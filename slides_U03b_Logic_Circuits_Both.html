@@ -1,11 +1,12 @@
 <!DOCTYPE html>
+
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
 <title>Logic Circuits — Words into Wires</title>
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/reveal.js/4.6.1/reveal.min.css">
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css">
+<link href="https://cdnjs.cloudflare.com/ajax/libs/reveal.js/4.6.1/reveal.min.css" rel="stylesheet"/>
+<link href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css" rel="stylesheet"/>
 <style>
 :root{
   --dark:#151B3C; --light:#F4F6FB; --accent1:#17B3A3; --accent2:#F0655B;
@@ -118,986 +119,846 @@
 .g-skip:hover{color:#17B3A3; border-color:#17B3A3;}
 .g-navwrap{float:right;}
 </style>
-</head>
+<style>.reveal .slides section,.reveal .slides section .fragment{transition-duration:180ms!important}
+@media(prefers-reduced-motion:reduce){.reveal *{animation:none!important;transition:none!important}}
+.lanes{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:14px;font-size:16px;line-height:1.35;text-align:left}
+.lanes>div{border-left:3px solid #17B3A3;background:rgba(23,179,163,.07);padding:8px 12px}
+.lanes>div+div{border-color:#F2B53C;background:rgba(242,181,60,.08)}
+.lanes b{display:block;font-size:13px;letter-spacing:.04em}
+.source{font-size:14px!important;line-height:1.35!important;color:#7a83a8;margin:8px 0!important}
+.reveal .small{font-size:19px;line-height:1.4}
+#fs-btn{left:18px;right:auto;font-size:16px}
+.reveal button{cursor:pointer}
+button:disabled{opacity:.4;cursor:default}
+#feedback button,.mark,.reset,.draw-reset,#aud-btns button{border:0;border-radius:6px;background:#3d4a85;color:white;padding:8px 14px;font-size:18px}
+.rubric{font-size:20px;line-height:1.4;text-align:left}
+.rubric label{display:block;margin:10px 0}.rubric input{width:20px;height:20px}
+.rubric p{font-size:18px}.draw-score{display:block;margin-top:12px}
+.draw-space{border:2px dashed #98a0c0;border-radius:12px;padding:40px;margin:24px 0;font-size:24px;color:#7a83a8;text-align:center}
+.output-fields{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin:18px 0}
+.output-fields label{font-size:18px;color:#3d4a85;text-align:left}
+.output-fields input{box-sizing:border-box;display:block;width:100%;font:22px monospace;border:2px solid #c6cde4;border-radius:6px;padding:8px;color:#222B5A;background:white}
+.output-fields input.right{border-color:#17B3A3}.output-fields input.wrong{border-color:#F0655B}
+.mark-result{font-size:19px;line-height:1.4;min-height:98px;margin:10px 0;text-align:left}.mark-result p{margin:4px 0}
+.lens{font-size:21px!important;line-height:1.35}
+#feedback .card{color:#E8EEF9;background:#222B5A;padding:18px}#feedback .two-col{font-size:22px;align-items:stretch}#feedback h3{font-size:25px}
+#feedback svg{width:100%}.stable-pair{font:28px monospace;text-align:center;margin:44px 0}.stable-pair span{color:#17B3A3;font-size:38px}
+#ring-state{font:19px monospace;margin:8px 0}
+#nand-proof .three-col{font-size:.62em!important}#nand-proof>.rule{font-size:.66em}
+#forge .lanes{margin-top:8px}#forge-scope{margin-top:4px!important}
+#backward .rule{font-size:.66em}#backward .two-col .rule{font-size:1em}
+#vocabulary table{font-size:.6em}
+#exit .rule,#exit-answer .rule,#ledger .rule{font-size:.75em}
+[id^="draw-answer-"] .circ{width:100%!important;max-width:580px!important}
+[id^="table-answer-"] table{font-size:25px!important}
+#feedback svg{height:125px}#feedback .stable-pair{margin:28px 0}
+#feedback .source a{color:#F2B53C}
+</style></head>
 <body>
-<div class="reveal"><div class="slides">
+<div class="reveal"><div class="slides"><section><section class="dk" data-background-color="#151B3C" id="title"><div class="badges"><span class="bg bg-hole">IG + AS</span></div>
+<div class="bar" style="background:var(--accent1)"></div>
 
-<!-- ============ H1 TITLE (+objectives) ============ -->
-<section>
-  <section class="dk" data-background-color="#151B3C">
-    <div class="bar" style="background:var(--accent1)"></div>
-    <div class="badges"><span class="bg bg-both">0478 ✓ · 9618 ✓</span></div>
-    <p style="font-size:.55em; color:var(--accent3); letter-spacing:.12em; margin-bottom:0;">COMPUTER SCIENCE · U3b · LOGIC CIRCUITS</p>
-    <h1 style="margin:.1em 0;">Logic Circuits</h1>
-    <p style="font-size:.7em; margin-top:0;">Words into Wires</p>
-    <p style="font-size:.5em; color:#98a0c0; margin-top:2.2em;">
-      Navigation: <span class="mono">→</span> next idea &nbsp;·&nbsp; <span class="mono">↓</span> dig deeper
-      <span class="accent3">🕳️</span> &nbsp;·&nbsp; badges top-right show whose exam it's on
+<p style="font-size:.55em; color:var(--accent3); letter-spacing:.12em; margin-bottom:0;">COMPUTER SCIENCE · U3b · LOGIC CIRCUITS</p>
+<h1 style="margin:.1em 0;">Logic Circuits</h1>
+<p style="font-size:.7em; margin-top:0;">Words into Wires</p>
+<p style="font-size:.5em; color:#98a0c0; margin-top:2.2em;">
+      Navigation: <span class="mono">→</span> next idea  ·  <span class="mono">↓</span> dig deeper
+      <span class="accent3">🕳️</span>  ·  badges top-right show whose exam it's on
     </p>
-    <p style="margin-top:1.6em;"><button id="obj-btn" onclick="Reveal.down()">🎯 objectives</button></p>
+<p style="margin-top:1.6em;"><button id="obj-btn" onclick="Reveal.down()">🎯 objectives</button></p>
 
-</section>
-  <section class="dk" data-background-color="#151B3C">
-    <div class="bar" style="background:var(--accent3)"></div>
-    <div class="badges"><span class="bg bg-both">0478 ✓ · 9618 ✓</span></div>
-    <h2>🎯 Today you will be able to</h2>
-    <div class="rule"><strong class="accent1">1.</strong> Translate between problem statement, logic expression, circuit and truth table — in <em>any</em> direction</div>
-    <div class="rule"><strong class="accent1">2.</strong> Build a working circuit for a real problem (a burglar alarm)</div>
-    <div class="rule accent3"><strong class="accent3">3.</strong> Work backward from a truth table to a circuit that produces it</div>
-    <div class="rule accent2"><strong class="accent2">4.</strong> Know that NAND alone can build any circuit — and why chip factories love that</div>
-  </section>
-</section>
+<div id="aud-btns"><button onclick="setAud('ig')">IGCSE 0478 ▶</button> <button onclick="setAud('al')">AS 9618 ▶</button></div><p id="aud-sub"></p><p id="aud-chip" style="display:none"></p></section><section class="dk" data-background-color="#151B3C" id="objectives"><div class="badges"><span class="bg bg-hole">IG + AS</span></div>
+<div class="bar" style="background:var(--accent3)"></div>
 
-<!-- ============ H2 THE DEBT: WHICH GATE DID THEY KEEP? ============ -->
-<section class="lt" data-background-color="#F4F6FB">
-  <div class="bar" style="background:var(--accent2)"></div>
-  <div class="badges"><span class="bg bg-hole">🕳️ the payoff</span></div>
-  <h2>The debt is due: which gate did they keep?</h2>
-  <div class="two-col">
-    <div style="font-size:.74em;">
-      <div class="card">Last week: a real CPU under the microscope. Six gates in your toolbox — but on the chip, <strong>one gate type, repeated hundreds of millions of times.</strong><br><br><em>So — your guesses?</em></div>
-      <div class="fragment rule accent2" data-fragment-index="2" style="margin-top:14px;"><strong>But that only deepens the mystery.</strong> How can <em>one</em> gate possibly do the work of six?<br><br><strong class="accent2">The claim:</strong> anything you can build from the six, you can build from NAND alone. Anything. <strong>Proof or it didn't happen →</strong></div>
-    </div>
-    <div class="center fragment" data-fragment-index="1">
-      <div class="card center" style="display:inline-block; padding:22px 34px;">
-        <div class="circ" style="width:190px;">
-          <svg viewBox="0 0 130 70">
-            <line x1="0" y1="20" x2="30" y2="20" stroke="#222B5A" stroke-width="3"/>
-            <line x1="0" y1="50" x2="30" y2="50" stroke="#222B5A" stroke-width="3"/>
-            <path d="M30 8 H62 A27 27 0 0 1 62 62 H30 Z" fill="none" stroke="#222B5A" stroke-width="3"/>
-            <circle cx="97" cy="35" r="7" fill="none" stroke="#F0655B" stroke-width="3"/>
-            <line x1="104" y1="35" x2="125" y2="35" stroke="#222B5A" stroke-width="3"/>
-          </svg>
-        </div>
-        <div style="font-size:1.25em; font-weight:bold; font-family:'Georgia',serif; margin-top:6px;">NAND</div>
-        <div style="font-size:.55em; color:#7a83a8;">the AND that lies — 0 only when both inputs are 1</div>
-      </div>
-    </div>
-  </div>
+<h2>🎯 Today you will be able to</h2>
+<div class="rule"><strong class="accent1">1.</strong> Translate between problem statement, logic expression, circuit and truth table — in <em>any</em> direction</div>
+<div class="rule"><strong class="accent1">2.</strong> Build a working circuit for a real problem (a burglar alarm)</div>
+<div class="rule accent3"><strong class="accent3">3.</strong> Work backward from a truth table to a circuit that produces it</div>
+<div class="rule accent2">4. Explore NAND constructions, addition and feedback as <b>enrichment for both groups</b>.</div>
+</section></section><section class="lt" data-background-color="#F4F6FB" id="nand-question"><div class="badges"><span class="bg bg-hole">SHARED · ENRICHMENT</span></div>
+<div class="bar" style="background:var(--accent2)"></div>
 
-</section>
+<h2>The debt is due: can one gate do it?</h2>
+<div class="two-col">
+<div style="font-size:.74em;">
+<div class="card"><b>Six gates in your toolbox.</b><br/><br/>Could you construct their Boolean functions if the toolbox contained only NAND?<br/><br/>Which constructions would prove it?</div>
+<div class="fragment rule accent2" data-fragment-index="2" style="margin-top:14px;"><b>The claim:</b> NAND gates can construct NOT, AND and OR. Those operations can express any finite Boolean truth table. <b>Proof or it didn’t happen →</b></div>
+</div>
+<div class="center fragment" data-fragment-index="1">
+<div class="card center" style="display:inline-block; padding:22px 34px;">
+<div class="circ" style="width:190px;">
+<svg viewBox="0 0 130 70">
+<line stroke="#222B5A" stroke-width="3" x1="0" x2="30" y1="20" y2="20"></line>
+<line stroke="#222B5A" stroke-width="3" x1="0" x2="30" y1="50" y2="50"></line>
+<path d="M30 8 H62 A27 27 0 0 1 62 62 H30 Z" fill="none" stroke="#222B5A" stroke-width="3"></path>
+<circle cx="97" cy="35" fill="none" r="7" stroke="#F0655B" stroke-width="3"></circle>
+<line stroke="#222B5A" stroke-width="3" x1="104" x2="125" y1="35" y2="35"></line>
+</svg>
+</div>
+<div style="font-size:1.25em; font-weight:bold; font-family:'Georgia',serif; margin-top:6px;">NAND</div>
+<div style="font-size:.55em; color:#7a83a8;">the AND that lies — 0 only when both inputs are 1</div>
+</div>
+</div>
+</div>
 
-<!-- ============ H3 ONE GATE BECOMES THREE (+ apollo hole) ============ -->
-<section>
-  <section class="lt" data-background-color="#F4F6FB">
-    <div class="bar" style="background:var(--accent2)"></div>
-    <div class="badges"><span class="bg bg-hole">🕳️ the payoff</span></div>
-    <h2>Watch one gate become three</h2>
-    <div class="three-col" style="font-size:.62em;">
-      <div class="card">
-        <strong class="accent1">① NOT — tie the inputs together</strong>
-        <div class="circ" style="width:230px; margin:8px auto;">
-          <svg viewBox="0 0 300 90">
-            <line x1="26" y1="44" x2="48" y2="44" stroke="#222B5A" stroke-width="2.5"/>
-            <circle cx="48" cy="44" r="4" fill="#222B5A"/>
-            <line x1="48" y1="44" x2="48" y2="29" stroke="#222B5A" stroke-width="2.5"/>
-            <line x1="48" y1="29" x2="70" y2="29" stroke="#222B5A" stroke-width="2.5"/>
-            <line x1="48" y1="44" x2="48" y2="59" stroke="#222B5A" stroke-width="2.5"/>
-            <line x1="48" y1="59" x2="70" y2="59" stroke="#222B5A" stroke-width="2.5"/>
-            <g transform="translate(40,9)">
-              <path d="M30 8 H62 A27 27 0 0 1 62 62 H30 Z" fill="none" stroke="#222B5A" stroke-width="3"/>
-              <circle cx="97" cy="35" r="7" fill="none" stroke="#F0655B" stroke-width="3"/>
-            </g>
-            <line x1="144" y1="44" x2="185" y2="44" stroke="#222B5A" stroke-width="2.5"/>
-          </svg>
-          <span class="clbl" style="left:5%; top:49%;">A</span>
-          <span class="clbl accent1" style="left:83%; top:49%;">Ā</span>
-        </div>
-        NAND(A, A) = NOT A — because A·A is just A, then the bubble flips it.<br>
-        <span class="mono accent1">A=0→1 · A=1→0 ✓</span><br>
-        <strong>1 NAND = 1 NOT.</strong> <span style="color:#7a83a8;">(Turing Complete's opening level — some of you have done this with your own hands.)</span>
-      </div>
-      <div class="card fragment">
-        <strong class="accent1">② AND — flip the flip</strong>
-        <div class="circ" style="width:250px; margin:8px auto;">
-          <svg viewBox="0 0 300 90">
-            <line x1="24" y1="29" x2="60" y2="29" stroke="#222B5A" stroke-width="2.5"/>
-            <line x1="24" y1="59" x2="60" y2="59" stroke="#222B5A" stroke-width="2.5"/>
-            <g transform="translate(30,9)">
-              <path d="M30 8 H62 A27 27 0 0 1 62 62 H30 Z" fill="none" stroke="#222B5A" stroke-width="3"/>
-              <circle cx="97" cy="35" r="7" fill="none" stroke="#F0655B" stroke-width="3"/>
-            </g>
-            <line x1="134" y1="44" x2="150" y2="44" stroke="#222B5A" stroke-width="2.5"/>
-            <circle cx="150" cy="44" r="4" fill="#222B5A"/>
-            <line x1="150" y1="44" x2="150" y2="29" stroke="#222B5A" stroke-width="2.5"/>
-            <line x1="150" y1="29" x2="162" y2="29" stroke="#222B5A" stroke-width="2.5"/>
-            <line x1="150" y1="44" x2="150" y2="59" stroke="#222B5A" stroke-width="2.5"/>
-            <line x1="150" y1="59" x2="162" y2="59" stroke="#222B5A" stroke-width="2.5"/>
-            <g transform="translate(132,9)">
-              <path d="M30 8 H62 A27 27 0 0 1 62 62 H30 Z" fill="none" stroke="#222B5A" stroke-width="3"/>
-              <circle cx="97" cy="35" r="7" fill="none" stroke="#F0655B" stroke-width="3"/>
-            </g>
-            <line x1="236" y1="44" x2="272" y2="44" stroke="#222B5A" stroke-width="2.5"/>
-          </svg>
-          <span class="clbl" style="left:4%; top:32%;">A</span>
-          <span class="clbl" style="left:4%; top:66%;">B</span>
-          <span class="clbl accent1" style="left:88%; top:33%;">A·B</span>
-        </div>
-        A NAND is an AND that lies. So make it lie <em>twice</em>: NAND, then the NOT trick on its output.<br>
-        <strong>2 NANDs = 1 AND.</strong>
-      </div>
-      <div class="card fragment">
-        <strong class="accent1">③ OR — De Morgan's re-costume</strong>
-        <div class="circ" style="width:250px; margin:8px auto;">
-          <svg viewBox="0 0 320 150">
-            <line x1="26" y1="30" x2="40" y2="30" stroke="#222B5A" stroke-width="2.5"/>
-            <circle cx="40" cy="30" r="4" fill="#222B5A"/>
-            <line x1="40" y1="30" x2="40" y2="25" stroke="#222B5A" stroke-width="2.5"/><line x1="40" y1="25" x2="80" y2="25" stroke="#222B5A" stroke-width="2.5"/>
-            <line x1="40" y1="30" x2="40" y2="55" stroke="#222B5A" stroke-width="2.5"/><line x1="40" y1="55" x2="80" y2="55" stroke="#222B5A" stroke-width="2.5"/>
-            <g transform="translate(50,5)">
-              <path d="M30 8 H62 A27 27 0 0 1 62 62 H30 Z" fill="none" stroke="#222B5A" stroke-width="3"/>
-              <circle cx="97" cy="35" r="7" fill="none" stroke="#F0655B" stroke-width="3"/>
-            </g>
-            <line x1="26" y1="115" x2="40" y2="115" stroke="#222B5A" stroke-width="2.5"/>
-            <circle cx="40" cy="115" r="4" fill="#222B5A"/>
-            <line x1="40" y1="115" x2="40" y2="100" stroke="#222B5A" stroke-width="2.5"/><line x1="40" y1="100" x2="80" y2="100" stroke="#222B5A" stroke-width="2.5"/>
-            <line x1="40" y1="115" x2="40" y2="130" stroke="#222B5A" stroke-width="2.5"/><line x1="40" y1="130" x2="80" y2="130" stroke="#222B5A" stroke-width="2.5"/>
-            <g transform="translate(50,80)">
-              <path d="M30 8 H62 A27 27 0 0 1 62 62 H30 Z" fill="none" stroke="#222B5A" stroke-width="3"/>
-              <circle cx="97" cy="35" r="7" fill="none" stroke="#F0655B" stroke-width="3"/>
-            </g>
-            <line x1="154" y1="40" x2="170" y2="40" stroke="#222B5A" stroke-width="2.5"/>
-            <line x1="170" y1="40" x2="170" y2="62" stroke="#222B5A" stroke-width="2.5"/><line x1="170" y1="62" x2="210" y2="62" stroke="#222B5A" stroke-width="2.5"/>
-            <line x1="154" y1="115" x2="170" y2="115" stroke="#222B5A" stroke-width="2.5"/>
-            <line x1="170" y1="115" x2="170" y2="92" stroke="#222B5A" stroke-width="2.5"/><line x1="170" y1="92" x2="210" y2="92" stroke="#222B5A" stroke-width="2.5"/>
-            <g transform="translate(180,42)">
-              <path d="M30 8 H62 A27 27 0 0 1 62 62 H30 Z" fill="none" stroke="#222B5A" stroke-width="3"/>
-              <circle cx="97" cy="35" r="7" fill="none" stroke="#F0655B" stroke-width="3"/>
-            </g>
-            <line x1="284" y1="77" x2="308" y2="77" stroke="#222B5A" stroke-width="2.5"/>
-          </svg>
-          <span class="clbl" style="left:4%; top:20%;">A</span>
-          <span class="clbl" style="left:4%; top:77%;">B</span>
-          <span class="clbl accent1" style="left:91%; top:39%;">A+B</span>
-        </div>
-        Flip both inputs, then NAND them: "NOT(Ā·B̄)" — and De Morgan says that IS "A OR B". You shaded this law in maths class.<br>
-        <strong>3 NANDs = 1 OR.</strong>
-      </div>
-    </div>
-    <div class="fragment rule accent2" style="margin-top:8px;"><strong>The clincher:</strong> every circuit you will ever draw is made of AND, OR, NOT — and each of those is just NANDs. <strong>So the factory prints ONE shape, millions of times.</strong> The die photo finally makes sense. And Turing Complete hands you one gate at the start <em>because one gate is enough</em> — the game's opening is this theorem in costume.</div>
-    <div class="dig">⬇ the other universal gate went to the Moon 🕳️</div>
+<div class="lanes"><div><b>📝 IN THE EXAM</b>Enrichment for both groups; it is not a required AS/IG method.</div><div><b>🏛 IN REALITY</b>Use the stated model; device delays and implementation details still matter.</div></div></section><section><section class="lt" data-background-color="#F4F6FB" id="nand-proof"><div class="badges"><span class="bg bg-hole">SHARED · ENRICHMENT</span></div>
+<div class="bar" style="background:var(--accent2)"></div>
 
-</section>
-  <section class="lt" data-background-color="#F4F6FB">
-    <div class="bar" style="background:var(--accent3)"></div>
-    <div class="badges"><span class="bg bg-hole">🕳️ beyond the exam</span></div>
-    <h2>The other universal gate — and the Moon</h2>
-    <div class="two-col" style="font-size:.68em;">
-      <div class="card"><strong class="accent1">🌗 NOR is universal too.</strong><br>Run the same three constructions with NORs instead of NANDs — they all work (the mirror of the proof you just saw). And that's not hypothetical: the <strong>Apollo Guidance Computer</strong> — the machine that landed people on the Moon — was built from <strong>one chip type: a dual 3-input NOR gate</strong>, thousands of identical chips, wired into everything. One shape. It flew.</div>
-      <div class="card"><strong class="accent2">⚡ So why does modern silicon pick NAND?</strong><br>Recall the cellar from last week: in CMOS, the gate's series stack sits on the <em>fast</em> transistors in a NAND — and electrons outrun holes roughly 2–3× — so NAND is the smaller, quicker worker. One repeatable pattern = cheaper factories, fewer defects, higher yield. NOR got the Moon; NAND got everything after.</div>
-    </div>
-    <div class="rule" style="margin-top:14px;"><strong class="accent1">Universality is the theorem. Which universal gate wins is economics.</strong></div>
+<h2>Watch one gate become three</h2>
+<div class="three-col" style="font-size:.62em;">
+<div class="card">
+<strong class="accent1">① NOT — tie the inputs together</strong>
+<div class="circ" style="width:230px; margin:8px auto;">
+<svg viewBox="0 0 300 90">
+<line stroke="#222B5A" stroke-width="2.5" x1="26" x2="48" y1="44" y2="44"></line>
+<circle cx="48" cy="44" fill="#222B5A" r="4"></circle>
+<line stroke="#222B5A" stroke-width="2.5" x1="48" x2="48" y1="44" y2="29"></line>
+<line stroke="#222B5A" stroke-width="2.5" x1="48" x2="70" y1="29" y2="29"></line>
+<line stroke="#222B5A" stroke-width="2.5" x1="48" x2="48" y1="44" y2="59"></line>
+<line stroke="#222B5A" stroke-width="2.5" x1="48" x2="70" y1="59" y2="59"></line>
+<g transform="translate(40,9)">
+<path d="M30 8 H62 A27 27 0 0 1 62 62 H30 Z" fill="none" stroke="#222B5A" stroke-width="3"></path>
+<circle cx="97" cy="35" fill="none" r="7" stroke="#F0655B" stroke-width="3"></circle>
+</g>
+<line stroke="#222B5A" stroke-width="2.5" x1="144" x2="185" y1="44" y2="44"></line>
+</svg>
+<span class="clbl" style="left:5%; top:49%;">A</span>
+<span class="clbl accent1" style="left:83%; top:49%;">Ā</span>
+</div>
+        NAND(A, A) = NOT A — because A·A is just A, then the bubble flips it.<br/>
+<span class="mono accent1">A=0→1 · A=1→0 ✓</span><br/>
+<strong>1 NAND = 1 NOT.</strong> <span style="color:#7a83a8;">(Turing Complete's opening level — some of you have done this with your own hands.)</span>
+</div>
+<div class="card fragment">
+<strong class="accent1">② AND — flip the flip</strong>
+<div class="circ" style="width:250px; margin:8px auto;">
+<svg viewBox="0 0 300 90">
+<line stroke="#222B5A" stroke-width="2.5" x1="24" x2="60" y1="29" y2="29"></line>
+<line stroke="#222B5A" stroke-width="2.5" x1="24" x2="60" y1="59" y2="59"></line>
+<g transform="translate(30,9)">
+<path d="M30 8 H62 A27 27 0 0 1 62 62 H30 Z" fill="none" stroke="#222B5A" stroke-width="3"></path>
+<circle cx="97" cy="35" fill="none" r="7" stroke="#F0655B" stroke-width="3"></circle>
+</g>
+<line stroke="#222B5A" stroke-width="2.5" x1="134" x2="150" y1="44" y2="44"></line>
+<circle cx="150" cy="44" fill="#222B5A" r="4"></circle>
+<line stroke="#222B5A" stroke-width="2.5" x1="150" x2="150" y1="44" y2="29"></line>
+<line stroke="#222B5A" stroke-width="2.5" x1="150" x2="162" y1="29" y2="29"></line>
+<line stroke="#222B5A" stroke-width="2.5" x1="150" x2="150" y1="44" y2="59"></line>
+<line stroke="#222B5A" stroke-width="2.5" x1="150" x2="162" y1="59" y2="59"></line>
+<g transform="translate(132,9)">
+<path d="M30 8 H62 A27 27 0 0 1 62 62 H30 Z" fill="none" stroke="#222B5A" stroke-width="3"></path>
+<circle cx="97" cy="35" fill="none" r="7" stroke="#F0655B" stroke-width="3"></circle>
+</g>
+<line stroke="#222B5A" stroke-width="2.5" x1="236" x2="272" y1="44" y2="44"></line>
+</svg>
+<span class="clbl" style="left:4%; top:32%;">A</span>
+<span class="clbl" style="left:4%; top:66%;">B</span>
+<span class="clbl accent1" style="left:88%; top:33%;">A·B</span>
+</div>
+        A NAND is an AND that lies. So make it lie <em>twice</em>: NAND, then the NOT trick on its output.<br/>
+<strong>2 NANDs = 1 AND.</strong>
+</div>
+<div class="card fragment">
+<strong class="accent1">③ OR — De Morgan's re-costume</strong>
+<div class="circ" style="width:250px; margin:8px auto;">
+<svg viewBox="0 0 320 150">
+<line stroke="#222B5A" stroke-width="2.5" x1="26" x2="40" y1="30" y2="30"></line>
+<circle cx="40" cy="30" fill="#222B5A" r="4"></circle>
+<line stroke="#222B5A" stroke-width="2.5" x1="40" x2="40" y1="30" y2="25"></line><line stroke="#222B5A" stroke-width="2.5" x1="40" x2="80" y1="25" y2="25"></line>
+<line stroke="#222B5A" stroke-width="2.5" x1="40" x2="40" y1="30" y2="55"></line><line stroke="#222B5A" stroke-width="2.5" x1="40" x2="80" y1="55" y2="55"></line>
+<g transform="translate(50,5)">
+<path d="M30 8 H62 A27 27 0 0 1 62 62 H30 Z" fill="none" stroke="#222B5A" stroke-width="3"></path>
+<circle cx="97" cy="35" fill="none" r="7" stroke="#F0655B" stroke-width="3"></circle>
+</g>
+<line stroke="#222B5A" stroke-width="2.5" x1="26" x2="40" y1="115" y2="115"></line>
+<circle cx="40" cy="115" fill="#222B5A" r="4"></circle>
+<line stroke="#222B5A" stroke-width="2.5" x1="40" x2="40" y1="115" y2="100"></line><line stroke="#222B5A" stroke-width="2.5" x1="40" x2="80" y1="100" y2="100"></line>
+<line stroke="#222B5A" stroke-width="2.5" x1="40" x2="40" y1="115" y2="130"></line><line stroke="#222B5A" stroke-width="2.5" x1="40" x2="80" y1="130" y2="130"></line>
+<g transform="translate(50,80)">
+<path d="M30 8 H62 A27 27 0 0 1 62 62 H30 Z" fill="none" stroke="#222B5A" stroke-width="3"></path>
+<circle cx="97" cy="35" fill="none" r="7" stroke="#F0655B" stroke-width="3"></circle>
+</g>
+<line stroke="#222B5A" stroke-width="2.5" x1="154" x2="170" y1="40" y2="40"></line>
+<line stroke="#222B5A" stroke-width="2.5" x1="170" x2="170" y1="40" y2="62"></line><line stroke="#222B5A" stroke-width="2.5" x1="170" x2="210" y1="62" y2="62"></line>
+<line stroke="#222B5A" stroke-width="2.5" x1="154" x2="170" y1="115" y2="115"></line>
+<line stroke="#222B5A" stroke-width="2.5" x1="170" x2="170" y1="115" y2="92"></line><line stroke="#222B5A" stroke-width="2.5" x1="170" x2="210" y1="92" y2="92"></line>
+<g transform="translate(180,42)">
+<path d="M30 8 H62 A27 27 0 0 1 62 62 H30 Z" fill="none" stroke="#222B5A" stroke-width="3"></path>
+<circle cx="97" cy="35" fill="none" r="7" stroke="#F0655B" stroke-width="3"></circle>
+</g>
+<line stroke="#222B5A" stroke-width="2.5" x1="284" x2="308" y1="77" y2="77"></line>
+</svg>
+<span class="clbl" style="left:4%; top:20%;">A</span>
+<span class="clbl" style="left:4%; top:77%;">B</span>
+<span class="clbl accent1" style="left:91%; top:39%;">A+B</span>
+</div>
+        Flip both inputs, then NAND them: "NOT(Ā·B̄)" — and De Morgan says that IS "A OR B". Check inputs 00, 01, 10, 11: the result is 0111, just like OR.<br/>
+<strong>3 NANDs = 1 OR.</strong>
+</div>
+</div>
+<div class="fragment rule accent2" style="margin-top:8px;"><b>Logical sufficiency:</b> these constructions provide NOT, AND and OR from NAND. That proves what can be built, not what every chip contains. Real designs choose from many cell functions.</div>
+<div class="dig">⬇ the other universal gate went to the Moon 🕳️</div>
 
-</section>
-</section>
+<div class="lanes"><div><b>📝 IN THE EXAM</b>Enrichment for both groups; it is not a required AS/IG method.</div><div><b>🏛 IN REALITY</b>Use the stated model; device delays and implementation details still matter.</div></div></section><section class="lt" data-background-color="#F4F6FB" data-hole="true" id="apollo"><div class="badges"><span class="bg bg-hole">↓ SHARED · ENRICHMENT</span></div>
+<div class="bar" style="background:var(--accent3)"></div>
 
-<!-- ============ H4 FOUR LANGUAGES ============ -->
-<section class="lt" data-background-color="#F4F6FB">
-  <div class="bar" style="background:var(--accent1)"></div>
-  <div class="badges"><span class="bg bg-both">0478 ✓ · 9618 ✓</span></div>
-  <h2>Four languages, one decision</h2>
-  <div class="two-col">
-    <div>
-      <p style="font-size:.7em;">A decision lives in four costumes. The exam will hand you <em>any one</em> of them and demand <em>any other</em>:</p>
-      <div style="display:grid; grid-template-columns:1fr 1fr; gap:10px 26px; font-size:.6em; position:relative; max-width:520px;">
-        <div class="card center"><strong>English statement</strong><br><span style="color:#7a83a8;">"the alarm sounds if…"</span></div>
-        <div class="card center"><strong>Logic expression</strong><br><span class="mono" style="color:#7a83a8;">A = (W AND M) OR P</span></div>
-        <div class="card center"><strong>Circuit diagram</strong><br><span style="color:#7a83a8;">gates and wires</span></div>
-        <div class="card center"><strong>Truth table</strong><br><span style="color:#7a83a8;">the fingerprint</span></div>
-        <span style="position:absolute; left:50%; top:24%; transform:translate(-50%,-50%); font-size:1.3em; color:var(--accent1);">⇄</span>
-        <span style="position:absolute; left:50%; top:76%; transform:translate(-50%,-50%); font-size:1.3em; color:var(--accent1);">⇄</span>
-        <span style="position:absolute; left:23%; top:50%; transform:translate(-50%,-50%) rotate(90deg); font-size:1.3em; color:var(--accent1);">⇄</span>
-        <span style="position:absolute; left:77%; top:50%; transform:translate(-50%,-50%) rotate(90deg); font-size:1.3em; color:var(--accent1);">⇄</span>
-        <span style="position:absolute; left:50%; top:50%; transform:translate(-50%,-50%) rotate(45deg); font-size:1.1em; color:#c6cde4;">⇄</span>
-      </div>
-      <p style="font-size:.62em; color:#7a83a8; margin-top:10px;">Last week you mastered one edge: anything → truth table. Today, all the rest.</p>
-    </div>
-    <div class="fragment">
-      <div class="rule accent3"><strong class="accent3">Meet today's specimen — the burglar alarm:</strong><br><br><em>"The alarm <span class="mono">A</span> sounds if the window sensor <span class="mono">W</span> and the motion sensor <span class="mono">M</span> both fire, or if the panic button <span class="mono">P</span> is pressed."</em><br><br>By the end of the hour this one sentence will have worn all four costumes.</div>
-    </div>
-  </div>
+<h2>The other universal gate — and the Moon</h2>
+<div class="two-col" style="font-size:.68em;">
+<div class="card"><b>🌗 NOR reached the Moon.</b><br/>The Apollo Guidance Computer used dual three-input NOR devices for its logic. That is a documented hardware choice, not a rule for all computers.<br/><br/><b>Try the mirrored construction:</b> NOR(A,A) gives NOT A. Inverting NOR(A,B) gives OR.</div>
+<div class="card"><b>Can NOR also make AND?</b><br/>First form NOT A and NOT B using tied-input NOR gates. Feed them to another NOR.<br/><br/>Check all four rows: NOT((NOT A) OR (NOT B)) gives <b>0001</b>. Three NORs have become AND.</div>
+</div>
+<div class="rule" style="margin-top:14px;"><b>Keep the distinction:</b> a universal gate can build every Boolean function; a real computer also needs memory, timing, power and interfaces. The historical three-input NOR is beyond these boards’ gate-drawing scope.</div>
 
-</section>
+<p class="source"><a href="https://www.klabs.org/history/ech/scd/" rel="noopener" target="_blank">NASA Office of Logic Design: Apollo NOR specifications</a></p><div class="lanes"><div><b>📝 IN THE EXAM</b>Enrichment for both groups; it is not a required AS/IG method.</div><div><b>🏛 IN REALITY</b>Use the stated model; device delays and implementation details still matter.</div></div></section></section><section class="lt" data-background-color="#F4F6FB" id="four-languages"><div class="badges"><span class="bg bg-hole">IG + AS</span></div>
+<div class="bar" style="background:var(--accent1)"></div>
 
-<!-- ============ H5 ENGLISH → EXPRESSION ============ -->
-<section class="lt" data-background-color="#F4F6FB">
-  <div class="bar" style="background:var(--accent1)"></div>
-  <div class="badges"><span class="bg bg-both">0478 ✓ · 9618 ✓</span></div>
-  <h2>English → expression</h2>
-  <div class="two-col">
-    <div style="font-size:.72em;">
-      <div class="card"><em>"The alarm sounds if the window sensor and the motion sensor both fire, or if the panic button is pressed."</em><br><br>
-      <span class="fragment" data-fragment-index="1">"both fire" → <span class="mono accent1">W AND M</span><br></span>
-      <span class="fragment" data-fragment-index="2">"or if panic" → <span class="mono accent1">(…) OR P</span><br></span>
-      <span class="fragment" data-fragment-index="3" style="font-size:1.15em;"><strong class="mono">A = (W AND M) OR P</strong></span></div>
-      <div class="fragment rule accent2" data-fragment-index="4"><strong>Why the brackets are not optional:</strong> <span class="mono">W AND M OR P</span> could mean <span class="mono">W AND (M OR P)</span> — a <em>different alarm</em> (one that needs the window every time). Precedence: <strong>NOT first, then AND, then OR</strong> — and brackets make the order explicit. On the exam, when in doubt: bracket.</div>
-    </div>
-    <div style="font-size:.66em;">
-      <table class="xt">
-        <tr><th>English says…</th><th>Logic hears…</th></tr>
-        <tr><td>"and", "while", "but", "both … and"</td><td class="mono">AND</td></tr>
-        <tr><td>"or" (usually — recall: <em>inclusive</em>)</td><td class="mono">OR</td></tr>
-        <tr><td>"unless", "not", "fails to"</td><td class="mono">NOT</td></tr>
-        <tr><td>"exactly one of", "but not both"</td><td class="mono">XOR</td></tr>
-      </table>
-      <div class="fragment rule" style="margin-top:12px;"><strong class="accent1">Your turn (30 s):</strong> "The pump <span class="mono">X</span> runs if the tank is not full (<span class="mono">F</span>) and the switch <span class="mono">S</span> is on."<br>
-      <span style="font-size:.86em; color:#8890b5; font-style:italic;">Write it down before you look — the answer is on the next slide.</span></div>
-    </div>
-  </div>
+<h2>Four languages, one decision</h2>
+<div class="two-col">
+<div>
+<p style="font-size:.7em;">Both boards ask you to construct a circuit, expression or truth table from the given problem statement or representation. These four forms describe the same decision.</p>
+<div style="display:grid; grid-template-columns:1fr 1fr; gap:10px 26px; font-size:.6em; position:relative; max-width:520px;">
+<div class="card center"><strong>English statement</strong><br/><span style="color:#7a83a8;">"the alarm sounds if…"</span></div>
+<div class="card center"><strong>Logic expression</strong><br/><span class="mono" style="color:#7a83a8;">A = (W AND M) OR P</span></div>
+<div class="card center"><strong>Circuit diagram</strong><br/><span style="color:#7a83a8;">gates and wires</span></div>
+<div class="card center"><strong>Truth table</strong><br/><span style="color:#7a83a8;">the fingerprint</span></div>
+<span style="position:absolute; left:50%; top:24%; transform:translate(-50%,-50%); font-size:1.3em; color:var(--accent1);">⇄</span>
+<span style="position:absolute; left:50%; top:76%; transform:translate(-50%,-50%); font-size:1.3em; color:var(--accent1);">⇄</span>
+<span style="position:absolute; left:23%; top:50%; transform:translate(-50%,-50%) rotate(90deg); font-size:1.3em; color:var(--accent1);">⇄</span>
+<span style="position:absolute; left:77%; top:50%; transform:translate(-50%,-50%) rotate(90deg); font-size:1.3em; color:var(--accent1);">⇄</span>
+<span style="position:absolute; left:50%; top:50%; transform:translate(-50%,-50%) rotate(45deg); font-size:1.1em; color:#c6cde4;">⇄</span>
+</div>
+<p style="font-size:.62em; color:#7a83a8; margin-top:10px;">Last week you mastered one edge: anything → truth table. Today, all the rest.</p>
+</div>
+<div class="fragment">
+<div class="rule accent3"><strong class="accent3">Meet today's specimen — the burglar alarm:</strong><br/><br/><em>"The alarm <span class="mono">A</span> sounds if the window sensor <span class="mono">W</span> and the motion sensor <span class="mono">M</span> both fire, or if the panic button <span class="mono">P</span> is pressed."</em><br/><br/>By the end of the hour this one sentence will have worn all four costumes.</div>
+</div>
+</div>
 
-</section>
+<div class="lanes"><div><b>📝 IN THE EXAM</b>Follow the supplied representation; NOT has one input, the other gates two.</div><div><b>🏛 IN REALITY</b>Equivalent Boolean functions may have different physical implementations.</div></div></section><section class="lt" data-background-color="#F4F6FB" id="words"><div class="badges"><span class="bg bg-hole">IG + AS</span></div>
+<div class="bar" style="background:var(--accent1)"></div>
 
-<!-- the answer to the "your turn", on its own slide -->
-<section class="lt" data-background-color="#F4F6FB">
-  <div class="bar" style="background:var(--accent1)"></div>
-  <h2>Your turn — the answer</h2>
-  <div class="rule" style="font-size:.9em;">
+<h2>English → expression</h2>
+<div class="two-col">
+<div style="font-size:.72em;">
+<div class="card"><em>"The alarm sounds if the window sensor and the motion sensor both fire, or if the panic button is pressed."</em><br/><br/>
+<span class="fragment" data-fragment-index="1">"both fire" → <span class="mono accent1">W AND M</span><br/></span>
+<span class="fragment" data-fragment-index="2">"or if panic" → <span class="mono accent1">(…) OR P</span><br/></span>
+<span class="fragment" data-fragment-index="3" style="font-size:1.15em;"><strong class="mono">A = (W AND M) OR P</strong></span></div>
+<div class="fragment rule accent2" data-fragment-index="4"><b>Precedence: NOT, then AND, then OR.</b> W AND M OR P therefore means (W AND M) OR P. Brackets make that grouping easy to see. W AND (M OR P) is a different alarm: panic alone cannot trigger it.</div>
+</div>
+<div style="font-size:.66em;">
+<table class="xt">
+<tr><th>English says…</th><th>Logic hears…</th></tr>
+<tr><td>Both sensors must fire</td><td>W AND M</td></tr>
+<tr><td>Either sensor, including both</td><td>W OR M</td></tr>
+<tr><td>Tank is not full; F means “full”</td><td>NOT F</td></tr>
+<tr><td>Exactly one sensor fires</td><td>W XOR M</td></tr>
+</table>
+<div class="fragment rule" style="margin-top:12px;"><strong class="accent1">Your turn (30 s):</strong> "The pump <span class="mono">X</span> runs if the tank is not full (<span class="mono">F</span>) and the switch <span class="mono">S</span> is on."<br/>
+<span style="font-size:.86em; color:#8890b5; font-style:italic;">Write it down before you look — the answer is on the next slide.</span></div>
+</div>
+</div>
+
+<p class="source">Read the whole condition. Words such as “unless” need their context; define what a 1 means for each input.</p><div class="lanes"><div><b>📝 IN THE EXAM</b>Follow the supplied representation; NOT has one input, the other gates two.</div><div><b>🏛 IN REALITY</b>Equivalent Boolean functions may have different physical implementations.</div></div></section><section class="lt" data-background-color="#F4F6FB" id="pump-answer"><div class="badges"><span class="bg bg-hole">IG + AS</span></div>
+<div class="bar" style="background:var(--accent1)"></div>
+<h2>Your turn — the answer</h2>
+<div class="rule" style="font-size:.9em;">
     "The pump <span class="mono">X</span> runs if the tank is <strong>not</strong> full (<span class="mono">F</span>)
     <strong>and</strong> the switch <span class="mono">S</span> is on."
   </div>
-  <p class="center" style="font-size:1.5em; margin:18px 0;"><span class="mono accent1"><strong>X = (NOT F) AND S</strong></span></p>
-  <div class="rule" style="font-size:.82em;">
-    <strong class="accent1">The brackets are not decoration.</strong> <span class="mono">NOT F AND S</span> is ambiguous to a
-    reader and wrong to a machine that applies <span class="mono">NOT</span> last — it would test
-    "not (F and S)", which is a different pump. <strong>Negate the one thing you meant to negate, and bracket it.</strong>
-  </div>
+<p class="center" style="font-size:1.5em; margin:18px 0;"><span class="mono accent1"><strong>X = (NOT F) AND S</strong></span></p>
+<div class="rule" style="font-size:.82em;"><b>Negate the intended input.</b> With NOT evaluated first, NOT F AND S already means (NOT F) AND S. NOT(F AND S) is different: for F=0, S=0 it gives 1 even though the switch is off.</div>
 
-</section>
+<div class="lanes"><div><b>📝 IN THE EXAM</b>Follow the supplied representation; NOT has one input, the other gates two.</div><div><b>🏛 IN REALITY</b>Equivalent Boolean functions may have different physical implementations.</div></div></section><section><section class="lt" data-background-color="#F4F6FB" id="einstein"><div class="badges"><span class="bg bg-hole">SHARED · ENRICHMENT</span></div>
+<div class="bar" style="background:var(--accent3)"></div>
 
-<!-- ============ H5.5 EINSTEIN'S PUZZLE (+ prize/machine hole) ============ -->
-<section>
-  <section class="lt" data-background-color="#F4F6FB">
-    <div class="bar" style="background:var(--accent3)"></div>
-    <div class="badges"><span class="bg bg-hole">🕳️ same skill, more teeth</span></div>
-    <h2>Einstein's puzzle 🧩</h2>
-    <div class="two-col">
-      <div style="font-size:.7em;">
-        <div class="card">The internet calls it <strong>Einstein's Riddle</strong> and claims only 2% of people can solve it. The attribution is almost certainly fake — the marketing worked anyway. The puzzle is real, and it earns the name.</div>
-        <div class="fragment rule accent2"><strong>Why it belongs in this room:</strong> every clue is a <strong>logic statement</strong>. The grid you prune is a <strong>truth table</strong>. For the next ten minutes, you are a logic circuit made of meat.</div>
-        <div class="fragment rule"><strong class="accent1">Start with clues that pin a HOUSE, not a person.</strong> (Which clue nails something to a fixed position?)</div>
-      </div>
-      <div style="font-size:.72em;">
-        <div style="display:flex; gap:12px; justify-content:center; margin-bottom:10px;">
-          <div class="eh"><span class="roof">🏠</span>house 1</div>
-          <div class="eh"><span class="roof">🏠</span>house 2</div>
-          <div class="eh"><span class="roof">🏠</span>house 3</div>
-        </div>
-        <div class="card">
-          <strong>Three houses in a row (1 = left), each a different colour. The owners — a Brit, a Swede and a German — each keep a different pet: a cat, a fish and a dog.</strong>
-          <ol class="eclue">
-            <li>The Brit lives in the red house.</li>
-            <li>The red house is on the far right.</li>
-            <li>The Swede keeps a cat.</li>
-            <li>The green house is immediately to the left of the blue house.</li>
-            <li>The fish lives immediately to the left of the cat.</li>
-          </ol>
-          <strong class="accent2">Who owns the fish? 🐟</strong>
-        </div>
-      </div>
-    </div>
-    <div class="dig">⬇ for the winners 🕳️</div>
+<h2>Einstein's puzzle 🧩</h2>
+<div class="two-col">
+<div style="font-size:.7em;">
+<div class="card">Commonly called <b>Einstein’s riddle</b>; its authorship is unverified. The attraction is the reasoning, not a claim about who can solve it.</div>
+<div class="fragment rule accent2"><b>Each clue constrains the possible assignments.</b> An elimination grid records those constraints. Find a combination that satisfies every clue, then explain why the alternatives fail.</div>
+<div class="fragment rule"><strong class="accent1">Start with clues that pin a HOUSE, not a person.</strong> (Which clue nails something to a fixed position?)</div>
+</div>
+<div style="font-size:.72em;">
+<div style="display:flex; gap:12px; justify-content:center; margin-bottom:10px;">
+<div class="eh"><span class="roof">🏠</span>house 1</div>
+<div class="eh"><span class="roof">🏠</span>house 2</div>
+<div class="eh"><span class="roof">🏠</span>house 3</div>
+</div>
+<div class="card">
+<strong>Three houses in a row (1 = left), each a different colour. The owners — a Brit, a Swede and a German — each keep a different pet: a cat, a fish and a dog.</strong>
+<ol class="eclue">
+<li>The Brit lives in the red house.</li>
+<li>The red house is on the far right.</li>
+<li>The Swede keeps a cat.</li>
+<li>The green house is immediately to the left of the blue house.</li>
+<li>The fish lives immediately to the left of the cat.</li>
+</ol>
+<strong class="accent2">Who owns the fish? 🐟</strong>
+</div>
+</div>
+</div>
+<div class="dig">⬇ for the winners 🕳️</div>
 
-</section>
-  <section class="lt" data-background-color="#F4F6FB">
-    <div class="bar" style="background:var(--accent3)"></div>
-    <div class="badges"><span class="bg bg-hole">🕳️ beyond the exam</span></div>
-    <h2>For the winners — and for the machines</h2>
-    <div class="two-col" style="font-size:.68em;">
-      <div class="card"><strong class="accent3">🏆 The prize</strong><br>Crack the 3-house version and you get the <strong>original</strong>: 5 houses, 5 nationalities, 5 drinks, 5 hobbies, 5 pets — 15 interlocking clues. The question is still the fish. It is printed, it is yours, and it is <em>not</em> going on this screen.</div>
-      <div class="card"><strong class="accent1">🤖 What a machine does with it</strong><br>Turn every attribute into a Boolean variable ("house 2 is blue" = one bit). Every clue becomes a constraint on those bits. Solving = finding the one row of the giant truth table where every clue outputs 1 — <strong>working backward from a table</strong>, which is exactly the skill you'll learn in a few slides… at industrial scale.</div>
-    </div>
-    <div class="rule" style="margin-top:14px;"><strong class="accent1">This is a real job.</strong> Chip designers ask "does this circuit <em>ever</em> give the wrong answer?" — that's the same puzzle with billions of houses. The tools that answer it are called SAT solvers, and they run the modern world's hardware checks.</div>
+<div class="lanes"><div><b>📝 IN THE EXAM</b>Shared enrichment: practise satisfying every condition.</div><div><b>🏛 IN REALITY</b>A constraint model can describe many possible assignments, not just gate inputs.</div></div></section><section class="lt" data-background-color="#F4F6FB" data-hole="true" id="constraints"><div class="badges"><span class="bg bg-hole">↓ SHARED · ENRICHMENT</span></div>
+<div class="bar" style="background:var(--accent3)"></div>
 
-</section>
-</section>
+<h2>For the winners — and for the machines</h2>
+<div class="two-col" style="font-size:.68em;">
+<div class="card"><strong class="accent3">🏆 The prize</strong><br/>Crack the 3-house version and you get the <strong>original</strong>: 5 houses, 5 nationalities, 5 drinks, 5 hobbies, 5 pets — 15 interlocking clues. The question is still the fish. It is printed, it is yours, and it is <em>not</em> going on this screen.</div>
+<div class="card"><strong class="accent1">🤖 What a machine does with it</strong><br/>Turn every attribute into a Boolean variable ("house 2 is blue" = one bit). Every clue becomes a constraint on those bits. Solving = finding an assignment where every clue outputs 1 — <strong>working backward from a table</strong>, which is related to the backward reasoning in this lesson… at industrial scale.</div>
+</div>
+<div class="rule" style="margin-top:14px;"><b>From puzzle to verification:</b> express a design’s requirements as constraints. A solver can search for an assignment that violates a property: a counterexample. The model and the property must describe the intended system.</div>
 
-<!-- ============ H6 EXPRESSION → CIRCUIT ============ -->
-<section class="lt" data-background-color="#F4F6FB">
-  <div class="bar" style="background:var(--accent1)"></div>
-  <div class="badges"><span class="bg bg-both">0478 ✓ · 9618 ✓</span></div>
-  <h2>Expression → circuit</h2>
-  <div class="two-col">
-    <div style="font-size:.7em;">
-      <p><span class="mono">A = (W AND M) OR P</span> — now build it:</p>
-      <div class="rule"><strong class="accent1">The method — start from the middle of the sentence:</strong><br>
-      ① Find the operation <strong>outside all brackets</strong> — it sits in the middle of the line. That is the <strong>final gate</strong>, drawn right at the output.<br>
-      ② Each side of that operator is a smaller expression — same rule again, working leftward.<br>
-      ③ When you hit plain letters, those are the input wires. <strong>It always works.</strong></div>
-      <div class="fragment rule accent2" data-fragment-index="3"><strong>Drawing conventions (marks live here):</strong> inputs enter on the left · output leaves on the right · a <strong>junction dot</strong> wherever one wire feeds two gates · and on 0478: <strong>every gate max two inputs</strong> — three things ANDed = two AND gates chained.</div>
-    </div>
-    <div class="center">
-      <div class="circ" style="width:400px;">
-        <svg viewBox="0 0 340 120">
-          <g class="fragment" data-fragment-index="1">
-            <line x1="26" y1="85" x2="212" y2="85" stroke="#222B5A" stroke-width="2.5"/>
-            <g transform="translate(180,35)">
-              <path d="M28 8 Q52 8 68 16 Q86 25 94 35 Q86 45 68 54 Q52 62 28 62 Q40 35 28 8 Z" fill="none" stroke="#222B5A" stroke-width="3"/>
-            </g>
-            <line x1="274" y1="70" x2="310" y2="70" stroke="#222B5A" stroke-width="2.5"/>
-          </g>
-          <g class="fragment" data-fragment-index="2">
-            <line x1="26" y1="30" x2="90" y2="30" stroke="#222B5A" stroke-width="2.5"/>
-            <line x1="26" y1="60" x2="90" y2="60" stroke="#222B5A" stroke-width="2.5"/>
-            <g transform="translate(60,10)">
-              <path d="M30 8 H62 A27 27 0 0 1 62 62 H30 Z" fill="none" stroke="#222B5A" stroke-width="3"/>
-            </g>
-            <line x1="149" y1="45" x2="168" y2="45" stroke="#222B5A" stroke-width="2.5"/>
-            <line x1="168" y1="45" x2="168" y2="55" stroke="#222B5A" stroke-width="2.5"/>
-            <line x1="168" y1="55" x2="212" y2="55" stroke="#222B5A" stroke-width="2.5"/>
-          </g>
-        </svg>
-        <span class="clbl fragment" data-fragment-index="1" style="left:4%; top:71%;">P</span>
-        <span class="gtag fragment" data-fragment-index="1" style="left:71%; top:58%;">OR</span>
-        <span class="clbl accent1 fragment" data-fragment-index="1" style="left:95%; top:58%;">A</span>
-        <span class="clbl fragment" data-fragment-index="2" style="left:4%; top:25%;">W</span>
-        <span class="clbl fragment" data-fragment-index="2" style="left:4%; top:50%;">M</span>
-        <span class="gtag fragment" data-fragment-index="2" style="left:31%; top:37%;">AND</span>
-      </div>
-      <p class="fragment smaller" data-fragment-index="2" style="color:#7a83a8; margin-top:4px; max-width:400px;">the OR is outside all brackets — so it went down first, at the output; the bracket became the AND that feeds it</p>
-    </div>
-  </div>
+<div class="lanes"><div><b>📝 IN THE EXAM</b>Shared enrichment: practise satisfying every condition.</div><div><b>🏛 IN REALITY</b>A constraint model can describe many possible assignments, not just gate inputs.</div></div></section></section><section class="lt" data-background-color="#F4F6FB" id="expression-circuit"><div class="badges"><span class="bg bg-hole">IG + AS</span></div>
+<div class="bar" style="background:var(--accent1)"></div>
 
-</section>
+<h2>Expression → circuit</h2>
+<div class="two-col">
+<div style="font-size:.7em;">
+<p><span class="mono">A = (W AND M) OR P</span> — now build it:</p>
+<div class="rule"><b>Build from the final operation.</b><br/>① Parse the brackets and precedence; identify the operation evaluated last.<br/>② Draw that gate at the output.<br/>③ Build each of its input expressions the same way, working back to the named inputs.</div>
+<div class="fragment rule accent2" data-fragment-index="3"><b>For both boards:</b> NOT has one input; each other gate has two. Chain gates when combining three signals. Label inputs/output and make branching connections clear with junction dots.</div>
+</div>
+<div class="center">
+<div class="circ" style="width:400px;">
+<svg viewBox="0 0 340 120">
+<g class="fragment" data-fragment-index="1">
+<line stroke="#222B5A" stroke-width="2.5" x1="26" x2="212" y1="85" y2="85"></line>
+<g transform="translate(180,35)">
+<path d="M28 8 Q52 8 68 16 Q86 25 94 35 Q86 45 68 54 Q52 62 28 62 Q40 35 28 8 Z" fill="none" stroke="#222B5A" stroke-width="3"></path>
+</g>
+<line stroke="#222B5A" stroke-width="2.5" x1="274" x2="310" y1="70" y2="70"></line>
+</g>
+<g class="fragment" data-fragment-index="2">
+<line stroke="#222B5A" stroke-width="2.5" x1="26" x2="90" y1="30" y2="30"></line>
+<line stroke="#222B5A" stroke-width="2.5" x1="26" x2="90" y1="60" y2="60"></line>
+<g transform="translate(60,10)">
+<path d="M30 8 H62 A27 27 0 0 1 62 62 H30 Z" fill="none" stroke="#222B5A" stroke-width="3"></path>
+</g>
+<line stroke="#222B5A" stroke-width="2.5" x1="149" x2="168" y1="45" y2="45"></line>
+<line stroke="#222B5A" stroke-width="2.5" x1="168" x2="168" y1="45" y2="55"></line>
+<line stroke="#222B5A" stroke-width="2.5" x1="168" x2="212" y1="55" y2="55"></line>
+</g>
+</svg>
+<span class="clbl fragment" data-fragment-index="1" style="left:4%; top:71%;">P</span>
+<span class="gtag fragment" data-fragment-index="1" style="left:71%; top:58%;">OR</span>
+<span class="clbl accent1 fragment" data-fragment-index="1" style="left:95%; top:58%;">A</span>
+<span class="clbl fragment" data-fragment-index="2" style="left:4%; top:25%;">W</span>
+<span class="clbl fragment" data-fragment-index="2" style="left:4%; top:50%;">M</span>
+<span class="gtag fragment" data-fragment-index="2" style="left:31%; top:37%;">AND</span>
+</div>
+<p class="fragment smaller" data-fragment-index="2" style="color:#7a83a8; margin-top:4px; max-width:400px;">the OR is outside all brackets — so it went down first, at the output; the bracket became the AND that feeds it</p>
+</div>
+</div>
 
-<!-- ============ H7 CIRCUIT → EXPRESSION ============ -->
-<section class="lt" data-background-color="#F4F6FB">
-  <div class="bar" style="background:var(--accent1)"></div>
-  <div class="badges"><span class="bg bg-both">0478 ✓ · 9618 ✓</span></div>
-  <h2>Circuit → expression <span class="smaller" style="color:#7a83a8;">(reading in reverse)</span></h2>
-  <div class="two-col">
-    <div class="center">
-      <div class="circ" style="width:420px;">
-        <svg viewBox="0 0 360 110">
-          <line x1="26" y1="28" x2="104" y2="28" stroke="#222B5A" stroke-width="2.5"/>
-          <line x1="26" y1="56" x2="104" y2="56" stroke="#222B5A" stroke-width="2.5"/>
-          <g transform="translate(70,7)">
-            <path d="M20 8 Q32 35 20 62" fill="none" stroke="#222B5A" stroke-width="3"/>
-            <path d="M28 8 Q52 8 68 16 Q86 25 94 35 Q86 45 68 54 Q52 62 28 62 Q40 35 28 8 Z" fill="none" stroke="#222B5A" stroke-width="3"/>
-          </g>
-          <line x1="164" y1="42" x2="180" y2="42" stroke="#F0655B" stroke-width="2.5"/>
-          <line x1="180" y1="42" x2="180" y2="48" stroke="#F0655B" stroke-width="2.5"/>
-          <line x1="180" y1="48" x2="227" y2="48" stroke="#F0655B" stroke-width="2.5"/>
-          <line x1="26" y1="78" x2="227" y2="78" stroke="#222B5A" stroke-width="2.5"/>
-          <g transform="translate(195,28)">
-            <path d="M28 8 Q52 8 68 16 Q86 25 94 35 Q86 45 68 54 Q52 62 28 62 Q40 35 28 8 Z" fill="none" stroke="#222B5A" stroke-width="3"/>
-            <circle cx="101" cy="35" r="7" fill="none" stroke="#F0655B" stroke-width="3"/>
-          </g>
-          <line x1="303" y1="63" x2="336" y2="63" stroke="#222B5A" stroke-width="2.5"/>
-        </svg>
-        <span class="clbl" style="left:4%; top:25%;">A</span>
-        <span class="clbl" style="left:4%; top:51%;">B</span>
-        <span class="clbl" style="left:4%; top:71%;">C</span>
-        <span class="clbl accent1" style="left:96%; top:57%;">X</span>
-        <span class="gtag" style="left:33%; top:38%;">XOR</span>
-        <span class="gtag" style="left:70%; top:57%;">NOR</span>
-        <span class="clbl accent2 fragment" data-fragment-index="1" style="left:50%; top:33%;">P</span>
-      </div>
-      <p class="smaller" style="color:#7a83a8;">two gates, one intermediate wire</p>
-    </div>
-    <div style="font-size:.7em;">
-      <div class="rule"><strong class="accent1">The last gate is the middle of the sentence.</strong><br>
-      <span class="fragment" data-fragment-index="1">① The gate touching X is a NOR — so the answer already has its shape: <span class="mono">X = ( … ) NOR ( … )</span>, NOR in the middle.</span><br>
-      <span class="fragment" data-fragment-index="2">② Fill the blanks from the wires that feed it — name them: <span class="mono accent2">P = A XOR B</span>; the other is just <span class="mono">C</span>.</span><br>
-      <span class="fragment" data-fragment-index="3">③ Substitute: <strong class="mono">X = (A XOR B) NOR C</strong> — works on any circuit, however deep.</span></div>
-      <div class="fragment rule accent2"><strong>The bubble trap:</strong> <span class="mono">NOT (A AND B)</span> and <span class="mono">(NOT A) AND B</span> are <em>different circuits</em>. Where the bubble sits decides what gets flipped — the whole gate's output, or one input. Brackets are how you say which.</div>
-    </div>
-  </div>
+<div class="lanes"><div><b>📝 IN THE EXAM</b>Follow the supplied representation; NOT has one input, the other gates two.</div><div><b>🏛 IN REALITY</b>Equivalent Boolean functions may have different physical implementations.</div></div></section><section class="lt" data-background-color="#F4F6FB" id="circuit-expression"><div class="badges"><span class="bg bg-hole">IG + AS</span></div>
+<div class="bar" style="background:var(--accent1)"></div>
 
-</section>
+<h2>Circuit → expression <span class="smaller" style="color:#7a83a8;">(reading in reverse)</span></h2>
+<div class="two-col">
+<div class="center">
+<div class="circ" style="width:420px;">
+<svg viewBox="0 0 360 110">
+<line stroke="#222B5A" stroke-width="2.5" x1="26" x2="104" y1="28" y2="28"></line>
+<line stroke="#222B5A" stroke-width="2.5" x1="26" x2="104" y1="56" y2="56"></line>
+<g transform="translate(70,7)">
+<path d="M20 8 Q32 35 20 62" fill="none" stroke="#222B5A" stroke-width="3"></path>
+<path d="M28 8 Q52 8 68 16 Q86 25 94 35 Q86 45 68 54 Q52 62 28 62 Q40 35 28 8 Z" fill="none" stroke="#222B5A" stroke-width="3"></path>
+</g>
+<line stroke="#F0655B" stroke-width="2.5" x1="164" x2="180" y1="42" y2="42"></line>
+<line stroke="#F0655B" stroke-width="2.5" x1="180" x2="180" y1="42" y2="48"></line>
+<line stroke="#F0655B" stroke-width="2.5" x1="180" x2="227" y1="48" y2="48"></line>
+<line stroke="#222B5A" stroke-width="2.5" x1="26" x2="227" y1="78" y2="78"></line>
+<g transform="translate(195,28)">
+<path d="M28 8 Q52 8 68 16 Q86 25 94 35 Q86 45 68 54 Q52 62 28 62 Q40 35 28 8 Z" fill="none" stroke="#222B5A" stroke-width="3"></path>
+<circle cx="101" cy="35" fill="none" r="7" stroke="#F0655B" stroke-width="3"></circle>
+</g>
+<line stroke="#222B5A" stroke-width="2.5" x1="303" x2="336" y1="63" y2="63"></line>
+</svg>
+<span class="clbl" style="left:4%; top:25%;">A</span>
+<span class="clbl" style="left:4%; top:51%;">B</span>
+<span class="clbl" style="left:4%; top:71%;">C</span>
+<span class="clbl accent1" style="left:96%; top:57%;">X</span>
+<span class="gtag" style="left:33%; top:38%;">XOR</span>
+<span class="gtag" style="left:70%; top:57%;">NOR</span>
+<span class="clbl accent2 fragment" data-fragment-index="1" style="left:50%; top:33%;">P</span>
+</div>
+<p class="smaller" style="color:#7a83a8;">two gates, one intermediate wire</p>
+</div>
+<div style="font-size:.7em;">
+<div class="rule"><strong class="accent1">The output gate gives the outermost operation.</strong><br/>
+<span class="fragment" data-fragment-index="1">① The gate touching X is a NOR — so the answer already has its shape: <span class="mono">X = ( … ) NOR ( … )</span>, NOR combines the two incoming expressions.</span><br/>
+<span class="fragment" data-fragment-index="2">② Fill the blanks from the wires that feed it — name them: <span class="mono accent2">P = A XOR B</span>; the other is just <span class="mono">C</span>.</span><br/>
+<span class="fragment" data-fragment-index="3">③ Substitute: <strong class="mono">X = (A XOR B) NOR C</strong> — follow this process through the combinational circuit.</span></div>
+<div class="fragment rule accent2"><strong>The bubble trap:</strong> <span class="mono">NOT (A AND B)</span> and <span class="mono">(NOT A) AND B</span> are <em>different circuits</em>. Where the bubble sits decides what gets flipped — the whole gate's output, or one input. Brackets are how you say which.</div>
+</div>
+</div>
 
-<!-- ============ H8 ANYTHING → TRUTH TABLE ============ -->
-<section class="lt" data-background-color="#F4F6FB">
-  <div class="bar" style="background:var(--accent1)"></div>
-  <div class="badges"><span class="bg bg-both">0478 ✓ · 9618 ✓</span></div>
-  <h2>Anything → truth table <span class="smaller" style="color:#7a83a8;">(you own this)</span></h2>
-  <div class="two-col">
-    <div style="font-size:.7em;">
-      <div class="rule"><strong class="accent1">Last week's method, unchanged:</strong> 2ⁿ rows counted in binary · walk the gates left to right · final column = fingerprint.</div>
-      <div class="fragment rule accent3"><strong class="accent3">The one upgrade — working columns:</strong> give every named wire its own column. Mark schemes print a "working space" column <em>because examiners expect you to use it</em>. The intermediate column is not decoration; it's where part-marks live when a slip happens.</div>
-      <div class="fragment rule"><strong class="accent1">The alarm, fingerprinted →</strong> fires in 5 of 8 worlds. Silent only when panic is off AND the W·M pair isn't complete. The table <em>is</em> the sentence.</div>
-    </div>
-    <div class="center">
-      <table class="tt" style="margin:0 auto; font-size:.62em;">
-        <tr><th>W</th><th>M</th><th>P</th><th>W AND M</th><th>A</th></tr>
-        <tr><td>0</td><td>0</td><td>0</td><td class="fragment" data-fragment-index="1">0</td><td class="fragment" data-fragment-index="2">0</td></tr>
-        <tr><td>0</td><td>0</td><td>1</td><td class="fragment" data-fragment-index="1">0</td><td class="fragment hit" data-fragment-index="2">1</td></tr>
-        <tr><td>0</td><td>1</td><td>0</td><td class="fragment" data-fragment-index="1">0</td><td class="fragment" data-fragment-index="2">0</td></tr>
-        <tr><td>0</td><td>1</td><td>1</td><td class="fragment" data-fragment-index="1">0</td><td class="fragment hit" data-fragment-index="2">1</td></tr>
-        <tr><td>1</td><td>0</td><td>0</td><td class="fragment" data-fragment-index="1">0</td><td class="fragment" data-fragment-index="2">0</td></tr>
-        <tr><td>1</td><td>0</td><td>1</td><td class="fragment" data-fragment-index="1">0</td><td class="fragment hit" data-fragment-index="2">1</td></tr>
-        <tr><td>1</td><td>1</td><td>0</td><td class="fragment" data-fragment-index="1">1</td><td class="fragment hit" data-fragment-index="2">1</td></tr>
-        <tr><td>1</td><td>1</td><td>1</td><td class="fragment" data-fragment-index="1">1</td><td class="fragment hit" data-fragment-index="2">1</td></tr>
-      </table>
-    </div>
-  </div>
+<div class="lanes"><div><b>📝 IN THE EXAM</b>Follow the supplied representation; NOT has one input, the other gates two.</div><div><b>🏛 IN REALITY</b>Equivalent Boolean functions may have different physical implementations.</div></div></section><section class="lt" data-background-color="#F4F6FB" id="forward-table"><div class="badges"><span class="bg bg-hole">IG + AS</span></div>
+<div class="bar" style="background:var(--accent1)"></div>
 
-</section>
+<h2>Anything → truth table <span class="smaller" style="color:#7a83a8;">(you own this)</span></h2>
+<div class="two-col">
+<div style="font-size:.7em;">
+<div class="rule"><strong class="accent1">Last week's method, unchanged:</strong> 2ⁿ rows counted in binary · walk the gates left to right · final column = fingerprint.</div>
+<div class="fragment rule accent3"><b>Working columns help you trace accurately.</b> They do not automatically earn marks. Use the question’s scheme: the anchors later score the final output column in specified groups.</div>
+<div class="fragment rule"><strong class="accent1">The alarm, fingerprinted →</strong> fires in 5 of 8 worlds. Silent only when panic is off AND the W·M pair isn't complete. The table <em>is</em> the sentence.</div>
+</div>
+<div class="center">
+<table class="tt" style="margin:0 auto; font-size:.62em;">
+<tr><th>W</th><th>M</th><th>P</th><th>W AND M</th><th>A</th></tr>
+<tr><td>0</td><td>0</td><td>0</td><td class="fragment" data-fragment-index="1">0</td><td class="fragment" data-fragment-index="2">0</td></tr>
+<tr><td>0</td><td>0</td><td>1</td><td class="fragment" data-fragment-index="1">0</td><td class="fragment hit" data-fragment-index="2">1</td></tr>
+<tr><td>0</td><td>1</td><td>0</td><td class="fragment" data-fragment-index="1">0</td><td class="fragment" data-fragment-index="2">0</td></tr>
+<tr><td>0</td><td>1</td><td>1</td><td class="fragment" data-fragment-index="1">0</td><td class="fragment hit" data-fragment-index="2">1</td></tr>
+<tr><td>1</td><td>0</td><td>0</td><td class="fragment" data-fragment-index="1">0</td><td class="fragment" data-fragment-index="2">0</td></tr>
+<tr><td>1</td><td>0</td><td>1</td><td class="fragment" data-fragment-index="1">0</td><td class="fragment hit" data-fragment-index="2">1</td></tr>
+<tr><td>1</td><td>1</td><td>0</td><td class="fragment" data-fragment-index="1">1</td><td class="fragment hit" data-fragment-index="2">1</td></tr>
+<tr><td>1</td><td>1</td><td>1</td><td class="fragment" data-fragment-index="1">1</td><td class="fragment hit" data-fragment-index="2">1</td></tr>
+</table>
+</div>
+</div>
 
-<!-- ============ H9 BACKWARD: TABLE → CIRCUIT (+ pro hole) ============ -->
-<section>
-  <section class="lt" data-background-color="#F4F6FB">
-    <div class="bar" style="background:var(--accent2)"></div>
-    <div class="badges"><span class="bg bg-both">0478 ✓ · 9618 ✓</span></div>
-    <h2>Working backward: table → circuit</h2>
-    <div class="two-col">
-      <div style="font-size:.7em;">
-        <p>Someone hands you <em>only a fingerprint</em> and demands the circuit:</p>
-        <table class="tt" style="font-size:.85em;">
-          <tr><th>A</th><th>B</th><th>F</th></tr>
-          <tr><td>0</td><td>0</td><td class="hit">1</td></tr>
-          <tr><td>0</td><td>1</td><td>0</td></tr>
-          <tr><td>1</td><td>0</td><td>0</td></tr>
-          <tr><td>1</td><td>1</td><td class="hit">1</td></tr>
-        </table>
-        <div class="fragment rule" style="margin-top:10px;"><strong class="accent1">The recipe:</strong><br>
-        ① Find every row where the output is <strong>1</strong>.<br>
-        ② Describe each such row with ANDs — put a NOT on every input showing 0.<br>
+<div class="lanes"><div><b>📝 IN THE EXAM</b>Follow the supplied representation; NOT has one input, the other gates two.</div><div><b>🏛 IN REALITY</b>Equivalent Boolean functions may have different physical implementations.</div></div></section><section><section class="lt" data-background-color="#F4F6FB" id="backward"><div class="badges"><span class="bg bg-hole">IG + AS</span></div>
+<div class="bar" style="background:var(--accent2)"></div>
+
+<h2>Working backward: table → circuit</h2>
+<div class="two-col">
+<div style="font-size:.7em;">
+<p>Someone hands you <em>only a fingerprint</em> and demands the circuit:</p>
+<table class="tt" style="font-size:.85em;">
+<tr><th>A</th><th>B</th><th>F</th></tr>
+<tr><td>0</td><td>0</td><td class="hit">1</td></tr>
+<tr><td>0</td><td>1</td><td>0</td></tr>
+<tr><td>1</td><td>0</td><td>0</td></tr>
+<tr><td>1</td><td>1</td><td class="hit">1</td></tr>
+</table>
+<div class="fragment rule" style="margin-top:10px;"><strong class="accent1">The recipe:</strong><br/>
+        ① Find every row where the output is <strong>1</strong>.<br/>
+        ② Describe each such row with ANDs — put a NOT on every input showing 0.<br/>
         ③ OR the row-descriptions together. Done.</div>
-      </div>
-      <div style="font-size:.7em;">
-        <div class="fragment card">
-          Row <span class="mono">0 0 → 1</span>: &nbsp;<span class="mono accent1">(NOT A) AND (NOT B)</span><br>
-          Row <span class="mono">1 1 → 1</span>: &nbsp;<span class="mono accent1">A AND B</span><br><br>
-          <strong class="mono">F = ((NOT A) AND (NOT B)) OR (A AND B)</strong><br>
-          <span style="color:#7a83a8;">— "both off, or both on": you just built an <em>equality detector</em>, XOR's twin.</span>
-        </div>
-        <div class="fragment rule accent2"><strong>The theorem you just used:</strong> any truth table you can dream up — any behaviour at all — has a circuit. <strong>A circuit always exists.</strong> This is why the four languages are really one language.</div>
-        <div class="fragment rule accent3"><strong class="accent3">But count the 1s first — the small-table shortcut:</strong> <span class="mono">two 1s</span> → XOR · <span class="mono">one 1</span> → AND (1 sits at row 1 1) or NOR (at 0 0) · <span class="mono">three 1s</span> → OR or NAND (find the lone 0). <em>This</em> table has two 1s — but in XOR's <strong>wrong seats</strong> (0 0 and 1 1). None of the six fit. That's how you know it's recipe time.</div>
-      </div>
-    </div>
-    <div class="dig">⬇ the pro's version 🕳️</div>
+</div>
+<div style="font-size:.7em;">
+<div class="fragment card">
+          Row <span class="mono">0 0 → 1</span>:  <span class="mono accent1">(NOT A) AND (NOT B)</span><br/>
+          Row <span class="mono">1 1 → 1</span>:  <span class="mono accent1">A AND B</span><br/><br/>
+<strong class="mono">F = ((NOT A) AND (NOT B)) OR (A AND B)</strong><br/>
+<span style="color:#7a83a8;">— "both off, or both on": you just built an <em>equality detector</em>, XOR's twin.</span>
+</div>
+<div class="fragment rule accent2"><b>For any finite Boolean table, a circuit exists.</b> If every row is 0, a constant-zero function such as A AND NOT A handles that case. This claim concerns combinational Boolean functions, not arbitrary physical behaviour.</div>
+<div class="fragment rule accent3"><b>Match positions, not just the count of 1s.</b> XOR is 0110; this table is 1001. A table such as 0011 also has two 1s but simply outputs A. If no listed gate fits, use the row-building recipe.</div>
+</div>
+</div>
+<div class="dig">⬇ the pro's version 🕳️</div>
 
-</section>
-  <section class="lt" data-background-color="#F4F6FB">
-    <div class="bar" style="background:var(--accent3)"></div>
-    <div class="badges"><span class="bg bg-hole">🕳️ A2 preview · 9618 §15.2</span></div>
-    <h2>The pro's version</h2>
-    <div class="two-col" style="font-size:.68em;">
-      <div class="card"><strong class="accent2">The recipe is honest but bloated.</strong><br>Read the burglar alarm backward off its table and you describe all <strong>five</strong> firing rows: five 3-input ANDs, a 5-input OR, plus NOTs — <strong>a dozen-plus gates</strong> for the alarm we built this hour with <strong>two</strong>.</div>
-      <div class="card"><strong class="accent1">There is an algebra that dismantles the bloat.</strong><br>One glimpse: <span class="mono">(W·M·P) OR (W·M·NOT P)</span> — two terms differing in exactly one letter — merge into <span class="mono">W·M</span>, and the letter <em>vanishes</em>. Rule by rule, twelve gates collapse back to two. There's even a visual tool that does it by eye.</div>
-    </div>
-    <div class="rule" style="margin-top:14px;"><strong class="accent3">That algebra — and the tool — is A2 material (9618 §15.2).</strong> For now, know this: the recipe guarantees a circuit <em>exists</em>; the algebra makes it <em>cheap</em>. The door closes here. 🚪</div>
+<div class="lanes"><div><b>📝 IN THE EXAM</b>Follow the supplied representation; NOT has one input, the other gates two.</div><div><b>🏛 IN REALITY</b>Equivalent Boolean functions may have different physical implementations.</div></div></section><section class="lt" data-background-color="#F4F6FB" data-hole="true" id="simplification"><div class="badges"><span class="bg bg-hole">↓ SHARED · ENRICHMENT</span></div>
+<div class="bar" style="background:var(--accent3)"></div>
 
-</section>
-</section>
+<h2>The pro's version</h2>
+<div class="two-col" style="font-size:.68em;">
+<div class="card"><b>The row-by-row construction can be long.</b> The alarm has five output-1 rows. Each three-signal AND term needs two two-input AND gates; combining five terms needs four two-input OR gates, plus input inversion.</div>
+<div class="card"><strong class="accent1">There is an algebra that dismantles the bloat.</strong><br/>One glimpse: <span class="mono">(W·M·P) OR (W·M·NOT P)</span> — two terms differing in exactly one letter — merge into <span class="mono">W·M</span>, and the letter <em>vanishes</em>. Rule by rule, the longer construction can be replaced by two gates. There's even a visual tool that does it by eye.</div>
+</div>
+<div class="rule" style="margin-top:14px;"><b>Optional A2 preview:</b> algebra and Karnaugh maps can reduce a construction’s gate count. Physical cost also depends on the cells and wiring. In AS/IG questions, follow the supplied structure; this is not an extra simplification requirement.</div>
 
-<!-- ============ H10 🎮 CIRCUIT FORGE ============ -->
-<section class="lt" data-background-color="#F4F6FB">
-  <div class="bar" style="background:var(--accent3)"></div>
-  <div class="badges"><span class="bg bg-both">0478 ✓ · 9618 ✓</span></div>
-  <h2 style="margin-bottom:6px;">🎮 Circuit Forge</h2>
-  <div style="display:flex; flex-direction:column; gap:8px; align-items:center;">
-    <span class="g-navwrap"><button id="fg-back" class="g-skip" title="back to the previous question">&larr; back</button><button id="fg-skip" class="g-skip" title="on to the next question, answered or not">next &rarr;</button></span><div class="mg-stage" id="fg-stage">Stage 1</div>
-    <div class="mg-prog" id="fg-prog"></div>
-    <div style="display:flex; gap:26px; align-items:flex-start;">
-      <div>
-        <!-- panel A2 -->
-        <div class="circ" id="fgp-a2" style="width:300px; display:none;">
-          <svg viewBox="0 0 340 110">
-            <line x1="30" y1="35" x2="120" y2="35" stroke="#222B5A" stroke-width="2.5"/>
-            <line x1="30" y1="73" x2="120" y2="73" stroke="#222B5A" stroke-width="2.5"/>
-            <line x1="196" y1="54" x2="240" y2="54" stroke="#222B5A" stroke-width="2.5"/>
-          </svg>
-          <span class="clbl" style="left:5%; top:32%;">A</span>
-          <span class="clbl" style="left:5%; top:66%;">B</span>
-          <span class="clbl accent1" style="left:76%; top:49%;">X</span>
-          <div class="fg-slot" data-slot="0" style="left:35%; top:25%;">?</div>
-        </div>
-        <!-- panel B3 -->
-        <div class="circ" id="fgp-b3" style="width:340px; display:none;">
-          <svg viewBox="0 0 340 190">
-            <line x1="30" y1="42" x2="90" y2="42" stroke="#222B5A" stroke-width="2.5"/>
-            <line x1="30" y1="68" x2="90" y2="68" stroke="#222B5A" stroke-width="2.5"/>
-            <line x1="166" y1="55" x2="195" y2="55" stroke="#222B5A" stroke-width="2.5"/>
-            <line x1="195" y1="55" x2="195" y2="84" stroke="#222B5A" stroke-width="2.5"/>
-            <line x1="195" y1="84" x2="210" y2="84" stroke="#222B5A" stroke-width="2.5"/>
-            <line x1="30" y1="110" x2="210" y2="110" stroke="#222B5A" stroke-width="2.5"/>
-            <line x1="286" y1="97" x2="322" y2="97" stroke="#222B5A" stroke-width="2.5"/>
-          </svg>
-          <span class="clbl" id="fgb3-l1" style="left:5%; top:22%;">A</span>
-          <span class="clbl" id="fgb3-l2" style="left:5%; top:36%;">B</span>
-          <span class="clbl" id="fgb3-l3" style="left:5%; top:58%;">C</span>
-          <span class="clbl accent1" id="fgb3-lo" style="left:97%; top:51%;">X</span>
-          <div class="fg-slot" data-slot="0" style="left:26.5%; top:15%;">?</div>
-          <div class="fg-slot" data-slot="1" style="left:61.7%; top:37%;">?</div>
-        </div>
-        <!-- panel HA -->
-        <div class="circ" id="fgp-ha" style="width:340px; display:none;">
-          <svg viewBox="0 0 340 190">
-            <line x1="30" y1="34" x2="150" y2="34" stroke="#222B5A" stroke-width="2.5"/>
-            <circle cx="62" cy="34" r="4" fill="#222B5A"/>
-            <line x1="62" y1="34" x2="62" y2="124" stroke="#222B5A" stroke-width="2.5"/>
-            <line x1="62" y1="124" x2="150" y2="124" stroke="#222B5A" stroke-width="2.5"/>
-            <line x1="30" y1="58" x2="150" y2="58" stroke="#222B5A" stroke-width="2.5"/>
-            <circle cx="86" cy="58" r="4" fill="#222B5A"/>
-            <line x1="86" y1="58" x2="86" y2="148" stroke="#222B5A" stroke-width="2.5"/>
-            <line x1="86" y1="148" x2="150" y2="148" stroke="#222B5A" stroke-width="2.5"/>
-            <line x1="226" y1="47" x2="262" y2="47" stroke="#222B5A" stroke-width="2.5"/>
-            <line x1="226" y1="137" x2="262" y2="137" stroke="#222B5A" stroke-width="2.5"/>
-          </svg>
-          <span class="clbl" style="left:5%; top:18%;">A</span>
-          <span class="clbl" style="left:5%; top:30%;">B</span>
-          <span class="clbl accent1" style="left:88%; top:25%;">Sum</span>
-          <span class="clbl accent1" style="left:88%; top:72%;">Carry</span>
-          <div class="fg-slot" data-slot="0" style="left:44%; top:11%;">?</div>
-          <div class="fg-slot" data-slot="1" style="left:44%; top:58%;">?</div>
-        </div>
-        <div class="mg-status" id="fg-status" style="margin-top:8px;">&nbsp;</div>
-        <div style="display:flex; gap:10px; justify-content:center; margin-top:2px;">
-          <button class="mg-btn" id="fg-new">↻ new game</button>
-        </div>
-      </div>
-      <div style="width:400px;">
-        <div class="fg-spec" id="fg-spec"></div>
-        <div id="fg-table" style="margin-top:8px; text-align:center;"></div>
-        <div id="fg-pal" style="display:flex; gap:8px; flex-wrap:wrap; margin-top:10px; justify-content:center;"></div>
-        <div id="fg-opts" style="display:none; flex-direction:column; gap:8px; margin-top:10px;"></div>
-      </div>
-    </div>
-  </div>
+<div class="lanes"><div><b>📝 IN THE EXAM</b>Enrichment for both groups; it is not a required AS/IG method.</div><div><b>🏛 IN REALITY</b>Use the stated model; device delays and implementation details still matter.</div></div></section></section><section class="lt" data-background-color="#F4F6FB" id="forge"><div class="badges"><span class="bg bg-hole">IG + AS</span></div>
+<div class="bar" style="background:var(--accent3)"></div>
 
-</section>
+<h2 style="margin-bottom:6px;">🎮 Circuit Forge</h2>
+<div style="display:flex; flex-direction:column; gap:8px; align-items:center;">
+<span class="g-navwrap"><button class="g-skip" id="fg-back" title="back to the previous question">← back</button><button class="g-skip" id="fg-skip" title="on to the next question, answered or not">next →</button></span><div class="mg-stage" id="fg-stage">Stage 1</div>
+<div class="mg-prog" id="fg-prog"></div>
+<div style="display:flex; gap:26px; align-items:flex-start;">
+<div>
+<!-- panel A2 -->
+<div class="circ" id="fgp-a2" style="width:300px; display:none;">
+<svg viewBox="0 0 340 110">
+<line stroke="#222B5A" stroke-width="2.5" x1="30" x2="120" y1="35" y2="35"></line>
+<line stroke="#222B5A" stroke-width="2.5" x1="30" x2="120" y1="73" y2="73"></line>
+<line stroke="#222B5A" stroke-width="2.5" x1="196" x2="240" y1="54" y2="54"></line>
+</svg>
+<span class="clbl" style="left:5%; top:32%;">A</span>
+<span class="clbl" style="left:5%; top:66%;">B</span>
+<span class="clbl accent1" style="left:76%; top:49%;">X</span>
+<div class="fg-slot" data-slot="0" style="left:35%; top:25%;">?</div>
+</div>
+<!-- panel B3 -->
+<div class="circ" id="fgp-b3" style="width:340px; display:none;">
+<svg viewBox="0 0 340 190">
+<line stroke="#222B5A" stroke-width="2.5" x1="30" x2="90" y1="42" y2="42"></line>
+<line stroke="#222B5A" stroke-width="2.5" x1="30" x2="90" y1="68" y2="68"></line>
+<line stroke="#222B5A" stroke-width="2.5" x1="166" x2="195" y1="55" y2="55"></line>
+<line stroke="#222B5A" stroke-width="2.5" x1="195" x2="195" y1="55" y2="84"></line>
+<line stroke="#222B5A" stroke-width="2.5" x1="195" x2="210" y1="84" y2="84"></line>
+<line stroke="#222B5A" stroke-width="2.5" x1="30" x2="210" y1="110" y2="110"></line>
+<line stroke="#222B5A" stroke-width="2.5" x1="286" x2="322" y1="97" y2="97"></line>
+</svg>
+<span class="clbl" id="fgb3-l1" style="left:5%; top:22%;">A</span>
+<span class="clbl" id="fgb3-l2" style="left:5%; top:36%;">B</span>
+<span class="clbl" id="fgb3-l3" style="left:5%; top:58%;">C</span>
+<span class="clbl accent1" id="fgb3-lo" style="left:97%; top:51%;">X</span>
+<div class="fg-slot" data-slot="0" style="left:26.5%; top:15%;">?</div>
+<div class="fg-slot" data-slot="1" style="left:61.7%; top:37%;">?</div>
+</div>
+<!-- panel HA -->
+<div class="circ" id="fgp-ha" style="width:340px; display:none;">
+<svg viewBox="0 0 340 190">
+<line stroke="#222B5A" stroke-width="2.5" x1="30" x2="150" y1="34" y2="34"></line>
+<circle cx="62" cy="34" fill="#222B5A" r="4"></circle>
+<line stroke="#222B5A" stroke-width="2.5" x1="62" x2="62" y1="34" y2="124"></line>
+<line stroke="#222B5A" stroke-width="2.5" x1="62" x2="150" y1="124" y2="124"></line>
+<line stroke="#222B5A" stroke-width="2.5" x1="30" x2="150" y1="58" y2="58"></line>
+<circle cx="86" cy="58" fill="#222B5A" r="4"></circle>
+<line stroke="#222B5A" stroke-width="2.5" x1="86" x2="86" y1="58" y2="148"></line>
+<line stroke="#222B5A" stroke-width="2.5" x1="86" x2="150" y1="148" y2="148"></line>
+<line stroke="#222B5A" stroke-width="2.5" x1="226" x2="262" y1="47" y2="47"></line>
+<line stroke="#222B5A" stroke-width="2.5" x1="226" x2="262" y1="137" y2="137"></line>
+</svg>
+<span class="clbl" style="left:5%; top:18%;">A</span>
+<span class="clbl" style="left:5%; top:30%;">B</span>
+<span class="clbl accent1" style="left:88%; top:25%;">Sum</span>
+<span class="clbl accent1" style="left:88%; top:72%;">Carry</span>
+<div class="fg-slot" data-slot="0" style="left:44%; top:11%;">?</div>
+<div class="fg-slot" data-slot="1" style="left:44%; top:58%;">?</div>
+</div>
+<div class="mg-status" id="fg-status" style="margin-top:8px;"> </div>
+<div style="display:flex; gap:10px; justify-content:center; margin-top:2px;">
+<button class="mg-btn" id="fg-new">↻ new game</button>
+</div>
+</div>
+<div style="width:400px;">
+<div class="fg-spec" id="fg-spec"></div>
+<div id="fg-table" style="margin-top:8px; text-align:center;"></div>
+<div id="fg-pal" style="display:flex; gap:8px; flex-wrap:wrap; margin-top:10px; justify-content:center;"></div>
+<div id="fg-opts" style="display:none; flex-direction:column; gap:8px; margin-top:10px;"></div>
+</div>
+</div>
+</div>
 
-<!-- ============ H11 TWO GATES JUST DID ARITHMETIC (+ ripple hole) ============ -->
-<section>
-  <section class="lt" data-background-color="#F4F6FB">
-    <div class="bar" style="background:var(--accent2)"></div>
-    <div class="badges"><span class="bg bg-hole">🕳️ A2 preview · 9618 §15.2</span></div>
-    <h2>Two gates just did arithmetic</h2>
-    <div class="two-col">
-      <div class="center">
-        <div class="circ" style="width:360px;">
-          <svg viewBox="0 0 340 190">
-            <line x1="30" y1="34" x2="150" y2="34" stroke="#222B5A" stroke-width="2.5"/>
-            <circle cx="62" cy="34" r="4" fill="#222B5A"/>
-            <line x1="62" y1="34" x2="62" y2="124" stroke="#222B5A" stroke-width="2.5"/>
-            <line x1="62" y1="124" x2="150" y2="124" stroke="#222B5A" stroke-width="2.5"/>
-            <line x1="30" y1="58" x2="150" y2="58" stroke="#222B5A" stroke-width="2.5"/>
-            <circle cx="86" cy="58" r="4" fill="#222B5A"/>
-            <line x1="86" y1="58" x2="86" y2="148" stroke="#222B5A" stroke-width="2.5"/>
-            <line x1="86" y1="148" x2="150" y2="148" stroke="#222B5A" stroke-width="2.5"/>
-            <g transform="translate(120,11)">
-              <path d="M20 8 Q32 35 20 62" fill="none" stroke="#222B5A" stroke-width="3"/>
-              <path d="M28 8 Q52 8 68 16 Q86 25 94 35 Q86 45 68 54 Q52 62 28 62 Q40 35 28 8 Z" fill="none" stroke="#222B5A" stroke-width="3"/>
-            </g>
-            <g transform="translate(120,101)">
-              <path d="M30 8 H62 A27 27 0 0 1 62 62 H30 Z" fill="none" stroke="#222B5A" stroke-width="3"/>
-            </g>
-            <line x1="214" y1="46" x2="262" y2="46" stroke="#222B5A" stroke-width="2.5"/>
-            <line x1="209" y1="136" x2="262" y2="136" stroke="#222B5A" stroke-width="2.5"/>
-          </svg>
-          <span class="clbl" style="left:5%; top:18%;">A</span>
-          <span class="clbl" style="left:5%; top:30%;">B</span>
-          <span class="gtag" style="left:49%; top:24%;">XOR</span>
-          <span class="gtag" style="left:49%; top:71%;">AND</span>
-          <span class="clbl accent1" style="left:88%; top:24%;">Sum</span>
-          <span class="clbl accent1" style="left:89%; top:71%;">Carry</span>
-        </div>
-        <p class="smaller" style="color:#7a83a8;">the machine you just forged — it has a name: the <strong>half adder</strong></p>
-      </div>
-      <div style="font-size:.7em;">
-        <div class="rule"><strong class="accent1">The plant pays.</strong> Last week, a hole ended with: "1⊕1 = 0… which is what you <em>write</em> for 1+1. Hold that thought." You held it for a week. <strong>XOR writes the sum. AND raises the carry.</strong> Binary addition — the thing from U2 — <em>is these two gates</em>.</div>
-        <div class="fragment rule accent3"><strong class="accent3">And it scales.</strong> Give it one upgrade (a carry-<em>in</em>, so columns can chain) and copies of this circuit add numbers of any width. Your calculator, your phone, the machine showing this slide — adding by pure logic, billions of times a second.</div>
-        <div class="fragment rule accent2"><strong>The week's arc closes:</strong> physics forced two symbols (U3a) → two symbols made gates → gates make arithmetic. A computer doesn't do maths <em>despite</em> being made of logic. <strong>Arithmetic IS logic.</strong></div>
-      </div>
-    </div>
-    <div class="dig">⬇ watch the carry ripple 🕳️</div>
+<p class="source" id="forge-scope">Shared translation practice. The final two-output addition stage is enrichment for both groups.</p><div class="lanes"><div><b>📝 IN THE EXAM</b>Core stages practise translations; the two-output finale is enrichment.</div><div><b>🏛 IN REALITY</b>Matching the table establishes the function for the tested Boolean inputs.</div></div></section><section><section class="lt" data-background-color="#F4F6FB" id="half-adder"><div class="badges"><span class="bg bg-hole">SHARED · ENRICHMENT</span></div>
+<div class="bar" style="background:var(--accent2)"></div>
 
-</section>
-  <section class="lt" data-background-color="#F4F6FB">
-    <div class="bar" style="background:var(--accent3)"></div>
-    <div class="badges"><span class="bg bg-hole">🕳️ A2 preview</span></div>
-    <h2>Watch the carry ripple</h2>
-    <div class="center" style="font-size:.7em; margin:14px 0;">
-      <div style="display:inline-flex; gap:10px; align-items:center;">
-        <div class="card center" style="padding:10px 14px;"><span class="mono">FA</span><br><span style="font-size:.7em; color:#7a83a8;">bit 3</span></div>
-        <span class="accent2" style="font-size:1.2em;">←</span>
-        <div class="card center" style="padding:10px 14px;"><span class="mono">FA</span><br><span style="font-size:.7em; color:#7a83a8;">bit 2</span></div>
-        <span class="accent2" style="font-size:1.2em;">←</span>
-        <div class="card center" style="padding:10px 14px;"><span class="mono">FA</span><br><span style="font-size:.7em; color:#7a83a8;">bit 1</span></div>
-        <span class="accent2" style="font-size:1.2em;">←</span>
-        <div class="card center" style="padding:10px 14px;"><span class="mono">HA</span><br><span style="font-size:.7em; color:#7a83a8;">bit 0</span></div>
-      </div>
-      <p style="font-size:.85em; color:#7a83a8; margin-top:8px;">each stage's carry-out feeds the next stage's carry-in — the red arrows are one wire each</p>
-    </div>
-    <div class="two-col" style="font-size:.68em;">
-      <div class="card"><strong class="accent1">Try 0111 + 0001 in your head.</strong> Bit 0: 1+1 = write 0, carry 1. Bit 1: 1+0+carry = write 0, carry 1. Bit 2: same again. Bit 3: 0+0+carry = 1. Answer 1000 — the carry <strong>swept left like 0999+1 → 1000</strong>. That sweep is a real electrical wave crossing the chip.</div>
-      <div class="card"><strong class="accent2">A promise for a few weeks from now:</strong> when negative numbers arrive, <em>this exact circuit</em> will do subtraction too — no new hardware, one small trick at the inputs. (No, really. Hold this thought like you held the last one.)</div>
-    </div>
+<h2>Two gates just did arithmetic</h2>
+<div class="two-col">
+<div class="center">
+<div class="circ" style="width:360px;">
+<svg viewBox="0 0 340 190">
+<line stroke="#222B5A" stroke-width="2.5" x1="30" x2="150" y1="34" y2="34"></line>
+<circle cx="62" cy="34" fill="#222B5A" r="4"></circle>
+<line stroke="#222B5A" stroke-width="2.5" x1="62" x2="62" y1="34" y2="124"></line>
+<line stroke="#222B5A" stroke-width="2.5" x1="62" x2="150" y1="124" y2="124"></line>
+<line stroke="#222B5A" stroke-width="2.5" x1="30" x2="150" y1="58" y2="58"></line>
+<circle cx="86" cy="58" fill="#222B5A" r="4"></circle>
+<line stroke="#222B5A" stroke-width="2.5" x1="86" x2="86" y1="58" y2="148"></line>
+<line stroke="#222B5A" stroke-width="2.5" x1="86" x2="150" y1="148" y2="148"></line>
+<g transform="translate(120,11)">
+<path d="M20 8 Q32 35 20 62" fill="none" stroke="#222B5A" stroke-width="3"></path>
+<path d="M28 8 Q52 8 68 16 Q86 25 94 35 Q86 45 68 54 Q52 62 28 62 Q40 35 28 8 Z" fill="none" stroke="#222B5A" stroke-width="3"></path>
+</g>
+<g transform="translate(120,101)">
+<path d="M30 8 H62 A27 27 0 0 1 62 62 H30 Z" fill="none" stroke="#222B5A" stroke-width="3"></path>
+</g>
+<line stroke="#222B5A" stroke-width="2.5" x1="214" x2="262" y1="46" y2="46"></line>
+<line stroke="#222B5A" stroke-width="2.5" x1="209" x2="262" y1="136" y2="136"></line>
+</svg>
+<span class="clbl" style="left:5%; top:18%;">A</span>
+<span class="clbl" style="left:5%; top:30%;">B</span>
+<span class="gtag" style="left:49%; top:24%;">XOR</span>
+<span class="gtag" style="left:49%; top:71%;">AND</span>
+<span class="clbl accent1" style="left:88%; top:24%;">Sum</span>
+<span class="clbl accent1" style="left:89%; top:71%;">Carry</span>
+</div>
+<p class="smaller" style="color:#7a83a8;">the machine you just forged — it has a name: the <strong>half adder</strong></p>
+</div>
+<div style="font-size:.7em;">
+<div class="rule"><strong class="accent1">The plant pays.</strong> Last week, a hole ended with: "1⊕1 = 0… which is what you <em>write</em> for 1+1. Hold that thought." You held it for a week. <strong>XOR writes the sum. AND raises the carry.</strong> Binary addition — the thing from U2 — <em>is these two gates</em>.</div>
+<div class="fragment rule accent3"><strong class="accent3">And it scales.</strong> Give it one upgrade (a carry-<em>in</em>, so columns can chain) and copies of this circuit add numbers of any width. Your calculator, your phone, the machine showing this slide — adding by pure logic, billions of times a second.</div>
+<div class="fragment rule accent2"><strong>The week's arc closes:</strong> two signal ranges made binary convenient (U3a) → two symbols made gates → gates make arithmetic. A computer doesn't do maths <em>despite</em> being made of logic. <strong>Arithmetic IS logic.</strong></div>
+</div>
+</div>
+<div class="dig">⬇ watch the carry ripple 🕳️</div>
 
-</section>
-</section>
+<div class="lanes"><div><b>📝 IN THE EXAM</b>Enrichment for both groups; it is not a required AS/IG method.</div><div><b>🏛 IN REALITY</b>Use the stated model; device delays and implementation details still matter.</div></div></section><section class="lt" data-background-color="#F4F6FB" data-hole="true" id="ripple"><div class="badges"><span class="bg bg-hole">↓ SHARED · ENRICHMENT</span></div>
+<div class="bar" style="background:var(--accent3)"></div>
 
-<!-- ============ H12 DRILL ============ -->
-<section class="lt" data-background-color="#F4F6FB">
-  <div class="bar" style="background:var(--accent2)"></div>
-  <div class="badges"><span class="bg bg-both">0478 ✓ · 9618 ✓</span></div>
-  <h2>Drill — exam wording, exam speed</h2>
-  <div class="three-col" style="font-size:.64em;">
-    <div class="card"><strong>1. English → expression.</strong><br>"The heater <span class="mono">H</span> turns on if the temperature is low (<span class="mono">L</span>) and the window is not open (<span class="mono">W</span>)."<br><br>
-    <span class="fragment mono accent1">H = L AND (NOT W)</span></div>
-    <div class="card"><strong>2. Circuit → expression.</strong><br>
-      <div class="circ" style="width:220px; margin:6px auto;">
-        <svg viewBox="0 0 340 190">
-          <line x1="30" y1="42" x2="90" y2="42" stroke="#222B5A" stroke-width="3"/>
-          <line x1="30" y1="68" x2="90" y2="68" stroke="#222B5A" stroke-width="3"/>
-          <g transform="translate(60,20)">
-            <path d="M28 8 Q52 8 68 16 Q86 25 94 35 Q86 45 68 54 Q52 62 28 62 Q40 35 28 8 Z" fill="none" stroke="#222B5A" stroke-width="3"/>
-            <circle cx="101" cy="35" r="7" fill="none" stroke="#F0655B" stroke-width="3"/>
-          </g>
-          <line x1="168" y1="55" x2="195" y2="55" stroke="#222B5A" stroke-width="3"/>
-          <line x1="195" y1="55" x2="195" y2="84" stroke="#222B5A" stroke-width="3"/>
-          <line x1="195" y1="84" x2="210" y2="84" stroke="#222B5A" stroke-width="3"/>
-          <line x1="30" y1="110" x2="210" y2="110" stroke="#222B5A" stroke-width="3"/>
-          <g transform="translate(180,62)">
-            <path d="M30 8 H62 A27 27 0 0 1 62 62 H30 Z" fill="none" stroke="#222B5A" stroke-width="3"/>
-          </g>
-          <line x1="269" y1="97" x2="310" y2="97" stroke="#222B5A" stroke-width="3"/>
-        </svg>
-        <span class="clbl" style="left:5%; top:19%;">A</span>
-        <span class="clbl" style="left:5%; top:33%;">B</span>
-        <span class="clbl" style="left:5%; top:55%;">C</span>
-        <span class="clbl accent1" style="left:95%; top:49%;">X</span>
-      </div>
-    <span class="fragment mono accent1">X = (A NOR B) AND C</span></div>
-    <div class="card"><strong>3. Table → expression (backward).</strong><br>A 2-input circuit outputs 1 in exactly one row: <span class="mono">A=1, B=0</span>. Write its expression.<br><br>
-    <span class="fragment mono accent1">X = A AND (NOT B)</span><br>
-    <span class="fragment" style="color:#7a83a8;">one 1-row = one AND term — the H9 recipe at its smallest</span></div>
-  </div>
-  <div class="fragment rule accent2" style="margin-top:12px;"><strong>Habit check:</strong> brackets explicit · bubbles read as whole-gate flips · every branch gets its junction dot · working columns in every table.</div>
+<h2>Watch the carry ripple</h2>
+<div class="center" style="font-size:.7em; margin:14px 0;">
+<div style="display:inline-flex; gap:10px; align-items:center;">
+<div class="card center" style="padding:10px 14px;"><span class="mono">FA</span><br/><span style="font-size:.7em; color:#7a83a8;">bit 3</span></div>
+<span class="accent2" style="font-size:1.2em;">←</span>
+<div class="card center" style="padding:10px 14px;"><span class="mono">FA</span><br/><span style="font-size:.7em; color:#7a83a8;">bit 2</span></div>
+<span class="accent2" style="font-size:1.2em;">←</span>
+<div class="card center" style="padding:10px 14px;"><span class="mono">FA</span><br/><span style="font-size:.7em; color:#7a83a8;">bit 1</span></div>
+<span class="accent2" style="font-size:1.2em;">←</span>
+<div class="card center" style="padding:10px 14px;"><span class="mono">HA</span><br/><span style="font-size:.7em; color:#7a83a8;">bit 0</span></div>
+</div>
+<p style="font-size:.85em; color:#7a83a8; margin-top:8px;">each stage's carry-out feeds the next stage's carry-in — the red arrows are one wire each</p>
+</div>
+<div class="two-col" style="font-size:.68em;">
+<div class="card"><strong class="accent1">Try 0111 + 0001 in your head.</strong> Bit 0: 1+1 = write 0, carry 1. Bit 1: 1+0+carry = write 0, carry 1. Bit 2: same again. Bit 3: 0+0+carry = 1. Answer 1000 — the carry <strong>swept left like 0999+1 → 1000</strong>. That sweep is a real electrical wave crossing the chip.</div>
+<div class="card"><b>A bridge to subtraction:</b> an adder can be reused by supplying the complemented second operand and an initial carry of 1. Controllable inversion and carry-input circuitry make that selection possible. U06 explains why the arithmetic works.</div>
+</div>
 
-</section>
+<div class="lanes"><div><b>📝 IN THE EXAM</b>Enrichment for both groups; it is not a required AS/IG method.</div><div><b>🏛 IN REALITY</b>Use the stated model; device delays and implementation details still matter.</div></div></section></section><section class="lt" data-background-color="#F4F6FB" id="drill"><div class="badges"><span class="bg bg-hole">IG + AS</span></div>
+<div class="bar" style="background:var(--accent2)"></div>
 
-<!-- ============ H13 EXAM LENS ============ -->
-<section class="lt" data-background-color="#F4F6FB">
-  <div class="bar" style="background:var(--accent3)"></div>
-  <div class="badges"><span class="bg bg-both">0478 ✓ · 9618 ✓</span></div>
-  <h2>Exam lens</h2>
-  <table class="xt">
-    <tr><th style="width:12%;">Board</th><th>How it's asked</th><th>What earns the marks</th></tr>
-    <tr>
-      <td><strong>0478</strong><br>IGCSE</td>
-      <td>"Draw a logic circuit to represent the given logic statement" (~5 marks) · "Complete the truth table" with working space (~4) · "Write the logic statement for the circuit/problem"</td>
-      <td><strong>One mark per correct gate with correct inputs</strong> · max two inputs per gate — chain them · don't simplify unless told</td>
-    </tr>
-    <tr>
-      <td><strong>9618</strong><br>AS P1</td>
-      <td>"Draw the logic circuit for this logic expression" (~2 marks, denser circuits) · truth tables from expressions mixing XOR/NAND/NOR · write the expression from a drawn circuit</td>
-      <td>Marks grouped per gate-cluster · brackets in written expressions · working columns at 8 rows</td>
-    </tr>
-  </table>
-  <div class="rule accent2" style="margin-top:10px;"><strong>The five classic traps:</strong>
-    ① brackets dropped — precedence decides a <em>different circuit</em> ·
-    ② bubble scope: NOT(A AND B) ≠ (NOT A) AND B ·
-    ③ a branching wire with no junction dot (or an input drawn twice) ·
-    ④ a 3-input gate drawn where the paper says max two ·
-    ⑤ English "or" read as XOR</div>
-  <div class="rule" style="margin-top:8px; font-size:.6em; display:flex; gap:16px; align-items:center;">
-    <div style="flex:1;"><strong class="accent1">Through the marker's eyes:</strong> a hand-drawn gate is identified by its <strong>tail</strong> — the back edge, where the inputs enter. Straight tail → AND family; curved tail → OR family (XOR wears a second arc). The nose proves little — <em>draw the tail like you mean it.</em> And wires only connect where you plant a <strong>junction dot</strong>; a crossing without a dot is two strangers passing.</div>
-    <div style="text-align:center;">
-      <svg viewBox="0 0 100 70" width="62"><path d="M30 8 H62 A27 27 0 0 1 62 62 H30 Z" fill="none" stroke="#7a83a8" stroke-width="2.5"/><line x1="30" y1="8" x2="30" y2="62" stroke="#F2B53C" stroke-width="4.5"/></svg>
-      <div style="color:#7a83a8;">straight → AND · NAND</div>
-    </div>
-    <div style="text-align:center;">
-      <svg viewBox="0 0 100 70" width="62"><path d="M28 8 Q52 8 68 16 Q86 25 94 35 Q86 45 68 54 Q52 62 28 62 Q40 35 28 8 Z" fill="none" stroke="#7a83a8" stroke-width="2.5"/><path d="M28 8 Q40 35 28 62" fill="none" stroke="#F2B53C" stroke-width="4.5"/></svg>
-      <div style="color:#7a83a8;">curved → OR · NOR</div>
-    </div>
-    <div style="text-align:center;">
-      <svg viewBox="0 0 100 70" width="62"><line x1="10" y1="30" x2="90" y2="30" stroke="#222B5A" stroke-width="2.5"/><line x1="50" y1="30" x2="50" y2="62" stroke="#222B5A" stroke-width="2.5"/><circle cx="50" cy="30" r="5.5" fill="#17B3A3"/></svg>
-      <div style="color:#7a83a8;">dot — truly joined</div>
-    </div>
-    <div style="text-align:center;">
-      <svg viewBox="0 0 100 70" width="62"><line x1="10" y1="35" x2="90" y2="35" stroke="#222B5A" stroke-width="2.5"/><line x1="50" y1="8" x2="50" y2="62" stroke="#222B5A" stroke-width="2.5"/></svg>
-      <div style="color:#7a83a8;">no dot — just crossing</div>
-    </div>
-  </div>
+<h2>Drill — exam wording, exam speed</h2>
+<div class="three-col" style="font-size:.64em;">
+<div class="card"><strong>1. English → expression.</strong><br/>"The heater <span class="mono">H</span> turns on if the temperature is low (<span class="mono">L</span>) and the window is not open (<span class="mono">W</span>)."<br/><br/>
+</div>
+<div class="card"><strong>2. Circuit → expression.</strong><br/>
+<div class="circ" style="width:220px; margin:6px auto;">
+<svg viewBox="0 0 340 190">
+<line stroke="#222B5A" stroke-width="3" x1="30" x2="90" y1="42" y2="42"></line>
+<line stroke="#222B5A" stroke-width="3" x1="30" x2="90" y1="68" y2="68"></line>
+<g transform="translate(60,20)">
+<path d="M28 8 Q52 8 68 16 Q86 25 94 35 Q86 45 68 54 Q52 62 28 62 Q40 35 28 8 Z" fill="none" stroke="#222B5A" stroke-width="3"></path>
+<circle cx="101" cy="35" fill="none" r="7" stroke="#F0655B" stroke-width="3"></circle>
+</g>
+<line stroke="#222B5A" stroke-width="3" x1="168" x2="195" y1="55" y2="55"></line>
+<line stroke="#222B5A" stroke-width="3" x1="195" x2="195" y1="55" y2="84"></line>
+<line stroke="#222B5A" stroke-width="3" x1="195" x2="210" y1="84" y2="84"></line>
+<line stroke="#222B5A" stroke-width="3" x1="30" x2="210" y1="110" y2="110"></line>
+<g transform="translate(180,62)">
+<path d="M30 8 H62 A27 27 0 0 1 62 62 H30 Z" fill="none" stroke="#222B5A" stroke-width="3"></path>
+</g>
+<line stroke="#222B5A" stroke-width="3" x1="269" x2="310" y1="97" y2="97"></line>
+</svg>
+<span class="clbl" style="left:5%; top:19%;">A</span>
+<span class="clbl" style="left:5%; top:33%;">B</span>
+<span class="clbl" style="left:5%; top:55%;">C</span>
+<span class="clbl accent1" style="left:95%; top:49%;">X</span>
+</div>
+</div>
+<div class="card"><strong>3. Table → expression (backward).</strong><br/>A 2-input circuit outputs 1 in exactly one row: <span class="mono">A=1, B=0</span>. Write its expression.<br/><br/>
+<br/>
+</div>
+</div>
 
-</section>
 
-<!-- ============ H13.5 THE REAL THING ============ -->
-<section>
-  <section class="lt" data-background-color="#F4F6FB">
-    <div class="bar" style="background:var(--accent3)"></div>
-    <div class="badges"><span class="bg bg-both">0478 ✓ · 9618 ✓</span></div>
-    <h2>The real thing</h2>
-    <p style="font-size:.8em;">Actual questions from actual papers. Pick your battlefield:</p>
-    <div style="display:flex; gap:28px; justify-content:center; margin-top:46px;">
-      <button class="pbtn" onclick="Reveal.slide(Reveal.getIndices().h,1)">IGCSE 0478 ↓</button>
-      <button class="pbtn" onclick="Reveal.slide(Reveal.getIndices().h,2)">AS 9618 ↓</button>
-    </div>
-  </section>
-  <section class="lt" data-background-color="#F4F6FB">
-    <div class="bar" style="background:var(--accent1)"></div>
-    <div class="badges"><span class="bg bg-both">0478 ✓</span></div>
-    <h2>0478 — the real thing</h2>
-    <div class="two-col" style="font-size:.58em;">
-      <div class="card">
-        Consider the logic statement: <strong class="mono">X = ((A OR B) AND (NOT (B XOR C)) AND C)</strong><br>
-        <strong>(a)</strong> Draw a logic circuit to represent it. Do not simplify. All gates max <strong>two</strong> inputs. <strong>[5]</strong>
-        <div class="fragment center">
-          <div class="circ" style="width:100%; max-width:400px; margin-top:6px;">
-            <svg viewBox="0 0 560 250">
-              <line x1="24" y1="30" x2="110" y2="30" stroke="#222B5A" stroke-width="3"/>
-              <line x1="24" y1="90" x2="50" y2="90" stroke="#222B5A" stroke-width="3"/>
-              <circle cx="50" cy="90" r="4.5" fill="#222B5A"/>
-              <line x1="50" y1="90" x2="50" y2="60" stroke="#222B5A" stroke-width="3"/>
-              <line x1="50" y1="60" x2="110" y2="60" stroke="#222B5A" stroke-width="3"/>
-              <line x1="50" y1="90" x2="124" y2="90" stroke="#222B5A" stroke-width="3"/>
-              <line x1="24" y1="150" x2="60" y2="150" stroke="#222B5A" stroke-width="3"/>
-              <circle cx="60" cy="150" r="4.5" fill="#222B5A"/>
-              <line x1="60" y1="150" x2="60" y2="120" stroke="#222B5A" stroke-width="3"/>
-              <line x1="60" y1="120" x2="124" y2="120" stroke="#222B5A" stroke-width="3"/>
-              <line x1="60" y1="150" x2="400" y2="150" stroke="#222B5A" stroke-width="3"/>
-              <g transform="translate(80,10)">
-                <path d="M28 8 Q52 8 68 16 Q86 25 94 35 Q86 45 68 54 Q52 62 28 62 Q40 35 28 8 Z" fill="none" stroke="#222B5A" stroke-width="3"/>
-              </g>
-              <g transform="translate(90,70)">
-                <path d="M20 8 Q32 35 20 62" fill="none" stroke="#222B5A" stroke-width="3"/>
-                <path d="M28 8 Q52 8 68 16 Q86 25 94 35 Q86 45 68 54 Q52 62 28 62 Q40 35 28 8 Z" fill="none" stroke="#222B5A" stroke-width="3"/>
-              </g>
-              <line x1="184" y1="105" x2="234" y2="105" stroke="#222B5A" stroke-width="3"/>
-              <g transform="translate(200,75)">
-                <path d="M34 10 L34 50 L78 30 Z" fill="none" stroke="#222B5A" stroke-width="3"/>
-                <circle cx="86" cy="30" r="7" fill="none" stroke="#222B5A" stroke-width="3"/>
-              </g>
-              <line x1="293" y1="105" x2="350" y2="105" stroke="#222B5A" stroke-width="3"/>
-              <line x1="174" y1="45" x2="305" y2="45" stroke="#222B5A" stroke-width="3"/>
-              <line x1="305" y1="45" x2="305" y2="75" stroke="#222B5A" stroke-width="3"/>
-              <line x1="305" y1="75" x2="350" y2="75" stroke="#222B5A" stroke-width="3"/>
-              <g transform="translate(320,40)">
-                <path d="M30 8 H62 A27 27 0 0 1 62 62 H30 Z" fill="none" stroke="#222B5A" stroke-width="3"/>
-              </g>
-              <line x1="409" y1="75" x2="420" y2="75" stroke="#222B5A" stroke-width="3"/>
-              <line x1="420" y1="75" x2="420" y2="105" stroke="#222B5A" stroke-width="3"/>
-              <line x1="420" y1="105" x2="460" y2="105" stroke="#222B5A" stroke-width="3"/>
-              <line x1="400" y1="150" x2="400" y2="135" stroke="#222B5A" stroke-width="3"/>
-              <line x1="400" y1="135" x2="460" y2="135" stroke="#222B5A" stroke-width="3"/>
-              <g transform="translate(430,85)">
-                <path d="M30 8 H62 A27 27 0 0 1 62 62 H30 Z" fill="none" stroke="#222B5A" stroke-width="3"/>
-              </g>
-              <line x1="519" y1="120" x2="548" y2="120" stroke="#222B5A" stroke-width="3"/>
-            </svg>
-            <span class="clbl" style="left:2%; top:11%;">A</span>
-            <span class="clbl" style="left:2%; top:35%;">B</span>
-            <span class="clbl" style="left:2%; top:59%;">C</span>
-            <span class="clbl accent1" style="left:99%; top:47%;">X</span>
-            <span class="gtag" style="left:25%; top:17%;">OR</span>
-            <span class="gtag" style="left:27%; top:41%;">XOR</span>
-            <span class="gtag" style="left:45%; top:34%;">NOT</span>
-            <span class="gtag" style="left:64%; top:22%;">AND</span>
-            <span class="gtag" style="left:84%; top:41%;">AND</span>
-          </div>
-          <p style="color:#7a83a8; margin:4px 0 0;">five gates = five marks — one per correct gate with correct inputs · note B and C each branch (junction dots)</p>
-        </div>
-      </div>
-      <div class="card">
-        <strong>(b)</strong> Complete the truth table for the statement. <strong>[4]</strong>
-        <table class="tt" style="margin:6px auto; font-size:.95em;">
-          <tr><th>A</th><th>B</th><th>C</th><th>X</th></tr>
-          <tr><td>0</td><td>0</td><td>0</td><td class="fragment">0</td></tr>
-          <tr><td>0</td><td>0</td><td>1</td><td class="fragment">0</td></tr>
-          <tr><td>0</td><td>1</td><td>0</td><td class="fragment">0</td></tr>
-          <tr><td>0</td><td>1</td><td>1</td><td class="fragment hit">1</td></tr>
-          <tr><td>1</td><td>0</td><td>0</td><td class="fragment">0</td></tr>
-          <tr><td>1</td><td>0</td><td>1</td><td class="fragment">0</td></tr>
-          <tr><td>1</td><td>1</td><td>0</td><td class="fragment">0</td></tr>
-          <tr><td>1</td><td>1</td><td>1</td><td class="fragment hit">1</td></tr>
-        </table>
-        <p class="fragment" style="color:#7a83a8;">Working columns: (A OR B), (B XOR C), NOT(B XOR C) — then AND the three. X = 1 needs C on, B on with C matching… only two worlds survive.</p>
-      </div>
-    </div>
-    <p class="src">0478/12 Paper 1, May/June 2022, Q5 · © UCLES</p>
+<div class="lanes"><div><b>📝 IN THE EXAM</b>Follow the supplied representation; NOT has one input, the other gates two.</div><div><b>🏛 IN REALITY</b>Equivalent Boolean functions may have different physical implementations.</div></div></section><section class="lt" data-background-color="#F4F6FB" id="drill-answer"><div class="badges"><span class="bg bg-hole">IG + AS</span></div>
+<div class="bar" style="background:var(--accent2)"></div>
 
-</section>
-  <section class="lt" data-background-color="#F4F6FB">
-    <div class="bar" style="background:var(--accent1)"></div>
-    <div class="badges"><span class="bg bg-both">9618 ✓</span></div>
-    <h2>9618 — the real thing</h2>
-    <div class="two-col" style="font-size:.58em;">
-      <div class="card">
-        <strong>(a)</strong> Draw the logic circuit for: <strong class="mono">Z = (R XOR S) AND (NOT T NOR P)</strong> <strong>[2]</strong>
-        <div class="fragment center">
-          <div class="circ" style="width:100%; max-width:380px; margin-top:6px;">
-            <svg viewBox="0 0 470 220">
-              <line x1="24" y1="30" x2="94" y2="30" stroke="#222B5A" stroke-width="3"/>
-              <line x1="24" y1="60" x2="94" y2="60" stroke="#222B5A" stroke-width="3"/>
-              <g transform="translate(60,10)">
-                <path d="M20 8 Q32 35 20 62" fill="none" stroke="#222B5A" stroke-width="3"/>
-                <path d="M28 8 Q52 8 68 16 Q86 25 94 35 Q86 45 68 54 Q52 62 28 62 Q40 35 28 8 Z" fill="none" stroke="#222B5A" stroke-width="3"/>
-              </g>
-              <line x1="24" y1="120" x2="94" y2="120" stroke="#222B5A" stroke-width="3"/>
-              <g transform="translate(60,90)">
-                <path d="M34 10 L34 50 L78 30 Z" fill="none" stroke="#222B5A" stroke-width="3"/>
-                <circle cx="86" cy="30" r="7" fill="none" stroke="#222B5A" stroke-width="3"/>
-              </g>
-              <line x1="153" y1="120" x2="232" y2="120" stroke="#222B5A" stroke-width="3"/>
-              <line x1="24" y1="180" x2="180" y2="180" stroke="#222B5A" stroke-width="3"/>
-              <line x1="180" y1="180" x2="180" y2="150" stroke="#222B5A" stroke-width="3"/>
-              <line x1="180" y1="150" x2="232" y2="150" stroke="#222B5A" stroke-width="3"/>
-              <g transform="translate(200,100)">
-                <path d="M28 8 Q52 8 68 16 Q86 25 94 35 Q86 45 68 54 Q52 62 28 62 Q40 35 28 8 Z" fill="none" stroke="#222B5A" stroke-width="3"/>
-                <circle cx="101" cy="35" r="7" fill="none" stroke="#222B5A" stroke-width="3"/>
-              </g>
-              <line x1="308" y1="135" x2="315" y2="135" stroke="#222B5A" stroke-width="3"/>
-              <line x1="315" y1="135" x2="315" y2="110" stroke="#222B5A" stroke-width="3"/>
-              <line x1="315" y1="110" x2="360" y2="110" stroke="#222B5A" stroke-width="3"/>
-              <line x1="154" y1="45" x2="315" y2="45" stroke="#222B5A" stroke-width="3"/>
-              <line x1="315" y1="45" x2="315" y2="80" stroke="#222B5A" stroke-width="3"/>
-              <line x1="315" y1="80" x2="360" y2="80" stroke="#222B5A" stroke-width="3"/>
-              <g transform="translate(330,60)">
-                <path d="M30 8 H62 A27 27 0 0 1 62 62 H30 Z" fill="none" stroke="#222B5A" stroke-width="3"/>
-              </g>
-              <line x1="419" y1="95" x2="450" y2="95" stroke="#222B5A" stroke-width="3"/>
-            </svg>
-            <span class="clbl" style="left:2%; top:12%;">R</span>
-            <span class="clbl" style="left:2%; top:26%;">S</span>
-            <span class="clbl" style="left:2%; top:53%;">T</span>
-            <span class="clbl" style="left:2%; top:80%;">P</span>
-            <span class="clbl accent1" style="left:98%; top:42%;">Z</span>
-            <span class="gtag" style="left:22%; top:14%;">XOR</span>
-            <span class="gtag" style="left:22%; top:48%;">NOT</span>
-            <span class="gtag" style="left:53%; top:56%;">NOR</span>
-            <span class="gtag" style="left:80%; top:37%;">AND</span>
-          </div>
-          <p style="color:#7a83a8; margin:4px 0 0;">mark scheme: 1 mark XOR + AND correct · 1 mark NOT + NOR correct — four gates, two marks. Denser than IGCSE.</p>
-        </div>
-      </div>
-      <div class="card">
-        <strong>(b)</strong> Complete the truth table for: <strong class="mono">Z = (NOT P OR Q) XOR (R NOR Q)</strong> <strong>[2]</strong>
-        <table class="tt" style="margin:6px auto; font-size:.95em;">
-          <tr><th>P</th><th>Q</th><th>R</th><th>Z</th></tr>
-          <tr><td>0</td><td>0</td><td>0</td><td class="fragment">0</td></tr>
-          <tr><td>0</td><td>0</td><td>1</td><td class="fragment hit">1</td></tr>
-          <tr><td>0</td><td>1</td><td>0</td><td class="fragment hit">1</td></tr>
-          <tr><td>0</td><td>1</td><td>1</td><td class="fragment hit">1</td></tr>
-          <tr><td>1</td><td>0</td><td>0</td><td class="fragment hit">1</td></tr>
-          <tr><td>1</td><td>0</td><td>1</td><td class="fragment">0</td></tr>
-          <tr><td>1</td><td>1</td><td>0</td><td class="fragment hit">1</td></tr>
-          <tr><td>1</td><td>1</td><td>1</td><td class="fragment hit">1</td></tr>
-        </table>
-        <p class="fragment" style="color:#7a83a8;">Working columns: NOT P, (NOT P OR Q), (R NOR Q) — then XOR. Note "NOT P OR Q" = (NOT P) OR Q — precedence!</p>
-      </div>
-    </div>
-    <p class="src">9618/12 Paper 1, May/June 2023, Q6 · © UCLES</p>
+<h2>Check the three translations</h2>
+<div class="three-col" style="font-size:.64em;">
+<div class="card"><strong>1. English → expression.</strong><br/>"The heater <span class="mono">H</span> turns on if the temperature is low (<span class="mono">L</span>) and the window is not open (<span class="mono">W</span>)."<br/><br/>
+<span class="mono accent1">H = L AND (NOT W)</span></div>
+<div class="card"><strong>2. Circuit → expression.</strong><br/>
+<div class="circ" style="width:220px; margin:6px auto;">
+<svg viewBox="0 0 340 190">
+<line stroke="#222B5A" stroke-width="3" x1="30" x2="90" y1="42" y2="42"></line>
+<line stroke="#222B5A" stroke-width="3" x1="30" x2="90" y1="68" y2="68"></line>
+<g transform="translate(60,20)">
+<path d="M28 8 Q52 8 68 16 Q86 25 94 35 Q86 45 68 54 Q52 62 28 62 Q40 35 28 8 Z" fill="none" stroke="#222B5A" stroke-width="3"></path>
+<circle cx="101" cy="35" fill="none" r="7" stroke="#F0655B" stroke-width="3"></circle>
+</g>
+<line stroke="#222B5A" stroke-width="3" x1="168" x2="195" y1="55" y2="55"></line>
+<line stroke="#222B5A" stroke-width="3" x1="195" x2="195" y1="55" y2="84"></line>
+<line stroke="#222B5A" stroke-width="3" x1="195" x2="210" y1="84" y2="84"></line>
+<line stroke="#222B5A" stroke-width="3" x1="30" x2="210" y1="110" y2="110"></line>
+<g transform="translate(180,62)">
+<path d="M30 8 H62 A27 27 0 0 1 62 62 H30 Z" fill="none" stroke="#222B5A" stroke-width="3"></path>
+</g>
+<line stroke="#222B5A" stroke-width="3" x1="269" x2="310" y1="97" y2="97"></line>
+</svg>
+<span class="clbl" style="left:5%; top:19%;">A</span>
+<span class="clbl" style="left:5%; top:33%;">B</span>
+<span class="clbl" style="left:5%; top:55%;">C</span>
+<span class="clbl accent1" style="left:95%; top:49%;">X</span>
+</div>
+<span class="mono accent1">X = (A NOR B) AND C</span></div>
+<div class="card"><strong>3. Table → expression (backward).</strong><br/>A 2-input circuit outputs 1 in exactly one row: <span class="mono">A=1, B=0</span>. Write its expression.<br/><br/>
+<span class="mono accent1">X = A AND (NOT B)</span><br/>
+<span class="" style="color:#7a83a8;">one 1-row = one AND term — the H9 recipe at its smallest</span></div>
+</div>
+<div class="rule accent2" style="margin-top:12px;"><strong>Habit check:</strong> brackets explicit · bubbles read as whole-gate flips · every branch gets its junction dot · working columns in every table.</div>
 
-</section>
-</section>
+<div class="lanes"><div><b>📝 IN THE EXAM</b>Follow the supplied representation; NOT has one input, the other gates two.</div><div><b>🏛 IN REALITY</b>Equivalent Boolean functions may have different physical implementations.</div></div></section><section class="lt" data-aud="ig" data-background-color="#F4F6FB" id="draw-ig"><div class="badges"><span class="bg bg-hole">IGCSE 0478</span></div><div class="bar"></div><h2>IG — draw it before revealing</h2><p class="source">0478 June 2022 /12 Q5, © UCLES. Original expressions; response layout adapted.</p><div class="rule"><b>X = ((A OR B) AND (NOT (B XOR C)) AND C)</b></div><div class="rule">Draw the circuit on paper. [5] Preserve the supplied expression. NOT has one input; all other gates have two.</div><div class="rule">Label the signals and show each connection clearly. Then move forward to compare with the model.</div><div class="draw-space">✎ Paper first · diagram and labels</div><div class="lanes"><div><b>📝 IN THE EXAM</b>Use this question’s mark allocation; there is no universal marks-per-gate rule.</div><div><b>🏛 IN REALITY</b>Human rubric checks drawings; local table checks assess the entered values.</div></div></section><section class="lt" data-aud="ig" data-background-color="#F4F6FB" id="draw-answer-ig"><div class="badges"><span class="bg bg-hole">IGCSE 0478</span></div><div class="bar"></div><h2>IG — compare the connections</h2><p class="source">0478 June 2022 /12 Q5, © UCLES. Original expressions; response layout adapted.</p><div class="two-col"><div><div class="circ" style="width:100%; max-width:400px; margin-top:6px;">
+<svg viewBox="0 0 560 250">
+<line stroke="#222B5A" stroke-width="3" x1="24" x2="110" y1="30" y2="30"></line>
+<line stroke="#222B5A" stroke-width="3" x1="24" x2="50" y1="90" y2="90"></line>
+<circle cx="50" cy="90" fill="#222B5A" r="4.5"></circle>
+<line stroke="#222B5A" stroke-width="3" x1="50" x2="50" y1="90" y2="60"></line>
+<line stroke="#222B5A" stroke-width="3" x1="50" x2="110" y1="60" y2="60"></line>
+<line stroke="#222B5A" stroke-width="3" x1="50" x2="124" y1="90" y2="90"></line>
+<line stroke="#222B5A" stroke-width="3" x1="24" x2="60" y1="150" y2="150"></line>
+<circle cx="60" cy="150" fill="#222B5A" r="4.5"></circle>
+<line stroke="#222B5A" stroke-width="3" x1="60" x2="60" y1="150" y2="120"></line>
+<line stroke="#222B5A" stroke-width="3" x1="60" x2="124" y1="120" y2="120"></line>
+<line stroke="#222B5A" stroke-width="3" x1="60" x2="400" y1="150" y2="150"></line>
+<g transform="translate(80,10)">
+<path d="M28 8 Q52 8 68 16 Q86 25 94 35 Q86 45 68 54 Q52 62 28 62 Q40 35 28 8 Z" fill="none" stroke="#222B5A" stroke-width="3"></path>
+</g>
+<g transform="translate(90,70)">
+<path d="M20 8 Q32 35 20 62" fill="none" stroke="#222B5A" stroke-width="3"></path>
+<path d="M28 8 Q52 8 68 16 Q86 25 94 35 Q86 45 68 54 Q52 62 28 62 Q40 35 28 8 Z" fill="none" stroke="#222B5A" stroke-width="3"></path>
+</g>
+<line stroke="#222B5A" stroke-width="3" x1="184" x2="234" y1="105" y2="105"></line>
+<g transform="translate(200,75)">
+<path d="M34 10 L34 50 L78 30 Z" fill="none" stroke="#222B5A" stroke-width="3"></path>
+<circle cx="86" cy="30" fill="none" r="7" stroke="#222B5A" stroke-width="3"></circle>
+</g>
+<path d="M293 105 H330 V90 H350" fill="none" stroke="#222B5A" stroke-width="3"></path>
+<line stroke="#222B5A" stroke-width="3" x1="174" x2="305" y1="45" y2="45"></line>
+<line stroke="#222B5A" stroke-width="3" x1="305" x2="305" y1="45" y2="60"></line>
+<line stroke="#222B5A" stroke-width="3" x1="305" x2="350" y1="60" y2="60"></line>
+<g transform="translate(320,40)">
+<path d="M30 8 H62 A27 27 0 0 1 62 62 H30 Z" fill="none" stroke="#222B5A" stroke-width="3"></path>
+</g>
+<line stroke="#222B5A" stroke-width="3" x1="409" x2="420" y1="75" y2="75"></line>
+<line stroke="#222B5A" stroke-width="3" x1="420" x2="420" y1="75" y2="105"></line>
+<line stroke="#222B5A" stroke-width="3" x1="420" x2="460" y1="105" y2="105"></line>
+<line stroke="#222B5A" stroke-width="3" x1="400" x2="400" y1="150" y2="135"></line>
+<line stroke="#222B5A" stroke-width="3" x1="400" x2="460" y1="135" y2="135"></line>
+<g transform="translate(430,85)">
+<path d="M30 8 H62 A27 27 0 0 1 62 62 H30 Z" fill="none" stroke="#222B5A" stroke-width="3"></path>
+</g>
+<line stroke="#222B5A" stroke-width="3" x1="519" x2="548" y1="120" y2="120"></line>
+</svg>
+<span class="clbl" style="left:2%; top:11%;">A</span>
+<span class="clbl" style="left:2%; top:35%;">B</span>
+<span class="clbl" style="left:2%; top:59%;">C</span>
+<span class="clbl accent1" style="left:99%; top:47%;">X</span>
+<span class="gtag" style="left:25%; top:17%;">OR</span>
+<span class="gtag" style="left:27%; top:41%;">XOR</span>
+<span class="gtag" style="left:45%; top:34%;">NOT</span>
+<span class="gtag" style="left:64%; top:22%;">AND</span>
+<span class="gtag" style="left:84%; top:41%;">AND</span>
+</div></div><div class="rubric" data-total="5"><p>Human check: tick only points present in your own drawing.</p><label><input type="checkbox"/> OR with inputs A and B</label><label><input type="checkbox"/> XOR with inputs B and C</label><label><input type="checkbox"/> NOT applied to that XOR output</label><label><input type="checkbox"/> AND combining OR and NOT outputs</label><label><input type="checkbox"/> AND combining the intermediate result and C</label><b class="draw-score">0 / 5</b> <button class="draw-reset">Reset checks</button></div></div><p class="source">Alternative layouts with the same required connections are valid. This is a self-check rubric, not automatic sketch recognition.</p><div class="lanes"><div><b>📝 IN THE EXAM</b>Use this question’s mark allocation; there is no universal marks-per-gate rule.</div><div><b>🏛 IN REALITY</b>Human rubric checks drawings; local table checks assess the entered values.</div></div></section><section class="lt" data-aud="ig" data-background-color="#F4F6FB" id="table-ig"><div class="badges"><span class="bg bg-hole">IGCSE 0478</span></div><div class="bar"></div><h2>IG — trace every input row</h2><p class="source">0478 June 2022 /12 Q5, © UCLES. Original expressions; response layout adapted.</p><div class="rule"><b>X = ((A OR B) AND (NOT (B XOR C)) AND C)</b></div><div class="rule">Complete the output column. [4] Make working columns on paper if useful; enter one output per row below.</div><div data-board="ig" id="marker-ig"></div><div class="lanes"><div><b>📝 IN THE EXAM</b>Use this question’s mark allocation; there is no universal marks-per-gate rule.</div><div><b>🏛 IN REALITY</b>Human rubric checks drawings; local table checks assess the entered values.</div></div></section><section class="lt" data-aud="ig" data-background-color="#F4F6FB" id="table-answer-ig"><div class="badges"><span class="bg bg-hole">IGCSE 0478</span></div><div class="bar"></div><h2>IG — the output column</h2><p class="source">0478 June 2022 /12 Q5, © UCLES. Original expressions; response layout adapted.</p><div class="two-col"><div class="center"><table class="tt" style="margin:6px auto; font-size:.95em;">
+<tr><th>A</th><th>B</th><th>C</th><th>X</th></tr>
+<tr><td>0</td><td>0</td><td>0</td><td class="">0</td></tr>
+<tr><td>0</td><td>0</td><td>1</td><td class="">0</td></tr>
+<tr><td>0</td><td>1</td><td>0</td><td class="">0</td></tr>
+<tr><td>0</td><td>1</td><td>1</td><td class="hit">1</td></tr>
+<tr><td>1</td><td>0</td><td>0</td><td class="">0</td></tr>
+<tr><td>1</td><td>0</td><td>1</td><td class="">0</td></tr>
+<tr><td>1</td><td>1</td><td>0</td><td class="">0</td></tr>
+<tr><td>1</td><td>1</td><td>1</td><td class="hit">1</td></tr>
+</table></div><div><div class="rule">X=1 only for 011 and 111. C must be 1 and B must match C; then A OR B is 1.</div><div class="rule">4 marks for8 correct outputs;3 for6–7;2 for4–5;1 for2–3.</div><div class="rule">The scheme awards no separate marks for the working columns in this question.</div></div></div><div class="lanes"><div><b>📝 IN THE EXAM</b>Use this question’s mark allocation; there is no universal marks-per-gate rule.</div><div><b>🏛 IN REALITY</b>Human rubric checks drawings; local table checks assess the entered values.</div></div></section><section class="lt" data-aud="ig" data-background-color="#F4F6FB" id="lens-ig"><div class="badges"><span class="bg bg-hole">IGCSE 0478</span></div><div class="bar"></div><h2>IG — the exam shapes</h2><table class="xt lens"><tr><th>Shape</th><th>How the stem reads</th><th>Marks</th><th>Where marks die</th></tr><tr><td>Circuit from a supplied expression</td><td>Draw a logic circuit…</td><td>5 here: each correct gate + inputs</td><td>Changed structure, missing inversion, wrong connections.</td></tr><tr><td>Complete a truth table</td><td>Complete the output column…</td><td>4 here: by number of correct outputs</td><td>Missed rows; incorrect bracket or bubble scope.</td></tr><tr><td>Construct an expression</td><td>Write an expression for the statement / circuit / table.</td><td>Question-specific</td><td>Wrong grouping, inversion or output-1 rows.</td></tr><tr><td>Construct a circuit from behaviour</td><td>Draw the circuit for the statement / table.</td><td>Question-specific</td><td>Missing a condition; using gates with too many inputs.</td></tr></table><div class="lanes"><div><b>📝 IN THE EXAM</b>Use this question’s mark allocation; there is no universal marks-per-gate rule.</div><div><b>🏛 IN REALITY</b>Human rubric checks drawings; local table checks assess the entered values.</div></div></section><section class="lt" data-aud="al" data-background-color="#F4F6FB" id="draw-al"><div class="badges"><span class="bg bg-hole">AS 9618</span></div><div class="bar"></div><h2>AS — draw it before revealing</h2><p class="source">9618 June 2023 /12 Q6, © UCLES. Original expressions; response layout adapted.</p><div class="rule"><b>Z = (R XOR S) AND (NOT T NOR P)</b></div><div class="rule">Draw the circuit on paper. [2] Preserve the supplied expression. NOT has one input; all other gates have two.</div><div class="rule">Label the signals and show each connection clearly. Then move forward to compare with the model.</div><div class="draw-space">✎ Paper first · diagram and labels</div><div class="lanes"><div><b>📝 IN THE EXAM</b>Use this question’s mark allocation; there is no universal marks-per-gate rule.</div><div><b>🏛 IN REALITY</b>Human rubric checks drawings; local table checks assess the entered values.</div></div></section><section class="lt" data-aud="al" data-background-color="#F4F6FB" id="draw-answer-al"><div class="badges"><span class="bg bg-hole">AS 9618</span></div><div class="bar"></div><h2>AS — compare the connections</h2><p class="source">9618 June 2023 /12 Q6, © UCLES. Original expressions; response layout adapted.</p><div class="two-col"><div><div class="circ" style="width:100%; max-width:380px; margin-top:6px;">
+<svg viewBox="0 0 470 220">
+<line stroke="#222B5A" stroke-width="3" x1="24" x2="94" y1="30" y2="30"></line>
+<line stroke="#222B5A" stroke-width="3" x1="24" x2="94" y1="60" y2="60"></line>
+<g transform="translate(60,10)">
+<path d="M20 8 Q32 35 20 62" fill="none" stroke="#222B5A" stroke-width="3"></path>
+<path d="M28 8 Q52 8 68 16 Q86 25 94 35 Q86 45 68 54 Q52 62 28 62 Q40 35 28 8 Z" fill="none" stroke="#222B5A" stroke-width="3"></path>
+</g>
+<line stroke="#222B5A" stroke-width="3" x1="24" x2="94" y1="120" y2="120"></line>
+<g transform="translate(60,90)">
+<path d="M34 10 L34 50 L78 30 Z" fill="none" stroke="#222B5A" stroke-width="3"></path>
+<circle cx="86" cy="30" fill="none" r="7" stroke="#222B5A" stroke-width="3"></circle>
+</g>
+<line stroke="#222B5A" stroke-width="3" x1="153" x2="232" y1="120" y2="120"></line>
+<line stroke="#222B5A" stroke-width="3" x1="24" x2="180" y1="180" y2="180"></line>
+<line stroke="#222B5A" stroke-width="3" x1="180" x2="180" y1="180" y2="150"></line>
+<line stroke="#222B5A" stroke-width="3" x1="180" x2="232" y1="150" y2="150"></line>
+<g transform="translate(200,100)">
+<path d="M28 8 Q52 8 68 16 Q86 25 94 35 Q86 45 68 54 Q52 62 28 62 Q40 35 28 8 Z" fill="none" stroke="#222B5A" stroke-width="3"></path>
+<circle cx="101" cy="35" fill="none" r="7" stroke="#222B5A" stroke-width="3"></circle>
+</g>
+<line stroke="#222B5A" stroke-width="3" x1="308" x2="315" y1="135" y2="135"></line>
+<line stroke="#222B5A" stroke-width="3" x1="315" x2="315" y1="135" y2="110"></line>
+<line stroke="#222B5A" stroke-width="3" x1="315" x2="360" y1="110" y2="110"></line>
+<line stroke="#222B5A" stroke-width="3" x1="154" x2="315" y1="45" y2="45"></line>
+<line stroke="#222B5A" stroke-width="3" x1="315" x2="315" y1="45" y2="80"></line>
+<line stroke="#222B5A" stroke-width="3" x1="315" x2="360" y1="80" y2="80"></line>
+<g transform="translate(330,60)">
+<path d="M30 8 H62 A27 27 0 0 1 62 62 H30 Z" fill="none" stroke="#222B5A" stroke-width="3"></path>
+</g>
+<line stroke="#222B5A" stroke-width="3" x1="419" x2="450" y1="95" y2="95"></line>
+</svg>
+<span class="clbl" style="left:2%; top:12%;">R</span>
+<span class="clbl" style="left:2%; top:26%;">S</span>
+<span class="clbl" style="left:2%; top:53%;">T</span>
+<span class="clbl" style="left:2%; top:80%;">P</span>
+<span class="clbl accent1" style="left:98%; top:42%;">Z</span>
+<span class="gtag" style="left:22%; top:14%;">XOR</span>
+<span class="gtag" style="left:22%; top:48%;">NOT</span>
+<span class="gtag" style="left:53%; top:56%;">NOR</span>
+<span class="gtag" style="left:80%; top:37%;">AND</span>
+</div></div><div class="rubric" data-total="2"><p>Human check: tick only points present in your own drawing.</p><label><input type="checkbox"/> XOR and final AND, both with correct inputs</label><label><input type="checkbox"/> NOT and NOR, both with correct inputs</label><b class="draw-score">0 / 2</b> <button class="draw-reset">Reset checks</button></div></div><p class="source">Alternative layouts with the same required connections are valid. This is a self-check rubric, not automatic sketch recognition.</p><div class="lanes"><div><b>📝 IN THE EXAM</b>Use this question’s mark allocation; there is no universal marks-per-gate rule.</div><div><b>🏛 IN REALITY</b>Human rubric checks drawings; local table checks assess the entered values.</div></div></section><section class="lt" data-aud="al" data-background-color="#F4F6FB" id="table-al"><div class="badges"><span class="bg bg-hole">AS 9618</span></div><div class="bar"></div><h2>AS — trace every input row</h2><p class="source">9618 June 2023 /12 Q6, © UCLES. Original expressions; response layout adapted.</p><div class="rule"><b>Z = (NOT P OR Q) XOR (R NOR Q)</b></div><div class="rule">Complete the output column. [2] Make working columns on paper if useful; enter one output per row below.</div><div data-board="al" id="marker-al"></div><div class="lanes"><div><b>📝 IN THE EXAM</b>Use this question’s mark allocation; there is no universal marks-per-gate rule.</div><div><b>🏛 IN REALITY</b>Human rubric checks drawings; local table checks assess the entered values.</div></div></section><section class="lt" data-aud="al" data-background-color="#F4F6FB" id="table-answer-al"><div class="badges"><span class="bg bg-hole">AS 9618</span></div><div class="bar"></div><h2>AS — the output column</h2><p class="source">9618 June 2023 /12 Q6, © UCLES. Original expressions; response layout adapted.</p><div class="two-col"><div class="center"><table class="tt" style="margin:6px auto; font-size:.95em;">
+<tr><th>P</th><th>Q</th><th>R</th><th>Z</th></tr>
+<tr><td>0</td><td>0</td><td>0</td><td class="">0</td></tr>
+<tr><td>0</td><td>0</td><td>1</td><td class="hit">1</td></tr>
+<tr><td>0</td><td>1</td><td>0</td><td class="hit">1</td></tr>
+<tr><td>0</td><td>1</td><td>1</td><td class="hit">1</td></tr>
+<tr><td>1</td><td>0</td><td>0</td><td class="hit">1</td></tr>
+<tr><td>1</td><td>0</td><td>1</td><td class="">0</td></tr>
+<tr><td>1</td><td>1</td><td>0</td><td class="hit">1</td></tr>
+<tr><td>1</td><td>1</td><td>1</td><td class="hit">1</td></tr>
+</table></div><div><div class="rule">First compute NOT P, then (NOT P OR Q) and (R NOR Q); XOR those two results.</div><div class="rule">1 mark for the complete first four outputs;1 for the complete last four.</div><div class="rule">The scheme awards no separate marks for the working columns in this question.</div></div></div><div class="lanes"><div><b>📝 IN THE EXAM</b>Use this question’s mark allocation; there is no universal marks-per-gate rule.</div><div><b>🏛 IN REALITY</b>Human rubric checks drawings; local table checks assess the entered values.</div></div></section><section class="lt" data-aud="al" data-background-color="#F4F6FB" id="lens-al"><div class="badges"><span class="bg bg-hole">AS 9618</span></div><div class="bar"></div><h2>AS — the exam shapes</h2><table class="xt lens"><tr><th>Shape</th><th>How the stem reads</th><th>Marks</th><th>Where marks die</th></tr><tr><td>Circuit from a supplied expression</td><td>Draw a logic circuit…</td><td>2 here: two specified gate groups</td><td>Changed structure, missing inversion, wrong connections.</td></tr><tr><td>Complete a truth table</td><td>Complete the output column…</td><td>2 here: one per complete half</td><td>Missed rows; incorrect bracket or bubble scope.</td></tr><tr><td>Construct an expression</td><td>Write an expression for the statement / circuit / table.</td><td>Question-specific</td><td>Wrong grouping, inversion or output-1 rows.</td></tr><tr><td>Construct a circuit from behaviour</td><td>Draw the circuit for the statement / table.</td><td>Question-specific</td><td>Missing a condition; using gates with too many inputs.</td></tr></table><div class="lanes"><div><b>📝 IN THE EXAM</b>Use this question’s mark allocation; there is no universal marks-per-gate rule.</div><div><b>🏛 IN REALITY</b>Human rubric checks drawings; local table checks assess the entered values.</div></div></section><section><section class="dk" data-background-color="#151B3C" id="memory"><div class="badges"><span class="bg bg-hole">SHARED · ENRICHMENT</span></div>
+<div class="bar" style="background:var(--accent2)"></div>
 
-<!-- ============ H14 CLIFFHANGER (+ cellar) ============ -->
-<section>
-  <section class="dk" data-background-color="#151B3C">
-    <div class="bar" style="background:var(--accent2)"></div>
-    <div class="badges"><span class="bg bg-hole">🕳️ beyond the exam</span></div>
-    <h2 style="margin-top:.4em;">Everything you built today… forgets</h2>
-    <div class="two-col">
-      <div style="font-size:.78em;">
-        <p>Every circuit from this lesson is a <strong>reflex</strong>: change the inputs, the output follows <em>instantly</em> — and the past is gone. Nothing in it can <em>hold</em> anything.</p>
-        <p class="fragment">But your machine <strong class="accent3">remembers</strong>. Your save file. Your high score. This very slide, sitting in RAM.</p>
-        <p class="fragment">You have six gates. <strong>None of them can store even a single bit.</strong> So what is memory <em>made of</em>?</p>
-        <p class="fragment accent2" style="font-size:1.05em;"><strong>One strange idea: what happens if a gate's output is wired back into its own input?</strong></p>
-      </div>
-      <div class="center fragment">
-        <div class="circ" style="width:320px;">
-          <svg viewBox="0 0 300 130">
-            <line x1="40" y1="85" x2="120" y2="85" stroke="#98a0c0" stroke-width="3"/>
-            <g transform="translate(90,20)">
-              <path d="M30 8 H62 A27 27 0 0 1 62 62 H30 Z" fill="none" stroke="#E8EEF9" stroke-width="3"/>
-            </g>
-            <line x1="179" y1="55" x2="235" y2="55" stroke="#98a0c0" stroke-width="3"/>
-            <path d="M215 55 V14 H70 V40 H120" fill="none" stroke="#F0655B" stroke-width="4" class="loopwire"/>
-          </svg>
-          <span class="clbl dim" style="left:8%; top:63%;">the other input</span>
-          <span class="clbl accent2" style="left:50%; top:2%;">this wire · ???</span>
-        </div>
-        <p style="font-size:.6em; color:#98a0c0;">the output, eating its own tail</p>
-      </div>
-    </div>
-    <div class="fragment rule accent3" style="margin-top:8px; font-size:.72em;"><strong>We are not answering this today.</strong> That wire is the strangest object in this course — and it is how a chip remembers. (Impatient? There's a cellar. ↓)</div>
-    <div class="dig">⬇ the cellar 🕳️</div>
+<h2 style="margin-top:.4em;">Everything you built today… forgets</h2>
+<div class="two-col">
+<div style="font-size:.78em;">
+<p>The combinational circuits we traced respond to the <b>current inputs</b> after propagation delays. Their Boolean tables do not describe stored state.</p>
+<p class="fragment">But your machine <strong class="accent3">remembers</strong>. Your save file. Your high score. This very slide, sitting in RAM.</p>
+<p class="fragment">A single memoryless gate is not a storage element. Connecting gates with <b>feedback</b> can create state. What changes when outputs can affect future inputs?</p>
+<p class="fragment accent2" style="font-size:1.05em;"><strong>One strange idea: what happens if a gate's output is wired back into its own input?</strong></p>
+</div>
+<div class="center fragment">
+<div class="circ" style="width:320px;">
+<svg viewBox="0 0 300 130">
+<line stroke="#98a0c0" stroke-width="3" x1="40" x2="120" y1="85" y2="85"></line>
+<g transform="translate(90,20)">
+<path d="M30 8 H62 A27 27 0 0 1 62 62 H30 Z" fill="none" stroke="#E8EEF9" stroke-width="3"></path>
+</g>
+<line stroke="#98a0c0" stroke-width="3" x1="179" x2="235" y1="55" y2="55"></line>
+<path class="loopwire" d="M215 55 V14 H70 V40 H120" fill="none" stroke="#F0655B" stroke-width="4"></path>
+</svg>
+<span class="clbl dim" style="left:8%; top:63%;">the other input</span>
+<span class="clbl accent2" style="left:50%; top:2%;">this wire · ???</span>
+</div>
+<p style="font-size:.6em; color:#98a0c0;">the output, eating its own tail</p>
+</div>
+</div>
+<div class="fragment rule accent3" style="margin-top:8px; font-size:.72em;"><b>Investigate below:</b> the arrangement and delay matter. A feedback connection can support stable state, oscillation or other behaviour; the loop alone is not a memory guarantee.</div>
+<div class="dig">⬇ the cellar 🕳️</div>
 
-</section>
-  <section class="dk" data-background-color="#151B3C">
-    <div class="bar" style="background:var(--accent3)"></div>
-    <div class="badges"><span class="bg bg-hole">🕳️ beyond the exam</span></div>
-    <h2>The cellar: a loop with a mind of its own</h2>
-    <div class="two-col" style="font-size:.62em;">
-      <div class="rule accent2">
-        <strong class="accent2">ONE inverter in a loop</strong> — "my output is my own opposite." No stable answer exists, so it never settles. Watch:
-        <div class="circ" style="width:240px; margin:8px auto 2px;">
-          <svg viewBox="0 0 260 100">
-            <path d="M114 35 L114 75 L158 55 Z" fill="none" stroke="#E8EEF9" stroke-width="3"/>
-            <circle cx="166" cy="55" r="7" fill="none" stroke="#E8EEF9" stroke-width="3"/>
-            <path id="osc-loop" d="M173 55 H210 V15 H60 V55 H114" fill="none" stroke="#F0655B" stroke-width="3.5"/>
-          </svg>
-          <span class="clbl" id="osc-val" style="left:52%; top:15%; font-size:.9em; color:#F0655B;">0</span>
-        </div>
-        <p class="center" style="margin:2px 0 0; color:#98a0c0;">flip. flip. flip. <em>forever.</em> The liar's paradox in silicon — and engineers sell it as a <strong>clock</strong>.</p>
-      </div>
-      <div class="rule">
-        <strong class="accent1">TWO inverters in a loop</strong> — "the opposite of my opposite." Stable, twice over — it holds whatever you left in it:
-        <div class="circ" style="width:270px; margin:8px auto 2px;">
-          <svg viewBox="0 0 300 130">
-            <path d="M84 30 L84 70 L128 50 Z" fill="none" stroke="#E8EEF9" stroke-width="3"/>
-            <circle cx="136" cy="50" r="7" fill="none" stroke="#E8EEF9" stroke-width="3"/>
-            <line x1="143" y1="50" x2="180" y2="50" stroke="#17B3A3" stroke-width="3.5"/>
-            <path d="M180 30 L180 70 L224 50 Z" fill="none" stroke="#E8EEF9" stroke-width="3"/>
-            <circle cx="232" cy="50" r="7" fill="none" stroke="#E8EEF9" stroke-width="3"/>
-            <path d="M239 50 H268 V105 H60 V50 H84" fill="none" stroke="#98a0c0" stroke-width="3.5"/>
-          </svg>
-          <span class="clbl accent1" style="left:54%; top:28%;">1</span>
-          <span class="clbl" style="left:52%; top:89%; color:#98a0c0;">0</span>
-        </div>
-        <p class="center" style="margin:2px 0 0; color:#98a0c0;">calm. <strong class="accent1">That is a bit, remembering</strong> — your CPU's fastest memory is exactly this.</p>
-      </div>
-    </div>
-    <div class="rule" style="margin-top:10px;"><strong class="accent3">Stop there.</strong> How you <em>write</em> into the loop — and the trap when two writes collide — is a lesson of its own, and it's a good one. 🚪</div>
+<div class="lanes"><div><b>📝 IN THE EXAM</b>Enrichment for both groups; it is not a required AS/IG method.</div><div><b>🏛 IN REALITY</b>Use the stated model; device delays and implementation details still matter.</div></div></section><section class="dk" data-background-color="#151B3C" data-hole="true" id="feedback"><div class="badges"><span class="bg bg-hole">↓ SHARED · ENRICHMENT</span></div><div class="bar"></div><h2>The loop changes the question</h2><div class="two-col"><div class="card"><h3>Three NOT gates: a delayed ring</h3><svg aria-label="Three inverters connected in a ring" role="img" viewBox="0 0 510 150"><path d="M75 55 L75 95 L120 75 Z" fill="none" stroke="#E8EEF9" stroke-width="3"></path><circle cx="128" cy="75" fill="none" r="7" stroke="#E8EEF9" stroke-width="3"></circle><text fill="#98a0c0" font-size="16" text-anchor="middle" x="103" y="40">NOT 1</text><text fill="#17B3A3" font-size="22" id="ring-v0" x="153" y="64">0</text><path d="M135 75 H225" fill="none" id="ring-w0" stroke="#17B3A3" stroke-width="3"></path><path d="M225 55 L225 95 L270 75 Z" fill="none" stroke="#E8EEF9" stroke-width="3"></path><circle cx="278" cy="75" fill="none" r="7" stroke="#E8EEF9" stroke-width="3"></circle><text fill="#98a0c0" font-size="16" text-anchor="middle" x="253" y="40">NOT 2</text><text fill="#17B3A3" font-size="22" id="ring-v1" x="303" y="64">0</text><path d="M285 75 H375" fill="none" id="ring-w1" stroke="#17B3A3" stroke-width="3"></path><path d="M375 55 L375 95 L420 75 Z" fill="none" stroke="#E8EEF9" stroke-width="3"></path><circle cx="428" cy="75" fill="none" r="7" stroke="#E8EEF9" stroke-width="3"></circle><text fill="#98a0c0" font-size="16" text-anchor="middle" x="403" y="40">NOT 3</text><text fill="#17B3A3" font-size="22" id="ring-v2" x="453" y="64">0</text><path d="M435 75 H480 V125 H30 V75 H75" fill="none" id="ring-w2" stroke="#17B3A3" stroke-width="3"></path></svg><p id="ring-state"></p><button id="ring-step">Step</button> <button id="ring-play">Play</button> <button id="ring-reset">Reset</button><p class="small">Equal-delay toy model: each step recomputes every gate from the previous outputs. Start at 100; predict the next state.</p></div><div class="card"><h3>Two NOT gates: two stable states</h3><div class="stable-pair"><span id="stable-q">0</span> ⇄ NOT ⇄ <span id="stable-r">1</span></div><p>Each output feeds the other inverter’s input. Both 01 and 10 satisfy the two NOT operations.</p><button id="seed-zero">Initialise 01</button> <button id="seed-one">Initialise 10</button><p class="small">These buttons set an initial state in the model. A real memory cell needs circuitry to write and read it, and power to retain its state.</p></div></div><p class="source">Model, not an analogue simulation. Physical oscillation depends on device gain and delay; no Boolean fixed point alone does not prove it.</p><p class="source"><a href="https://wiki.analog.com/university/courses/alm1k/alm-lab-ring-osc" rel="noopener" target="_blank">Analog Devices: three-inverter ring oscillator experiment</a></p><div class="lanes"><div><b>📝 IN THE EXAM</b>Enrichment for both groups; it is not a required AS/IG method.</div><div><b>🏛 IN REALITY</b>Use the stated model; device delays and implementation details still matter.</div></div></section></section><section class="lt" data-background-color="#F4F6FB" id="vocabulary"><div class="badges"><span class="bg bg-hole">IG + AS</span></div>
+<div class="bar" style="background:var(--accent1)"></div>
 
-</section>
-</section>
+<h2>Vocabulary <span class="smaller accent1">词汇</span></h2>
+<table class="vtab">
+<tr><th>English</th><th>中文 (pīnyīn)</th><th>Meaning check</th></tr>
+<tr><td><strong>logic circuit</strong></td><td>逻辑电路 (luójí diànlù)</td><td>gates wired together to compute one decision</td></tr>
+<tr class="fragment"><td><strong>logic expression / statement</strong></td><td>逻辑表达式 / 逻辑语句 (luójí biǎodáshì / yǔjù)</td><td>the decision written in symbols / in words</td></tr>
+<tr class="fragment"><td><strong>precedence</strong></td><td>优先级 (yōuxiānjí)</td><td>NOT before AND before OR — brackets override</td></tr>
+<tr class="fragment"><td><strong>junction</strong></td><td>分支节点 (fēnzhī jiédiǎn)</td><td>the dot where one wire feeds two gates</td></tr>
+<tr class="fragment"><td><strong>universal gate</strong></td><td>通用门 (tōngyòng mén)</td><td>NAND or NOR — either can construct any Boolean function</td></tr>
+<tr class="fragment"><td><strong>half adder</strong></td><td>半加器 (bàn jiā qì)</td><td>XOR + AND — adds two bits</td></tr>
+<tr class="fragment"><td><strong>sum / carry</strong></td><td>和 / 进位 (hé / jìnwèi)</td><td>the written digit / the overflow to the next column</td></tr>
+<tr class="fragment"><td><strong>feedback</strong></td><td>反馈 (fǎnkuì)</td><td>an output wired back toward its own input — 🔥</td></tr>
+</table>
+</section><section class="dk" data-background-color="#151B3C" id="recap"><div class="badges"><span class="bg bg-hole">IG + AS</span></div>
+<div class="bar" style="background:var(--accent1)"></div>
 
-<!-- ============ H15 VOCAB ============ -->
-<section class="lt" data-background-color="#F4F6FB">
-  <div class="bar" style="background:var(--accent1)"></div>
-  <div class="badges"><span class="bg bg-both">0478 ✓ · 9618 ✓</span></div>
-  <h2>Vocabulary <span class="smaller accent1">词汇</span></h2>
-  <table class="vtab">
-    <tr><th>English</th><th>中文 (pīnyīn)</th><th>Meaning check</th></tr>
-    <tr><td><strong>logic circuit</strong></td><td>逻辑电路 (luójí diànlù)</td><td>gates wired together to compute one decision</td></tr>
-    <tr class="fragment"><td><strong>logic expression / statement</strong></td><td>逻辑表达式 / 逻辑语句 (luójí biǎodáshì / yǔjù)</td><td>the decision written in symbols / in words</td></tr>
-    <tr class="fragment"><td><strong>precedence</strong></td><td>优先级 (yōuxiānjí)</td><td>NOT before AND before OR — brackets override</td></tr>
-    <tr class="fragment"><td><strong>junction</strong></td><td>分支节点 (fēnzhī jiédiǎn)</td><td>the dot where one wire feeds two gates</td></tr>
-    <tr class="fragment"><td><strong>universal gate</strong></td><td>通用门 (tōngyòng mén)</td><td>NAND or NOR — either alone builds everything</td></tr>
-    <tr class="fragment"><td><strong>half adder</strong></td><td>半加器 (bàn jiā qì)</td><td>XOR + AND — adds two bits</td></tr>
-    <tr class="fragment"><td><strong>sum / carry</strong></td><td>和 / 进位 (hé / jìnwèi)</td><td>the written digit / the overflow to the next column</td></tr>
-    <tr class="fragment"><td><strong>feedback</strong></td><td>反馈 (fǎnkuì)</td><td>an output wired back toward its own input — 🔥</td></tr>
-  </table>
-</section>
+<h2>What you can do now</h2>
+<div class="sgrid" style="margin-top:14px;">
+<div class="scard"><b>One gate can construct the others</b><br/>NAND universality is a statement about Boolean functions, not the components inside every chip.</div>
+<div class="scard"><strong class="accent1">Four languages, any edge</strong><br/>statement ⇄ expression ⇄ circuit ⇄ table — brackets explicit, wires named, junction dots drawn.</div>
+<div class="scard" style="border-top-color:var(--accent3);"><strong class="accent3">A circuit always exists</strong><br/>Read the 1-rows, AND each, OR them together — any fingerprint can be built.</div>
+<div class="scard" style="border-top-color:var(--accent2);"><strong class="accent2">Two gates did arithmetic</strong><br/>XOR writes, AND carries — the half adder. Arithmetic IS logic.</div>
+</div>
+<div class="rule accent2" style="margin-top:18px; font-size:.72em;"><strong>Still open:</strong> a wire looped from a gate's output back into its own input — what happens in there? 🔥</div>
+<p style="font-size:.55em; color:#98a0c0; margin-top:10px;">…and a debt from Binary still stands: writing 32 bits by hand hurts. Next lesson, we fix the <em>writing</em>.</p>
 
-<!-- ============ H16 SUMMARY ============ -->
-<section class="dk" data-background-color="#151B3C">
-  <div class="bar" style="background:var(--accent1)"></div>
-  <div class="badges"><span class="bg bg-both">0478 ✓ · 9618 ✓</span></div>
-  <h2>What you can do now</h2>
-  <div class="sgrid" style="margin-top:14px;">
-    <div class="scard"><strong class="accent1">One gate builds all</strong><br>NAND (or NOR) alone constructs NOT, AND, OR — and therefore everything. The die photo is answered.</div>
-    <div class="scard"><strong class="accent1">Four languages, any edge</strong><br>statement ⇄ expression ⇄ circuit ⇄ table — brackets explicit, wires named, junction dots drawn.</div>
-    <div class="scard" style="border-top-color:var(--accent3);"><strong class="accent3">A circuit always exists</strong><br>Read the 1-rows, AND each, OR them together — any fingerprint can be built.</div>
-    <div class="scard" style="border-top-color:var(--accent2);"><strong class="accent2">Two gates did arithmetic</strong><br>XOR writes, AND carries — the half adder. Arithmetic IS logic.</div>
-  </div>
-  <div class="rule accent2" style="margin-top:18px; font-size:.72em;"><strong>Still open:</strong> a wire looped from a gate's output back into its own input — what happens in there? 🔥</div>
-  <p style="font-size:.55em; color:#98a0c0; margin-top:10px;">…and a debt from Binary still stands: writing 32 bits by hand hurts. Next lesson, we fix the <em>writing</em>.</p>
-
-</section>
-
-</div></div>
-
-<button id="fs-btn" onclick="document.documentElement.requestFullscreen().catch(()=>{})">⛶ Fullscreen</button>
-
+</section><section class="lt" data-background-color="#F4F6FB" id="exit"><div class="badges"><span class="bg bg-hole">IG + AS</span></div><div class="bar"></div><h2>Before you leave</h2><div class="rule">1. A fan runs when enabled E=1 and hot H=1, or whenever override O=1. Write its expression.</div><div class="rule">2. Sketch that circuit with two-input gates; label the intermediate signal.</div><div class="rule">3. For a two-input table with output0011 in order00,01,10,11, is XOR correct? Explain.</div><div class="rule">4. Why can two circuits have the same Boolean table but behave differently as physical hardware?</div><div class="lanes"><div><b>📝 IN THE EXAM</b>Follow the supplied representation; NOT has one input, the other gates two.</div><div><b>🏛 IN REALITY</b>Equivalent Boolean functions may have different physical implementations.</div></div></section><section class="lt" data-background-color="#F4F6FB" id="exit-answer"><div class="badges"><span class="bg bg-hole">IG + AS</span></div><div class="bar"></div><h2>Check the exit</h2><div class="rule">1. F = (E AND H) OR O.</div><div class="rule">2. AND takes E,H and produces T; OR takes T,O and produces F. Both gates have two inputs.</div><div class="rule">3. No:0011 simply copies A. XOR is0110; output positions matter.</div><div class="rule">4. The table records the Boolean function for stable inputs. Delays, power and implementation can differ.</div><div class="lanes"><div><b>📝 IN THE EXAM</b>Follow the supplied representation; NOT has one input, the other gates two.</div><div><b>🏛 IN REALITY</b>Equivalent Boolean functions may have different physical implementations.</div></div></section><section class="dk" data-background-color="#151B3C" id="ledger"><div class="badges"><span class="bg bg-hole">IG + AS</span></div><div class="bar"></div><h2>🧾 Outside the exam hall</h2><div class="rule"><b>Keep:</b> translate the required behaviour faithfully; a counterexample is enough to disprove equivalence.</div><div class="rule"><b>For the exam:</b> follow the supplied structure, gate limits and published mark allocation. Working is useful; marks are question-specific.</div><div class="rule"><b>In hardware:</b> gates have delay, analogue voltage ranges and physical costs. Functional equivalence does not make those properties equal.</div><div class="rule"><b>Beyond the syllabus:</b> universality, adders and feedback explain what these ideas can build. The labels tell you which journey you are on.</div></section></div></div>
+<button id="fs-btn" onclick="document.documentElement.requestFullscreen().catch(()=&gt;{})">⛶ Fullscreen</button>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/reveal.js/4.6.1/reveal.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/reveal.js/4.6.1/plugin/notes/notes.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/contrib/auto-render.min.js"></script>
-<script>
+
+<script>var AUD=new URLSearchParams(location.search).get('aud');if(!['ig','al'].includes(AUD))AUD=null;
+function setAud(a){const u=new URL(location.href);if(a)u.searchParams.set('aud',a);else u.searchParams.delete('aud');u.hash='/title';location.href=u.href;}
+(function(){
+ if(!AUD){document.querySelectorAll('.slides>section').forEach((s,i)=>{if(i)s.remove()});document.querySelectorAll('#objectives').forEach(s=>s.remove());document.querySelector('#obj-btn')?.remove();return;}
+ document.querySelectorAll('[data-aud]').forEach(el=>{if(el.getAttribute('data-aud')!==AUD)el.remove()});
+})();
+function audTitle(){let sub=document.getElementById('aud-sub'),btn=document.getElementById('aud-btns'),chip=document.getElementById('aud-chip');if(AUD&&sub){sub.textContent='Words → expressions → circuits → truth tables';btn.style.display='none';chip.style.display='';chip.innerHTML='path: <b>'+(AUD==='ig'?'IGCSE 0478':'AS 9618')+'</b> · <a href="javascript:void(0)" onclick="setAud(null)">change</a>';}}
+</script><script>
 /* ===== 🎮 Circuit Forge ===== */
 function initForge(){
   var stageEl=document.getElementById('fg-stage'); if(!stageEl) return;
@@ -1150,7 +1011,7 @@ function initForge(){
        specTitle:'Final stage — a machine with TWO outputs:',
        spec:'The fingerprint is the table of binary addition, A + B: one column is what you WRITE, the other is what you CARRY.',
        tgt:target('HA','XOR','AND'),
-       banner:'Stage 6 — ???'}
+       banner:'Stage 6 — enrichment: two outputs add two bits'}
     ];
   }
 
@@ -1163,7 +1024,7 @@ function initForge(){
     s.className='mg-status'+(cls?' '+cls:'');
   }
   function drawProg(){
-    stageEl.textContent = done ? '🎉 forge complete — new game for free play' : stages[cur].banner;
+    stageEl.textContent = done ? '🎉 forge complete — new game to try again' : stages[cur].banner;
     var p=document.getElementById('fg-prog'); p.innerHTML='';
     stages.forEach(function(s,i){
       var d=document.createElement('div');
@@ -1187,7 +1048,7 @@ function initForge(){
     }
     slotEls().forEach(function(el,i){
       var g = st.type==='read' ? (st.rounds[st.round]['g'+(i+1)]) : slots[i];
-      el.textContent = g || '?';
+      el.textContent = g || '?'; el.setAttribute('aria-label','Gate slot '+(i+1)+': '+(g||'empty'));
       el.className='fg-slot'+(g?' filled':'')+(st.type!=='read'&&i===sel&&!done?' sel':'')+(st.type==='read'?' locked':'');
     });
   }
@@ -1251,14 +1112,11 @@ function initForge(){
           if(o===rd.correct){
             judging=true;
             setStatus('✓ correct — wires read, expression written','ok');
-            setTimeout(function(){
-              if(st.round<st.rounds.length-1){ st.round++; judging=false; beginStage(); }
-              else advance();
-            },1100);
+            document.getElementById('fg-skip').disabled=false;
           } else {
             b.classList.add('no');
-            setStatus('find the LAST gate first — its operator is the middle of the expression','bad');
-            setTimeout(function(){ b.classList.remove('no'); },450);
+            setStatus('find the LAST gate first — it gives the outermost operation','bad');
+
           }
         });
         opts.appendChild(b);
@@ -1268,7 +1126,7 @@ function initForge(){
       PAL.forEach(function(g){
         var b=document.createElement('button');
         b.className='mg-gbtn'; b.textContent=g;
-        b.addEventListener('click',function(){ if(!judging&&!done) place(g); });
+        b.addEventListener('click',function(){ if(!done) place(g); });
         pal.appendChild(b);
       });
     }
@@ -1276,7 +1134,7 @@ function initForge(){
 
   function place(g){
     var st=stages[cur];
-    slots[sel]=g;
+    judging=false; document.getElementById('fg-skip').disabled=true; slots[sel]=g;
     var nxt=slots.indexOf(null);
     if(nxt!==-1) sel=nxt;
     renderPanel();
@@ -1307,12 +1165,12 @@ function initForge(){
     if(all){
       judging=true;
       if(st.finale){
-        done=true; drawProg();
+        done=true; document.getElementById('fg-skip').disabled=true; drawProg();
         document.getElementById('fg-spec').innerHTML='<div class="fg-tada">🎉 YOU JUST BUILT ARITHMETIC</div>';
         setStatus('Sum = XOR (writes the digit) · Carry = AND (raises the 1) — this machine has a name. Next slide →','ok');
       } else {
-        setStatus('✓ fingerprint matches — same table, same circuit','ok');
-        setTimeout(advance,1300);
+        setStatus('✓ fingerprint matches — same Boolean function. Use Next when ready.','ok');
+        document.getElementById('fg-skip').disabled=false;
       }
     } else {
       if(st.hideTgt){ setStatus('✗ '+counterexample(st,m),'bad'); }
@@ -1322,16 +1180,17 @@ function initForge(){
 
     (function(){
     var n = document.getElementById('fg-skip'), k = document.getElementById('fg-back');
-    if(n && !n.__bound){ n.__bound = true; n.addEventListener('click', function(ev){ ev.stopPropagation(); advance(); }); }
-    if(k && !k.__bound){ k.__bound = true; k.addEventListener('click', function(ev){ ev.stopPropagation(); if(cur > 0){ cur--; judging = false; done = false; beginStage(); } }); }
+    if(n && !n.__bound){ n.__bound = true; n.addEventListener('click', function(ev){ ev.stopPropagation(); if(!judging||done)return; var st=stages[cur]; if(st.type==='read'&&st.round<st.rounds.length-1){st.round++;beginStage();}else advance(); }); }
+    if(k && !k.__bound){ k.__bound = true; k.addEventListener('click', function(ev){ ev.stopPropagation(); if(cur > 0){ cur--; judging = false; done = false; if(stages[cur].type==='read')stages[cur].round=0; beginStage(); } }); }
   })();
   function advance(){
     cur++; judging=false;
-    if(cur>=stages.length){ done=true; drawProg(); return; }
+    if(cur>=stages.length){ done=true; document.getElementById('fg-skip').disabled=true; drawProg(); return; }
     beginStage();
   }
 
   function beginStage(){
+    document.getElementById('fg-skip').disabled=true; document.getElementById('fg-back').disabled=cur===0;
     var st=stages[cur];
     judging=false;
     if(st.boss && !st.tgt){
@@ -1350,7 +1209,6 @@ function initForge(){
         var st=stages[cur];
         if(st.type==='read'||done) return;
         sel=parseInt(el.getAttribute('data-slot'),10);
-        judging=false;
         renderPanel();
       });
     });
@@ -1367,27 +1225,41 @@ function initForge(){
   beginStage();
 }
 
-/* ===== ring-oscillator cellar toy: the one-inverter loop never settles ===== */
-function initLoops(){
-  var v=document.getElementById('osc-val'); if(!v) return;
-  var w=document.getElementById('osc-loop'), s=0;
-  setInterval(function(){
-    s=1-s;
-    v.textContent=s;
-    v.style.color = s ? '#17B3A3' : '#F0655B';
-    w.setAttribute('stroke', s ? '#17B3A3' : '#F0655B');
-  }, 300);
+</script><script>function initMarkers(){
+ document.querySelectorAll('.rubric').forEach(h=>{
+  const boxes=[...h.querySelectorAll('input')];const refresh=()=>h.querySelector('.draw-score').textContent=boxes.filter(x=>x.checked).length+' / '+h.dataset.total+' · human checked';
+  boxes.forEach(x=>x.addEventListener('change',refresh));h.querySelector('.draw-reset').onclick=()=>{boxes.forEach(x=>x.checked=false);refresh()};
+ });
+ for(const a of ['ig','al']){
+  const h=document.getElementById('marker-'+a);if(!h)continue;
+  h.innerHTML='<div class="output-fields">'+Array.from({length:8},(_,i)=>'<label>'+ (a==='ig'?'ABC':'PQR')+'='+i.toString(2).padStart(3,'0')+'<input aria-label="Output row '+i+'" autocomplete="off" spellcheck="false"></label>').join('')+'</div><button class="mark">Mark outputs</button> <button class="reset">Reset</button><div class="mark-result" aria-live="polite"></div>';
+  const inputs=[...h.querySelectorAll('input')],res=h.querySelector('.mark-result'),want=a==='ig'?'00010001':'01111011',total=a==='ig'?4:2;
+  const clear=()=>{res.textContent='Answer changed — mark again.';inputs.forEach(x=>x.classList.remove('right','wrong'))};inputs.forEach(x=>x.addEventListener('input',clear));
+  h.querySelector('.reset').onclick=()=>{inputs.forEach(x=>{x.value='';x.classList.remove('right','wrong')});res.textContent=''};
+  h.querySelector('.mark').onclick=()=>{
+   const correct=inputs.map((x,i)=>x.value.trim()===want[i]);let score=a==='ig'?Math.floor(correct.filter(Boolean).length/2):Number(correct.slice(0,4).every(Boolean))+Number(correct.slice(4).every(Boolean));
+   inputs.forEach((x,i)=>{x.classList.toggle('right',correct[i]);x.classList.toggle('wrong',!correct[i])});
+   res.innerHTML='<b>'+score+' / '+total+'</b> · '+correct.filter(Boolean).length+' of 8 outputs correct.<p>'+ (a==='ig'?'Pairs of correct outputs earn marks regardless of where they occur.':'Each complete four-row half earns one mark; scattered correct rows are not combined.')+'</p><p>Correct output column: <b>'+want+'</b>. Working columns have no separate marks here.</p>';
+  };
+ }
 }
-
-Reveal.initialize({
-  hash:true, slideNumber:'c/t', width:1280, height:720, margin:.06,
-  plugins:[RevealNotes],
-  transition:'slide', backgroundTransition:'fade'
-}).then(function(){
-  initForge();
-  initLoops();
-  if(window.renderMathInElement){ renderMathInElement(document.body,{delimiters:[{left:'$',right:'$',display:false}]}); }
+</script><script>function initLoops(){
+ if(!document.getElementById('ring-step'))return;
+ let state=[1,0,0],tick=0,playing=false;
+ const draw=()=>{state.forEach((v,i)=>{document.getElementById('ring-v'+i).textContent=v;document.getElementById('ring-w'+i).setAttribute('stroke',v?'#17B3A3':'#98a0c0')});document.getElementById('ring-state').textContent='Step '+tick+' · outputs '+state.join('');document.getElementById('ring-play').textContent=playing?'Pause':'Play';};
+ const step=()=>{state=[1-state[2],1-state[0],1-state[1]];tick++;draw()};
+ document.getElementById('ring-step').onclick=()=>{playing=false;step()};
+ document.getElementById('ring-play').onclick=()=>{playing=!playing;draw()};
+ document.getElementById('ring-reset').onclick=()=>{playing=false;state=[1,0,0];tick=0;draw()};
+ const seed=q=>{document.getElementById('stable-q').textContent=q;document.getElementById('stable-r').textContent=1-q};
+ document.getElementById('seed-zero').onclick=()=>seed(0);document.getElementById('seed-one').onclick=()=>seed(1);
+ setInterval(()=>{if(playing&&!document.hidden&&Reveal.getCurrentSlide()?.id==='feedback')step()},650);
+ Reveal.on('slidechanged',e=>{if(e.currentSlide.id!=='feedback'){playing=false;draw()}});draw();
+}
+</script><script>Reveal.initialize({hash:true,slideNumber:'c/t',width:1280,height:720,margin:.04,plugins:[RevealNotes],transition:matchMedia('(prefers-reduced-motion: reduce)').matches?'none':'fade',backgroundTransition:'none'}).then(()=>{
+ audTitle();initForge();initMarkers();initLoops();
+ if(window.renderMathInElement)renderMathInElement(document.body,{delimiters:[{left:'$',right:'$',display:false}]});
+ document.querySelectorAll('.fg-slot').forEach(x=>{x.tabIndex=0;x.setAttribute('role','button');x.addEventListener('keydown',e=>{if(e.key===' '||e.key==='Enter'){e.preventDefault();x.click()}})});
 });
-</script>
-</body>
+</script><script type="application/json" id="course-routes">{"ig": {"slides": 32, "cells": 0}, "al": {"slides": 32, "cells": 0}}</script><script type="application/json" id="paper-spend">[["0478", "J22", "12", "5"], ["9618", "J23", "12", "6"]]</script></body>
 </html>

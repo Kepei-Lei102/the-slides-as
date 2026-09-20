@@ -1,10 +1,11 @@
 <!DOCTYPE html>
+
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
 <title>Where the Gigabytes Went — Storage Units &amp; File Size</title>
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/reveal.js/4.6.1/reveal.min.css">
+<link href="https://cdnjs.cloudflare.com/ajax/libs/reveal.js/4.6.1/reveal.min.css" rel="stylesheet"/>
 <style>
 :root{
   --dark:#151B3C; --light:#F4F6FB; --accent1:#17B3A3; --accent2:#F0655B;
@@ -214,491 +215,105 @@
 .reveal .slides section.pq-grow{top:40px !important;}
 
 </style>
-</head>
+<style>/* Third edition: keep the original typography, palette and widget forms. */
+.reveal .slides section{box-sizing:border-box}
+.reveal .slides section.pq-grow,.reveal .slides section:has(.marker){top:30px!important}
+.reveal .slides section:has(#bf-row){top:30px!important}
+.lanes{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:16px;font-size:15px;line-height:1.3;text-align:left}
+.lanes>div{border-top:2px solid var(--accent1);padding:7px 10px;background:rgba(23,179,163,.07)}
+.lanes>div+div{border-color:var(--accent3);background:rgba(242,181,60,.08)}
+.lanes b{display:block;font-size:12px;letter-spacing:.04em;margin-bottom:3px}.lanes span{display:block}
+.dk .lanes{color:var(--ice)}.dk .card{background:rgba(255,255,255,.08);color:var(--ice)}
+.dig{position:static;transform:none!important;animation:none;font-size:15px;text-align:center;margin-top:9px}
+.investigate{font-size:18px!important;color:#626c91;margin:12px 0 0!important}
+.source{font-size:14px!important;color:#697496;line-height:1.35!important}.source a{color:#42769a}
+.plant{font-size:17px!important;background:rgba(242,181,60,.14);border-left:4px solid var(--accent3);padding:9px 12px}
+.cliff{font-size:24px!important;color:var(--accent3)}
+.lens{border-collapse:collapse;width:100%;font-size:20px!important;line-height:1.4}
+.lens th,.lens td{padding:12px 14px;border-bottom:1px solid #c9d0e0;text-align:left}.lens th{background:var(--navy);color:white}.lens td{background:white}
+.reveal details{font-size:20px;line-height:1.4;margin-top:12px}.reveal summary{cursor:pointer;color:#079385;font-weight:bold}
+.marker{font-size:18px;line-height:1.35}.mark-fields{display:flex;gap:12px;flex-wrap:wrap;margin:12px 0}.mark-fields label{display:flex;flex-direction:column;gap:4px;flex:1;min-width:130px}
+.marker input[type=text],.marker textarea{box-sizing:border-box;max-width:100%;font:19px 'Courier New',monospace;padding:7px;border:2px solid #bfc7df;border-radius:6px;color:var(--navy);background:white}
+.marker textarea{display:block;width:100%;height:58px;resize:vertical;max-height:100px}.marker input.ok{border-color:var(--accent1)}.marker input.bad{border-color:var(--accent2)}
+.mark-controls{display:flex;gap:10px;margin:10px 0}.marker button{font:inherit;cursor:pointer;background:var(--navy);color:white;border:0;border-radius:7px;padding:8px 15px}
+.mark-options{display:grid;grid-template-columns:1fr 1fr;gap:8px}.mark-options button{text-align:left;background:#e6eaf5;color:var(--navy);border:2px solid transparent}.mark-options button.chosen{border-color:var(--accent2)}
+.mark-feedback{display:grid;grid-template-columns:1fr 1fr;gap:16px;font-size:17px;line-height:1.4}.mark-feedback:empty{display:none}.mark-feedback>div{background:white;padding:10px 12px;border-radius:8px}.mark-feedback ul{margin:5px 0 0 20px!important}.mark-score{font-size:25px;font-weight:bold;color:#088778}.human{display:block;padding:7px 0}.human input{margin-right:8px}.marker .muted{color:#6b7390;font-size:15px}
+.reveal .slides section p{line-height:1.4}
+.reveal .slides section#trick-ig,.reveal .slides section#reveal-ig,.reveal .slides section#encore-al{top:28px!important}
+.reveal .slides section#build-card-ig{top:25px!important}
+.reveal .slides section .wh-odo{align-items:center}.wh-side{min-width:0}
+.reveal .slides section .wh-say{font-size:18px;line-height:1.3}
+.reveal .slides section .wh-bres{min-height:24px}
+.reveal .slides section .marker p{font-size:18px}
+.reveal .slides section .transition-none{transition:none!important}
+.reveal .slides>section,.reveal .slides>section>section{transition-duration:180ms!important}
+@media(prefers-reduced-motion:reduce){*,*::before,*::after{animation:none!important;transition:none!important;scroll-behavior:auto!important}}
+
+.reveal .slides section:has(.marker)>h2{margin:14px 0 16px}
+.reveal .slides section:has(.marker)>p{margin:12px 0}
+.reveal .slides section .mark-feedback p{margin:6px 0;font-size:17px}
+.mark-feedback ul{line-height:1.4}.marker textarea{resize:none}
+
+.reveal h2{font-size:1.55em;margin:22px 0}.reveal section>p{font-size:22px}
+.hook-grid{display:grid;grid-template-columns:1fr 1fr;gap:14px}.hook-grid h3{font-size:30px;margin:9px 0}.hook-grid p{font-size:18px;margin:5px 0}.hook-grid b{font-size:20px}
+#weigh{background:white;border-radius:16px;padding:22px;text-align:center}.weigh-pair{display:flex;justify-content:center;gap:35px;margin:15px}.weigh-pair b{background:#e8eef9;border-radius:12px;padding:20px;font-size:36px;min-width:250px}.weigh-controls{display:flex;gap:12px;justify-content:center;margin:12px}.weigh-controls button,.reveal #aud-btns button{border:0;border-radius:8px;padding:12px 22px;background:var(--navy);color:white;font-size:20px;cursor:pointer}.weigh-controls button:disabled{opacity:.35}.weigh-feedback{min-height:55px;font-size:21px}.weigh-round{font-size:16px;color:#687392}
+#bit-depth canvas{max-height:176px;width:100%;object-fit:fill}#bit-depth #bd-cap{font-size:18px;line-height:1.4;margin:8px 0}#bit-depth #bd-read{font-size:19px}#bd-range{width:55%;margin:15px 20px 8px 0}#bd-hard{font-size:17px}
+#paper-ig,#paper-al{top:18px!important}.reveal #paper-ig>p,.reveal #paper-al>p{font-size:19px;margin:8px 0}.reveal #paper-ig h2,.reveal #paper-al h2{margin:18px 0 10px}
+.marker .ig-grid{display:grid;grid-template-columns:1fr 1fr;gap:16px}.marker label{font-size:16px}.marker textarea{height:48px;font-size:17px}.marker .rubric{font-size:15px;line-height:1.3;background:white;padding:8px}.marker .rubric label{display:block;font-size:15px;margin:4px 0}.marker .human-note{font-size:15px;margin:6px 0}.marker input[type=text]{font-size:18px;padding:5px;width:100%}.marker .mark-score{font-size:21px;min-height:27px}.marker .mark-fields{margin:6px 0}.marker .mark-options{grid-template-columns:repeat(4,1fr)}.marker .mark-options button{font-size:17px;padding:8px}.marker .mark-controls{margin:8px 0}
+#size-machine .pyta{font-size:18px}#size-machine .two-col{gap:18px}#settle .pyta{font-size:19px}.pyout{max-height:120px;overflow:auto}.reveal .slides section .pyout{width:auto;box-shadow:none}.reveal #vocabulary h2{margin:20px 0}
+
+.reveal .rule{font-size:23px;line-height:1.4;padding:12px 17px}.reveal .big{font-size:34px;line-height:1.6}.reveal #title h2{font-size:64px;max-width:1000px}.reveal #title>p{font-size:27px}.reveal #title a{color:#5fd6c9}#title #obj-btn{font-size:18px;opacity:1}#title .dig{display:none}
+#hook .rule,#bit-depth .rule,#size-machine .rule,#sound-size .rule{font-size:21px}#bit-depth #bd-read{display:block;margin:6px 0}#bit-depth #bd-range{width:55%;margin:12px 0}#bit-depth #bd-hard{display:inline-block;margin:6px 0}#fs-btn{right:100px;bottom:15px}#settle .rule{font-size:21px}
+</style></head>
 <body>
-<div class="reveal"><div class="slides">
-
-<!-- ==================== H1 TITLE ==================== -->
-<section>
-  <section class="dk" data-background-color="#151B3C">
-    <div class="bar" style="background:var(--accent1)"></div>
-    <div class="badges"><span class="bg bg-both">0478 ✓ · 9618 ✓</span></div>
-    <p style="font-size:.55em; color:var(--accent3); letter-spacing:.12em; margin-bottom:0;">COMPUTER SCIENCE · U2b · DATA REPRESENTATION</p>
-    <h1 style="margin:.1em 0;">Where the Gigabytes Went</h1>
-    <p style="font-size:.7em; margin-top:0;">Storage units, and the arithmetic of a file</p>
-    <p style="font-size:.5em; color:#98a0c0; margin-top:2.2em;">
-      Navigation: <span class="mono">→</span> next idea &nbsp;·&nbsp; <span class="mono">↓</span> dig deeper
-      <span class="accent3">🕳️</span> &nbsp;·&nbsp; badges top-right show whose exam it's on
-    </p>
-    <p style="margin-top:1.6em;"><button id="obj-btn" onclick="Reveal.down()">🎯 objectives</button></p>
-
-</section>
-  <section class="dk" data-background-color="#151B3C">
-    <div class="bar" style="background:var(--accent3)"></div>
-    <div class="badges"><span class="bg bg-both">0478 ✓ · 9618 ✓</span></div>
-    <h2>🎯 Today you will be able to</h2>
-    <div class="rule"><strong class="accent1">1.</strong> Climb the storage ladder — bit, nibble, byte, KiB, MiB, GiB, TiB — and say how much of the previous unit each one holds</div>
-    <div class="rule"><strong class="accent1">2.</strong> Explain the difference between a <em>binary</em> prefix and a <em>decimal</em> prefix, and say which one your computer uses</div>
-    <div class="rule accent3"><strong class="accent3">3.</strong> Calculate the file size of an image from its resolution and colour depth</div>
-    <div class="rule accent2"><strong class="accent2">4.</strong> Calculate the file size of a sound from its sample rate, sample resolution and length — and give the answer in the unit you were asked for</div>
-  </section>
-</section>
-
-<!-- ==================== H2 HOOK ==================== -->
-<section class="lt" data-background-color="#F4F6FB">
-  <div class="bar" style="background:var(--accent2)"></div>
-  <div class="badges"><span class="bg bg-both">0478 ✓ · 9618 ✓</span></div>
-  <h2>One drive. Three computers. Three answers.</h2>
-  <p style="font-size:.72em; margin-top:-4px;">I buy one SSD and plug it into three machines in a row. Nobody touches anything in between.</p>
-  <div class="panels">
-    <div class="pan box">
-      <div class="who">📦 THE BOX SAYS</div>
-      <div class="num">256 GB</div>
-      <div class="sub">printed on the packaging,<br>and on the invoice</div>
-    </div>
-    <div class="pan win fragment">
-      <div class="who">🖥 WINDOWS SAYS</div>
-      <div class="num">238 GB</div>
-      <div class="sub">This PC → Local Disk (D:)<br>right-click → Properties</div>
-    </div>
-    <div class="pan mac fragment">
-      <div class="who">🍎 THE MAC SAYS</div>
-      <div class="num">256 GB</div>
-      <div class="sub">the same drive,<br>ten seconds later</div>
-    </div>
-    <div class="pan pen fragment">
-      <div class="who">🐧 LINUX SAYS</div>
-      <div class="num" style="font-size:1.15em; line-height:1.5;">which<br>would you like?</div>
-      <div class="sub"><span class="mono">df -h</span> → 238 &nbsp;·&nbsp; <span class="mono">df -H</span> → 256<br>the only one that hands you a switch</div>
-    </div>
-  </div>
-  <p class="fragment center" style="font-size:.85em; margin-top:18px;">So which one is <strong class="accent2">lying</strong>?</p>
-  <div class="fragment rule accent3"><strong>None of them.</strong> Not the box, not Windows, not the Mac — and Linux is the one being openly cheeky about it, because on Linux the answer has always been a <em>flag you choose</em>. By the end of today you will be able to prove all four honest, in one line of arithmetic.</div>
-
-</section>
-
-<!-- ==================== H3 THE LADDER ==================== -->
-<section class="lt" data-background-color="#F4F6FB">
-  <div class="bar" style="background:var(--accent1)"></div>
-  <div class="badges"><span class="bg bg-both">0478 ✓ · 9618 ✓</span></div>
-  <h2>The ladder up from the bit</h2>
-  <p style="font-size:.72em; margin-top:-6px;">You already own the bottom three rungs. Everything above them is the <strong class="accent2">same step, repeated</strong>.</p>
-  <div class="lad" style="margin:16px 0 8px;">
-    <div class="u base">bit<small>0 or 1</small></div>
-    <div class="x">×4 →</div>
-    <div class="u base">nibble<small>4 bits</small></div>
-    <div class="x">×2 →</div>
-    <div class="u base">byte<small>8 bits</small></div>
-    <div class="x">×1024 →</div>
-    <div class="u">KiB<small>kibibyte</small></div>
-    <div class="x">×1024 →</div>
-    <div class="u">MiB<small>mebibyte</small></div>
-    <div class="x">×1024 →</div>
-    <div class="u">GiB<small>gibibyte</small></div>
-    <div class="x">×1024 →</div>
-    <div class="u">TiB<small>tebibyte</small></div>
-    <div class="x">×1024 →</div>
-    <div class="u hi">PiB<small>pebibyte</small></div>
-    <div class="x">×1024 →</div>
-    <div class="u hi">EiB<small>exbibyte</small></div>
-  </div>
-  <div class="fragment rule"><strong class="accent1">The exam's own wording:</strong> you must know <em>"the amount of the previous denomination present"</em> — 8 bits in a byte, <strong>1024 mebibytes in a gibibyte</strong>. It never asks you to jump two rungs at once, so you never have to.</div>
-  <div class="fragment rule accent3" style="font-size:.66em;"><strong>The two dashed rungs are IGCSE-only.</strong> 0478 lists all the way to the <strong>exbibyte</strong>; 9618 stops at the <strong>tebibyte</strong>. If you are sitting 9618, learn them anyway — they cost you one sentence and they turn up in the news.</div>
-
-</section>
-
-<!-- ==================== H4 TWO LADDERS + THE DRIFT (3 holes) ==================== -->
-<section>
-  <section class="lt" data-background-color="#F4F6FB">
-    <div class="bar" style="background:var(--accent2)"></div>
-    <div class="badges"><span class="bg bg-both">0478 ✓ · 9618 ✓</span></div>
-    <h2>Two ladders, and they drift apart</h2>
-    <div class="two-col" style="gap:20px;">
-      <div>
-        <table class="dual">
-          <tr><th>Engineer's (×1024)</th><th>Shopkeeper's (×1000)</th><th style="text-align:right;">gap</th></tr>
-          <tr><td class="m">KiB = 1 024 B</td><td class="m">kB = 1 000 B</td><td class="gap">2.4 %</td></tr>
-          <tr><td class="m">MiB = 1 048 576 B</td><td class="m">MB = 10⁶ B</td><td class="gap">4.9 %</td></tr>
-          <tr class="hot"><td class="m">GiB = 2³⁰ B</td><td class="m">GB = 10⁹ B</td><td class="gap">7.4 %</td></tr>
-          <tr><td class="m">TiB = 2⁴⁰ B</td><td class="m">TB = 10¹² B</td><td class="gap">10.0 %</td></tr>
-          <tr><td class="m">PiB = 2⁵⁰ B</td><td class="m">PB = 10¹⁵ B</td><td class="gap">12.6 %</td></tr>
-          <tr><td class="m">EiB = 2⁶⁰ B</td><td class="m">EB = 10¹⁸ B</td><td class="gap">15.3 %</td></tr>
-        </table>
-      </div>
-      <div>
-        <div class="rule accent2" style="margin-top:0;"><strong>The gap is not fixed. It compounds.</strong> Every rung multiplies the disagreement again, because you are comparing 1024ⁿ with 1000ⁿ.</div>
-        <div class="fragment rule accent3"><strong>Which is why nobody complained in 1970.</strong> At kilobyte scale the two ladders are 2.4 % apart — that is 24 bytes, and 24 bytes was not worth an argument. Drives grew. The argument arrived on schedule.</div>
-        <div class="fragment rule"><strong class="accent1">Exam rule, in the syllabus's own words:</strong> <em>"Calculations must use the measurement of 1024 and not 1000."</em> In this room, and in that hall, the <strong>engineer's ladder</strong> is the only one you compute with.</div>
-      </div>
-    </div>
-    <div class="dig">⬇ but why 1024? 🕳️</div>
-
-</section>
-
-  <!-- H4↓ why 1024 -->
-  <section class="lt" data-background-color="#F4F6FB">
-    <div class="bar" style="background:var(--accent3)"></div>
-    <div class="badges"><span class="bg bg-hole">🕳️ beyond the exam</span></div>
-    <h2>Why 1024?</h2>
-    <div style="font-size:.74em; max-width:960px;">
-      <div class="rule">Memory is not a shelf you can build to any length. To reach a cell you send it an <strong>address</strong> — in binary, down a fixed number of wires. <strong class="accent2">n</strong> wires can name exactly <strong class="accent1">2ⁿ</strong> cells. There is no chip in the world with 1000 addressable cells, because you cannot get 1000 out of <em>n</em> wires.</div>
-      <div class="rule fragment">10 wires → 2¹⁰ → <strong>1024</strong> cells. Which is <em>almost</em> a thousand. So the engineers reached for the word they already had, and called it a <strong>kilo</strong>byte. They were off by 24 bytes and nobody in 1965 cared.</div>
-      <div class="rule accent3 fragment"><strong>And the near-miss is a fact about logarithms.</strong> log₁₀2 = 0.30103 — so ten doublings land on 10<sup>3.0103</sup>, a hair over three decades. That 0.0103 is the whole ambiguity. <strong>A rounding error in a logarithm became an industry's argument.</strong></div>
-      <div class="rule accent2 fragment">You will meet those address wires again for real, when we open the processor and count them.</div>
-    </div>
-    <div class="dig">⬇ then why do drives use 1000? 🕳️</div>
-  </section>
-
-  <!-- H4↓↓ RAM vs disks -->
-  <section class="lt" data-background-color="#F4F6FB">
-    <div class="bar" style="background:var(--accent3)"></div>
-    <div class="badges"><span class="bg bg-hole">🕳️ beyond the exam</span></div>
-    <h2>Why your RAM is binary but your disk is not</h2>
-    <div class="three-col" style="font-size:.6em;">
-      <div class="card">
-        <strong class="accent1">🧠 RAM has no choice.</strong><br>
-        Address wires, 2ⁿ cells. A stick sold as <strong>8 GB</strong> genuinely holds 8 <strong>GiB</strong> — 8 589 934 592 bytes. Nobody is rounding; the hardware could not have come out any other number.
-      </div>
-      <div class="card">
-        <strong class="accent2">💽 A hard disk has a choice.</strong><br>
-        A platter is addressed by <em>sector number</em>, and a sector count can be anything at all. Nothing forces a power of two — so the number on the box became a <strong>marketing decision</strong>, and marketing picked the ladder with the bigger number.
-      </div>
-      <div class="card">
-        <strong class="accent3">⚡ An SSD is the interesting one.</strong><br>
-        Flash chips <em>are</em> built on the binary ladder. A drive sold as <strong>256 GB</strong> physically contains 256 <strong>GiB</strong> of silicon — 274.9 decimal GB. It sells you 256 × 10⁹ and <strong>keeps the rest</strong>.
-      </div>
-    </div>
-    <div class="fragment rule accent3" style="margin-top:14px;"><strong>The controller keeps those ≈ 18.9 GB deliberately.</strong> They are its <strong>over-provisioning</strong>: a private reserve of spare blocks, used to keep the drive fast and to retire cells as they wear out. You never see them and you cannot have them. <strong>On a hard disk the gap is bookkeeping; on an SSD it is a workshop.</strong></div>
-    <div class="fragment rule accent2"><strong>And look at the ratio one more time.</strong> 274.9 ÷ 256 = <strong>1.0737</strong> — the same 2³⁰ ÷ 10⁹ that made Windows say 238, turning up again at the <em>other end</em> of the same drive. <strong>Wherever the two ladders touch, that number is waiting.</strong></div>
-    <div class="dig">⬇ so did anyone actually sue? 🕳️</div>
-
-</section>
-
-  <!-- H4↓↓↓ the lawsuits -->
-  <section class="lt" data-background-color="#F4F6FB">
-    <div class="bar" style="background:var(--accent3)"></div>
-    <div class="badges"><span class="bg bg-hole">🕳️ beyond the exam</span></div>
-    <h2>Yes. In court.</h2>
-    <div class="two-col" style="font-size:.68em;">
-      <div class="card">
-        <strong class="accent2">⚖️ Western Digital, settled 2006</strong><br>
-        A class action on behalf of roughly a <strong>million</strong> buyers. The complaint's example: a drive sold as <strong>80 GB</strong> that Windows reported as <strong>74.5 GB</strong>. WD settled by giving out free backup software valued at $30 a copy. Seagate faced the same claim — that its drives were overstated by <strong class="accent2">7 %</strong>.
-      </div>
-      <div class="card">
-        <strong class="accent1">📐 Look at that 7 % again.</strong><br>
-        It is not a number a lawyer chose. It is the <strong>giga row</strong> of the table two slides back: 2³⁰ ÷ 10⁹ = 1.0737. The lawsuit was, in the end, an argument about which of two ladders the word "giga" was standing on.
-      </div>
-    </div>
-    <div class="fragment rule accent3" style="margin-top:16px;"><strong>And this is where your syllabus's strange vocabulary comes from.</strong> In <strong>1998</strong> the IEC published a fix: new prefixes for the binary ladder — <strong>kibi</strong>, <strong>mebi</strong>, <strong>gibi</strong> — where the "bi" says <em>binary</em>, so that "kilo" could go back to meaning 1000 and nobody would ever have to argue again.</div>
-    <div class="fragment rule accent2"><strong>Almost nobody uses them.</strong> Twenty-eight years later, the industry still says "GB" for both. Cambridge, to its credit, insists on the honest spelling — which is why your exam is one of the few places on earth you will read the word <em>mebibyte</em>.</div>
-
-</section>
-</section>
-
-<!-- ==================== H5 PY-CELL: SETTLE THE HOOK ==================== -->
-<section class="lt" data-background-color="#F4F6FB">
-  <div class="bar" style="background:var(--accent1)"></div>
-  <div class="badges"><span class="bg bg-both">0478 ✓ · 9618 ✓</span></div>
-  <h2>Settle it 🐍</h2>
-  <div class="two-col" style="gap:22px;">
-    <div>
-      <p style="font-size:.72em; margin-top:0;">The box sold me <strong>256 000 000 000 bytes</strong>. That is what "256 GB" means on the shopkeeper's ladder, and the drive delivered every one of them.</p>
-      <p style="font-size:.72em;">Windows then counted those same bytes on the <strong>engineer's</strong> ladder — divide by 1024 three times to reach gibibytes — and printed the answer with the label "GB".</p>
-      <div class="fragment rule accent2"><strong>238 GB and 256 GB are the same drive.</strong> Nothing is missing. One number is bytes ÷ 10⁹; the other is bytes ÷ 2³⁰. The bytes never moved.</div>
-    </div>
-    <div>
-      <div class="pycell"><script type="text/plain" class="pysrc">bytes_on_the_drive = 256000000000
+<div class="reveal"><div class="slides"><section><section class="dk" data-background-color="#151B3C" id="title"><div class="badges"><span class="bg bg-both">IG + AS</span></div><div class="bar"></div><h2>Where the Gigabytes Went</h2><p>Storage units, and the arithmetic of a file</p><div id="aud-btns"><button onclick="setAud('ig')">IGCSE 0478 ▶</button> <button onclick="setAud('al')">AS 9618 ▶</button></div><p id="aud-sub"></p><p id="aud-chip" style="display:none"></p><p class="small">→ main lesson · ↓ optional investigation</p><button id="obj-btn" onclick="Reveal.down()">🎯 objectives</button><div class="dig">↓ investigate · → continue</div></section><section class="lt" data-background-color="#F4F6FB" id="objectives"><div class="badges"><span class="bg bg-both">IG + AS</span></div><div class="bar"></div><h2>Today you will be able to</h2><div class="rule">Follow bits → bytes → binary storage units.</div><div class="rule">Explain how two unit systems can name the same byte count.</div><div class="rule">Count raw image and sound data; keep units attached.</div><div class="rule">Predict a change, then check it with a short Python calculation.</div><p data-aud="ig">IG: ladder through EiB; file calculations use 1024.</p><p data-aud="al">AS: binary and decimal prefixes through tera; bitmap estimates and size effects.</p></section></section><section class="lt" data-background-color="#F4F6FB" id="hook"><div class="badges"><span class="bg bg-both">IG + AS</span></div><div class="bar"></div><h2>One drive. Different labels.</h2><div class="hook-grid"><div class="card"><b>📦 Packaging</b><h3>256 GB</h3><p>256 billion advertised bytes</p></div><div class="card"><b>🖥 Binary display</b><h3>≈238. 4</h3><p>GiB; some tools label it “GB”</p></div><div class="card"><b>🍎 Decimal display</b><h3>256</h3><p>GB, before other deductions</p></div><div class="card"><b>🐧 GNU df</b><h3>-h / -H</h3><p>1024 / 1000 scaling</p></div></div><div class="rule">Which unit is each panel counting? Could the same byte count produce both numbers?</div><div class="rule">Illustrative displays: a real formatted volume may have less usable space. Tool and system conventions differ.</div><p class="source"><a href="https://support.apple.com/en-gb/102119" rel="noopener" target="_blank">Apple: storage capacity and formatted space</a></p><p class="source"><a href="https://www.gnu.org/s/coreutils/manual/html_node/df-invocation.html" rel="noopener" target="_blank">GNU: df display options</a></p><div class="lanes"><div><b>📝 IN THE EXAM</b><span>IG calculations: 1024. AS: use the prefix named.</span></div><div><b>🏛 IN REALITY</b><span>Unit conversion changes the label; reserved or formatted space is a separate issue.</span></div></div></section><section class="lt" data-background-color="#F4F6FB" id="ladder"><div class="badges"><span class="bg bg-both">IG + AS</span></div><div class="bar"></div><h2>The ladder starts where binary stopped</h2><div class="rule"><b>4 bits = 1 nibble · 2 nibbles = 1 byte · 8 bits = 1 byte</b></div><div class="rule"><b class="big">byte → KiB → MiB → GiB → TiB</b></div><div class="rule">From byte upwards, each step holds <b>1024</b> of the previous unit. Going up: divide. Going down: multiply.</div><div class="rule">Say it with units: 3 MiB = 3 × 1024 KiB = 3072 KiB.</div><div class="lanes"><div><b>📝 IN THE EXAM</b><span>IG: binary ladder through EiB. AS: binary/decimal through tera.</span></div><div><b>🏛 IN REALITY</b><span>Address width limits possible addresses; hardware need not populate every one.</span></div></div></section><section class="lt" data-aud="ig" data-background-color="#F4F6FB" id="ig-high"><div class="badges"><span class="bg bg-both">IGCSE 0478</span></div><div class="bar"></div><h2>Two more rungs for IG</h2><div class="rule"><b class="big">TiB → PiB → EiB</b></div><div class="rule">1 PiB = 1024 TiB. 1 EiB = 1024 PiB.</div><div class="rule">Predict: how many TiB are in 2 PiB? How many PiB are in half an EiB?</div><details><summary>Check the idea</summary><p>2048 TiB; 512 PiB. The step size stays the same.</p></details><div class="lanes"><div><b>📝 IN THE EXAM</b><span>IG: binary ladder through EiB. AS: binary/decimal through tera.</span></div><div><b>🏛 IN REALITY</b><span>Address width limits possible addresses; hardware need not populate every one.</span></div></div></section><section><section class="lt" data-background-color="#F4F6FB" id="two-ladders"><div class="badges"><span class="bg bg-both">IG + AS</span></div><div class="bar"></div><h2>Two ladders, one byte count</h2><table class="lens"><tr><th>Units</th><th>Binary: bytes</th><th>Decimal: bytes</th></tr><tr><td>KiB / kB</td><td>1024</td><td>1000</td></tr><tr><td>MiB / MB</td><td>1 048 576</td><td>1 000 000</td></tr><tr><td>GiB / GB</td><td>2³⁰</td><td>10⁹</td></tr><tr><td>TiB / TB</td><td>2⁴⁰</td><td>10¹²</td></tr></table><p data-aud="ig">IG: the decimal ladder explains the real-world puzzle; your syllabus file calculations use 1024.</p><p data-aud="al">AS: distinguish both prefixes and use the one named in the question.</p><div class="lanes"><div><b>📝 IN THE EXAM</b><span>IG calculations: 1024. AS: use the prefix named.</span></div><div><b>🏛 IN REALITY</b><span>Unit conversion changes the label; reserved or formatted space is a separate issue.</span></div></div><div class="dig">↓ investigate · → continue</div></section><section class="lt" data-background-color="#F4F6FB" data-hole="true" id="addresses"><div class="badges"><span class="bg bg-both">↓ OPTIONAL INVESTIGATION</span></div><div class="bar"></div><h2>Why 1024?</h2><div class="rule">Ten binary address digits name <b>2¹⁰ = 1024</b> distinct patterns. That makes powers of two convenient capacities.</div><div class="rule"><b>Investigate:</b> a device implements only addresses 0–999. How many ten-bit patterns are unused? Does ten-bit addressing force every pattern to contain memory?</div><details><summary>Check the idea</summary><p>24 are unused. Address width bounds the number of distinct addresses; it does not force every address to be populated.</p></details><div class="lanes"><div><b>📝 IN THE EXAM</b><span>IG: binary ladder through EiB. AS: binary/decimal through tera.</span></div><div><b>🏛 IN REALITY</b><span>Address width limits possible addresses; hardware need not populate every one.</span></div></div></section><section class="lt" data-background-color="#F4F6FB" data-hole="true" id="reserve"><div class="badges"><span class="bg bg-both">↓ OPTIONAL INVESTIGATION</span></div><div class="bar"></div><h2>Two gaps that must stay separate</h2><div class="two-col"><div class="rule"><b>Unit conversion</b><br/>256 billion bytes ≈238. 4 GiB. Same bytes, a different-sized unit.</div><div class="rule"><b>Reserved capacity</b><br/>An SSD may keep capacity for controller work. Its amount depends on the product and configuration.</div></div><div class="rule">A toy drive has 512 GB raw capacity and exposes 400 GB. Predict its reserved capacity. Can a “256 GB” sticker alone tell you its raw flash capacity?</div><details><summary>Check the idea</summary><p>112 GB in the toy example. A retail capacity label alone does not establish raw capacity or a universal reserve percentage.</p></details><p class="source"><a href="https://semiconductor.samsung.com/resources/others/Samsung_SSD_845DC_04_Over-provisioning.pdf" rel="noopener" target="_blank">Samsung: over-provisioning and controller work</a></p><div class="lanes"><div><b>📝 IN THE EXAM</b><span>IG calculations: 1024. AS: use the prefix named.</span></div><div><b>🏛 IN REALITY</b><span>Unit conversion changes the label; reserved or formatted space is a separate issue.</span></div></div></section><section class="lt" data-background-color="#F4F6FB" data-hole="true" id="dispute"><div class="badges"><span class="bg bg-both">↓ OPTIONAL INVESTIGATION</span></div><div class="bar"></div><h2>The label dispute reached court</h2><div class="rule">A 2006 court record in <i>Safier v. Western Digital</i> records a proposed settlement over drive-capacity labelling. Unit definitions mattered outside a classroom.</div><div class="rule"><b>Investigate:</b> 1 GiB is 1. 073741824 GB. Calculate (1. 073741824 − 1) ÷ 1, then divide the same difference by 1. 073741824. Why are the percentages different?</div><details><summary>Check the idea</summary><p>7. 37% relative to the smaller unit; 6. 87% relative to the larger one. State the denominator before claiming a percentage gap. Neither calculation removes bytes.</p></details><p class="source"><a href="https://www.govinfo.gov/content/pkg/USCOURTS-cand-3_05-cv-03353/pdf/USCOURTS-cand-3_05-cv-03353-4.pdf" rel="noopener" target="_blank">2006 court record and settlement notice</a></p><div class="lanes"><div><b>📝 IN THE EXAM</b><span>IG calculations: 1024. AS: use the prefix named.</span></div><div><b>🏛 IN REALITY</b><span>Unit conversion changes the label; reserved or formatted space is a separate issue.</span></div></div></section></section><section class="lt" data-aud="al" data-background-color="#F4F6FB" id="prefix-al"><div class="badges"><span class="bg bg-both">AS 9618</span></div><div class="bar"></div><h2>AS: name the ladder before calculating</h2><div class="rule">3 KiB = 3 × 1024 = <b>3072 bytes</b>.</div><div class="rule">3 kB = 3 × 1000 = <b>3000 bytes</b>.</div><div class="rule">Try: 2 TB in GB; 2 TiB in GiB. Explain why the multipliers differ.</div><details><summary>Check the idea</summary><p>2000 GB; 2048 GiB. Tera/giga are decimal; tebi/gibi are binary.</p></details><div class="lanes"><div><b>📝 IN THE EXAM</b><span>IG calculations: 1024. AS: use the prefix named.</span></div><div><b>🏛 IN REALITY</b><span>Unit conversion changes the label; reserved or formatted space is a separate issue.</span></div></div></section><section class="lt" data-background-color="#F4F6FB" id="settle"><div class="badges"><span class="bg bg-both">IG + AS</span></div><div class="bar"></div><h2>Settle the drive puzzle 🐍</h2><div class="rule">Predict which output is near 256 and which is near 238. Run; then change the byte count to <b>1 000 000 000 000</b>.</div><div class="pycell"><script class="pysrc" type="text/plain">bytes_on_the_drive = 256000000000
 
 print(bytes_on_the_drive / 1000 / 1000 / 1000)
-print(bytes_on_the_drive / 1024 / 1024 / 1024)</script></div>
-      <p class="fragment smaller" style="color:#7a83a8; margin-top:8px;">Two ladders, one drive, one line of arithmetic each. Try a 1 TB drive: <span class="mono">1000000000000</span>.</p>
-    </div>
-  </div>
-
-</section>
-
-<!-- ==================== H6 🧾 THE LEDGER ==================== -->
-<section class="lt" data-background-color="#F4F6FB">
-  <div class="bar" style="background:var(--accent3)"></div>
-  <div class="badges"><span class="bg bg-both">0478 ✓ · 9618 ✓</span></div>
-  <h2>🧾 Outside the exam hall</h2>
-  <p style="font-size:.7em; margin-top:-6px;">Every so often I will stop and tell you what a piece of this syllabus is actually worth once the exam is over. Here is today's ledger.</p>
-  <div class="toll">
-    <span class="th">WHAT TRANSFERS</span><br>
-    <span class="yes">The ×1024 / ×1000 split — permanently.</span> The moment a number looks about 7 % off, "which kind of giga?" should be your first thought, and it will be right more often than any other guess. It is not only disks: <strong>network speeds are decimal, and they are in bits.</strong> A "100 Mbps" line carries 100 000 000 bits per second, which is 100 000 000 ÷ 8 ÷ 1024 ÷ 1024 ≈ <strong>11.9 MiB/s</strong> — and that is why a download you were promised at "100 megabits" arrives at "12 megabytes" and nobody has cheated you.
-  </div>
-  <div class="toll">
-    <span class="th">WHAT DOESN'T</span><br>
-    <span class="no">Saying "mebibyte" out loud.</span> Almost nobody does. In twenty-eight years the words have not caught on outside standards documents, exam papers and a corner of the Linux world — engineers write GB, mean either one, and work out which from context. <strong>One place does spell it your way:</strong> the KDE desktop writes KiB / MiB / GiB in its file manager, while GNOME writes kB / MB / GB. Two Linux desktops, same files, different words — which tells you the argument is still live.
-  </div>
-  <div class="rule accent3"><strong>So: learn the words for the exam, and keep the arithmetic for life.</strong> That is not a complaint about the syllabus — the syllabus is teaching the honest version. It is a warning that if you say "gibibyte" at your first job, somebody will look at you strangely, and you will still be the one who is right.</div>
-
-</section>
-
-<!-- ==================== H7 🎮 THE WEIGH-IN ==================== -->
-<section class="lt" data-background-color="#F4F6FB">
-  <div class="bar" style="background:var(--accent2)"></div>
-  <div class="badges"><span class="bg bg-both">0478 ✓ · 9618 ✓</span></div>
-  <h2>🎮 The Weigh-In</h2>
-  <div class="wi-wrap">
-    <span class="g-navwrap"><button id="wi-back" class="g-skip" title="back to the previous question">&larr; back</button><button id="wi-skip" class="g-skip" title="on to the next question, answered or not">next &rarr;</button></span><div class="wi-stage" id="wi-stage"></div>
-    <div class="wi-prog" id="wi-prog"></div>
-    <div id="wi-body"></div>
-    <div class="wi-btns" id="wi-btns"></div>
-    <div class="wi-say" id="wi-say">&nbsp;</div>
-    <button class="wi-new" id="wi-new">new game</button>
-  </div>
-
-</section>
-
-<!-- ==================== H8 IMAGE FILE SIZE (+ 16.7 million) ==================== -->
-<section>
-  <section class="lt" data-background-color="#F4F6FB">
-    <div class="bar" style="background:var(--accent1)"></div>
-    <div class="badges"><span class="bg bg-both">0478 ✓ · 9618 ✓</span></div>
-    <h2>How big is an image?</h2>
-    <div class="two-col" style="gap:22px;">
-      <div>
-        <div class="rule" style="margin-top:0;"><strong class="accent1">It is counting, not physics.</strong> An image is a grid of pixels. Every pixel stores the same number of bits. So:<br>
-        <span class="center" style="display:block; margin-top:8px; font-size:1.05em;"><strong>width × height × colour depth</strong></span>
-        <span class="center smaller" style="display:block; color:#7a83a8;">and colour depth is in <strong>bits</strong>, so that total is in bits</span></div>
-        <div class="fragment rule accent2"><strong>Then convert, one rung at a time.</strong> ÷8 to reach bytes. ÷1024 to reach KiB. ÷1024 again to reach MiB. <strong>Never divide by 8000, and never by 1000.</strong></div>
-        <div class="fragment rule accent3" style="font-size:.66em;"><strong>9618 says <em>estimate</em>; 0478 says <em>calculate</em>.</strong> That is not carelessness. A real image file also carries a <strong>file header</strong> — width, height, colour depth, which format it is — before the first pixel. It is small, and no exam expects you to size it, but it is why the honest word is "estimate".</div>
-      </div>
-      <div>
-        <div class="card">
-          <p style="font-size:.62em; margin:0 0 8px; color:#8a92b2;"><strong>A 16-bit colour image, 512 pixels wide by 512 high. Give the file size in KiB.</strong></p>
-          <div class="calc">
-            <span class="st fragment"><span class="lbl">pixels</span>512 × 512 = <span class="res">262 144</span></span>
-            <span class="st fragment"><span class="lbl">bits</span>262 144 × 16 = <span class="res">4 194 304</span></span>
-            <span class="st fragment"><span class="lbl">bytes</span>4 194 304 ÷ 8 = <span class="res">524 288</span></span>
-            <span class="st fragment"><span class="lbl">KiB</span>524 288 ÷ 1024 = <span class="fin">512 KiB</span></span>
-          </div>
-        </div>
-        <div class="fragment rule accent2" style="font-size:.68em;"><strong>Every one of those lines is a mark.</strong> The real mark scheme gives up to two marks for the <em>stages of working</em> and one for the final answer — so a correct number with no working is one mark out of three.</div>
-      </div>
-    </div>
-    <div class="dig">⬇ where does "millions of colours" come from? 🕳️</div>
-
-</section>
-
-  <!-- H8↓ 16.7 million -->
-  <section class="lt" data-background-color="#F4F6FB">
-    <div class="bar" style="background:var(--accent3)"></div>
-    <div class="badges"><span class="bg bg-hole">🕳️ beyond the exam</span></div>
-    <h2>"Millions of colours" — see it</h2>
-    <div class="two-col" style="font-size:.6em; gap:14px;">
-      <div class="rule" style="margin-top:2px;"><strong class="accent1">16.7 million is 2²⁴.</strong> Colour depth 24 bits, and 24 is <strong>three lots of 8</strong> — one byte each for red, green, blue. Never a marketing number.</div>
-      <div class="rule accent2" style="margin-top:2px;"><strong>So each channel runs 0 – 255.</strong> U2a's number, wearing a colour: pure red is <span class="mono">(255, 0, 0)</span>. <strong>Now drag the slider.</strong></div>
-    </div>
-    <div class="bdw">
-      <canvas id="bd-cv"></canvas>
-      <span class="bl" id="bd-lt">&nbsp;</span>
-      <span class="bl" id="bd-lb">&nbsp;</span>
-    </div>
-    <div class="bdc">
-      <span style="color:#8a92b2;">bottom strip:</span>
-      <input type="range" id="bd-range" min="1" max="8" value="3">
-      <span class="bd-read" id="bd-read">&nbsp;</span>
-      <button class="bd-btn" id="bd-hard">try the hard case ▸</button>
-    </div>
-    <p class="bd-cap" id="bd-cap">&nbsp;</p>
-
-</section>
-</section>
-
-<!-- ==================== H9 PY-CELL: THE SIZE MACHINE ==================== -->
-<section class="lt" data-background-color="#F4F6FB">
-  <div class="bar" style="background:var(--accent1)"></div>
-  <div class="badges"><span class="bg bg-both">0478 ✓ · 9618 ✓</span></div>
-  <h2>The size machine 🐍</h2>
-  <div class="two-col" style="gap:22px;">
-    <div>
-      <div class="pycell"><script type="text/plain" class="pysrc">width = 512
+print(bytes_on_the_drive / 1024 / 1024 / 1024)</script></div><div class="rule">The same byte count is divided by different units. Formatting and reserved capacity are separate questions.</div><div class="lanes"><div><b>📝 IN THE EXAM</b><span>IG calculations: 1024. AS: use the prefix named.</span></div><div><b>🏛 IN REALITY</b><span>Unit conversion changes the label; reserved or formatted space is a separate issue.</span></div></div></section><section class="lt" data-background-color="#F4F6FB" id="weigh-in"><div class="badges"><span class="bg bg-both">IG + AS</span></div><div class="bar"></div><h2>🎮 The Weigh-In</h2><p>Predict before clicking. Compare both quantities in the same unit.</p><div id="weigh"></div><div class="lanes"><div><b>📝 IN THE EXAM</b><span>Compare quantities in one common unit.</span></div><div><b>🏛 IN REALITY</b><span>For IG, decimal prefixes here explain real-world labels.</span></div></div></section><section><section class="lt" data-background-color="#F4F6FB" id="image-size"><div class="badges"><span class="bg bg-both">IG + AS</span></div><div class="bar"></div><h2>How big is an image?</h2><div class="rule">A pixel is one picture element; colour depth is the bits used to describe its colour.</div><div class="rule">Uncompressed pixel data = <b>width × height × bits per pixel</b>. The result is in bits.</div><div class="rule"><b>Our worked example:</b> 512 × 512 × 16 = 4 194 304 bits.</div><div class="rule">÷8 → 524 288 bytes. ÷1024 → <b>512 KiB</b>.</div><div class="rule">Keep the units beside each step. If depth is supplied in bytes, do not divide by eight again.</div><div class="lanes"><div><b>📝 IN THE EXAM</b><span>Count pixels×depth; distinguish bits from bytes.</span></div><div><b>🏛 IN REALITY</b><span>Raw pixels exclude headers, metadata and compression.</span></div></div><div class="dig">↓ investigate · → continue</div></section><section class="lt" data-background-color="#F4F6FB" data-hole="true" id="bit-depth"><div class="badges"><span class="bg bg-both">↓ OPTIONAL INVESTIGATION</span></div><div class="bar"></div><h2>Millions of colours — see the steps</h2><div class="rule">24-bit RGB uses eight bits per channel: 256³ = <b>16 777 216</b> possible combinations.</div><div class="rule">Predict what happens when the bottom strip gains one bit. Then compare the narrow-gradient hard case.</div><div class="bdw">
+<canvas id="bd-cv"></canvas>
+<span class="bl" id="bd-lt"> </span>
+<span class="bl" id="bd-lb"> </span>
+</div><input id="bd-range" max="8" min="1" type="range" value="3"/><span class="bd-read" id="bd-read"> </span><button class="bd-btn" id="bd-hard">try the hard case ▸</button><p class="bd-cap" id="bd-cap"> </p><div class="lanes"><div><b>📝 IN THE EXAM</b><span>Each extra bit doubles available values per channel.</span></div><div><b>🏛 IN REALITY</b><span>This canvas illustrates quantisation; it does not certify a 10-bit display.</span></div></div></section></section><section class="lt" data-aud="al" data-background-color="#F4F6FB" id="header-al"><div class="badges"><span class="bg bg-both">AS 9618</span></div><div class="bar"></div><h2>AS: an estimate has assumptions</h2><div class="rule">The pixel calculation counts <b>uncompressed pixel data</b>. A file may also include a header, metadata, padding or compression.</div><div class="rule">A header can describe dimensions and colour depth so software knows how to interpret the data.</div><div class="rule">Try: 512 KiB of pixels plus a stated 1024-byte header. What is the total if no other overhead or compression applies?</div><details><summary>Check the idea</summary><p>513 KiB. Do not invent a header size when none is given; state the assumptions of the estimate.</p></details><div class="lanes"><div><b>📝 IN THE EXAM</b><span>Count pixels×depth; distinguish bits from bytes.</span></div><div><b>🏛 IN REALITY</b><span>Raw pixels exclude headers, metadata and compression.</span></div></div></section><section class="lt" data-background-color="#F4F6FB" id="size-machine"><div class="badges"><span class="bg bg-both">IG + AS</span></div><div class="bar"></div><h2>Predict. Change. Run. 🐍</h2><div class="two-col"><div><div class="rule">Double width 512→1024. Predict the size.</div><div class="rule">Restore width; halve depth 16→8. Predict again.</div><div class="rule">Then use 4000×3000 at 24 bits; convert bytes into MiB.</div></div><div><div class="pycell"><script class="pysrc" type="text/plain">width = 512
 height = 512
 depth = 16
 
 bits = width * height * depth
 print(bits, "bits")
 print(bits / 8, "bytes")
-print(bits / 8 / 1024, "KiB")</script></div>
-    </div>
-    <div>
-      <p style="font-size:.7em; margin-top:0;">Same four lines you just did by hand. Run it — then <strong>change one number</strong> and run it again.</p>
-      <div class="rule" style="font-size:.66em;"><strong class="accent1">① Double the width</strong> to 1024. What happens to the size? Predict <em>before</em> you press run.</div>
-      <div class="rule accent3 fragment" style="font-size:.66em;"><strong>② Drop the depth</strong> from 16 to 8. Prediction first, again.</div>
-      <div class="rule accent2 fragment" style="font-size:.66em;"><strong>③ Now a real one:</strong> a 4000 × 3000 photo at depth 24. Answer in MiB — you will need one more <span class="mono">/ 1024</span>.</div>
-      <div class="fragment rule navy" style="font-size:.68em;"><strong>Your syllabus states this as a fact to memorise:</strong> <em>"the file size increases as the resolution and colour depth increase."</em> You have just made it happen twice. It is not a fact about images; it is what multiplication does.</div>
-    </div>
-  </div>
+print(bits / 8 / 1024, "KiB")</script></div></div></div><div class="lanes"><div><b>📝 IN THE EXAM</b><span>Count pixels×depth; distinguish bits from bytes.</span></div><div><b>🏛 IN REALITY</b><span>Raw pixels exclude headers, metadata and compression.</span></div></div></section><section><section class="lt" data-background-color="#F4F6FB" id="sound-size"><div class="badges"><span class="bg bg-both">IG + AS</span></div><div class="bar"></div><h2>A sound file counts samples</h2><div class="rule">A sample records the signal at one instant. Sample rate counts samples per second; bit depth gives bits per sample.</div><div class="rule"><b>samples/second × bits/sample × seconds × channels</b> → bits of uncompressed sample data.</div><div class="rule">For the following example, assume <b>one channel</b>. 22 016 × 8 × 10 = 1 761 280 bits.</div><div class="rule">÷8 →220 160 bytes; ÷1024 →<b>215 KiB</b>.</div><div class="rule">Two channels would double this payload. Headers and compression are separate from this count.</div><p class="source">Worked from 0478 November 2024 /12 Q 2(c), ©UCLES; original prompt does not state channels.</p><div class="lanes"><div><b>📝 IN THE EXAM</b><span>Use rate×depth×duration; state the channel assumption.</span></div><div><b>🏛 IN REALITY</b><span>This counts sample data; encoded files may include headers or compression.</span></div></div><div class="dig">↓ investigate · → continue</div></section><section class="lt" data-background-color="#F4F6FB" data-hole="true" id="photo"><div class="badges"><span class="bg bg-both">↓ OPTIONAL INVESTIGATION</span></div><div class="bar"></div><h2>Then why is the saved photo smaller?</h2><div class="rule">A 4000×3000 image at 24 bits has 36 000 000 bytes of raw pixels ≈34. 33 MiB.</div><div class="rule"><b>Investigate:</b> inspect an image’s dimensions and file size. Compare the raw-pixel estimate with the saved size. Identify its format.</div><div class="rule">Compression can make the saved file much smaller; headers and metadata can add bytes. The raw-pixel formula is <b>not a universal upper bound</b>.</div><details><summary>Check the idea</summary><p>A smaller JPEG does not mean pixels vanished by unit conversion. Encoding/compression changed what was stored. Keep this question for the compression lesson.</p></details><div class="lanes"><div><b>📝 IN THE EXAM</b><span>Count pixels×depth; distinguish bits from bytes.</span></div><div><b>🏛 IN REALITY</b><span>Raw pixels exclude headers, metadata and compression.</span></div></div></section></section><section class="lt" data-aud="ig" data-background-color="#F4F6FB" id="drill-ig"><div class="badges"><span class="bg bg-both">IGCSE 0478</span></div><div class="bar"></div><h2>Your turn — units before arithmetic</h2><div class="rule">1. State the number of bytes in 1 KiB.</div><div class="rule">2. Name the unit equal to 1024 GiB.</div><div class="rule">3. Image: 1000×1000 pixels,2 <b>bytes</b> per pixel. Calculate its size in bytes. [2]</div><div class="rule">4. How many PiB are in 2 EiB?</div><p class="source">Q 3: 0478 March 2023 /12 Q 4(b), ©UCLES. Other prompts are ours.</p><div class="lanes"><div><b>📝 IN THE EXAM</b><span>Use the named units and show valid working.</span></div><div><b>🏛 IN REALITY</b><span>Check what was counted before interpreting the number.</span></div></div></section><section class="lt" data-aud="ig" data-background-color="#F4F6FB" id="drill-answer-ig"><div class="badges"><span class="bg bg-both">IGCSE 0478</span></div><div class="bar"></div><h2>Check each unit</h2><div class="rule">1. 1024 bytes. 2. tebibyte (TiB).</div><div class="rule">3. 1000×1000 =1 000 000 pixels; ×2 bytes =<b>2 000 000 bytes</b>.</div><div class="rule">4. 2048 PiB.</div><div class="lanes"><div><b>📝 IN THE EXAM</b><span>Use the named units and show valid working.</span></div><div><b>🏛 IN REALITY</b><span>Check what was counted before interpreting the number.</span></div></div></section><section class="lt" data-aud="al" data-background-color="#F4F6FB" id="drill-al"><div class="badges"><span class="bg bg-both">AS 9618</span></div><div class="bar"></div><h2>Your turn — units before arithmetic</h2><div class="rule">1. State the number of bytes in 1 KiB.</div><div class="rule">2. Name the unit equal to 1024 GiB.</div><div class="rule">3. Image: 1000×1000 pixels,2 <b>bytes</b> per pixel. Calculate its size in bytes. [2]</div><div class="rule">4. Which is larger: 3100 kB or 3 MiB? Show comparable byte counts.</div><p class="source">Q 3: 0478 March 2023 /12 Q 4(b), ©UCLES. Other prompts are ours.</p><div class="lanes"><div><b>📝 IN THE EXAM</b><span>Use the named units and show valid working.</span></div><div><b>🏛 IN REALITY</b><span>Check what was counted before interpreting the number.</span></div></div></section><section class="lt" data-aud="al" data-background-color="#F4F6FB" id="drill-answer-al"><div class="badges"><span class="bg bg-both">AS 9618</span></div><div class="bar"></div><h2>Check each unit</h2><div class="rule">1. 1024 bytes. 2. tebibyte (TiB).</div><div class="rule">3. 1000×1000 =1 000 000 pixels; ×2 bytes =<b>2 000 000 bytes</b>.</div><div class="rule">4. 3 100 000 B &lt;3 145 728 B, so 3 MiB is larger.</div><div class="lanes"><div><b>📝 IN THE EXAM</b><span>Use the named units and show valid working.</span></div><div><b>🏛 IN REALITY</b><span>Check what was counted before interpreting the number.</span></div></div></section><section class="lt" data-aud="ig" data-background-color="#F4F6FB" id="paper-ig"><div class="badges"><span class="bg bg-both">IGCSE 0478</span></div><div class="bar"></div><h2>IG — count samples, then pixels</h2><p class="source">0478 November 2024 /12 Q 2(c) and March 2023 /12 Q 4(b), ©UCLES; contexts condensed.</p><p>A 10-second sound effect uses 22 016 Hz and 8 bits/sample. Assume one channel. Calculate its size in KiB, showing working. [3]</p><p>An image is 1000×1000 pixels with depth 2 bytes. Calculate its size in bytes, showing working. [2]</p><div id="mark-ig"></div><div class="lanes"><div><b>📝 IN THE EXAM</b><span>Up to 2 sound working marks; 1 image working mark.</span></div><div><b>🏛 IN REALITY</b><span>A value check cannot judge your reasoning; use the rubric honestly.</span></div></div></section><section class="lt" data-aud="al" data-background-color="#F4F6FB" id="paper-al"><div class="badges"><span class="bg bg-both">AS 9618</span></div><div class="bar"></div><h2>AS — choose the right prefix</h2><p class="source">9618 June 2024 /12 Q 7(a) and /13 Q 1(a), ©UCLES; response layout adapted.</p><p>Identify the largest file size [1]. Then complete the four prefix/value statements [4].</p><div id="mark-al"></div><div class="lanes"><div><b>📝 IN THE EXAM</b><span>Use the named units and show valid working.</span></div><div><b>🏛 IN REALITY</b><span>Check what was counted before interpreting the number.</span></div></div></section><section class="lt" data-aud="ig" data-background-color="#F4F6FB" id="lens-ig"><div class="badges"><span class="bg bg-both">IGCSE 0478</span></div><div class="bar"></div><h2>IG — the exam shapes</h2><table class="lens"><tr><th>Shape</th><th>How the stem reads</th><th>Marks</th><th>Where marks die</th></tr><tr><td>Unit ladder</td><td>State the number/name of units.</td><td>1</td><td>Skipping a rung; confusing bits and bytes.</td></tr><tr><td>Image or sound size</td><td>Calculate…in the named unit. Show working.</td><td>2–3 here</td><td>Wrong depth unit, missing duration, wrong final unit.</td></tr></table><div class="lanes"><div><b>📝 IN THE EXAM</b><span>Use the named units and show valid working.</span></div><div><b>🏛 IN REALITY</b><span>Check what was counted before interpreting the number.</span></div></div></section><section class="lt" data-aud="al" data-background-color="#F4F6FB" id="lens-al"><div class="badges"><span class="bg bg-both">AS 9618</span></div><div class="bar"></div><h2>AS — the exam shapes</h2><table class="lens"><tr><th>Shape</th><th>How the stem reads</th><th>Marks</th><th>Where marks die</th></tr><tr><td>Prefix definition</td><td>Complete: kibi has a…prefix.</td><td>1 each</td><td>Using binary and decimal interchangeably.</td></tr><tr><td>Compare sizes</td><td>Tick the largest file size.</td><td>1 here</td><td>Comparing bare numbers instead of common units.</td></tr><tr><td>Bitmap estimate</td><td>Estimate file size; describe an effect.</td><td>Follow scheme</td><td>Ignoring the stated depth/unit or given header.</td></tr></table><div class="lanes"><div><b>📝 IN THE EXAM</b><span>Use the named units and show valid working.</span></div><div><b>🏛 IN REALITY</b><span>Check what was counted before interpreting the number.</span></div></div></section><section class="lt" data-background-color="#F4F6FB" id="vocabulary"><div class="badges"><span class="bg bg-both">IG + AS</span></div>
+<div class="bar" style="background:var(--accent1)"></div>
 
-</section>
+<h2>Vocabulary <span class="smaller accent1">词汇</span></h2>
+<table class="vtab">
+<tr><th>English</th><th>中文 (pīnyīn)</th><th>Meaning check</th></tr>
+<tr><td><strong>storage unit</strong></td><td>存储单位 (cún chǔ dān wèi)</td><td>a named quantity of data: byte, KiB, MiB…</td></tr>
+<tr class="fragment"><td><strong>kibibyte (KiB)</strong></td><td>二进制千字节 (èr jìn zhì qiān zì jié)</td><td>1024 bytes — one binary-prefix step</td></tr>
+<tr class="fragment"><td><strong>binary prefix</strong></td><td>二进制前缀 (èr jìn zhì qián zhuì)</td><td>ki-, me-, gi-, te- — every step ×1024</td></tr>
+<tr class="fragment"><td><strong>decimal prefix</strong></td><td>十进制前缀 (shí jìn zhì qián zhuì)</td><td>kilo-, mega-, giga-, tera- — every step ×1000</td></tr>
+<tr class="fragment"><td><strong>file size</strong></td><td>文件大小 (wén jiàn dà xiǎo)</td><td>how many bytes the file occupies</td></tr>
+<tr class="fragment"><td><strong>resolution</strong></td><td>分辨率 (fēn biàn lǜ)</td><td>how many pixels: width × height</td></tr>
+<tr class="fragment"><td><strong>colour depth</strong></td><td>色彩深度 (sè cǎi shēn dù)</td><td>bits per pixel — 24 bits gives 16. 7 million colours</td></tr>
+<tr class="fragment"><td><strong>sample rate</strong></td><td>采样率 (cǎi yàng lǜ)</td><td>measurements per second, in Hz</td></tr>
+<tr class="fragment"><td><strong>sample resolution</strong></td><td>采样位深 (cǎi yàng wèi shēn)</td><td>bits per measurement</td></tr>
+</table>
+</section><section class="dk" data-aud="ig" data-background-color="#151B3C" id="recap-ig"><div class="badges"><span class="bg bg-both">IGCSE 0478</span></div><div class="bar"></div><h2>What survives the lesson</h2><div class="rule">8 bits per byte; 1024 per binary-prefix step. Continue through EiB.</div><div class="rule"><b>Count raw data first.</b> Pixels: width×height×depth. Sound: rate×depth×duration×channels.</div><div class="rule"><b>Label each unit.</b> Format, header and compression decide how payload relates to a real file.</div></section><section class="lt" data-aud="ig" data-background-color="#F4F6FB" id="exit-ig"><div class="badges"><span class="bg bg-both">IGCSE 0478</span></div><div class="bar"></div><h2>Before you leave</h2><div class="rule">A 256×128 image uses 8 bits per pixel. Find the raw size in KiB and explain what happens when the width doubles.</div><div class="rule">Explain why a raw-pixel estimate may differ from the size of the saved file.</div><div class="rule">How many TiB make 1 PiB?</div><div class="lanes"><div><b>📝 IN THE EXAM</b><span>Use the named units and show valid working.</span></div><div><b>🏛 IN REALITY</b><span>Check what was counted before interpreting the number.</span></div></div></section><section class="lt" data-aud="ig" data-background-color="#F4F6FB" id="exit-answer-ig"><div class="badges"><span class="bg bg-both">IGCSE 0478</span></div><div class="bar"></div><h2>Check your exit</h2><div class="rule">256×128×8÷8÷1024 =<b>32 KiB</b>. Doubling width doubles the payload to 64 KiB.</div><div class="rule">Headers/metadata may add bytes; compression may reduce stored data.</div><div class="rule">1024 TiB =1 PiB.</div><div class="lanes"><div><b>📝 IN THE EXAM</b><span>Use the named units and show valid working.</span></div><div><b>🏛 IN REALITY</b><span>Check what was counted before interpreting the number.</span></div></div></section><section class="dk" data-aud="al" data-background-color="#151B3C" id="recap-al"><div class="badges"><span class="bg bg-both">AS 9618</span></div><div class="bar"></div><h2>What survives the lesson</h2><div class="rule">8 bits per byte; 1024 per binary-prefix step. Decimal prefixes use 1000; distinguish them through tera.</div><div class="rule"><b>Count raw data first.</b> Pixels: width×height×depth. Sound: rate×depth×duration×channels.</div><div class="rule"><b>Label each unit.</b> Format, header and compression decide how payload relates to a real file.</div></section><section class="lt" data-aud="al" data-background-color="#F4F6FB" id="exit-al"><div class="badges"><span class="bg bg-both">AS 9618</span></div><div class="bar"></div><h2>Before you leave</h2><div class="rule">A 256×128 image uses 8 bits per pixel. Find the raw size in KiB and explain what happens when the width doubles.</div><div class="rule">Explain why a raw-pixel estimate may differ from the size of the saved file.</div><div class="rule">Which is larger: 1 MB or 1 MiB? Explain.</div><div class="lanes"><div><b>📝 IN THE EXAM</b><span>Use the named units and show valid working.</span></div><div><b>🏛 IN REALITY</b><span>Check what was counted before interpreting the number.</span></div></div></section><section class="lt" data-aud="al" data-background-color="#F4F6FB" id="exit-answer-al"><div class="badges"><span class="bg bg-both">AS 9618</span></div><div class="bar"></div><h2>Check your exit</h2><div class="rule">256×128×8÷8÷1024 =<b>32 KiB</b>. Doubling width doubles the payload to 64 KiB.</div><div class="rule">Headers/metadata may add bytes; compression may reduce stored data.</div><div class="rule">1 MiB =1 048 576 B &gt;1 MB =1 000 000 B.</div><div class="lanes"><div><b>📝 IN THE EXAM</b><span>Use the named units and show valid working.</span></div><div><b>🏛 IN REALITY</b><span>Check what was counted before interpreting the number.</span></div></div></section><section class="dk" data-background-color="#151B3C" id="ledger"><div class="badges"><span class="bg bg-both">IG + AS</span></div><div class="bar"></div><h2>🧾 Outside the exam hall</h2><div class="rule"><b>Keep:</b> count what is stored, attach units, and distinguish a count of bytes from the label used to report it.</div><div class="rule"><b>Check:</b> raw payload, metadata, compression and available capacity answer different questions.</div><div class="rule"><b>Use tools:</b> a calculator or short program handles arithmetic; you still choose the assumptions.</div><div class="rule"><b>Next:</b> why do physical computers find two signal states so useful?</div></section></div></div>
+<button id="fs-btn" onclick="document.documentElement.requestFullscreen().catch(()=&gt;{})">⛶ Fullscreen</button>
 
-<!-- ==================== H10 SOUND (+ compression plant) ==================== -->
-<section>
-  <section class="lt" data-background-color="#F4F6FB">
-    <div class="bar" style="background:var(--accent1)"></div>
-    <div class="badges"><span class="bg bg-both">0478 ✓ · 9618 ✓</span></div>
-    <h2>How big is a sound?</h2>
-    <div class="two-col" style="gap:22px;">
-      <div>
-        <div class="rule" style="margin-top:0;"><strong class="accent1">Same idea: count the numbers.</strong> A recording measures the sound thousands of times a second, and stores each measurement in a fixed number of bits.<br>
-        <span class="center" style="display:block; margin-top:8px; font-size:1.02em;"><strong>sample rate × sample resolution × length</strong></span>
-        <span class="center smaller" style="display:block; color:#7a83a8;">samples per second × bits per sample × seconds → bits</span></div>
-        <div class="fragment rule accent3" style="font-size:.68em;"><strong>Two things the exam formula quietly leaves out.</strong> Real audio is usually <strong>stereo</strong> — two channels, so twice the samples, so twice the size. And like an image, a sound file carries a <strong>header</strong>. Neither board will ask you for them; both are why your answer is a floor, not a ceiling.</div>
-        <div class="diverge fragment"><span class="dh">📐 WHERE WE LEAVE THE SYLLABUS'S ORDER</span><br>
-          Your syllabus prints storage units, file-size calculation and <strong>compression</strong> together in one section, and we are doing only the first two today. Compression comes later, with images and sound properly — because today's lesson is <em>arithmetic in the right units</em>, and compression is a different idea that deserves its own hour rather than a footnote after it.</div>
-      </div>
-      <div>
-        <div class="card">
-          <p style="font-size:.62em; margin:0 0 8px; color:#8a92b2;"><strong>A 10 second sound effect, sample rate 22 016 Hz, sample resolution 8 bits. Give the file size in KiB.</strong></p>
-          <div class="calc">
-            <span class="st fragment"><span class="lbl">samples</span>22 016 × 10 = <span class="res">220 160</span></span>
-            <span class="st fragment"><span class="lbl">bits</span>220 160 × 8 = <span class="res">1 761 280</span></span>
-            <span class="st fragment"><span class="lbl">bytes</span>1 761 280 ÷ 8 = <span class="res">220 160</span></span>
-            <span class="st fragment"><span class="lbl">KiB</span>220 160 ÷ 1024 = <span class="fin">215 KiB</span></span>
-          </div>
-        </div>
-        <div class="fragment rule accent2" style="font-size:.66em;"><strong>Watch the middle two lines.</strong> ×8 then ÷8 — because the resolution was 8 bits. The numbers 220 160 appear twice and mean <em>different things</em>: once samples, once bytes. Label your lines and this can never bite you.</div>
-      </div>
-    </div>
-    <div class="dig">⬇ so why is my music file so small? 🕳️</div>
 
-</section>
-
-  <!-- H10↓ where the 90% went -->
-  <section class="lt" data-background-color="#F4F6FB">
-    <div class="bar" style="background:var(--accent3)"></div>
-    <div class="badges"><span class="bg bg-hole">🕳️ beyond the exam</span></div>
-    <h2>Then why is my photo only 3 MB?</h2>
-    <div style="font-size:.74em; max-width:940px;">
-      <div class="rule">Your phone shoots <strong>12 megapixels</strong> at 24-bit colour. Run our formula: 12 000 000 × 24 = 288 000 000 bits ÷ 8 ÷ 1024 ÷ 1024 = <strong class="accent2">34.3 MiB</strong>.</div>
-      <div class="rule fragment">Go and look at the actual file. It is about <strong>3 MB</strong>. <strong class="accent2">Nine tenths of it is gone</strong> — and the picture still looks like the picture.</div>
-      <div class="rule accent3 fragment">Everything you calculated today is therefore an <strong>upper bound</strong>: how big the file would be if nobody had been clever. Somebody was extremely clever, roughly a thousand times, and the results are called JPEG, PNG, MP3, and about forty others.</div>
-      <div class="rule accent2 fragment"><strong>How do you throw away 90 % of a photograph and still have a photograph?</strong> That is a whole unit of its own, and it is one of the genuinely beautiful things in this subject. Not today.</div>
-    </div>
-
-</section>
-</section>
-
-<!-- ==================== H11 DRILL ==================== -->
-<section class="lt" data-background-color="#F4F6FB">
-  <div class="bar" style="background:var(--accent2)"></div>
-  <div class="badges"><span class="bg bg-both">0478 ✓ · 9618 ✓</span></div>
-  <h2>Drill — exam wording, exam speed</h2>
-  <div class="two-col" style="font-size:.68em;">
-    <div>
-      <div class="card"><strong>1.</strong> State how many bytes there are in a kibibyte (KiB). <strong>[1]</strong><br><span class="fragment accent1 mono">1024</span></div>
-      <div class="card" style="margin-top:11px;"><strong>2.</strong> Give the name of the data storage measurement that is equal to 1024 gibibytes (GiB). <strong>[1]</strong><br><span class="fragment accent1 mono">tebibyte (TiB)</span></div>
-      <div class="card" style="margin-top:11px;"><strong>3.</strong> An image has a resolution of 1000 × 1000 and a colour depth of <strong>2 bytes</strong>. Calculate the file size <strong>in bytes</strong>. <strong>[2]</strong><br>
-        <span class="fragment accent1 mono">1000 × 1000 = 1 000 000<br>1 000 000 × 2 = 2 000 000 bytes</span></div>
-    </div>
-    <div>
-      <div class="card"><strong>4.</strong> A bitmap image is 2048 pixels wide by 1024 high, with a bit depth of 10 bits per pixel. Estimate the file size <strong>in mebibytes</strong>. <strong>[2]</strong><br>
-        <span class="fragment accent1 mono">2048 × 1024 × 10 = 20 971 520 bits<br>÷ 8 = 2 621 440 bytes<br>÷ 1024 ÷ 1024 = 2.5 MiB</span></div>
-      <div class="fragment rule accent2" style="margin-top:11px;"><strong>Question 3 is the trap of the topic.</strong> The depth was given in <strong>bytes</strong>, not bits — so there is <strong>no ÷8</strong>. Anyone who divided by 8 out of habit has just handed back <strong>seven eighths</strong> of the file. <strong>Read the unit on every number before you touch it.</strong></div>
-    </div>
-  </div>
-
-</section>
-
-<!-- ==================== H12 EXAM LENS ==================== -->
-<section class="lt" data-background-color="#F4F6FB">
-  <div class="bar" style="background:var(--accent3)"></div>
-  <div class="badges"><span class="bg bg-both">0478 ✓ · 9618 ✓</span></div>
-  <h2>Exam lens</h2>
-  <table class="xt">
-    <tr><th style="width:12%;">Board</th><th>How it's asked</th><th>What earns the marks</th></tr>
-    <tr>
-      <td><strong>0478</strong><br>IGCSE</td>
-      <td>"State how many bytes there are in a kibibyte." · "Give the name of the measurement equal to 1024 GiB." · "Calculate the file size of the image / of the sound effect in KiB. <strong>Show all your working.</strong>"</td>
-      <td>Up to <strong>two marks for the stages of working</strong>, one for the answer · the answer in <strong>the unit named in the question</strong> · 1024, never 1000</td>
-    </tr>
-    <tr>
-      <td><strong>9618</strong><br>AS P1</td>
-      <td>"State the difference between a kibibyte and a kilobyte." · "A kibibyte has a ______ prefix." · "Tick one box to identify the largest file size." · "<strong>Estimate</strong> the file size of the bitmap image in mebibytes."</td>
-      <td>Both ladders, named: <em>binary</em> vs <em>decimal</em> prefix · the numbers 1024 and 1000 in the same sentence · working shown even when the mark is for the answer</td>
-    </tr>
-  </table>
-  <div class="rule accent2" style="margin-top:12px; font-size:.68em;"><strong>The five classic traps:</strong>
-    ① answering in bytes when the question said KiB ·
-    ② dividing by 1000 ·
-    ③ forgetting ÷8 to get from bits to bytes ·
-    ④ dividing by 8 when the colour depth was already given in <strong>bytes</strong> ·
-    ⑤ a correct final number with no working — which is one mark out of three</div>
-</section>
-
-<!-- ==================== H13 THE REAL THING ==================== -->
-<section>
-  <section class="lt" data-background-color="#F4F6FB">
-    <div class="bar" style="background:var(--accent3)"></div>
-    <div class="badges"><span class="bg bg-both">0478 ✓ · 9618 ✓</span></div>
-    <h2>The real thing</h2>
-    <p style="font-size:.8em;">Not "exam-style" — these are the <strong>actual questions</strong>, from actual papers, that students sat. Pick your battlefield:</p>
-    <div style="display:flex; gap:28px; justify-content:center; margin-top:46px;">
-      <button class="pbtn" onclick="Reveal.slide(Reveal.getIndices().h,1)">IGCSE 0478 ↓</button>
-      <button class="pbtn" onclick="Reveal.slide(Reveal.getIndices().h,2)">AS 9618 ↓</button>
-    </div>
-
-</section>
-
-  <!-- ↓ 0478 -->
-  <section class="lt pq-grow" data-background-color="#F4F6FB">
-<div class="bar" style="background:#F0655B"></div><div class="badges"><span class="bg bg-ig">IGCSE 0478</span></div><h2>0478 — the real thing <span style="font-size:.5em; color:#8a92b2;">type it, then mark it</span></h2><div class="two-col" style="gap:18px;"><div><div class="card" style="font-size:.56em;">A 10 second sound effect is recorded with a sample rate of 22 016 Hz and a sample resolution of 8 bits. <strong>Calculate the file size in kibibytes (KiB). Show all your working.</strong> <strong>[3]</strong><br><br>An image has a resolution of 1000 × 1000 and a colour depth of <strong>2 bytes</strong>. <strong>Calculate the file size in bytes. Show your working.</strong> <strong>[2]</strong></div><p class="src">0478/12 Oct/Nov 2024 Q3(c) · Feb/Mar 2023 Q4(b) · © UCLES</p></div><div><div id="pq-u2b0"></div></div></div>
-</section>
-
-  <!-- ↓ 9618 -->
-  <section class="lt pq-grow" data-background-color="#F4F6FB">
-<div class="bar" style="background:#222B5A"></div><div class="badges"><span class="bg bg-al">AS 9618</span></div><h2>9618 — the real thing <span style="font-size:.5em; color:#8a92b2;">type it, then mark it</span></h2><div class="two-col" style="gap:18px;"><div><div class="card" style="font-size:.56em;"><strong>(a)</strong> Tick one box only to identify the <strong>largest</strong> file size. <strong>[1]</strong><br><br><strong>(b)</strong> Complete: a kibibyte has a ____ prefix · three kibibytes is ____ bytes · a megabyte has a ____ prefix · two terabytes is ____ gigabytes. <strong>[4]</strong></div><p class="src">9618/12 May/June 2024 Q7(a) · 9618/13 May/June 2024 Q1(a) · © UCLES</p></div><div><div id="pq-u2b1"></div></div></div>
-</section>
-</section>
-
-<!-- ==================== H14 VOCABULARY ==================== -->
-<section class="lt" data-background-color="#F4F6FB">
-  <div class="bar" style="background:var(--accent1)"></div>
-  <div class="badges"><span class="bg bg-both">0478 ✓ · 9618 ✓</span></div>
-  <h2>Vocabulary <span class="smaller accent1">词汇</span></h2>
-  <table class="vtab">
-    <tr><th>English</th><th>中文 (pīnyīn)</th><th>Meaning check</th></tr>
-    <tr><td><strong>storage unit</strong></td><td>存储单位 (cún chǔ dān wèi)</td><td>a named quantity of data: byte, KiB, MiB…</td></tr>
-    <tr class="fragment"><td><strong>kibibyte (KiB)</strong></td><td>二进制千字节 (èr jìn zhì qiān zì jié)</td><td>1024 bytes — the one your exam computes with</td></tr>
-    <tr class="fragment"><td><strong>binary prefix</strong></td><td>二进制前缀 (èr jìn zhì qián zhuì)</td><td>ki-, me-, gi-, te- — every step ×1024</td></tr>
-    <tr class="fragment"><td><strong>decimal prefix</strong></td><td>十进制前缀 (shí jìn zhì qián zhuì)</td><td>kilo-, mega-, giga-, tera- — every step ×1000</td></tr>
-    <tr class="fragment"><td><strong>file size</strong></td><td>文件大小 (wén jiàn dà xiǎo)</td><td>how many bytes the file occupies</td></tr>
-    <tr class="fragment"><td><strong>resolution</strong></td><td>分辨率 (fēn biàn lǜ)</td><td>how many pixels: width × height</td></tr>
-    <tr class="fragment"><td><strong>colour depth</strong></td><td>色彩深度 (sè cǎi shēn dù)</td><td>bits per pixel — 24 bits gives 16.7 million colours</td></tr>
-    <tr class="fragment"><td><strong>sample rate</strong></td><td>采样率 (cǎi yàng lǜ)</td><td>measurements per second, in Hz</td></tr>
-    <tr class="fragment"><td><strong>sample resolution</strong></td><td>采样位深 (cǎi yàng wèi shēn)</td><td>bits per measurement</td></tr>
-  </table>
-</section>
-
-<!-- ==================== H15 SUMMARY + THE CLIFFHANGER STILL BURNING ==================== -->
-<section class="dk" data-background-color="#151B3C">
-  <div class="bar" style="background:var(--accent2)"></div>
-  <div class="badges"><span class="bg bg-both">0478 ✓ · 9618 ✓</span></div>
-  <h2>What you can do now</h2>
-  <div class="sgrid" style="margin-top:12px;">
-    <div class="scard"><strong class="accent1">Climb the ladder</strong><br>bit → nibble → byte → KiB → MiB → GiB → TiB, and 1024 of each in the next. 0478 keeps going to EiB.</div>
-    <div class="scard"><strong class="accent1">Tell the ladders apart</strong><br>Binary prefix ×1024, decimal prefix ×1000. The gap compounds: 2.4 % at kilo, 7.4 % at giga, 10 % at tera.</div>
-    <div class="scard" style="border-top-color:var(--accent3);"><strong class="accent3">Size an image</strong><br>width × height × depth → bits. ÷8, ÷1024, ÷1024. Every stage is a mark.</div>
-    <div class="scard" style="border-top-color:var(--accent2);"><strong class="accent2">Size a sound</strong><br>rate × resolution × length → bits. Same ladder down. Answer in the unit they named.</div>
-  </div>
-  <div class="rule accent3" style="margin-top:16px; font-size:.74em;"><strong>And notice what every number today had in common.</strong> 1024. 2³⁰. 8 bits to a byte. 24-bit colour. 2ⁿ addressable cells. The drive, the memory, the address wires, the colours — <strong>not one of them was a power of ten.</strong></div>
-  <div class="fragment rule accent2" style="font-size:.74em;"><strong>Last lesson I asked why the machine only gets two symbols, and I didn't answer it.</strong> Today you have seen how far down the two goes. 🔥 <strong>Next lesson the answer arrives — and it is physical.</strong></div>
-
-</section>
-
-</div></div>
-
-<button id="fs-btn" onclick="document.documentElement.requestFullscreen().catch(()=>{})">⛶ Fullscreen</button>
-<button id="llmchip">⚡ no reader — click for help</button>
-<div id="llmhelp"><span class="x" id="llmhelp-x">✕</span><b>Live marking needs the marking server.</b><br>Two steps, on the teacher's Mac:<br>1. open the <b>CS_Materials</b> folder<br>2. double-click <b>Start-LLM-Marking.command</b><br>This chip lights up by itself a few seconds after the server starts — no reload needed. Without it, the pattern marks still work; the reader adds the marker that reads for <i>meaning</i>.</div>
 <div id="py-chip">🐍 waking Python…</div>
-
 <script src="https://cdnjs.cloudflare.com/ajax/libs/reveal.js/4.6.1/reveal.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/reveal.js/4.6.1/plugin/notes/notes.min.js"></script>
 <script src="https://cdn.jsdelivr.net/pyodide/v0.26.4/full/pyodide.js"></script>
-<script>
+
+
+<script>var AUD=new URLSearchParams(location.search).get('aud');if(!['ig','al'].includes(AUD))AUD=null;
+function setAud(a){const u=new URL(location.href);if(a)u.searchParams.set('aud',a);else u.searchParams.delete('aud');u.hash='/title';location.href=u.href;}
+(function(){
+ if(!AUD){document.querySelectorAll('.slides>section').forEach((s,i)=>{if(i)s.remove()});document.querySelectorAll('#objectives').forEach(s=>s.remove());document.querySelector('#obj-btn')?.remove();return;}
+ document.querySelectorAll('[data-aud]').forEach(el=>{if(el.getAttribute('data-aud')!==AUD)el.remove()});
+})();
+function audTitle(){let sub=document.getElementById('aud-sub'),btn=document.getElementById('aud-btns'),chip=document.getElementById('aud-chip');if(AUD&&sub){sub.textContent=AUD==='ig'?'Binary units · image and sound size':'Both prefix systems · file-size estimates';btn.style.display='none';chip.style.display='';chip.innerHTML='path: <b>'+(AUD==='ig'?'IGCSE 0478':'AS 9618')+'</b> · <a href="javascript:void(0)" onclick="setAud(null)">change</a>';}}
+</script><script>
 /* ===== Python runtime (Pyodide) — the audited house harness ===== */
 var pyPromise = null, pyBusy = false, currentOut = null, activeInput = null;
 
@@ -739,7 +354,10 @@ function stopPy(){
 
 function bootPython(){
   if(pyPromise) return pyPromise;
-  pyPromise = loadPyodide().then(function(py){
+  pyPromise = new Promise(function(resolve,reject){
+    var timer=setTimeout(()=>reject(new Error('Python download timed out')),45000);
+    Promise.resolve().then(()=>loadPyodide()).then(resolve,reject).finally(()=>clearTimeout(timer));
+  }).then(function(py){
     py.runPython(
       "import builtins, js\n" +
       "async def __ainput(prompt=''):\n" +
@@ -758,7 +376,7 @@ function bootPython(){
     chip.textContent='🐍 Python ready'; chip.className='ready';
     if(!pyBusy) setRunButtons(true);
     return py;
-  });
+  }).catch(function(e){pyPromise=null;document.getElementById('py-chip').textContent='Python unavailable — Run to retry';setRunButtons(true);throw e;});
   return pyPromise;
 }
 
@@ -791,7 +409,7 @@ function runPy(code, outEl, doneCb){
     }
     pyBusy = false; setRunButtons(true); currentOut = null;
     if(doneCb) doneCb(crashed, outEl.textContent, errLine);
-  });
+  }).catch(function(e){outEl.textContent='Python could not load. Check your connection, then Run to retry.';pyBusy=false;currentOut=null;setRunButtons(true);});
 }
 
 function initPyCells(){
@@ -817,7 +435,7 @@ function initPyCells(){
     cell.appendChild(bar); cell.appendChild(ta); cell.appendChild(out);
     run.addEventListener('click',function(){ runPy(ta.value, out); });
   });
-  bootPython();
+  bootPython().catch(()=>{});
 }
 
 function autoSizePyTextareas(scope){
@@ -827,8 +445,7 @@ function autoSizePyTextareas(scope){
   });
 }
 
-/* ===== the bit-depth demo — 8 bits is a claim until they see it fail ===== */
-function initBitDepth(){
+</script><script>function initBitDepth(){
   var cv=document.getElementById('bd-cv'); if(!cv) return;
   var ctx=cv.getContext('2d');
   var W=1000, H=176, HALF=88;
@@ -869,22 +486,10 @@ function initBitDepth(){
 
     ltEl.style.top='9px';  ltEl.style.transform='none';
     lbEl.style.top='51%';
-    ltEl.textContent = hard ? '10 bits — dithered, because this screen only has 8' : '8 bits — everything your screen can do';
-    lbEl.textContent = bits + (bits===1?' bit':' bits') + ' per channel';
-
-    var shades = lv, total = lv*lv*lv;
-    readEl.textContent = '2^'+bits+' = '+shades+' shades  ·  '+total.toLocaleString('en-US')+' colours';
-
-    if(hard){
-      capEl.innerHTML = 'A dawn sky that travels only <strong>eight</strong> of the 256 steps. Now <strong>8 bits is not enough</strong> — the bands are back, and no slider position fixes them. '+
-        'The top strip is the same sky at <strong>10 bits</strong>, faked onto this 8-bit projector with a dither: a whisker of noise traded for a whisker of precision, which is exactly what a real 10-bit workflow does. '+
-        '<strong>That is what depth buys — not more colours you could name, but no steps where the picture changes slowly.</strong>';
-    } else if(bits>=7){
-      capEl.innerHTML = 'Both strips look the same now — and that is the answer to <strong>why 8</strong>. Eight is comfortably past the point where your eye stops seeing steps, <em>and</em> it is exactly one byte. '+
-        'Two reasons, one number. <span style="color:#c0392b;">So press the hard case.</span>';
-    } else {
-      capEl.innerHTML = 'Every band is one value the machine was allowed to store. Keep going until the steps disappear — then notice how few bits that took.';
-    }
+    ltEl.textContent=hard?'Fine quantisation + dither illustration':'8-bit reference';
+    lbEl.textContent=bits+' bits per channel';
+    readEl.textContent='2^'+bits+' = '+lv+' levels per channel · '+(lv**3).toLocaleString('en-US')+' RGB combinations';
+    capEl.textContent=hard?'A narrow gradient makes rounding steps easier to see. The reference uses a finer calculation plus noise before this canvas stores eight-bit channel values. This illustrates dithering; it does not turn the screen into a 10-bit display.':'Predict which changes when you add one bit: the number of levels, the width of each band, or both? Compare on this display; visibility depends on the image and viewing conditions.';
   }
 
   rangeEl.addEventListener('input', function(){ bits=parseInt(this.value,10); draw(); });
@@ -898,347 +503,38 @@ function initBitDepth(){
   draw();
 }
 
-/* ===== 🎮 The Weigh-In ===== */
-function initWeighIn(){
-  var KiB=1024, MiB=1048576;
-  var ROUNDS=[
-    { l:{n:'1 kilobyte',   b:1000},        r:{n:'1 kibibyte',   b:1024},
-      ans:'r', why:'1000 against 1024. The whole lesson, in one round — and the only 24 bytes that ever started a lawsuit.' },
-    { l:{n:'1 byte',       b:8},           r:{n:'9 bits',       b:9},
-      ans:'r', why:'A byte is 8 bits, so 9 bits is one bit more. The rung below the byte still counts.' },
-    { l:{n:'2 nibbles',    b:8},           r:{n:'1 byte',       b:8},
-      ans:'=', why:'Dead heat. 4 + 4 = 8. There is a "=" button for a reason, and now you know you cannot just guess left or right.' },
-    { l:{n:'1000 KiB',     b:1000*1024},   r:{n:'1 MiB',        b:1048576},
-      ans:'r', why:'A mebibyte is 1024 kibibytes, not 1000. Every rung of the engineer’s ladder is 1024 — no exceptions, all the way up.' },
-    { l:{n:'3100 kilobytes', b:3100*1000}, r:{n:'3 mebibytes',  b:3*1048576},
-      ans:'r', why:'3 100 000 against 3 145 728 — the mebibyte edges it. Remember this one, because the next round looks identical.' },
-    { l:{n:'3100 kibibytes', b:3100*1024}, r:{n:'3 mebibytes',  b:3*1048576},
-      ans:'l', why:'⭐ Two letters moved — kilo became kibi — and the answer flipped. 3 174 400 against 3 145 728. Nothing else about the question changed.' }
-  ];
-  var BOSS={
-    opts:[ {n:'3300 kibibytes', b:3300*1024},
-           {n:'0.3 megabytes',  b:300000},
-           {n:'3 mebibytes',    b:3*1048576},
-           {n:'3300 kilobytes', b:3300*1000} ],
-    ans:0
-  };
-  var stageEl=document.getElementById('wi-stage'), progEl=document.getElementById('wi-prog'),
-      bodyEl=document.getElementById('wi-body'), btnsEl=document.getElementById('wi-btns'),
-      sayEl=document.getElementById('wi-say'), newBtn=document.getElementById('wi-new');
-  var cur=0, busy=false, timer=null;
-  var TOTAL=ROUNDS.length+1;
-
-  function fmt(n){ return n.toLocaleString('en-US'); }
-
-  function say(txt, cls){ sayEl.innerHTML=txt||'&nbsp;'; sayEl.className='wi-say'+(cls?' '+cls:''); }
-
-  function drawProg(){
-    progEl.innerHTML='';
-    for(var i=0;i<TOTAL;i++){
-      var d=document.createElement('div');
-      d.className='pd'+(i<cur?' done':(i===cur?' cur':''));
-      progEl.appendChild(d);
-    }
-  }
-
-  function reveal(){
-    var r=ROUNDS[cur];
-    var L=document.getElementById('wi-L'), R=document.getElementById('wi-R');
-    document.getElementById('wi-Lb').textContent=fmt(r.l.b)+' bytes';
-    document.getElementById('wi-Rb').textContent=fmt(r.r.b)+' bytes';
-    if(r.ans==='='){ L.className='wi-side tie'; R.className='wi-side tie'; }
-    else if(r.ans==='l'){ L.className='wi-side win'; }
-    else { R.className='wi-side win'; }
-  }
-
-  function nextRound(){
-    cur++; busy=false;
-    if(cur<ROUNDS.length) drawRound(); else drawBoss();
-  }
-
-  function judge(pick, btn){
-    if(busy) return;
-    var r=ROUNDS[cur];
-    if(pick===r.ans){
-      busy=true; reveal();
-      say('✓ '+r.why,'ok');
-      btnsEl.innerHTML='';
-      var go=document.createElement('button'); go.className='wi-b'; go.textContent='next round →';
-      go.addEventListener('click', nextRound);
-      btnsEl.appendChild(go);
-    } else {
-      btn.classList.add('no');
-      setTimeout(function(){ btn.classList.remove('no'); },420);
-      say('Not that one. Work out both sides <em>in bytes</em> before you choose.','bad');
-    }
-  }
-
-    (function(){
-    var n = document.getElementById('wi-skip'), k = document.getElementById('wi-back');
-    var show = function(){ busy = false; (cur < ROUNDS.length) ? drawRound() : drawBoss(); };
-    if(n && !n.__bound){ n.__bound = true;
-      n.addEventListener('click', function(ev){ ev.stopPropagation(); if(cur < TOTAL - 1){ cur++; show(); } }); }
-    if(k && !k.__bound){ k.__bound = true;
-      k.addEventListener('click', function(ev){ ev.stopPropagation(); if(cur > 0){ cur--; show(); } }); }
-  })();
-  function drawRound(){
-    var r=ROUNDS[cur];
-    stageEl.textContent='Round '+(cur+1)+' — which is bigger?';
-    drawProg(); say('');
-    bodyEl.innerHTML=
-      '<div class="wi-ring">'+
-        '<div class="wi-side" id="wi-L"><div class="q">'+r.l.n+'</div><div class="b" id="wi-Lb">&nbsp;</div></div>'+
-        '<div class="wi-vs">vs</div>'+
-        '<div class="wi-side" id="wi-R"><div class="q">'+r.r.n+'</div><div class="b" id="wi-Rb">&nbsp;</div></div>'+
-      '</div>';
-    btnsEl.innerHTML='';
-    [['l','◀ left is bigger'],['=','= dead heat'],['r','right is bigger ▶']].forEach(function(p){
-      var b=document.createElement('button'); b.className='wi-b'; b.textContent=p[1];
-      b.addEventListener('click',function(){ judge(p[0], b); });
-      btnsEl.appendChild(b);
-    });
-  }
-
-  function drawBoss(){
-    stageEl.textContent='👑 BOSS — tick the largest file size';
-    drawProg(); say('');
-    bodyEl.innerHTML='<div class="wi-boss" id="wi-boss"></div>';
-    var g=document.getElementById('wi-boss');
-    BOSS.opts.forEach(function(o,i){
-      var b=document.createElement('button'); b.className='wi-b'; b.innerHTML=o.n;
-      b.addEventListener('click',function(){ bossPick(i,b); });
-      g.appendChild(b);
-    });
-    btnsEl.innerHTML='';
-  }
-
-  function bossPick(i, btn){
-    if(busy) return;
-    if(i===BOSS.ans){
-      busy=true;
-      var g=document.getElementById('wi-boss');
-      g.innerHTML='';
-      BOSS.opts.forEach(function(o,k){
-        var d=document.createElement('div'); d.className='wi-b';
-        d.innerHTML=o.n+'<br><span style="font-family:Courier New,monospace; font-size:.8em; color:'+(k===BOSS.ans?'#0d7a6e':'#8a92b2')+';">'+fmt(o.b)+' bytes</span>';
-        if(k===BOSS.ans){ d.style.borderColor='#17B3A3'; d.style.background='rgba(23,179,163,.09)'; }
-        g.appendChild(d);
-      });
-      say('✓ Three of them sit within 8 % of each other and the ladder decides between them. The fourth is a tenth the size — it is there for anyone skimming.','ok');
-      btnsEl.innerHTML='';
-      var go=document.createElement('button'); go.className='wi-b'; go.textContent='and one more thing →';
-      go.addEventListener('click', finish);
-      btnsEl.appendChild(go);
-    } else {
-      btn.classList.add('no');
-      setTimeout(function(){ btn.classList.remove('no'); },420);
-      say('Convert all four to bytes first. Two of them are on the shopkeeper’s ladder.','bad');
-    }
-  }
-
-  function finish(){
-    cur=TOTAL; drawProg();
-    stageEl.textContent='🏆 the weigh-in is over';
-    bodyEl.innerHTML=
-      '<div class="wi-tada">that was a real 9618 question</div>'+
-      '<div class="wi-ring" style="margin-top:10px;">'+
-        '<div class="wi-side tie"><div class="q">what the box sold</div>'+
-          '<div class="b">256 &times; 10<sup>9</sup><br>= 256,000,000,000 bytes</div></div>'+
-        '<div class="wi-vs">=</div>'+
-        '<div class="wi-side tie"><div class="q">what Windows counted</div>'+
-          '<div class="b">238.4185791&hellip; &times; 2<sup>30</sup><br>= 256,000,000,000 bytes</div></div>'+
-      '</div>'+
-      '<div style="font-size:.56em; text-align:center; margin-top:10px; line-height:1.55; color:#222B5A;">'+
-      'The last weigh-in of the day is a <strong>dead heat</strong>. Not one byte went missing — '+
-      'only the <strong>label</strong> changed.</div>';
-    btnsEl.innerHTML='';
-    say('Round 7 was 9618/12, May/June 2024. You have now sat it.','ok');
-  }
-
-  newBtn.addEventListener('click', function(){ cur=0; busy=false; drawRound(); });
-  drawRound();
+</script><script>function initWeighIn(){
+ const host=document.getElementById('weigh');let i=0,answer=null;
+ const rounds=[['1 kB',1000,'1 KiB',1024],['1 byte',1,'9 bits',1.125],['2 nibbles',1,'1 byte',1],['1000 KiB',1024000,'1 MiB',1048576],['3100 kB',3100000,'3 MiB',3145728],['3100 KiB',3174400,'3 MiB',3145728],['1536 KiB',1572864,'1 MiB',1048576]];
+ function draw(){let final=i===7,boss=i===6&&AUD==='al';host.innerHTML='<div class="weigh-round">'+(final?'The byte count survives':'Round '+(i+1)+' / 7')+'</div>'+(final?'<h3>256 000 000 000 bytes</h3><p>= 256 GB ≈ 238.42 GiB</p><p>Different units. The same number of bytes.</p>':boss?'<p>Which is largest?</p><div class="weigh-controls choices">'+['3300 KiB','0.3 MB','3 MiB','3300 kB'].map((t,j)=>'<button data-answer="'+j+'">'+t+'</button>').join('')+'</div>':'<div class="weigh-pair"><b>'+rounds[i][0]+'</b><b>'+rounds[i][2]+'</b></div><div class="weigh-controls choices"><button data-answer="L">Left is larger</button><button data-answer="E">Equal</button><button data-answer="R">Right is larger</button></div>')+'<div class="weigh-feedback" aria-live="polite"></div><div class="weigh-controls"><button id="weigh-back" '+(i===0?'disabled':'')+'>← Back</button><button id="weigh-new">Start again</button><button id="weigh-next" '+(final?'disabled':'')+'>Next →</button></div>';
+ host.querySelectorAll('[data-answer]').forEach(b=>b.onclick=()=>{answer=b.dataset.answer;let correct=boss?'0':rounds[i][1]===rounds[i][3]?'E':rounds[i][1]>rounds[i][3]?'L':'R';host.querySelector('.weigh-feedback').textContent=(answer===correct?'✓ Correct. ':'Try the comparison again. ')+(boss?'Byte counts: 3 379 200; 300 000; 3 145 728; 3 300 000.':rounds[i][1].toLocaleString('en-US')+' bytes versus '+rounds[i][3].toLocaleString('en-US')+' bytes.');});
+ host.querySelector('#weigh-back').onclick=()=>{i--;answer=null;draw()};host.querySelector('#weigh-next').onclick=()=>{i++;answer=null;draw()};host.querySelector('#weigh-new').onclick=()=>{i=0;answer=null;draw()};
+ }draw();
 }
-
-Reveal.initialize({
-  hash:true, slideNumber:'c/t', width:1280, height:720, margin:.06,
-  plugins:[RevealNotes],
-  transition:'slide', backgroundTransition:'fade'
-}).then(function(){
-  initPyCells();
-  initWeighIn();
-  initBitDepth();
-});
-Reveal.on('ready', function(e){ autoSizePyTextareas(e.currentSlide); });
-Reveal.on('slidechanged', function(e){ autoSizePyTextareas(e.currentSlide); });
-</script>
-<script>
-/* ═══ PQ: the typed real-paper stage — shared retrofit block (2026-08-22) ═══
-   Every U deck's "real thing" questions become answer-first: typed boxes or
-   exact-value fields, pattern mark points from the published schemes, model
-   answers, and — where a task id is named — the LLM reader as second marker.
-   The key is never in a deck: grade-server.py holds it; absence = off. ═══ */
-var LLM={url:'http://127.0.0.1:8788', available:false, on:true};
-function llmChip(){
-  var c=document.getElementById('llmchip'); if(!c) return;
-  if(!LLM.available){ c.className='off'; c.textContent='⚡ no reader — click for help'; return; }
-  c.className=LLM.on?'on':'off';
-  c.textContent=LLM.on?'⚡ reader on':'⚡ reader off';
+</script><script>function initMarkers(){
+ const host=document.getElementById('mark-'+AUD);host.className='marker';
+ if(AUD==='ig'){
+ host.innerHTML='<div class="ig-grid">'+[['sound','Sound answer (KiB)'],['image','Image answer (bytes)']].map(([id,label])=>'<div><label>'+label+'<input id="'+id+'-answer" type="text" autocomplete="off"></label><label>Your working<textarea id="'+id+'-work" aria-label="'+id+' working"></textarea></label><div id="'+id+'-rubric" class="rubric" hidden></div></div>').join('')+'</div><div class="mark-controls"><button id="mark">Check answers / show rubric</button><button id="reset">Reset</button></div><div class="mark-score" aria-live="polite"></div><p class="human-note">Values are checked locally. Working marks require your or your teacher’s judgement.</p>';
+ let checked=false,valueMarks=0;
+ const sound=['22016 × 8, then ÷8 (equivalent bit-to-byte step).','22016 × 10 (samples across the duration).','220160 ÷1024 (bytes into KiB).'];
+ function score(){let sn=Math.min(2,host.querySelectorAll('#sound-rubric input:checked').length),im=host.querySelectorAll('#image-rubric input:checked').length;host.querySelector('.mark-score').textContent='Values: '+valueMarks+'/2 · human working: '+(sn+im)+'/3 · total '+(valueMarks+sn+im)+'/5';}
+ function clear(){checked=false;host.querySelectorAll('.rubric').forEach(n=>{n.hidden=true;n.innerHTML=''});host.querySelector('.mark-score').textContent='';host.querySelectorAll('input[type=text]').forEach(n=>n.className='');}
+ host.querySelector('#mark').onclick=()=>{checked=true;valueMarks=0;[['sound',/^215(?:\.0+)?\s*(?:KiB)?$/i],['image',/^(?:2000000|2[ ,]000[ ,]000)(?:\.0+)?\s*(?:bytes?|B)?$/i]].forEach(([id,re])=>{let n=host.querySelector('#'+id+'-answer'),ok=re.test(n.value.trim());valueMarks+=+ok;n.className=ok?'ok':'bad'});
+ host.querySelector('#sound-rubric').innerHTML='<b>Model: 215 KiB.</b> Award any two valid stages shown:<br>'+sound.map(t=>'<label><input type="checkbox" '+(!host.querySelector('#sound-work').value.trim()?'disabled':'')+'>'+t+'</label>').join('');
+ host.querySelector('#image-rubric').innerHTML='<b>Model: 2 000 000 bytes.</b><label><input type="checkbox" '+(!host.querySelector('#image-work').value.trim()?'disabled':'')+'>1000 ×1000, or 1 000 000 ×2. [1]</label><p>Credit correct stages only. Check the units and the whole argument; isolated numbers are not working.</p>';
+ host.querySelectorAll('.rubric').forEach(n=>n.hidden=false);host.querySelectorAll('input[type=checkbox]').forEach(n=>n.onchange=score);score();};
+ host.querySelectorAll('input[type=text],textarea').forEach(n=>n.oninput=clear);
+ host.querySelector('#reset').onclick=()=>{host.querySelectorAll('input[type=text],textarea').forEach(n=>n.value='');clear()};
+ }else{
+ let pick=null;host.innerHTML='<div class="mark-options">'+['3300 KiB','0.3 MB','3 MiB','3300 kB'].map((t,i)=>'<button data-pick="'+i+'">'+t+'</button>').join('')+'</div><div class="mark-fields">'+['Kibi uses a ___ prefix','3 KiB = ___ bytes','Megabyte uses a ___ prefix','2 TB = ___ GB'].map((t,i)=>'<label>'+t+'<input id="prefix-'+i+'" type="text" autocomplete="off"></label>').join('')+'</div><div class="mark-controls"><button id="mark">Check</button><button id="reset">Reset</button></div><div class="mark-score" aria-live="polite"></div><div class="mark-feedback"></div>';
+ function clear(){host.querySelector('.mark-score').textContent='';host.querySelector('.mark-feedback').innerHTML='';host.querySelectorAll('input').forEach(n=>n.className='')}
+ host.querySelectorAll('[data-pick]').forEach(b=>b.onclick=()=>{pick=+b.dataset.pick;host.querySelectorAll('[data-pick]').forEach(n=>n.classList.toggle('chosen',n===b));clear()});
+ host.querySelectorAll('input').forEach(n=>n.oninput=clear);
+ host.querySelector('#mark').onclick=()=>{let score=+(pick===0);[/^binary$/i,/^(3072|3[ ,]072)$/,/^(decimal|denary)$/i,/^(2000|2[ ,]000)$/].forEach((re,i)=>{let n=host.querySelector('#prefix-'+i),ok=re.test(n.value.trim());score+=+ok;n.className=ok?'ok':'bad'});host.querySelector('.mark-score').textContent=score+'/5';host.querySelector('.mark-feedback').innerHTML='<div><b>Largest: 3300 KiB</b><br>Byte counts: 3 379 200; 300 000; 3 145 728; 3 300 000.</div><div><b>binary · 3072 · decimal/denary · 2000</b><br>Named units choose the multiplier.</div>'};
+ host.querySelector('#reset').onclick=()=>{pick=null;host.querySelectorAll('[data-pick]').forEach(n=>n.classList.remove('chosen'));host.querySelectorAll('input').forEach(n=>n.value='');clear()};
+ }
 }
-function llmHelp(show){ var h=document.getElementById('llmhelp'); if(h) h.style.display=show?'block':'none'; }
-function llmDetect(cb){
-  var ctl=new AbortController(); var t=setTimeout(function(){ctl.abort();},1200);
-  fetch(LLM.url+'/ping',{signal:ctl.signal,cache:'no-store'})
-    .then(function(r){return r.json();})
-    .then(function(j){clearTimeout(t); LLM.available=!!(j&&j.ok&&j.key); llmChip(); if(LLM.available) llmHelp(false); if(cb) cb();})
-    .catch(function(){clearTimeout(t); LLM.available=false; llmChip(); if(cb) cb();});
-}
-function llmWatch(){ setInterval(function(){ if(LLM.available||document.hidden) return; llmDetect(); },5000); }
-function llmBind(){
-  var c=document.getElementById('llmchip'); if(!c||c.__bound) return; c.__bound=true;
-  c.addEventListener('click',function(){
-    if(!LLM.available){ c.textContent='⚡ looking for the server…'; llmHelp(true); llmDetect(); return; }
-    LLM.on=!LLM.on; llmChip();
-  });
-  var x=document.getElementById('llmhelp-x'); if(x) x.addEventListener('click',function(){llmHelp(false);});
-  llmDetect(); llmWatch();
-}
-function pqPick(id,n,btn){
-  var t=document.getElementById('pq-tot-'+id); if(t) t.textContent=n;
-  if(btn){ Array.prototype.forEach.call(btn.parentNode.querySelectorAll('.pq-pick'),function(x){x.classList.remove('on');}); btn.classList.add('on'); }
-}
-function pqConsensus(id,r,l,cap){
-  r=Math.min(r,cap); l=Math.min(l,cap);
-  var picks=(r!==l)?(' Which stands? <button class="pq-pick" onclick="pqPick(\''+id+'\','+r+',this)">pattern '+r+'</button>'+
-                     '<button class="pq-pick" onclick="pqPick(\''+id+'\','+l+',this)">reader '+l+'</button>'):'';
-  if(l>r) return '<div class="pq-cons split"><b>pattern '+r+'/'+cap+' · reader '+l+'/'+cap+'</b> — <b>take the reader\'s '+l+':</b> the pattern hunts for words and misses a point made in your own words; an examiner marks the idea.'+picks+'</div>';
-  if(l<r) return '<div class="pq-cons split"><b>pattern '+r+'/'+cap+' · reader '+l+'/'+cap+'</b> — <b>the reader is stricter:</b> the words are present but it did not think the idea was. Worth a human eye.'+picks+'</div>';
-  return '<div class="pq-cons agree"><b>pattern '+r+'/'+cap+' · reader '+l+'/'+cap+'</b> — both markers agree. On prose, that is as certain as marking gets.</div>';
-}
-function pqReader(cfg,answer,rawGot,host){
-  if(!cfg.task){ if(host) host.innerHTML=''; return; }
-  if(!LLM.available||!LLM.on||!host){ if(host) host.innerHTML='<span style="color:#8a92b2;">reader off — pattern marks stand (chip, top right)</span>'; return; }
-  host.innerHTML='a second marker is reading it… <span style="color:#8a92b2;">(this one marks the idea, not the words)</span>';
-  var ctl=new AbortController(); var t=setTimeout(function(){ctl.abort();},90000);
-  fetch(LLM.url+'/mark',{method:'POST',signal:ctl.signal,headers:{'Content-Type':'application/json'},
-    body:JSON.stringify({task:cfg.task, fn:cfg.fn||'Answer', lang:'py', code:answer})})
-   .then(function(r){return r.json();})
-   .then(function(j){
-     clearTimeout(t);
-     if(!j||j.error){ host.innerHTML='reader unavailable ('+((j&&j.error)||'no reply')+')'; return; }
-     var rows=j.marks.map(function(m){return '<li><span class="'+(m.awarded?'y':'n')+'">'+(m.awarded?'✓':'✗')+'</span> '+m.point+(m.why?' <span style="color:#8a92b2;">— '+m.why+'</span>':'')+'</li>';}).join('');
-     host.innerHTML='<b>what the reader says — it marked the idea, not the words</b><ul class="pq-mp">'+rows+'</ul>'
-       +pqConsensus(cfg.id, rawGot, j.awarded, cfg.total)
-       +(j.missed?'<p style="margin:3px 0 0;">'+j.missed+'</p>':'');
-     if(Math.min(j.awarded,cfg.total)>rawGot) pqPick(cfg.id, Math.min(j.awarded,cfg.total));
-   })
-   .catch(function(){ clearTimeout(t); host.innerHTML='could not reach the reader — is the Terminal window still open? The pattern marks stand.'; });
-}
-/* value-field normalisation: spaces and case never cost a mark */
-function pqNorm(v){ return String(v||'').toLowerCase().replace(/[\s,]+/g,'').replace(/−/g,'-'); }
-function pqSet(v){ return String(v||'').toLowerCase().replace(/\s+/g,'').split(/[,+·/&;]/).filter(Boolean).sort().join(','); }
-window.PQ=window.PQ||{};
-function paperInit(hostId,cfg){
-  var host=document.getElementById(hostId); if(!host) return;
-  PQ[cfg.id]={cfg:cfg,host:hostId};
-  var html='';
-  (cfg.parts||[]).forEach(function(pt,i){
-    html+='<div class="pq-lbl">'+pt.lbl+'</div><textarea class="pq-ta" id="pq-'+cfg.id+'-'+i+'" rows="'+(pt.rows||2)+'" spellcheck="false"></textarea>';
-  });
-  if(cfg.vals&&cfg.vals.length){
-    html+='<div class="pq-vals">';
-    cfg.vals.forEach(function(v,i){
-      html+='<label>'+v.lbl+' <input class="pq-in" id="pqv-'+cfg.id+'-'+i+'" autocomplete="off" spellcheck="false" style="width:'+(v.w||120)+'px"></label>';
-    });
-    html+='</div>';
-  }
-  if(cfg.opts&&cfg.opts.length){
-    html+='<div class="pq-opts" id="pqo-'+cfg.id+'">';
-    cfg.opts.forEach(function(o,i){ html+='<button class="pq-opt" data-i="'+i+'">'+o.t+'</button>'; });
-    html+='</div>';
-  }
-  html+='<button class="pq-go" id="pq-go-'+cfg.id+'">mark it, out of '+cfg.total+'</button><div class="pq-res" id="pq-res-'+cfg.id+'"></div>';
-  host.innerHTML=html;
-  var optPick=null;
-  if(cfg.opts) document.querySelectorAll('#pqo-'+cfg.id+' .pq-opt').forEach(function(b){
-    b.addEventListener('click',function(){
-      optPick=parseInt(this.getAttribute('data-i'),10);
-      document.querySelectorAll('#pqo-'+cfg.id+' .pq-opt').forEach(function(x){x.classList.remove('on');});
-      this.classList.add('on');
-    });
-  });
-  document.getElementById('pq-go-'+cfg.id).addEventListener('click',function(){
-    var text={}, joined=[];
-    (cfg.parts||[]).forEach(function(pt,i){
-      var ta=document.getElementById('pq-'+cfg.id+'-'+i);
-      text[pt.key||('p'+i)]=ta.value; joined.push((pt.tag||'')+' '+ta.value);
-      var lines=(ta.value.match(/\n/g)||[]).length+1;
-      ta.rows=Math.max(1,Math.min(lines,3)); ta.readOnly=true;
-    });
-    var got=0, by={}, rows='';
-    (cfg.mps||[]).forEach(function(m){
-      var src=(m.grp&&text[m.grp]!=null)?text[m.grp]:joined.join('\n');
-      var ok=false; try{ ok=!!m.fn(src); }catch(e){}
-      var pts=m.pts||1;
-      if(ok){ var g=m.grp||'_'; by[g]=(by[g]||0)+pts;
-        if(!cfg.caps||!cfg.caps[g]||by[g]<=cfg.caps[g]) got+=pts; }
-      rows+='<li><span class="'+(ok?'y':'n')+'">'+(ok?'✓':'✗')+'</span> '+m.label+'</li>';
-    });
-    (cfg.vals||[]).forEach(function(v,i){
-      var el=document.getElementById('pqv-'+cfg.id+'-'+i);
-      var raw=el.value, ok;
-      if(v.set) ok=v.want.indexOf(pqSet(raw))!==-1;
-      else if(v.re) ok=v.re.test(pqNorm(raw));
-      else ok=v.want.indexOf(pqNorm(raw))!==-1;
-      el.disabled=true; el.className='pq-in '+(ok?'ok':'bad');
-      var pts=v.pts||1; if(ok) got+=pts;
-      rows+='<li><span class="'+(ok?'y':'n')+'">'+(ok?'✓':'✗')+'</span> '+v.label+' <b>['+pts+']</b></li>';
-      joined.push((v.lbl||'')+' '+raw);
-    });
-    if(cfg.opts){
-      var o=(optPick!=null)?cfg.opts[optPick]:null, ok=!!(o&&o.ok);
-      if(ok) got+=1;
-      rows+='<li><span class="'+(ok?'y':'n')+'">'+(ok?'✓':'✗')+'</span> '+(cfg.optLabel||'the correct pick')+' <b>[1]</b>'+(o&&o.why?' <span style="color:#8a92b2;">— '+o.why+'</span>':'')+'</li>';
-      document.querySelectorAll('#pqo-'+cfg.id+' .pq-opt').forEach(function(b,i){
-        b.disabled=true; if(cfg.opts[i].ok) b.classList.add('right');
-      });
-      if(o) joined.push('picked: '+o.t);
-    }
-    if(cfg.capRule) got=cfg.capRule(joined.join('\n'), got);
-    got=Math.min(got,cfg.total);
-    this.style.display='none';
-    document.getElementById('pq-res-'+cfg.id).innerHTML=
-      '<div class="pq-tot"><span id="pq-tot-'+cfg.id+'">'+got+'</span> / '+cfg.total
-      +(cfg.task?' <span style="color:#8a92b2; font-weight:normal;">— pattern marks; the reader may lift them</span>':'')+'</div>'
-      +'<div class="pq-two"><div><ul class="pq-mp">'+rows+'</ul>'
-      +(cfg.model?'<div class="pq-model"><b>model answer:</b><br>'+cfg.model+'</div>':'')+'</div>'
-      +'<div class="pq-llm" id="pq-llm-'+cfg.id+'"></div></div>';
-    pqReader(cfg, joined.join('\n'), got, document.getElementById('pq-llm-'+cfg.id));
-  });
-}
-llmBind();
-
-/* ===== this deck's real-paper stages ===== */
-
-paperInit('pq-u2b0',{id:'u2b0',total:5,task:'U02b-calc-sound',fn:'FileSizes',
- parts:[{key:'w',lbl:'your working, both calculations — every stage on its own line',rows:4}],
- vals:[
-  {lbl:'sound =',re:/^215(kib)?$/,want:[],label:'sound effect = <b>215 KiB</b>',w:90},
-  {lbl:'image =',re:/^2000000(bytes)?|2mb$/,want:[],label:'image = <b>2 000 000 bytes</b>',w:110}],
- mps:[
-  {grp:'w',fn:function(x){return /220\s?160|22\s?016\s?[x×*]\s?10|1\s?761\s?280/.test(x);},label:'sound: the ×10 seconds stage (220 160 bytes, or 1 761 280 bits)'},
-  {grp:'w',fn:function(x){return /1024/.test(x);},label:'sound: ÷ 1024 into KiB'},
-  {grp:'w',fn:function(x){return /1\s?000\s?000|1000\s?[x×*]\s?1000/.test(x);},label:'image: 1000 × 1000 = 1 000 000 pixels — and NO ÷8, the depth arrived in bytes'}],
- model:'Sound: 22 016 × 8 ÷ 8 = 22 016 bytes/s → × 10 = 220 160 bytes → ÷ 1024 = <b>215 KiB</b> (any correct route scores).<br>Image: 1000 × 1000 = 1 000 000 → × 2 = <b>2 000 000 bytes</b>. The depth was already in bytes and the answer was wanted in bytes — read the units, then compute.'});
-paperInit('pq-u2b1',{id:'u2b1',total:5,
- opts:[{t:'3300 kibibytes',ok:true,why:'3 379 200 bytes — the largest'},{t:'0.3 megabytes',ok:false},{t:'3 mebibytes',ok:false},{t:'3300 kilobytes',ok:false}],
- optLabel:'(a) 3300 kibibytes — 3 379 200 against 300 000 · 3 145 728 · 3 300 000',
- vals:[
-  {lbl:'(b) kibi prefix:',want:['binary'],label:'kibibyte has a <b>binary</b> prefix',w:90},
-  {lbl:'3 KiB =',re:/^3072(bytes)?$/,want:[],label:'3 × 1024 = <b>3072</b> bytes',w:80},
-  {lbl:'mega prefix:',want:['decimal','denary'],label:'megabyte has a <b>decimal</b> prefix',w:90},
-  {lbl:'2 TB =',re:/^2000(gb|gigabytes)?$/,want:[],label:'2 × 1000 = <b>2000</b> gigabytes',w:80}],
- model:'(a) 3300 KiB = 3 379 200 bytes — the others are 300 000, 3 145 728 and 3 300 000.<br>(b) binary · 3072 · decimal · 2000 — both ladders in one question, which is why 9618 wants the shopkeeper\'s ladder too.'});
-
-</script>
-</body>
+</script><script>Reveal.initialize({hash:true,slideNumber:'c/t',width:1280,height:720,margin:.04,center:true,controlsTutorial:false,transition:matchMedia('(prefers-reduced-motion:reduce)').matches?'none':'fade',backgroundTransition:'none',plugins:[RevealNotes]}).then(()=>{audTitle();if(AUD){initPyCells();initBitDepth();initWeighIn();initMarkers();autoSizePyTextareas(Reveal.getCurrentSlide());}else document.getElementById('py-chip').remove();});
+Reveal.on('slidechanged',e=>autoSizePyTextareas(e.currentSlide));
+</script><script type="application/json" id="course-routes">{"ig": {"slides": 25, "cells": 2}, "al": {"slides": 26, "cells": 2}}</script><script type="application/json" id="paper-spend">[["0478", "N24", "12", "2"], ["0478", "M23", "12", "4"], ["9618", "J24", "12", "7"], ["9618", "J24", "13", "1"]]</script></body>
 </html>
