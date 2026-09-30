@@ -81,4 +81,4 @@ repo.
 
 ---
 
-*Released slides-2026-09-20 · units in this edition: U02a, U02b, U03a, U03b, U04, U09b*
+*Released slides-2026-09-30 · units in this edition: U02a, U02b, U03a, U03b, U04, U09b*

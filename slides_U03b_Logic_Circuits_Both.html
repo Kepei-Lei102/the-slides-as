@@ -153,6 +153,26 @@ button:disabled{opacity:.4;cursor:default}
 [id^="table-answer-"] table{font-size:25px!important}
 #feedback svg{height:125px}#feedback .stable-pair{margin:28px 0}
 #feedback .source a{color:#F2B53C}
+
+/* U-lane visual sweep, 20 September 2026: brief entrance motion; no extra clicks. */
+.reveal .slides section{transition-duration:220ms!important}
+.reveal .backgrounds .slide-background{transition-duration:220ms!important}
+.reveal .slides section.lt .card,.reveal .slides section.lt .rule{box-shadow:0 2px 8px rgba(34,43,90,.065)}
+.reveal .slides section.dk .card,.reveal .slides section.dk .rule{box-shadow:0 3px 12px rgba(0,0,0,.12)}
+.reveal .slides section .pycell{box-shadow:0 5px 16px rgba(21,27,60,.12)}
+.reveal .slides section .dig-link,.reveal .slides section .return-link{text-decoration:underline;text-underline-offset:4px;text-decoration-color:rgba(23,179,163,.45)}
+.reveal .slides section button{transition:background-color .14s ease,border-color .14s ease,box-shadow .14s ease}
+.reveal .slides section button:focus-visible{outline:3px solid #f2b53c;outline-offset:3px}
+@keyframes u-enter{from{opacity:.15;transform:translateY(6px)}to{opacity:1;transform:translateY(0)}}
+@keyframes u-rule{from{transform:scaleX(.94);opacity:.3}to{transform:scaleX(1);opacity:1}}
+@media(prefers-reduced-motion:no-preference){
+ .reveal:not(.none) .slides section.present:not(.stack)>:is(h1,h2){animation:u-enter .22s ease-out both}
+ .reveal:not(.none) .slides section.present:not(.stack)>:is(.rule,.card,.two-col,.three-col,.pycell,.xt,.vtab):not(.fragment){animation:u-enter .24s ease-out both;animation-delay:35ms}
+ .reveal:not(.none) .slides section.present:not(.stack)>.bar{transform-origin:left;animation:u-rule .24s ease-out both}
+}
+.reveal.none .slides section,.reveal.none .slides section *{animation:none!important;transition:none!important}
+@media(prefers-reduced-motion:reduce){.reveal .slides section,.reveal .slides section *{animation:none!important;transition:none!important}}
+@media print{.reveal .slides section,.reveal .slides section *{animation:none!important;transition:none!important}}
 </style></head>
 <body>
 <div class="reveal"><div class="slides"><section><section class="dk" data-background-color="#151B3C" id="title"><div class="badges"><span class="bg bg-hole">IG + AS</span></div>
