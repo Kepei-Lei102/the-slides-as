@@ -1,0 +1,301 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>U05e · Decisions and Repetition</title>
+<link href="https://cdnjs.cloudflare.com/ajax/libs/reveal.js/4.6.1/reveal.min.css" rel="stylesheet"/>
+<style>
+:root{
+  --dark:#151B3C; --light:#F4F6FB; --accent1:#17B3A3; --accent2:#F0655B;
+  --accent3:#F2B53C; --navy:#222B5A; --ice:#E8EEF9; --white:#fff;
+}
+.reveal{font-family:'Calibri','Segoe UI','PingFang SC','Microsoft YaHei',system-ui,sans-serif; font-size:26px;}
+.reveal h1,.reveal h2,.reveal h3{font-family:'Georgia','Times New Roman','PingFang SC','Microsoft YaHei',serif; text-transform:none; letter-spacing:-.02em;}
+.reveal section{text-align:left;}
+.dk{color:var(--ice);} .dk h1,.dk h2,.dk h3{color:var(--white);}
+.lt{color:var(--navy);} .lt h2,.lt h3{color:var(--navy);}
+.bar{position:absolute; top:0; left:0; right:0; height:5px;}
+.card{background:var(--white); border-radius:10px; padding:16px 20px; box-shadow:0 4px 12px rgba(0,0,0,.07); text-align:left;}
+.rule{background:var(--white); border-radius:8px; padding:11px 16px; box-shadow:0 3px 10px rgba(0,0,0,.05); border-left:5px solid var(--accent1); margin:10px 0; text-align:left; font-size:.74em;}
+.rule.accent2{border-left-color:var(--accent2);} .rule.accent3{border-left-color:var(--accent3);} .rule.navy{border-left-color:var(--navy);}
+.dk .rule{background:rgba(255,255,255,.06); color:var(--ice);}
+.two-col{display:flex; gap:28px; align-items:flex-start;} .two-col>*{flex:1;}
+.three-col{display:flex; gap:18px;} .three-col>*{flex:1;}
+.sgrid{display:grid; grid-template-columns:1fr 1fr; gap:14px; font-size:.6em;}
+.scard{background:rgba(255,255,255,.08); border-radius:10px; padding:14px; text-align:left; border-top:3px solid var(--accent1);}
+.smaller{font-size:.7em;}
+.center{text-align:center;}
+.accent1{color:var(--accent1);} .accent2{color:var(--accent2);} .accent3{color:var(--accent3);}
+.mono{font-family:'Courier New',monospace; font-weight:bold;}
+
+.badges{position:absolute; top:-14px; right:0; display:flex; gap:6px; z-index:5;}
+.bg{font-size:.44em; font-weight:bold; letter-spacing:.03em; padding:3px 12px; border-radius:20px; font-family:'Calibri','Segoe UI',sans-serif;}
+.bg-both{background:rgba(23,179,163,.15); color:var(--accent1); border:1.5px solid var(--accent1);}
+.bg-hole{background:rgba(242,181,60,.15); color:#B8860B; border:1.5px solid var(--accent3);}
+.dk .bg-both{background:rgba(23,179,163,.22); color:#5FD6C9;}
+.dk .bg-hole{color:var(--accent3);}
+
+.dig{position:absolute; bottom:-34px; left:50%; transform:translateX(-50%); font-size:.5em; color:#98a0c0; animation:bob 2s ease-in-out infinite;}
+@keyframes bob{0%,100%{transform:translateX(-50%) translateY(0);}50%{transform:translateX(-50%) translateY(5px);}}
+
+#obj-btn{background:rgba(255,255,255,.08); color:var(--ice); border:1px solid rgba(255,255,255,.25); border-radius:8px; padding:5px 14px; cursor:pointer; font-size:.42em; opacity:.55; transition:opacity .2s;}
+#obj-btn:hover{opacity:1;}
+
+/* inherited cell styling */
+.pycell{background:var(--navy); border-radius:12px; padding:10px 12px 12px; box-shadow:0 4px 14px rgba(0,0,0,.14); text-align:left;}
+.pycell .pybar{display:flex; gap:8px; align-items:center; margin-bottom:6px;}
+.pycell .pydots{display:flex; gap:5px;}
+.pycell .pydots i{width:9px; height:9px; border-radius:50%; display:block;}
+.pyta{width:100%; box-sizing:border-box; background:#1b234d; color:var(--ice); border:none; border-radius:8px;
+  font-family:'Courier New',monospace; font-weight:bold; font-size:.62em; line-height:1.5; padding:10px 12px; resize:none; outline:none; display:block;}
+.pyta[readonly]{color:#aeb8dd;}
+.pyta:focus{box-shadow:0 0 0 2px var(--accent1);}
+.pyrun{background:var(--accent1); color:#fff; border:none; border-radius:7px; padding:4px 16px; font-size:.5em; font-weight:bold; cursor:pointer; font-family:'Calibri','Segoe UI',sans-serif;}
+.pyrun:hover{background:#12907f;}
+.pyrun:disabled{background:#5a6394; cursor:wait;}
+.pylock{background:transparent; color:#98a0c0; border:1.5px solid #454e82; border-radius:7px; padding:3px 12px; font-size:.5em; font-weight:bold; cursor:pointer;}
+.pylock:hover{color:var(--accent3); border-color:var(--accent3);}
+.pyout{background:#0d1230; color:#5FD6C9; border-radius:8px; font-family:'Courier New',monospace; font-weight:bold;
+  font-size:.58em; line-height:1.5; padding:9px 12px; margin:8px 0 0; min-height:1.4em; white-space:pre-wrap; text-align:left;}
+.pyout.err{color:var(--accent2);}
+.pyout .crash{color:var(--accent2);}
+.pyin-lbl{color:#5FD6C9;}
+.pyin{background:#1b234d; border:2px solid var(--accent1); border-radius:6px; color:var(--ice);
+  font-family:'Courier New',monospace; font-weight:bold; font-size:1em; padding:1px 8px; width:130px; outline:none; vertical-align:middle; margin-left:2px;}
+.pyin:focus{box-shadow:0 0 6px rgba(23,179,163,.55);}
+.pystate{font-size:.46em; color:#98a0c0; margin-left:auto;}
+
+/* karel figure */
+.circ{position:relative; margin:0 auto;}
+.circ svg{width:100%; display:block;}
+.clbl{position:absolute; font-family:'Calibri','Segoe UI',sans-serif; font-size:.5em; color:#7a83a8; transform:translate(-50%,-50%);}
+
+/* type train */
+.train{display:flex; gap:4px; align-items:center; justify-content:center;}
+.carriage{width:54px; height:54px; border-radius:9px; background:var(--white); border:2.5px solid var(--accent1);
+  display:flex; align-items:center; justify-content:center; font-family:'Courier New',monospace; font-weight:bold; font-size:.7em; color:var(--navy);}
+.carriage.solo{border-color:var(--accent3); background:rgba(242,181,60,.1);}
+
+/* game grammar */
+.mg-stage{font-size:.72em; font-weight:bold; color:var(--navy); background:rgba(242,181,60,.18); border:2px solid var(--accent3); border-radius:24px; padding:4px 26px; text-align:center;}
+.mg-prog{display:flex; gap:7px; justify-content:center;}
+.mg-prog .pd{width:11px; height:11px; border-radius:50%; background:#d4d9ea; transition:all .2s;}
+.mg-prog .pd.done{background:var(--accent1);}
+.mg-prog .pd.cur{background:var(--accent3); transform:scale(1.3);}
+.mg-gbtn{background:var(--white); border:2px solid #c6cde4; border-radius:10px; padding:8px 16px; font-size:.6em; font-weight:bold; color:var(--navy); cursor:pointer; font-family:'Courier New',monospace; text-align:left;}
+.mg-gbtn:hover{border-color:var(--accent1);}
+.mg-gbtn.no{animation:shake .4s; border-color:var(--accent2);}
+@keyframes shake{0%,100%{transform:translateX(0);}25%{transform:translateX(-6px);}75%{transform:translateX(6px);}}
+.mg-status{font-size:.6em; font-weight:bold; min-height:1.6em; text-align:center;}
+.mg-status.ok{color:var(--accent1);}
+.mg-status.bad{color:var(--accent2);}
+.mg-btn{background:var(--navy); color:var(--white); border:none; border-radius:8px; padding:6px 18px; font-size:.62em; font-weight:bold; cursor:pointer;}
+.mg-btn:hover{background:var(--accent1);}
+.pp-code{background:var(--navy); color:var(--ice); border-radius:10px; font-family:'Courier New',monospace; font-weight:bold; font-size:.6em; line-height:1.55; padding:12px 16px; text-align:left; white-space:pre;}
+.pp-line{display:block; border-radius:6px; padding:1px 8px; margin:1px 0; cursor:default;}
+.pp-line.clickable{cursor:pointer;}
+.pp-line.clickable:hover{background:rgba(242,181,60,.18);}
+.pp-line.picked{background:rgba(23,179,163,.25);}
+.pp-line.wrong{animation:shake .4s; background:rgba(240,101,91,.25);}
+.pp-tada{font-size:1.05em; font-weight:bold; color:var(--accent3); text-align:center; animation:pop .5s ease-out;}
+@keyframes pop{0%{transform:scale(.3); opacity:0;}70%{transform:scale(1.15);}100%{transform:scale(1); opacity:1;}}
+
+.pbtn{background:var(--navy); color:var(--white); border:none; border-radius:10px; padding:16px 38px; font-size:.8em; font-weight:bold; cursor:pointer;}
+.pbtn:hover{background:var(--accent1);}
+.src{font-size:.5em; color:#98a0c0; margin-top:12px;}
+
+.vtab{width:100%; border-collapse:collapse; font-size:.62em;}
+.vtab th{background:var(--navy); color:var(--white); padding:7px 12px; text-align:left;}
+.vtab td{background:var(--white); padding:6px 12px; border-bottom:1px solid #e3e7f2;}
+.xt{font-size:.6em; width:100%; border-collapse:collapse;}
+.xt td,.xt th{padding:6px 10px; border-bottom:1px solid #e3e7f2; background:var(--white); vertical-align:top;}
+.xt th{background:var(--navy); color:var(--white);}
+
+#fs-btn{position:fixed; bottom:18px; right:18px; z-index:99; background:rgba(30,39,97,.7); color:var(--ice); border:none; border-radius:8px; padding:6px 16px; cursor:pointer; font-size:18px; opacity:.7; transition:opacity .2s;}
+#fs-btn:hover{opacity:1;}
+:fullscreen #fs-btn,:-webkit-full-screen #fs-btn{display:none;}
+#py-chip{position:fixed; bottom:18px; left:18px; z-index:99; font-size:15px; font-weight:bold; padding:6px 14px; border-radius:20px; background:rgba(30,39,97,.75); color:#98a0c0;}
+#py-chip.ready{color:#5FD6C9;}
+
+</style>
+<style>.reveal{font-size:26px}.reveal .slides section:not(.stack){box-sizing:border-box;top:28px!important;padding:22px 18px 10px;line-height:1.28}.reveal h2{font-size:38px;margin:10px 0 18px}.reveal h1{font-size:64px;margin:32px 0 20px}.reveal p{font-size:23px;margin:12px 0}.rule{font-size:22px;line-height:1.35;margin:10px 0;padding:12px 16px}.two-col{gap:24px}.two-col>*{min-width:0}.dk .card{background:#252e55;color:var(--ice)}.bar{background:var(--accent1)}.badges{top:0;right:18px}.bg{font-size:12px;color:#278478;border:1px solid #17b3a3;background:#e1f5f0}.dk .bg{color:#5fd6c9;background:#253e52}.lanes{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-top:16px;font-size:16px;line-height:1.3}.lanes>div{border-top:2px solid var(--accent3);padding:8px 12px;background:#eceff7;border-radius:5px}.lanes b{display:block;font-size:12px;letter-spacing:.06em;margin-bottom:4px}.dk .lanes>div{background:#252e55}.dk .lanes{color:var(--ice)}.return-link,.dig-link{display:inline-block;font-size:18px;color:#596b95;margin-top:10px}.dk a{color:#7be2d8}button,.reveal button{font-family:inherit;font-size:18px;border:1px solid #b9c6dd;border-radius:8px;background:#fff;color:var(--navy);padding:7px 13px;cursor:pointer}button:hover{border-color:var(--accent1)}button:disabled{opacity:.5;cursor:default}button:focus-visible,a:focus-visible{outline:3px solid var(--accent3);outline-offset:3px}#obj-btn{font-size:20px;opacity:1;display:inline-block;margin-top:25px}#aud-chip,#aud-sub{font-size:18px}#fs-btn{font-size:14px;bottom:7px;right:70px}#py-chip{font-size:13px;bottom:7px;left:15px}.pycell{padding:12px}.pyta{font-size:19px;line-height:1.42;white-space:pre;overflow:auto;resize:none;height:215px;padding:12px;font-weight:normal;tab-size:4}.pyout{font-size:18px;line-height:1.4;height:132px;max-height:132px;overflow:auto;margin:8px 0 0;box-sizing:border-box;white-space:pre-wrap;overflow-wrap:anywhere}.pybar{flex-wrap:wrap}.pybar button{font-size:14px;padding:5px 9px;background:#303e70;color:#e8eef9}.pybar .pyrun{background:#138579;color:white}.pystate{font-size:12px}.pyrow{display:grid;grid-template-columns:1.1fr 1fr;gap:12px}.pyrow .pyta,.pyrow .pyout{height:320px;max-height:320px;margin:0}.pyrow .pyta{font-size:18px}.pyin{max-width:110px;font-size:17px}.xt,.vtab{font-size:21px;line-height:1.25}.xt th,.xt td,.vtab th,.vtab td{padding:9px 12px}.code{background:#222b5a;color:#e8eef9;font:21px/1.45 'Courier New',monospace;padding:18px;border-radius:10px;white-space:pre-wrap}.code .accent3{color:#ffd064}.symbols{display:flex;gap:14px;margin-top:16px}.symbols>div{flex:1;text-align:center;background:white;border-bottom:4px solid #17b3a3;border-radius:10px;padding:15px;font-size:18px}.symbols b{font:40px Georgia;display:block}.steps{display:flex;gap:8px;align-items:stretch;margin:25px 0}.steps>div{flex:1;background:white;border-top:4px solid var(--accent1);padding:18px 10px;border-radius:10px;font-size:22px;text-align:center}.steps>span{align-self:center}.note{font-size:18px!important;color:#697698}.game-nav{display:flex;gap:8px;align-items:center;margin-bottom:14px}.game-nav span{margin-left:auto;font-size:18px}.game-main{display:grid;grid-template-columns:1fr 1fr;gap:20px;min-height:225px}.game-main .code{font-size:21px;min-height:140px;margin:0}.game-main h3{font-family:inherit;font-size:23px;margin:0 0 12px}.options{display:grid;grid-template-columns:1fr 1fr;gap:8px}.options button.selected{border:3px solid #e4a42a;background:#fff4d1}.game-feedback{min-height:28px;font-size:20px;margin:10px 0}.game-main .pyout{height:105px;max-height:105px}.linepick{display:block;width:100%;text-align:left;background:#222b5a;color:#e8eef9;font:19px/1.3 monospace;padding:7px;margin:3px 0}.linepick.selected{border:2px solid var(--accent3);color:#ffdb88}.exact label{display:block;font-size:19px;margin:8px 0}.exact input{box-sizing:border-box;width:100%;font:20px monospace;padding:7px;border:2px solid #c6cde4;border-radius:7px}.exact .feedback{font-size:20px;min-height:28px;margin-top:10px}.exact .solution{font-size:18px;background:#e4f5ef;padding:10px;white-space:pre-wrap;border-radius:7px}.train{justify-content:start;margin:14px}.carriage{font-size:24px}.reveal .slides section .fragment{transition:opacity .18s ease!important}.reveal .slides section{transition-duration:.22s!important}.reveal pre{box-shadow:none;max-width:100%;width:auto}.reveal .slides section[data-hole] .bar{background:var(--accent3)}.reveal [hidden]{display:none!important}@media(prefers-reduced-motion:reduce){*,*::before,*::after{animation:none!important;transition:none!important;scroll-behavior:auto!important}}@media print{#fs-btn,#py-chip{display:none}}
+.pyta{height:185px}.pyrow .pyta,.pyrow .pyout{height:260px;max-height:260px}.exact[data-check="ig"]{display:grid;grid-template-columns:1fr 1fr;gap:6px 16px}.exact[data-check="ig"] label{margin:0}.exact[data-check="ig"] .feedback,.exact[data-check="ig"] .solution{grid-column:1/-1}.exact[data-check="ig"] .solution{font-size:17px}.reveal .linepick{background:#222b5a;color:#e8eef9;font:19px/1.3 monospace;text-align:left;padding:7px}.reveal .linepick.selected{border:2px solid var(--accent3);color:#ffdb88;background:#303758}.pyta[readonly]{color:#d2d8f0}
+#title h2{font-size:64px;margin:36px 0 24px}#title>p:first-of-type{font-size:18px;letter-spacing:.12em}
+
+/* U-lane visual sweep, 20 September 2026: brief entrance motion; no extra clicks. */
+.reveal .slides section{transition-duration:220ms!important}
+.reveal .backgrounds .slide-background{transition-duration:220ms!important}
+.reveal .slides section.lt .card,.reveal .slides section.lt .rule{box-shadow:0 2px 8px rgba(34,43,90,.065)}
+.reveal .slides section.dk .card,.reveal .slides section.dk .rule{box-shadow:0 3px 12px rgba(0,0,0,.12)}
+.reveal .slides section .pycell{box-shadow:0 5px 16px rgba(21,27,60,.12)}
+.reveal .slides section .dig-link,.reveal .slides section .return-link{text-decoration:underline;text-underline-offset:4px;text-decoration-color:rgba(23,179,163,.45)}
+.reveal .slides section button{transition:background-color .14s ease,border-color .14s ease,box-shadow .14s ease}
+.reveal .slides section button:focus-visible{outline:3px solid #f2b53c;outline-offset:3px}
+@keyframes u-enter{from{opacity:.15;transform:translateY(6px)}to{opacity:1;transform:translateY(0)}}
+@keyframes u-rule{from{transform:scaleX(.94);opacity:.3}to{transform:scaleX(1);opacity:1}}
+@media(prefers-reduced-motion:no-preference){
+ .reveal:not(.none) .slides section.present:not(.stack)>:is(h1,h2){animation:u-enter .22s ease-out both}
+ .reveal:not(.none) .slides section.present:not(.stack)>:is(.rule,.card,.two-col,.three-col,.pycell,.xt,.vtab):not(.fragment){animation:u-enter .24s ease-out both;animation-delay:35ms}
+ .reveal:not(.none) .slides section.present:not(.stack)>.bar{transform-origin:left;animation:u-rule .24s ease-out both}
+}
+.reveal.none .slides section,.reveal.none .slides section *{animation:none!important;transition:none!important}
+@media(prefers-reduced-motion:reduce){.reveal .slides section,.reveal .slides section *{animation:none!important;transition:none!important}}
+@media print{.reveal .slides section,.reveal .slides section *{animation:none!important;transition:none!important}}
+</style><style>.slides section[id]{padding-bottom:24px} #trace-state{font-size:25px} #trace-output{color:#17b3a3} .reveal .slides section .code{font-size:25px}</style><style>.reveal .slides section{top:28px!important}.reveal h2{font-size:40px;margin:0 0 20px}.reveal .rule{font-size:23px;line-height:1.36;padding:12px 16px;margin:12px 0}.reveal .code{font:22px/1.35 ui-monospace,monospace;padding:18px 22px;white-space:pre-wrap;border-left:5px solid #17b3a3;background:#222b5a;color:#eef2fb;box-shadow:0 6px 18px #151b3c22}.reveal .two-col{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:28px}.reveal .xt{font-size:23px;width:100%;border-collapse:collapse}.reveal .xt th,.reveal .xt td{padding:10px 14px}.reveal .small{font-size:19px}.reveal .dk .rule{background:#252e55;color:#eef2fb}.reveal .dk a{color:#5ce1cd}.game-nav{display:flex;gap:8px;align-items:center;margin-bottom:14px}.reveal button{font-size:19px;padding:9px 14px}.game-main{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:24px}.game-main h3{font-size:24px}.options{display:grid;gap:12px}.options button{text-align:left;font-size:22px;white-space:pre-wrap}.options button.selected{border:3px solid #d99416}.reveal #g-feedback{font-size:22px;line-height:1.35;min-height:66px;margin-top:14px}.reveal #g-score{font-size:20px;margin-left:18px}.reveal #title h2{font-size:64px;margin-top:40px}.trace-controls{margin:14px 0}.trace-state{border-left:5px solid #f2b53c;padding:16px;background:#fff;font-size:24px}.reveal .terminal-row{color:#68708d}.reveal section .rule{box-shadow:0 2px 8px #222b5a12}@keyframes u-enter{from{opacity:.15;transform:translateY(6px)}to{opacity:1;transform:translateY(0)}}@media(prefers-reduced-motion:no-preference){.reveal:not(.none) section.present>h2,.reveal:not(.none) section.present>.two-col{animation:u-enter .22s ease-out both}}.reveal.none *{animation:none!important;transition:none!important}@media(prefers-reduced-motion:reduce){.reveal *{animation:none!important;transition:none!important}}
+</style></head>
+<body>
+<div class="reveal"><div class="slides"><section><section class="dk" data-background-color="#151B3C" id="title"><div class="bar"></div><h2>Decisions and Repetition</h2><p class="accent3">U05e · PSEUDOCODE</p><p>Precise instructions. A trace you can explain.</p><div id="aud-btns"><button onclick="setAud('al')">AS 9618 ▶</button> <button onclick="setAud('ig')">IGCSE 0478 ▶</button></div><p id="aud-sub"></p><p hidden="" id="aud-chip"></p><a href="#/objectives" id="obj-btn">Objectives ↓</a> · <a href="#/iteration" id="entry-btn">Start here →</a>
+</section><section class="lt" data-background-color="#F4F6FB" id="objectives"><div class="bar"></div><h2>Choices, repeated work, a visible trace</h2><div class="rule">Follow IF and CASE, including nested decisions.</div><div class="rule">Count the values visited by FOR, including STEP.</div><div class="rule">Explain why WHILE may run zero times and REPEAT runs at least once.</div><div class="rule">Choose a loop, trace changing values and repair a faulty instruction.</div>
+</section></section><section class="lt" data-background-color="#F4F6FB" id="opener"><div class="bar"></div><h2>While we settle: the ticket attendant</h2><div class="rule">A visitor aged 12 or above pays 8. A younger visitor pays 5. A member gets 2 off either price.</div><div class="rule">Find the prices for: age 11, member; age 12, not a member; age 16, member.</div><div class="rule">Sketch the order of the attendant’s decisions. Can one decision change the answer to another?</div><div class="rule">4 minutes · paper only · work independently</div>
+</section><section class="lt" data-background-color="#F4F6FB" id="selection"><div class="bar"></div><h2>A branch chooses the next action</h2><div class="two-col"><div><pre class="code">DECLARE Age, Price : INTEGER
+INPUT Age
+IF Age &gt;= 12 THEN
+    Price ← 8
+ELSE
+    Price ← 5
+ENDIF
+OUTPUT Price</pre></div><div><div class="rule">Evaluate the condition once. Execute only the selected branch.</div><div class="rule">ENDIF closes the choice. The output afterwards runs whichever branch was selected.</div><div class="rule">With no ELSE, a false condition simply skips the body.</div></div></div>
+</section><section class="lt" data-background-color="#F4F6FB" id="conditions"><div class="bar"></div><h2>Every comparison asks a complete question</h2><table class="xt"><tr><th>Expression</th><th>At Age = 12</th></tr><tr><td>(Age &gt;= 12) AND (Age &lt;= 17)</td><td>TRUE</td></tr><tr><td>(Age &lt; 12) OR (Age &gt; 17)</td><td>FALSE</td></tr><tr><td>NOT (Age = 12)</td><td>FALSE</td></tr><tr><td>Age &lt;&gt; 12</td><td>FALSE</td></tr></table><div class="rule">Use = to compare, ← to assign. AND and OR join Boolean expressions.</div><div class="rule">Age = 12 OR 13 is incomplete: write (Age = 12) OR (Age = 13).</div>
+</section><section class="lt" data-background-color="#F4F6FB" id="independent"><div class="bar"></div><h2>A later IF is a separate decision</h2><div class="two-col"><div><pre class="code">DECLARE Price : INTEGER
+DECLARE Member : BOOLEAN
+Price ← 8
+Member ← TRUE
+IF Member THEN
+    Price ← Price - 2
+ENDIF
+OUTPUT Price</pre></div><div><div class="rule">This outputs 6. The membership test can follow either age branch.</div><div class="rule">Two independent IF statements can both run.</div><div class="rule">A nested IF is different: control must enter the outer branch before reaching the inner test.</div></div></div>
+</section><section class="lt" data-background-color="#F4F6FB" id="nested"><div class="bar"></div><h2>Which IF owns this ELSE?</h2><div class="two-col"><div><pre class="code">DECLARE Age : INTEGER
+DECLARE Member : BOOLEAN
+INPUT Age
+INPUT Member
+IF Age &gt;= 12 THEN
+    IF Member THEN
+        OUTPUT "Member ticket"
+    ELSE
+        OUTPUT "Standard ticket"
+    ENDIF
+ELSE
+    OUTPUT "Child ticket"
+ENDIF</pre></div><div><div class="rule">Age 11, Member TRUE: Child ticket. The inner IF is never reached.</div><div class="rule">Age 12, Member FALSE: Standard ticket.</div><div class="rule">Match each ENDIF to its IF. Indentation makes ownership visible.</div></div></div>
+</section><section class="lt" data-aud="al" data-background-color="#F4F6FB" id="case-al"><div class="bar"></div><h2>One value chooses a menu branch</h2><div class="two-col"><div><pre class="code">DECLARE Choice : INTEGER
+INPUT Choice
+CASE OF Choice
+    1 : OUTPUT "Tea"
+    2 : OUTPUT "Juice"
+    OTHERWISE : OUTPUT "Water"
+ENDCASE</pre></div><div><div class="rule">Read the cases in order. Execute the first matching branch, then leave CASE.</div><div class="rule">OTHERWISE handles unmatched values. It comes last.</div><div class="rule">Trace Choice = 2, then Choice = 9.</div></div></div>
+</section><section class="lt" data-aud="ig" data-background-color="#F4F6FB" id="case-ig"><div class="bar"></div><h2>One value chooses a menu branch</h2><div class="two-col"><div><pre class="code">DECLARE Choice : INTEGER
+INPUT Choice
+CASE OF Choice
+    1 : OUTPUT "Tea"
+    2 : OUTPUT "Juice"
+    OTHERWISE OUTPUT "Water"
+ENDCASE</pre></div><div><div class="rule">Read the cases in order. Execute the first matching branch, then leave CASE.</div><div class="rule">OTHERWISE handles unmatched values. It comes last.</div><div class="rule">Trace Choice = 2, then Choice = 9.</div></div></div>
+</section><section class="lt" data-background-color="#F4F6FB" id="selection-try"><div class="bar"></div><h2>1. Your turn: predict the two outputs</h2><div class="two-col"><div><pre class="code">DECLARE Score : INTEGER
+Score ← 90
+IF Score &gt;= 50 THEN
+    OUTPUT "Pass"
+ENDIF
+IF Score &gt;= 80 THEN
+    OUTPUT "Merit"
+ENDIF</pre></div><div><div class="rule">Write the output in order.</div><div class="rule">Explain why this is not “pick one branch”.</div><div class="rule">Then change Score to 65 and predict again.</div><div class="rule">Ours [3] · attempt before advancing</div></div></div>
+</section><section class="lt" data-background-color="#F4F6FB" id="selection-answer"><div class="bar"></div><h2>1. Solution</h2><div class="rule">At 90: Pass, then Merit. Both independent conditions are true.</div><div class="rule">At 65: Pass only. The second condition is false.</div><div class="rule">To make outcomes exclusive, nest the lower test inside the ELSE of the higher test.</div>
+</section><section class="dk" data-background-color="#151B3C" id="iteration"><div class="bar"></div><h2>Second lesson: who gets to enter?</h2><div class="rule">Two doors use the same test: “Have you finished?”</div><div class="rule">Door A asks before you enter the workroom. Door B asks after you have done one job.</div><div class="rule">If you arrive already finished, how many jobs must you do at each door?</div><div class="rule">4-minute opener · answer and explain on paper · then continue →</div>
+</section><section class="lt" data-aud="al" data-background-color="#F4F6FB" id="while-al"><div class="bar"></div><h2>WHILE checks before entry</h2><div class="two-col"><div><pre class="code">DECLARE Count : INTEGER
+Count ← 3
+WHILE Count &lt; 3
+    OUTPUT Count
+    Count ← Count + 1
+ENDWHILE
+OUTPUT "Done"</pre></div><div><div class="rule">The first test is 3 &lt; 3: FALSE. The body runs zero times. Output: Done.</div><div class="rule">Start at 1 instead: output 1, 2, then Done.</div><div class="rule">Test again before every pass. TRUE continues; FALSE leaves.</div></div></div>
+</section><section class="lt" data-aud="ig" data-background-color="#F4F6FB" id="while-ig"><div class="bar"></div><h2>WHILE checks before entry</h2><div class="two-col"><div><pre class="code">DECLARE Count : INTEGER
+Count ← 3
+WHILE Count &lt; 3 DO
+    OUTPUT Count
+    Count ← Count + 1
+ENDWHILE
+OUTPUT "Done"</pre></div><div><div class="rule">The first test is 3 &lt; 3: FALSE. The body runs zero times. Output: Done.</div><div class="rule">Start at 1 instead: output 1, 2, then Done.</div><div class="rule">Test again before every pass. TRUE continues; FALSE leaves.</div></div></div>
+</section><section class="lt" data-background-color="#F4F6FB" id="repeat"><div class="bar"></div><h2>REPEAT works first, then tests</h2><div class="two-col"><div><pre class="code">DECLARE Count : INTEGER
+Count ← 3
+REPEAT
+    OUTPUT Count
+    Count ← Count + 1
+UNTIL Count &gt;= 3
+OUTPUT "Done"</pre></div><div><div class="rule">The body runs before the test. Output: 3, then Done.</div><div class="rule">UNTIL TRUE means stop. FALSE means go back for another pass.</div><div class="rule">Start at 1: output 1, 2, then Done. The test sees the updated value.</div></div></div>
+</section><section class="lt" data-background-color="#F4F6FB" id="input-loop"><div class="bar"></div><h2>Ask at least once, stop on valid input</h2><div class="two-col"><div><pre class="code">DECLARE Mark : INTEGER
+REPEAT
+    INPUT Mark
+UNTIL (Mark &gt;= 0) AND (Mark &lt;= 100)
+OUTPUT Mark</pre></div><div><div class="rule">Inputs arrive in order: −1, 101, 75.</div><div class="rule">The tests are FALSE, FALSE, TRUE. Output: 75.</div><div class="rule">The stop condition describes valid input. Reversing it accepts the first invalid value.</div></div></div>
+</section><section class="lt" data-background-color="#F4F6FB" id="for"><div class="bar"></div><h2>FOR visits a sequence of counter values</h2><div class="two-col"><div><pre class="code">DECLARE Index : INTEGER
+FOR Index ← 1 TO 4
+    OUTPUT Index
+NEXT Index</pre></div><div><div class="rule">Output: 1, 2, 3, 4. TO includes the endpoint when the step reaches it.</div><div class="rule">Default STEP is 1. NEXT belongs to the named counter.</div><div class="rule">Four counter values means four executions. The count is known before starting.</div></div></div>
+</section><section class="lt" data-background-color="#F4F6FB" id="step"><div class="bar"></div><h2>STEP chooses the direction and gap</h2><table class="xt"><tr><th>Header after FOR Index ←</th><th>Values visited</th><th>Visits</th></tr><tr><td>2 TO 8 STEP 3</td><td>2, 5, 8</td><td>3</td></tr><tr><td>8 TO 2 STEP -3</td><td>8, 5, 2</td><td>3</td></tr><tr><td>2 TO 9 STEP 3</td><td>2, 5, 8</td><td>3</td></tr><tr><td>4 TO 4</td><td>4</td><td>1</td></tr><tr><td>5 TO 2 STEP 1</td><td>none</td><td>0</td></tr></table><div class="rule">A bound can be inclusive without being reached. STEP must make progress in the intended direction. Never use zero.</div>
+</section><section class="lt" data-background-color="#F4F6FB" id="loop-choice"><div class="bar"></div><h2>Choose the test location for the job</h2><table class="xt"><tr><th>Task</th><th>Suitable loop</th><th>Reason</th></tr><tr><td>Print each of 24 labels</td><td>FOR</td><td>24 visits known before starting</td></tr><tr><td>Top up a balance that may already be enough</td><td>WHILE</td><td>Check before charging anything</td></tr><tr><td>Ask for a rating before checking it</td><td>REPEAT</td><td>Need one input before the first test</td></tr></table><div class="rule">A reason must mention this task. “It is easier” gives no evidence.</div><div class="rule">Other loops can implement the same behaviour. Suitability describes the clearest structure.</div>
+</section><section class="lt" data-background-color="#F4F6FB" id="trace"><div class="bar"></div><h2>A trace records each executed event</h2><div class="two-col"><div><pre class="code">DECLARE Count, Total : INTEGER
+Count ← 0
+Total ← 0
+REPEAT
+    Count ← Count + 1
+    Total ← Total + Count
+UNTIL Count = 3
+OUTPUT Total</pre></div><div><p class="small">Fixed example trace · predict before each press</p><div class="trace-controls"><button id="trace-back">← Back</button> <button id="trace-next">Next step →</button> <button id="trace-reset">Restart</button></div><div class="trace-state" id="trace-state"></div><p class="small" id="trace-event"></p><p id="trace-output"></p></div></div>
+</section><section class="lt" data-background-color="#F4F6FB" id="trace-table"><div class="bar"></div><h2>The same execution on paper</h2><table class="xt"><tr><th>Event</th><th>Count</th><th>Total</th><th>UNTIL Count = 3</th><th>Output</th></tr><tr><td>Initial state</td><td>0</td><td>0</td><td>—</td><td>—</td></tr><tr><td>First body and test</td><td>1</td><td>1</td><td>FALSE</td><td>—</td></tr><tr><td>Second body and test</td><td>2</td><td>3</td><td>FALSE</td><td>—</td></tr><tr><td>Third body and test</td><td>3</td><td>6</td><td>TRUE</td><td>—</td></tr><tr><td>After loop</td><td>3</td><td>6</td><td>—</td><td>6</td></tr></table><div class="rule">This compact table groups each pass. In a supplied trace table, follow its row convention.</div><div class="rule">A stored value is not automatically output. Declaration does not initialise a variable.</div>
+</section><section class="lt" data-background-color="#F4F6FB" id="trace-try"><div class="bar"></div><h2>2. Your turn: change the accumulation</h2><div class="two-col"><div><pre class="code">DECLARE Count, Total : INTEGER
+Count ← 0
+Total ← 1
+REPEAT
+    Count ← Count + 1
+    Total ← Total + 2 * Count
+UNTIL Count = 3
+OUTPUT Total</pre></div><div><div class="rule">Make columns for Count, Total, condition and output.</div><div class="rule">Write one row after each body/test, then the final output.</div><div class="rule">Ours [4] · three complete body rows and the final output.</div><div class="rule">Attempt on paper. Solution on the next slide.</div></div></div>
+</section><section class="lt" data-background-color="#F4F6FB" id="trace-answer"><div class="bar"></div><h2>2. Solution</h2><table class="xt"><tr><th>After body/test</th><th>Count</th><th>Total</th><th>Condition</th></tr><tr><td>1</td><td>1</td><td>3</td><td>FALSE</td></tr><tr><td>2</td><td>2</td><td>7</td><td>FALSE</td></tr><tr><td>3</td><td>3</td><td>13</td><td>TRUE</td></tr></table><div class="rule">Output: 13, once after the loop.</div><div class="rule">One point per complete row [3], final output [1]. Max 4.</div><div class="rule">Starting at 1 and adding a fixed 2 would give 3, 5, 7. Here the amount added grows with Count.</div>
+</section><section class="lt" data-background-color="#F4F6FB" id="nested-loop"><div class="bar"></div><h2>Each outer pass starts a fresh inner run</h2><div class="two-col"><div><pre class="code">DECLARE Row, Seat : INTEGER
+FOR Row ← 1 TO 2
+    FOR Seat ← 1 TO 3
+        OUTPUT Row, ":", Seat
+    NEXT Seat
+NEXT Row</pre></div><div><div class="rule">Output: 1:1, 1:2, 1:3, 2:1, 2:2, 2:3.</div><div class="rule">The inner counter starts at 1 for each row. Six visits, not five.</div><div class="rule">A running total for the whole room starts before both loops.</div></div></div>
+</section><section class="lt" data-background-color="#F4F6FB" id="repair"><div class="bar"></div><h2>A changing counter can still miss the exit</h2><div class="two-col"><div><pre class="code">DECLARE Count : INTEGER
+Count ← 1
+REPEAT
+    OUTPUT Count
+    Count ← Count - 1
+UNTIL Count = 4</pre></div><div><div class="rule">First outputs: 1, 0, −1, −2… The update moves away from 4.</div><div class="rule">Repair the update to Count ← Count + 1. Then outputs are 1, 2, 3.</div><div class="rule">Removing the update creates a different failure: the condition never changes.</div></div></div>
+</section><section class="lt" data-background-color="#F4F6FB" id="game"><div class="bar"></div><h2>Trace Detective</h2><p class="small">Ours · commit a choice, explain it, then check. Each round is one point.</p><div class="game-nav"><button id="g-back">← Back</button><button id="g-next">Next →</button><button id="g-skip">Skip →</button><button id="g-retry">Retry</button><button id="g-new">New game</button><span id="g-progress"></span></div><div id="g-body"></div><div aria-live="polite" id="g-feedback"></div><button id="g-check">Check</button><span id="g-score"></span>
+</section><section class="lt" data-background-color="#F4F6FB" id="rehearsal"><div class="bar"></div><h2>3. The parcel counter</h2><div class="two-col"><div><pre class="code">DECLARE Item, Accepted : INTEGER
+Accepted ← 0
+FOR Item ← 1 TO 5
+    IF Item &gt;= 3 THEN
+        Accepted ← Accepted + 1
+    ENDIF
+NEXT Item
+OUTPUT Accepted</pre></div><div><div class="rule">Ours [4]. Write Accepted after each pass [2: all five values].</div><div class="rule">State the output [1].</div><div class="rule">Change only the FOR header to visit 5, 3, 1 [1].</div><div class="rule">Write first. Compare with the next slide.</div></div></div>
+</section><section class="lt" data-background-color="#F4F6FB" id="rehearsal-answer"><div class="bar"></div><h2>3. Solution</h2><div class="rule">Accepted after each pass: 0, 0, 1, 2, 3. [2 for five correct; 1 for three or four.]</div><div class="rule">Output: 3. [1]</div><div class="rule">FOR Item ← 5 TO 1 STEP -2 [1]</div><div class="rule">The altered program visits three values but accepts only two. Number of iterations and number accepted are different counts.</div>
+</section><section class="lt" data-background-color="#F4F6FB" id="lens"><div class="bar"></div><h2>How the questions use these ideas</h2><table class="xt"><tr><th>Shape</th><th>Typical instruction</th><th>Where a point is lost</th></tr><tr><td>Trace</td><td>Complete the table</td><td>Skipping the last test or inventing output</td></tr><tr><td>Construct</td><td>Complete this FOR / IF</td><td>Wrong bound, step, terminator or ownership</td></tr><tr><td>Repair</td><td>Identify and correct the error</td><td>Naming a symptom without a corrected line</td></tr><tr><td>Choose</td><td>State and justify a loop</td><td>Reason does not refer to the task</td></tr></table><div class="rule">Use the requested form and the supplied table. Read the whole question before lifting a fragment.</div>
+</section><section class="lt" data-background-color="#F4F6FB" id="vocab"><div class="bar"></div><h2>Words for control flow</h2><table class="xt"><tr><th>English</th><th>中文</th><th>Question to ask</th></tr><tr><td>selection</td><td>选择</td><td>Which branch runs?</td></tr><tr><td>iteration</td><td>迭代 / 循环</td><td>What repeats?</td></tr><tr><td>pre-condition</td><td>前置条件</td><td>Can the body run zero times?</td></tr><tr><td>post-condition</td><td>后置条件</td><td>What makes the loop stop?</td></tr><tr><td>trace table</td><td>跟踪表</td><td>What changed after this event?</td></tr></table>
+</section><section class="dk" data-background-color="#151B3C" id="exit"><div class="bar"></div><h2>An instruction is precise when you can trace it</h2><div class="rule">Exit: Count starts at 4. WHILE Count &lt; 4 surrounds an increment. How many body executions?</div><div class="rule">Now use REPEAT with the same increment and UNTIL Count &gt;= 4. How many? Why?</div><div class="rule">Keep: test position, truth direction, progress, exact state changes.</div><div class="rule">Notation belongs to this dialect. The reasoning transfers to any language. U08c develops longer hand traces.</div>
+</section></div></div>
+<button id="fs-btn" onclick="document.documentElement.requestFullscreen().catch(()=&gt;{})">⛶ Fullscreen</button>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/reveal.js/4.6.1/reveal.min.js"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/reveal.js/4.6.1/plugin/notes/notes.min.js"></script><script>var AUD=new URLSearchParams(location.search).get('aud');if(!['ig','al'].includes(AUD))AUD=null;
+function setAud(a){let u=new URL(location.href);if(a)u.searchParams.set('aud',a);else u.searchParams.delete('aud');u.hash='/title';location.href=u.href}
+(function(){if(!AUD){document.querySelectorAll('.slides>section').forEach((x,i)=>{if(i)x.remove()});document.getElementById('objectives')?.remove();document.getElementById('obj-btn')?.remove();document.getElementById('entry-btn')?.remove();document.getElementById('py-chip')?.remove();return}document.querySelectorAll('[data-aud]').forEach(x=>{if(x.dataset.aud!==AUD)x.remove()});document.querySelectorAll('.slides>section:not([id])').forEach(x=>{if(!x.querySelector('section'))x.remove()});let chip=document.getElementById('aud-chip');chip.hidden=false;chip.innerHTML=(AUD==='ig'?'IGCSE 0478':'AS 9618')+' route · <a href="javascript:void(0)" onclick="setAud(null)">Change route</a>';document.getElementById('aud-btns').hidden=true;document.getElementById('aud-sub').textContent='→ Main lesson · ↓ Objectives';})();
+</script><script>function questions(aud){return [
+{stage:'The empty entry',code:'Count ← 4\nWHILE Count < 4'+(aud==='ig'?' DO':'')+'\n    OUTPUT Count\n    Count ← Count + 1\nENDWHILE',ask:'How many body executions?',options:['0','1','4'],answer:0,why:'The first condition is false, so WHILE never enters.'},
+{stage:'One unavoidable visit',code:'Count ← 4\nREPEAT\n    OUTPUT Count\n    Count ← Count + 1\nUNTIL Count >= 4',ask:'What is output?',options:['nothing','4','5'],answer:1,why:'OUTPUT sees 4. The increment makes 5, then the true test stops the loop.'},
+{stage:'The stopping direction',code:'REPEAT\n    INPUT Rating\nUNTIL ...',ask:'Accept only integer ratings 1 to 5.',options:['(Rating < 1) OR (Rating > 5)','(Rating >= 1) AND (Rating <= 5)','Rating = 1 OR 5'],answer:1,why:'UNTIL stops on TRUE, so it must describe a valid rating. Each comparison needs both operands.'},
+{stage:'Inclusive when reached',code:'FOR Index ← 7 TO 1 STEP -2\n    OUTPUT Index\nNEXT Index',ask:'Which output is correct?',options:['7, 5, 3','7, 5, 3, 1','7, 6, 5, 4, 3, 2, 1'],answer:1,why:'Subtract 2 each time; 1 is reached and included.'},
+{stage:'One CASE branch',code:'Choice ← 9\nCASE OF Choice\n    1 : OUTPUT "Tea"\n    2 : OUTPUT "Juice"\n    OTHERWISE'+(aud==='al'?' :':'')+' OUTPUT "Water"\nENDCASE',ask:'What is output?',options:['Juice','Water','Tea, Juice, Water'],answer:1,why:'Neither numbered case matches 9. Only OTHERWISE runs.'},
+{stage:'Follow the total',code:'Total ← 1\nFOR Index ← 1 TO 3\n    Total ← Total + Index\nNEXT Index\nOUTPUT Total',ask:'What is the final output?',options:['6','7','1, 3, 6'],answer:1,why:'Totals are 2, 4, 7. Initial 1 matters, and output occurs only after the loop.'},
+{stage:'The nested decision',code:'Total ← 0\nFOR Index ← 1 TO 4\n    IF Index > 2 THEN\n        Total ← Total + Index\n    ENDIF\nNEXT Index',ask:'What is Total after the loop?',options:['10','7','4'],answer:1,why:'Only Index 3 and 4 enter the IF body: 3 + 4 = 7.'},
+{stage:'Repair the exit',code:'Count ← 1\nREPEAT\n    OUTPUT Count\n    Count ← Count - 1\nUNTIL Count = 4',ask:'Which single-line change makes outputs 1, 2, 3?',options:['Count ← Count + 1','UNTIL Count < 4','Count ← Count - 2'],answer:0,why:'Incrementing reaches 4 at the test, after outputting 3. Stopping on Count < 4 exits after the first pass.'}
+]}
+const TRACE=[['Declared','not initialised','not initialised','none'],['Count ← 0','0','not initialised','none'],['Total ← 0','0','0','none'],['Count ← Count + 1','1','0','none'],['Total ← Total + Count','1','1','none'],['UNTIL Count = 3: FALSE; repeat','1','1','none'],['Count ← Count + 1','2','1','none'],['Total ← Total + Count','2','3','none'],['UNTIL Count = 3: FALSE; repeat','2','3','none'],['Count ← Count + 1','3','3','none'],['Total ← Total + Count','3','6','none'],['UNTIL Count = 3: TRUE; leave','3','6','none'],['OUTPUT Total','3','6','6']];
+function initTrace(){let i=-1;function draw(){let s=i<0?['Not started','not initialised','not initialised','none']:TRACE[i];document.getElementById('trace-event').textContent=s[0];document.getElementById('trace-state').textContent=`Count: ${s[1]} · Total: ${s[2]}`;document.getElementById('trace-output').textContent='Output: '+s[3];document.getElementById('trace-back').disabled=i<0;document.getElementById('trace-next').disabled=i===TRACE.length-1}document.getElementById('trace-next').onclick=()=>{if(i<TRACE.length-1)i++;draw()};document.getElementById('trace-back').onclick=()=>{if(i>=0)i--;draw()};document.getElementById('trace-reset').onclick=()=>{i=-1;draw()};draw()}
+</script><script>let G={i:0,pick:null,passed:false,items:[],earned:[]};
+function renderGame(){let end=G.i===G.items.length,q=G.items[G.i];G.pick=null;G.passed=false;document.getElementById('g-progress').textContent=end?'Complete':`${G.i+1} / ${G.items.length}`;for(let id of ['g-back','g-next','g-skip','g-retry','g-check'])document.getElementById(id).hidden=end;document.getElementById('g-back').hidden=end||G.i===0;document.getElementById('g-next').disabled=true;document.getElementById('g-feedback').textContent='';document.getElementById('g-score').textContent=`Score: ${G.earned.reduce((a,b)=>a+b,0)} / ${G.items.length}`;let host=document.getElementById('g-body');host.innerHTML='';if(end){host.innerHTML='<div class="rule"><b>Case closed.</b><br>Read the exact instruction. Follow the changing values. Explain why the rejected answer fails.</div>';return}let main=document.createElement('div');main.className='game-main';let left=document.createElement('div'),right=document.createElement('div'),title=document.createElement('h3'),pre=document.createElement('pre'),ask=document.createElement('h3'),opts=document.createElement('div');title.textContent=q.stage;pre.className='code';pre.textContent=q.code;ask.textContent=q.ask;opts.className='options';opts.id='g-options';q.options.forEach((v,i)=>{let b=document.createElement('button');b.textContent=v;b.onclick=()=>{G.pick=i;G.passed=false;G.earned[G.i]=0;document.getElementById('g-score').textContent=`Score: ${G.earned.reduce((a,b)=>a+b,0)} / ${G.items.length}`;opts.querySelectorAll('button').forEach(x=>x.classList.remove('selected'));b.classList.add('selected');document.getElementById('g-next').disabled=true;document.getElementById('g-feedback').textContent='Choice changed. Check this version.'};opts.append(b)});left.append(title,pre);right.append(ask,opts);main.append(left,right);host.append(main)}
+function initGame(){G.items=questions(AUD);G.earned=G.items.map(()=>0);renderGame();document.getElementById('g-check').onclick=()=>{let fb=document.getElementById('g-feedback');if(G.pick===null){fb.textContent='Not attempted. Choose an answer first.';return}let q=G.items[G.i];G.passed=G.pick===q.answer;G.earned[G.i]=Number(G.passed);fb.textContent=(G.passed?'✓ Correct. ':'Try again. ')+(q.feedback?.[G.pick]||q.why);document.getElementById('g-score').textContent=`Score: ${G.earned.reduce((a,b)=>a+b,0)} / ${G.items.length}`;document.getElementById('g-next').disabled=!G.passed};document.getElementById('g-next').onclick=()=>{if(G.passed){G.i++;renderGame()}};document.getElementById('g-skip').onclick=()=>{if(G.i<G.items.length){G.i++;renderGame()}};document.getElementById('g-back').onclick=()=>{if(G.i){G.i--;renderGame()}};document.getElementById('g-retry').onclick=()=>{G.earned[G.i]=0;renderGame()};document.getElementById('g-new').onclick=()=>{G.i=0;G.earned.fill(0);renderGame()}}
+</script><script>Reveal.initialize({hash:true,slideNumber:'c/t',width:1280,height:720,margin:.04,center:false,transition:matchMedia('(prefers-reduced-motion: reduce)').matches?'none':'fade',transitionSpeed:'fast',plugins:[RevealNotes]}).then(()=>{if(AUD){initGame();if(window.initTrace)initTrace()}});</script><script id="course-routes" type="application/json">{"ig": {"slides": 29, "cells": 0}, "al": {"slides": 29, "cells": 0}}</script><script id="paper-spend" type="application/json">[]</script></body>
+</html>

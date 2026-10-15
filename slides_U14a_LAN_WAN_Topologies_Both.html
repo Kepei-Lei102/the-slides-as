@@ -1,0 +1,1982 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Twenty People and a Posting Board — LAN, WAN, Topologies</title>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/reveal.js/4.6.1/reveal.min.css">
+<style>
+:root{
+  --dark:#151B3C; --light:#F4F6FB; --accent1:#17B3A3; --accent2:#F0655B;
+  --accent3:#F2B53C; --navy:#222B5A; --ice:#E8EEF9; --white:#fff;
+}
+.reveal{font-family:'Calibri','Segoe UI','PingFang SC','Microsoft YaHei',system-ui,sans-serif; font-size:26px;}
+.reveal h1,.reveal h2,.reveal h3{font-family:'Georgia','Times New Roman','PingFang SC','Microsoft YaHei',serif; text-transform:none; letter-spacing:-.02em;}
+.reveal section{text-align:left;}
+.dk{color:var(--ice);} .dk h1,.dk h2,.dk h3{color:var(--white);}
+.lt{color:var(--navy);} .lt h2,.lt h3{color:var(--navy);}
+.bar{position:absolute; top:0; left:0; right:0; height:5px;}
+.card{background:var(--white); border-radius:10px; padding:16px 20px; box-shadow:0 4px 12px rgba(0,0,0,.07); text-align:left;}
+.dk .card{background:rgba(255,255,255,.06); color:var(--ice);}
+.rule{background:var(--white); border-radius:8px; padding:11px 16px; box-shadow:0 3px 10px rgba(0,0,0,.05); border-left:5px solid var(--accent1); margin:10px 0; text-align:left; font-size:.74em;}
+.rule.accent2{border-left-color:var(--accent2);} .rule.accent3{border-left-color:var(--accent3);} .rule.navy{border-left-color:var(--navy);}
+.dk .rule{background:rgba(255,255,255,.06); color:var(--ice);}
+.two-col{display:flex; gap:26px; align-items:flex-start;} .two-col>*{flex:1;}
+.three-col{display:flex; gap:16px;} .three-col>*{flex:1;}
+.smaller{font-size:.7em;}
+.center{text-align:center;}
+.accent1{color:var(--accent1);} .accent2{color:var(--accent2);} .accent3{color:var(--accent3);}
+.mono{font-family:'Courier New',monospace; font-weight:bold;}
+
+.badges{position:absolute; top:-14px; right:0; display:flex; gap:6px; z-index:5;}
+.bg{font-size:.44em; font-weight:bold; letter-spacing:.03em; padding:3px 12px; border-radius:20px; font-family:'Calibri','Segoe UI',sans-serif;}
+.bg-both{background:rgba(23,179,163,.15); color:var(--accent1); border:1.5px solid var(--accent1);}
+.bg-hole{background:rgba(242,181,60,.15); color:#B8860B; border:1.5px solid var(--accent3);}
+.bg-al{background:rgba(34,43,90,.1); color:var(--navy); border:1.5px solid var(--navy);}
+.bg-ig{background:rgba(240,101,91,.12); color:var(--accent2); border:1.5px solid var(--accent2);}
+.dk .bg-both{background:rgba(23,179,163,.22); color:#5FD6C9;}
+.dk .bg-hole{color:var(--accent3);}
+.dk .bg-al{color:#aeb8dd; border-color:#aeb8dd;}
+
+.dig{position:absolute; bottom:-34px; left:50%; transform:translateX(-50%); font-size:.5em; color:#98a0c0; animation:bob 2s ease-in-out infinite;}
+@keyframes bob{0%,100%{transform:translateX(-50%) translateY(0);}50%{transform:translateX(-50%) translateY(5px);}}
+#obj-btn{background:rgba(255,255,255,.08); color:var(--ice); border:1px solid rgba(255,255,255,.25); border-radius:8px; padding:5px 14px; cursor:pointer; font-size:.42em; opacity:.55; transition:opacity .2s;}
+#obj-btn:hover{opacity:1;}
+
+/* ===== py-cell ===== */
+.pycell{background:var(--navy); border-radius:12px; padding:10px 12px 12px; box-shadow:0 4px 14px rgba(0,0,0,.14); text-align:left;}
+.pycell .pybar{display:flex; gap:8px; align-items:center; margin-bottom:6px;}
+.pycell .pydots{display:flex; gap:5px;}
+.pycell .pydots i{width:9px; height:9px; border-radius:50%; display:block;}
+.pyta{width:100%; box-sizing:border-box; background:#1b234d; color:var(--ice); border:none; border-radius:8px;
+  font-family:'Courier New',monospace; font-weight:bold; font-size:.6em; line-height:1.5; padding:10px 12px; resize:none; outline:none; display:block;}
+.pyta[readonly]{color:#aeb8dd;}
+.pyta:focus{box-shadow:0 0 0 2px var(--accent1);}
+.pyrun{background:var(--accent1); color:#fff; border:none; border-radius:7px; padding:4px 16px; font-size:.5em; font-weight:bold; cursor:pointer; font-family:'Calibri','Segoe UI',sans-serif;}
+.pyrun:hover{background:#12907f;} .pyrun:disabled{background:#5a6394; cursor:wait;}
+.pylock{background:transparent; color:#98a0c0; border:1.5px solid #454e82; border-radius:7px; padding:3px 12px; font-size:.5em; font-weight:bold; cursor:pointer;}
+.pylock:hover{color:var(--accent3); border-color:var(--accent3);}
+.pyout{background:#0d1230; color:#5FD6C9; border-radius:8px; font-family:'Courier New',monospace; font-weight:bold;
+  font-size:.56em; line-height:1.5; padding:9px 12px; margin:8px 0 0; min-height:1.4em; white-space:pre-wrap; text-align:left;}
+.pyout .crash{color:var(--accent2);}
+.pyin-lbl{color:#5FD6C9;}
+.pyin{background:#1b234d; border:2px solid var(--accent1); border-radius:6px; color:var(--ice);
+  font-family:'Courier New',monospace; font-weight:bold; font-size:1em; padding:1px 8px; width:130px; outline:none; vertical-align:middle; margin-left:2px;}
+.pystate{font-size:.46em; color:#98a0c0; margin-left:auto;}
+
+/* CIE panel */
+.cie{background:#fdf3f2; border:1.5px solid #eed3d0; border-left:5px solid var(--accent2); border-radius:10px;
+  padding:9px 13px; font-family:'Courier New',monospace; font-weight:bold; font-size:.54em; line-height:1.55;
+  white-space:pre; color:var(--navy); text-align:left; overflow-x:auto;}
+.cie-tag{display:inline-block; font-family:'Calibri','Segoe UI',sans-serif; font-weight:bold; font-size:.44em;
+  background:rgba(240,101,91,.13); color:var(--accent2); border:1.5px solid var(--accent2); border-radius:20px;
+  padding:2px 12px; margin-bottom:5px;}
+.pp-code{background:var(--navy); color:var(--ice); border-radius:10px; font-family:'Courier New',monospace; font-weight:bold; font-size:.56em; line-height:1.55; padding:11px 15px; text-align:left; white-space:pre;}
+
+/* ===== 📐 divergence + 🧾 ledger ===== */
+.diverge{background:#f7f5ff; border:2px dashed #b3a6e8; border-radius:10px; padding:10px 15px; text-align:left; font-size:.57em; line-height:1.55; color:var(--navy); margin:9px 0;}
+.diverge .dh{display:inline-block; font-weight:bold; font-size:.85em; letter-spacing:.04em; color:#6d4fd0; margin-bottom:3px;}
+.toll{background:#fffaf0; border:2px solid #e8d9b5; border-radius:10px; padding:10px 15px; text-align:left; font-size:.57em; line-height:1.55; color:var(--navy); margin:9px 0;}
+.toll .th{font-weight:bold; letter-spacing:.04em; color:#8a6d1a;}
+.toll .yes{color:#0d7a6e; font-weight:bold;} .toll .no{color:var(--accent2); font-weight:bold;}
+
+
+.vtab{width:100%; border-collapse:collapse; font-size:.6em;}
+.vtab th{background:var(--navy); color:var(--white); padding:6px 12px; text-align:left;}
+.vtab td{background:var(--white); padding:5px 12px; border-bottom:1px solid #e3e7f2;}
+.xt{font-size:.58em; width:100%; border-collapse:collapse;}
+.xt td,.xt th{padding:6px 10px; border-bottom:1px solid #e3e7f2; background:var(--white); vertical-align:top;}
+.xt th{background:var(--navy); color:var(--white);}
+.pbtn{background:var(--navy); color:var(--white); border:none; border-radius:10px; padding:16px 38px; font-size:.8em; font-weight:bold; cursor:pointer;}
+.pbtn:hover{background:var(--accent1);}
+.src{font-size:.5em; color:#98a0c0; margin-top:10px;}
+.tt{border-collapse:collapse; font-size:.54em; font-family:'Courier New',monospace; font-weight:bold; margin:5px 0;}
+.tt th{background:var(--navy); color:var(--white); padding:4px 13px; font-family:'Calibri','Segoe UI',sans-serif; font-weight:600;}
+.tt td{background:var(--white); border:1px solid #d7dcec; padding:3px 13px; text-align:center; min-width:52px; color:var(--navy);}
+
+
+#fs-btn{position:fixed; bottom:18px; right:18px; z-index:99; background:rgba(30,39,97,.7); color:var(--ice); border:none; border-radius:8px; padding:6px 16px; cursor:pointer; font-size:18px; opacity:.7;}
+#fs-btn:hover{opacity:1;}
+:fullscreen #fs-btn,:-webkit-full-screen #fs-btn{display:none;}
+#py-chip{position:fixed; bottom:18px; left:18px; z-index:99; font-size:15px; font-weight:bold; padding:6px 14px; border-radius:20px; background:rgba(30,39,97,.75); color:#98a0c0;}
+#py-chip.ready{color:#5FD6C9;}
+
+/* the reader chip + on-screen help (⚡ hard rule: visible, not a tooltip) */
+#llmchip{position:fixed; top:18px; right:18px; z-index:99; font-size:14px; font-weight:bold; padding:6px 14px;
+  border-radius:20px; background:rgba(30,39,97,.75); color:#98a0c0; cursor:pointer; border:none;}
+#llmchip.on{color:#5FD6C9;} #llmchip.off{color:#F2B53C;}
+#llmhelp{display:none; position:fixed; top:56px; right:18px; z-index:99; width:340px; background:#fff; color:#222B5A;
+  border:2px solid #F2B53C; border-radius:12px; padding:12px 16px; font-size:14px; line-height:1.5; box-shadow:0 8px 30px rgba(0,0,0,.25);}
+#llmhelp b{color:#B8860B;} #llmhelp .x{float:right; cursor:pointer; font-weight:bold; color:#98a0c0;}
+
+/* ===== 🎮 the marked gauntlet — the A-deck engine, in U colours ===== */
+.g-wrap{background:var(--white); border-radius:12px; padding:14px 18px; box-shadow:0 5px 18px rgba(0,0,0,.09); color:var(--navy);}
+.g-head{display:flex; align-items:center; gap:14px; margin-bottom:9px;}
+.g-skip{margin-left:8px; background:transparent; color:#98a0c0; border:1.5px solid #ccd3e8;
+  border-radius:7px; padding:2px 11px; font-size:.44em; font-weight:bold; cursor:pointer;
+  font-family:'Calibri','Segoe UI',sans-serif;}
+.g-skip:hover{color:var(--accent1); border-color:var(--accent1);}
+.g-navwrap{margin-left:0;}
+.g-stage{font-size:.56em; font-weight:bold; color:var(--navy); background:rgba(242,181,60,.18); border:2px solid var(--accent3); border-radius:22px; padding:3px 20px;}
+.g-prog{display:flex; gap:6px; margin-left:auto;}
+.g-prog i{width:9px; height:9px; border-radius:50%; background:#d3d9ec; display:block; transition:.2s;}
+.g-prog i.done{background:var(--accent1);} .g-prog i.cur{background:var(--accent3); transform:scale(1.35);}
+.g-score{font-size:.52em; font-weight:bold; color:var(--accent2); font-family:'Courier New',monospace;}
+.g-q{font-size:.58em; line-height:1.5; margin-bottom:8px;}
+.g-q b{color:var(--accent2);}
+.g-q .cie{font-size:.5em;}
+.g-ta{width:100%; box-sizing:border-box; background:#1b234d; color:var(--ice); border:none; border-radius:8px;
+  font-family:'Courier New',monospace; font-weight:bold; font-size:.54em; line-height:1.5; padding:9px 12px; resize:none; outline:none;}
+.g-ta:focus{box-shadow:0 0 0 2px var(--accent3);}
+.g-sub{background:var(--accent3); color:#4a3500; border:none; border-radius:8px; padding:5px 20px; font-size:.52em;
+  font-weight:bold; cursor:pointer; font-family:'Calibri','Segoe UI',sans-serif; margin-top:7px;}
+.g-sub:hover{background:#e0a52c;}
+.g-say{font-size:.54em; min-height:1.5em; margin-top:7px; line-height:1.5;}
+.g-say.ok{color:#0d7a6e; font-weight:bold;} .g-say.bad{color:var(--accent2); font-weight:bold;}
+.g-say .g-mp{font-size:.92em; font-weight:normal; color:var(--navy);}
+.g-say .g-mp .y{color:#0d7a6e;} .g-say .g-mp .n{color:var(--accent2);}
+.g-mp{list-style:none; padding:0; margin:6px 0 0; font-size:.48em; line-height:1.55;}
+.g-mp li{padding-left:2px;} .g-mp .y{color:#0d7a6e; font-weight:bold;} .g-mp .n{color:var(--accent2); font-weight:bold;}
+.g-grid{display:grid; grid-template-columns:minmax(0,1fr) minmax(0,1fr); gap:6px 20px;}
+.g-grid > div{max-height:238px; overflow:auto;}
+.g-model{background:#f4f6fb; border:1px solid #d9deed; border-left:4px solid var(--accent1);
+  border-radius:8px; padding:8px 12px; font-size:.5em; line-height:1.5; color:var(--navy);
+  white-space:pre-wrap; margin:0;}
+.g-model.code{font-family:'JetBrains Mono','Courier New',monospace; font-size:.44em; line-height:1.38; white-space:normal;}
+.g-lbl{font-size:.5em; color:#5b6488; margin:5px 0 3px;}
+.g-fin{text-align:center; font-size:.62em; line-height:1.6;}
+.g-fin .big{font-size:1.5em; font-weight:bold; color:var(--accent3); font-family:'Courier New',monospace;}
+.g-ans{background:#1b234d; color:var(--ice); border-radius:8px; font-family:'Courier New',monospace;
+  font-weight:bold; font-size:.5em; line-height:1.45; padding:9px 12px; margin:0; white-space:pre;
+  overflow:auto; max-height:300px; text-align:left;}
+.g-ans:empty::before{content:'(nothing legible)'; color:#7b85ab; font-weight:normal;}
+.g-llm{margin-top:6px;}
+.g-llm:empty{display:none;}
+.g-grid.three{grid-template-columns:minmax(0,.9fr) minmax(0,1.05fr) minmax(0,1.05fr); gap:6px 14px;}
+.g-llm .conf{font-size:.82em; opacity:.7; font-style:italic;}
+.g-cons{margin-top:7px; border-radius:9px; padding:7px 12px; font-size:.5em; line-height:1.5;
+  border:2px solid; text-align:left;}
+.g-cons.agree{border-color:var(--accent1); background:rgba(23,179,163,.12); color:#0d7a6e;}
+.g-cons.split{border-color:var(--accent3); background:rgba(242,181,60,.14); color:#8a5c00;}
+.g-cons b{font-family:'Courier New',monospace;}
+.g-pickrow{margin-top:7px; font-size:.95em; color:var(--navy);}
+.g-pick{border:1.5px solid var(--accent1); background:rgba(23,179,163,.12); color:#0d7a6e; border-radius:7px;
+  padding:2px 10px; font-weight:bold; cursor:pointer; font-size:.95em; margin:0 5px; font-family:'Calibri','Segoe UI',sans-serif;}
+.g-pick:hover{background:rgba(23,179,163,.28);}
+.g-pick.on{background:var(--accent1); color:#fff;}
+.reveal .slides section.growslide{top:26px !important;}
+
+/* the matching stage — one chip row per description, the scheme's lines as buttons */
+.mt{width:100%; border-collapse:collapse; font-size:.54em;}
+.mt td{padding:5px 8px; border-bottom:1px solid #e3e7f2; vertical-align:middle;}
+.mt-d{width:46%; line-height:1.4; color:var(--navy);}
+.mt-c{text-align:left;}
+.mt-b{background:#f4f6fb; border:1.5px solid #ccd3e8; border-radius:14px; padding:2px 10px; margin:2px 3px;
+  font-size:.92em; font-weight:bold; color:var(--navy); cursor:pointer; font-family:'Calibri','Segoe UI',sans-serif;}
+.mt-b:hover{border-color:var(--accent1);}
+.mt-b.on{border-color:var(--accent1); background:rgba(23,179,163,.16); color:#0d7a6e;}
+.mt-b.yes{border-color:var(--accent1); background:var(--accent1); color:#fff;}
+.mt-b.want{border-color:var(--accent1); border-style:dashed; color:#0d7a6e;}
+.mt-b.no{border-color:var(--accent2); background:#fdeeec; color:#c0392b;}
+.mt-b:disabled{cursor:default; opacity:.85;}
+
+/* the photo path (stages 5 and 6) */
+.g-photo{display:flex; align-items:center; gap:10px; flex-wrap:wrap; margin-top:6px;}
+.g-photo-btn{font-size:.5em; font-weight:bold; color:#0d7a6e; border:1.5px dashed var(--accent1); border-radius:8px; padding:4px 12px; cursor:pointer; background:rgba(23,179,163,.06);}
+.g-photo-btn:hover{background:rgba(23,179,163,.16);}
+.g-photo-note{font-size:.44em; color:#8890b5;}
+.g-photo-thumb{height:48px; border-radius:6px; border:1.5px solid #ccd3e8;}
+
+
+/* ═══ U10b chart renderers ═══ */
+.ch-box{position:absolute; transform:translate(-50%,-50%); border:2px solid #222B5A; background:#fff;
+  display:flex; align-items:center; justify-content:center; font-size:15px; color:#222B5A;
+  font-family:'Calibri','Segoe UI',sans-serif; line-height:1.05; text-align:center; padding:1px 2px; box-sizing:border-box;}
+.ch-lab{position:absolute; transform:translate(-50%,-50%); font-family:'Courier New',monospace; font-weight:bold;
+  font-size:13.5px; color:#222B5A; white-space:nowrap;}
+.st-state{position:absolute; transform:translate(-50%,-50%); font-size:12.5px; color:#222B5A; text-align:center; line-height:1.1;
+  font-family:'Calibri','Segoe UI',sans-serif;}
+.g-shrink.shrunk{height:132px; overflow:hidden;}
+.g-shrink.shrunk > div{transform:scale(.62); transform-origin:top center;}
+.g-vals{margin-top:4px;}
+.g-valrow{display:flex; align-items:center; gap:8px; margin:3px 0; font-size:.56em;}
+.g-vallbl{min-width:120px; color:#3f4770;}
+.g-valfl{color:#8890b5;}
+.g-val{width:120px; font-family:'Courier New',monospace; font-size:.95em; padding:2px 7px; border:1.5px solid #ccd3e8;
+  border-radius:6px; background:#fff; color:#222B5A;}
+.g-val.ok{border-color:#17B3A3; background:rgba(23,179,163,.08);}
+.g-val.bad{border-color:#F0655B; background:rgba(240,101,91,.08);}
+.pycell.tight{display:grid; grid-template-columns:2fr 1fr; gap:4px 10px; align-items:start;}
+.pycell.tight .pybar{grid-column:1 / -1;}
+.pycell.tight .pyta{grid-column:1; font-size:.5em !important; line-height:1.32 !important;}
+.pycell.tight .pyout{grid-column:2; margin-top:0 !important; font-size:.5em !important; line-height:1.32 !important; min-height:60px;}
+.tmrow{display:flex; align-items:center; gap:3px; margin:3px 0;}
+.tmmood{width:58px; font-weight:bold; font-family:'Courier New',monospace; font-size:.95em;}
+.tmc{width:21px; height:21px; border:1.6px solid #9aa3c4; border-radius:3px; display:flex; align-items:center; justify-content:center;
+  background:#fff; font-family:'Courier New',monospace; font-weight:bold; font-size:13px; color:#222B5A; flex:0 0 auto;}
+.tmc.hd{border-color:#F0655B; background:rgba(240,101,91,.14);}
+.tmc.bl{color:#98a0c0;}
+.tmc.ok{border-color:#17B3A3; background:rgba(23,179,163,.1);}
+.tmnote{color:#7a83a8; margin-left:7px; font-size:.9em;}
+
+/* ═══ U11a — the FDE machine ═══ */
+.fd-bar{display:flex; gap:7px; align-items:center; flex-wrap:wrap; margin:2px 0 7px;}
+.fd-btn{background:#fff; border:1.6px solid #ccd3e8; border-radius:8px; padding:4px 14px; font-size:.54em;
+  font-weight:bold; color:var(--navy); cursor:pointer; font-family:'Calibri','Segoe UI',sans-serif;}
+.fd-btn:hover{border-color:var(--accent1); color:#0d7a6e;}
+.fd-btn.on{background:var(--navy); color:#fff; border-color:var(--navy);}
+.fd-btn.go{background:var(--accent1); color:#fff; border-color:var(--accent1);}
+.fd-btn:disabled{opacity:.45; cursor:default;}
+.fd-phase{font-size:.5em; font-weight:bold; font-family:'Courier New',monospace; border-radius:16px;
+  padding:2px 14px; margin-left:auto; border:2px solid #ccd3e8; color:#8890b5; background:#fff;}
+.fd-phase.f{border-color:var(--accent1); color:#0d7a6e; background:rgba(23,179,163,.1);}
+.fd-phase.d{border-color:var(--accent3); color:#8a5c00; background:rgba(242,181,60,.14);}
+.fd-phase.e{border-color:var(--accent2); color:#c0392b; background:rgba(240,101,91,.1);}
+.fd-cyc{font-size:.48em; font-family:'Courier New',monospace; font-weight:bold; color:#5b6488;}
+.fd-main{display:grid; grid-template-columns:minmax(0,1.28fr) 138px minmax(0,.95fr); gap:0; align-items:stretch;}
+.fd-cpu{background:#fff; border:2.2px solid var(--navy); border-radius:12px; padding:8px 12px 10px;}
+.fd-cpu .t{font-size:.5em; font-weight:bold; color:var(--navy); letter-spacing:.06em;}
+.fd-units{display:flex; gap:8px; margin:5px 0 7px;}
+.fd-unit{flex:1; border:1.6px dashed #9aa3c4; border-radius:8px; text-align:center; padding:5px 2px;
+  font-size:.5em; font-weight:bold; color:#5b6488;}
+.fd-unit.hot{border-color:var(--accent2); color:#c0392b; background:rgba(240,101,91,.07); border-style:solid;}
+.fd-regs{display:grid; grid-template-columns:repeat(5,1fr); gap:6px;}
+.fd-reg{border:1.8px solid #ccd3e8; border-radius:8px; text-align:center; padding:3px 2px 4px; background:#f8fafd; transition:.15s;}
+.fd-reg .n{font-size:.46em; font-weight:bold; color:#5b6488; letter-spacing:.05em;}
+.fd-reg .v{font-size:.74em; font-family:'Courier New',monospace; font-weight:bold; color:var(--navy); min-height:1.2em;}
+.fd-reg.hot{border-color:var(--accent3); background:rgba(242,181,60,.16); transform:translateY(-2px);
+  box-shadow:0 3px 8px rgba(242,181,60,.35);}
+.fd-buses{display:flex; flex-direction:column; justify-content:center; gap:12px; padding:0 6px;}
+.fd-bus{position:relative; height:26px;}
+.fd-bus .lab{position:absolute; left:50%; top:-3px; transform:translateX(-50%); font-size:.38em; font-weight:bold;
+  color:#8890b5; white-space:nowrap; letter-spacing:.04em;}
+.fd-bus .bar2{position:absolute; left:0; right:0; top:14px; height:5px; border-radius:3px; background:#e4e8f4; transition:.15s;}
+.fd-bus .ah{position:absolute; top:9px; font-size:.5em; color:#dde1ec; line-height:1; transition:.15s;}
+.fd-bus .lab b{font-family:'Courier New',monospace; letter-spacing:.06em;}
+.fd-bus.a.on .bar2{background:#F2B53C;} .fd-bus.a.on .ah.lit{color:#F2B53C;} .fd-bus.a.on .lab{color:#8a5c00;}
+.fd-bus.d.on .bar2{background:#17B3A3;} .fd-bus.d.on .ah.lit{color:#17B3A3;} .fd-bus.d.on .lab{color:#0d7a6e;}
+.fd-bus.c.on .bar2{background:#F0655B;} .fd-bus.c.on .ah.lit{color:#F0655B;} .fd-bus.c.on .lab{color:#c0392b;}
+/* the live map (needs the network — the drawing on the previous slide carries the idea without it) */
+.mapbar{display:flex; gap:9px; align-items:center; margin-bottom:6px;}
+.mapin{flex:1; font-size:.5em; padding:5px 11px; border:1.6px solid #ccd3e8; border-radius:8px;
+  font-family:'Calibri','Segoe UI',sans-serif; color:var(--navy); outline:none; background:#fff;}
+.mapin:focus{border-color:var(--accent1);}
+.maplink{font-size:.44em; font-weight:bold; color:#0d7a6e; text-decoration:none; white-space:nowrap;}
+.maplink:hover{text-decoration:underline;}
+.mapbox{border:2px solid #ccd3e8; border-radius:10px; overflow:hidden; height:252px; background:#eef1f8;}
+.mapbox iframe{width:100%; height:100%; border:0; display:block;}
+.mapnote{font-size:.4em; color:#8890b5; margin-top:4px; line-height:1.35;}
+.fd-ram{background:#fff; border:2.2px solid #9aa3c4; border-radius:12px; padding:8px 10px;}
+.fd-ram .t{font-size:.5em; font-weight:bold; color:#5b6488; letter-spacing:.06em;}
+.fd-cells{display:grid; grid-template-columns:1fr 1fr; gap:4px 8px; margin-top:5px;}
+.fd-cell{display:flex; justify-content:space-between; border:1.4px solid #e0e4f0; border-radius:6px;
+  padding:2px 9px; font-family:'Courier New',monospace; font-weight:bold; font-size:.56em; background:#fbfcfe; transition:.15s;}
+.fd-cell .a{color:#8890b5;} .fd-cell .val{color:var(--navy);}
+.fd-cell.hot{border-color:var(--accent1); background:rgba(23,179,163,.1);}
+.fd-cell.chg{border-color:var(--accent2); background:rgba(240,101,91,.14);}
+.fd-cell.chg .val{color:#c0392b;}
+.fd-say{margin-top:8px; background:var(--navy); color:var(--ice); border-radius:9px; padding:8px 14px;
+  font-size:.58em; line-height:1.45; min-height:2.2em;}
+.fd-say b{color:#5FD6C9;}
+.fd-blurb{font-size:.47em; color:#7a83a8; margin-top:4px; min-height:1.3em;}
+/* the parts introduce themselves as the cycle wakes them */
+.fd-gloss{display:grid; grid-template-columns:repeat(3, minmax(0,1fr)); gap:4px 9px; margin-top:7px;}
+.fd-gc{border:1.5px solid #dde2f0; border-left-width:4px; border-radius:7px; padding:3px 9px; background:#fff;
+  font-size:.42em; line-height:1.3; color:#3f4770;}
+.fd-gc b{font-family:'Courier New',monospace; font-size:1.12em;}
+.fd-gc .fl{font-weight:bold; color:var(--navy);}
+.fd-gc.reg{border-left-color:#F2B53C;} .fd-gc.reg b{color:#8a5c00;}
+.fd-gc.unit{border-left-color:#F0655B;} .fd-gc.unit b{color:#c0392b;}
+.fd-gc.bus{border-left-color:#17B3A3;} .fd-gc.bus b{color:#0d7a6e;}
+.fd-gc.new{box-shadow:0 0 0 2px rgba(242,181,60,.5); transform:translateY(-1px);}
+.fd-glabel{font-size:.42em; color:#98a0c0; margin-top:6px; letter-spacing:.04em;}
+/* the hook schematic + floor plan share the label style */
+.hk-box{position:absolute; transform:translate(-50%,-50%); border:2px solid #222B5A; background:#fff; border-radius:6px;
+  display:flex; align-items:center; justify-content:center; font-size:14px; color:#222B5A;
+  font-family:'Calibri','Segoe UI',sans-serif; text-align:center; line-height:1.1; box-sizing:border-box;}
+.hk-tile{position:absolute; transform:translate(-50%,-50%); border:2px solid #9aa3c4; background:#f4f6fb; border-radius:5px;
+  display:flex; align-items:center; justify-content:center; font-family:'Courier New',monospace; font-weight:bold;
+  font-size:14px; color:#222B5A; box-sizing:border-box;}
+.hk-lab{position:absolute; transform:translate(-50%,-50%); font-size:12.5px; color:#7a83a8;
+  font-family:'Calibri','Segoe UI',sans-serif; white-space:nowrap; text-align:center; line-height:1.15;}
+.hk-name{position:absolute; transform:translate(-50%,-50%); font-size:13.5px; font-weight:bold;
+  font-family:'Courier New',monospace; white-space:nowrap;}
+
+/* ═══ U13a — the shelf ═══ */
+.sh-main{display:grid; grid-template-columns:150px minmax(0,1.05fr) minmax(0,1.35fr); gap:12px; align-items:stretch; margin-top:6px;}
+.sh-cpu{background:#fff; border:2.2px solid var(--navy); border-radius:12px; padding:8px 10px; text-align:center;
+  display:flex; flex-direction:column; justify-content:center; gap:4px;}
+.sh-cpu .t{font-size:.5em; font-weight:bold; color:var(--navy); letter-spacing:.05em;}
+.sh-cpu .now{font-family:'Courier New',monospace; font-weight:bold; font-size:.62em; color:#8a5c00; min-height:1.3em;}
+.sh-shelf{background:#fff; border:2.2px solid var(--accent3); border-radius:12px; padding:8px 10px;}
+.sh-shelf .t{font-size:.5em; font-weight:bold; color:#8a5c00; letter-spacing:.05em;}
+.sh-slots{display:flex; flex-wrap:wrap; gap:5px; margin-top:6px; min-height:30px;}
+.sh-slot{border:1.8px solid #e6cf9e; border-radius:7px; background:#fdf8ec; font-family:'Courier New',monospace;
+  font-weight:bold; font-size:.56em; color:#8a5c00; padding:3px 10px; transition:.12s;}
+.sh-slot.emp{border-style:dashed; color:#d8c9a4; background:#fff;}
+.sh-slot.hit{border-color:#059669; background:rgba(5,150,105,.14); color:#046b4c; transform:translateY(-2px);}
+.sh-slot.newm{border-color:var(--accent2); background:rgba(240,101,91,.13); color:#c0392b;}
+.sh-cnt{display:flex; gap:9px; margin-left:auto; align-items:center;}
+.sh-pill{font-size:.48em; font-family:'Courier New',monospace; font-weight:bold; border-radius:14px; padding:2px 11px;
+  border:1.8px solid #ccd3e8; color:#5b6488; background:#fff;}
+.sh-pill.h{border-color:#059669; color:#046b4c;} .sh-pill.m{border-color:var(--accent2); color:#c0392b;}
+.sh-pill.tk{border-color:var(--navy); color:var(--navy);}
+.sh-chart{margin-top:8px; background:#fff; border:2px solid #ccd3e8; border-radius:10px; padding:7px 12px 4px;}
+.sh-chart .t{font-size:.44em; font-weight:bold; color:#5b6488; letter-spacing:.04em;}
+.sh-cols{display:flex; align-items:flex-end; gap:18px; height:86px; padding:4px 6px 0;}
+.sh-col{flex:1; display:flex; flex-direction:column; align-items:center; justify-content:flex-end; height:100%;}
+.sh-colbar{width:78%; border-radius:4px 4px 0 0; background:#e4e8f4; border:1.6px solid #ccd3e8; border-bottom:none;
+  min-height:3px; transition:height .5s;}
+.sh-colbar.done{background:rgba(23,179,163,.35); border-color:var(--accent1);}
+.sh-col .k{font-size:.42em; font-family:'Courier New',monospace; font-weight:bold; color:#5b6488; margin-top:2px;}
+.sh-col .pc2{font-size:.4em; font-family:'Courier New',monospace; color:#0d7a6e; min-height:1.2em; font-weight:bold;}
+
+/* ═══ U11b — the game panel scrolls instead of overflowing (review fix) ═══ */
+.g-wrap{max-height:640px; overflow-y:auto;}
+/* compact tables for in-game questions — .vtab is the vocab class and is 100% wide */
+table.bp{border-collapse:collapse; font-size:.46em; display:inline-table; width:auto; vertical-align:top; margin:0 14px 4px 0;}
+table.bp th{background:#eef1fa; color:#3f4770; padding:2px 10px; border:1px solid #c8cee0; font-family:'Calibri','Segoe UI',sans-serif;}
+table.bp td{border:1px solid #c8cee0; padding:1.5px 10px; font-family:'Courier New',monospace; font-weight:bold; color:var(--navy);}
+/* ═══ U11b — the trace widget ═══ */
+.tr-main{display:grid; grid-template-columns:minmax(0,1fr) minmax(0,1.35fr); gap:11px; align-items:start; margin-top:4px;}
+.tr-prog{background:#fff; border:2.2px solid var(--navy); border-radius:11px; padding:7px 10px;}
+.tr-prog .t{font-size:.46em; font-weight:bold; color:var(--navy); letter-spacing:.05em;}
+.tr-rows{margin-top:4px; max-height:300px; overflow:auto;}
+.tr-row{display:flex; gap:10px; font-family:'Courier New',monospace; font-weight:bold; font-size:.5em;
+  padding:1px 8px; border-radius:5px; color:var(--navy);}
+.tr-row .a{color:#8890b5; width:34px; text-align:right;}
+.tr-row.cur{background:rgba(242,181,60,.28); outline:1.5px solid var(--accent3);}
+.tr-row.data{color:#7a83a8;}
+.tr-tbl{background:#fff; border:2.2px solid #9aa3c4; border-radius:11px; padding:7px 10px;}
+.tr-tbl .t{font-size:.46em; font-weight:bold; color:#5b6488; letter-spacing:.05em;}
+table.trt{border-collapse:collapse; font-size:.48em; margin-top:4px; width:100%;}
+table.trt th, table.trt td{border:1px solid #c8cee0; padding:1.5px 8px; text-align:center;
+  font-family:'Courier New',monospace; font-weight:bold; color:var(--navy);}
+table.trt th{background:#eef1fa; font-family:'Calibri',sans-serif; color:#5b6488;}
+table.trt tr.init td{color:#8890b5; background:#f8f9fd;}
+table.trt tr.lap1 td{background:rgba(23,179,163,.07);}
+table.trt tr.new td{background:rgba(242,181,60,.22);}
+.tr-note{font-size:.44em; color:#7a83a8; margin-top:3px;}
+.tr-say{margin-top:7px; background:var(--navy); color:var(--ice); border-radius:9px; padding:7px 13px;
+  font-size:.55em; line-height:1.45; min-height:2.2em;}
+.tr-say b{color:#5FD6C9;}
+.tr-ascii{font-size:.44em; font-family:'Courier New',monospace; color:#5b6488; margin-top:4px;
+  border:1.4px dashed #c8cee0; border-radius:7px; padding:3px 8px;}
+
+/* ═══ U11c — the eight-lamp register ═══ */
+.lr-main{background:#fff; border:2.2px solid var(--navy); border-radius:12px; padding:8px 12px 10px; margin-top:4px;}
+.lr-row{display:grid; grid-template-columns:118px 44px repeat(8, 44px) 44px 1fr; gap:5px; align-items:center; margin:3px 0;}
+.lr-lbl{font-size:.5em; font-weight:bold; color:var(--navy); letter-spacing:.04em; text-align:right; padding-right:6px;}
+.lr-lbl small{display:block; font-weight:normal; color:#8890b5; letter-spacing:0; font-size:.82em;}
+.lamp{height:40px; border-radius:8px; border:2px solid #ccd3e8; background:#f4f6fb; display:flex; align-items:center; justify-content:center;
+  font-family:'Courier New',monospace; font-weight:bold; font-size:.78em; color:#aab2cf; transition:.15s; position:relative; user-select:none;}
+.lamp.on{background:rgba(242,181,60,.35); border-color:var(--accent3); color:#7a4f00; box-shadow:0 0 10px rgba(242,181,60,.55);}
+.lamp.click{cursor:pointer;} .lamp.click:hover{border-color:var(--accent1);}
+.lamp.res.on{background:rgba(23,179,163,.28); border-color:var(--accent1); color:#0d5c54; box-shadow:0 0 10px rgba(23,179,163,.5);}
+.lamp.arrive{border-color:var(--accent2); border-style:dashed;}
+.lamp.hot{transform:translateY(-3px);}
+.lamp .bitno{position:absolute; top:-13px; left:0; right:0; text-align:center; font-size:.42em; color:#98a0c0; font-family:'Calibri','Segoe UI',sans-serif; font-weight:normal;}
+.lr-side{font-family:'Courier New',monospace; font-weight:bold; font-size:.5em; color:#5b6488; padding-left:6px; white-space:nowrap;}
+.lr-side b{color:var(--navy);}
+.gate{height:30px; display:flex; align-items:center; justify-content:center;}
+.gate svg{width:34px; height:26px; display:block;}
+.gate path,.gate line,.gate circle{stroke:#ccd3e8; stroke-width:2; fill:none; transition:.15s;}
+.gate.on path,.gate.on line{stroke:var(--accent1);} .gate.on circle{stroke:var(--accent1);}
+.gate.on{filter:drop-shadow(0 0 4px rgba(23,179,163,.6));}
+.lr-bar{display:flex; gap:6px; align-items:center; flex-wrap:wrap; margin:2px 0 6px;}
+.lr-in{font-family:'Courier New',monospace; font-weight:bold; font-size:.56em; padding:4px 10px; border:1.8px solid #ccd3e8; border-radius:8px;
+  color:var(--navy); outline:none; background:#fff; width:150px;}
+.lr-in:focus{border-color:var(--accent1);}
+.lr-dec{font-family:'Courier New',monospace; font-weight:bold; font-size:.5em; color:#8a5c00; background:rgba(242,181,60,.14); border:1.5px solid var(--accent3);
+  border-radius:8px; padding:3px 10px; min-width:200px;}
+.lr-dec.bad{color:#c0392b; background:rgba(240,101,91,.1); border-color:var(--accent2);}
+.lr-mem{display:flex; gap:4px; margin-left:auto;}
+.lr-cell{border:1.4px solid #e0e4f0; border-radius:6px; padding:1px 7px; font-family:'Courier New',monospace; font-weight:bold; font-size:.44em; background:#fbfcfe; color:var(--navy);}
+.lr-cell .a{color:#8890b5; margin-right:4px;}
+.lr-cell.hot{border-color:var(--accent1); background:rgba(23,179,163,.1);}
+.lr-say{margin-top:7px; background:var(--navy); color:var(--ice); border-radius:9px; padding:7px 13px; font-size:.55em; line-height:1.45; min-height:2.2em;}
+.lr-say b{color:#5FD6C9;} .lr-say .mono{color:var(--accent3);}
+.lost{visibility:hidden; height:40px; border-radius:8px; border:2px dashed #e0b4ae; background:rgba(240,101,91,.06); display:flex; align-items:center; justify-content:center;
+  font-family:'Courier New',monospace; font-weight:bold; font-size:.7em; color:#c0392b; opacity:.35; transition:.2s;}
+.lost.has{opacity:1; box-shadow:0 0 8px rgba(240,101,91,.4);}
+.lost .bitno{position:absolute; top:-13px; left:0; right:0; text-align:center; font-size:.42em; color:#c0392b; font-family:'Calibri',sans-serif; font-weight:normal;}
+.lr-main.shiftmode .lost{visibility:visible;}
+.lr-fam{font-size:.44em; color:#5b6488; margin-left:2px;}
+.lr-opb{line-height:1.1; padding:3px 12px 4px;}
+.reveal button.lr-opb small{display:block; font-size:.66em; font-weight:normal; letter-spacing:0; color:#8890b5; line-height:1.15; vertical-align:baseline;}
+.reveal button.fd-btn.on.lr-opb small{color:#dfe4f5;}
+.lr-fam b{color:var(--navy);}
+
+/* ═══ U11c — the controller (hook drawing + NES stepper) ═══ */
+.pad{display:flex; gap:6px; align-items:flex-end; justify-content:center; margin:4px 0 8px;}
+.pbt{width:44px; height:44px; border-radius:50%; border:2.5px solid #9aa3c4; background:#f4f6fb; display:flex; align-items:center; justify-content:center;
+  font-size:.5em; font-weight:bold; color:#5b6488; font-family:'Calibri','Segoe UI',sans-serif; transition:.15s;}
+.pbt.sq{border-radius:8px; width:52px; height:30px;}
+.pbt.dn{background:rgba(240,101,91,.28); border-color:var(--accent2); color:#c0392b; box-shadow:0 0 10px rgba(240,101,91,.5); transform:translateY(2px);}
+.nx-main{display:grid; grid-template-columns:minmax(0,1fr) minmax(0,1.2fr); gap:12px; align-items:start;}
+.nx-code{background:var(--navy); color:var(--ice); border-radius:10px; font-family:'Courier New',monospace; font-weight:bold; font-size:.5em; line-height:1.5; padding:8px 12px;}
+.nx-code .l{display:block; padding:0 6px; border-radius:4px;} .nx-code .l.cur{background:rgba(242,181,60,.3);}
+.nx-code .c{color:#98a0c0; font-weight:normal;}
+.nx-wire{display:flex; align-items:center; gap:10px; margin:6px 0; font-size:.5em; color:var(--navy);}
+.nx-bit{width:40px; height:40px; border-radius:8px; border:2px solid #ccd3e8; display:flex; align-items:center; justify-content:center;
+  font-family:'Courier New',monospace; font-weight:bold; font-size:.8em; color:#aab2cf; background:#f4f6fb;}
+.nx-bit.on{background:rgba(240,101,91,.25); border-color:var(--accent2); color:#c0392b;}
+.nx-lab{font-size:.46em; color:#5b6488; text-align:center; margin-top:2px;}
+
+/* the exam's own answer grid (an 8-cell register) inside a game stage */
+.g-reg{display:inline-flex; gap:3px; vertical-align:middle; margin:2px 6px 2px 0;}
+.g-reg span{width:22px; height:24px; border:1.5px solid #c8cee0; border-radius:4px; display:flex; align-items:center; justify-content:center;
+  font-family:'Courier New',monospace; font-weight:bold; font-size:.5em; color:var(--navy); background:#fff;}
+
+/* ═══ U12a — the captured run (top, from the teacher's Mac) ═══ */
+.cap{background:var(--navy); color:#e8c98a; border-radius:12px; font-family:'Courier New',monospace; font-weight:bold; font-size:.46em; line-height:1.45; padding:10px 14px; white-space:pre; overflow:hidden; text-align:left; box-shadow:0 4px 14px rgba(0,0,0,.14);}
+.cap .hl{color:#5FD6C9;} .cap .rd{color:#ff9d95;}
+.cap-chip{display:inline-block; font-size:.42em; font-weight:bold; color:#e0b050; border:1.5px solid #a87700; border-radius:14px; padding:2px 10px; margin-bottom:5px; font-family:'Calibri','Segoe UI',sans-serif;}
+
+/* ═══ U12a — the illusionist (CPU) + the government (RAM) ═══ */
+.il-main{display:grid; grid-template-columns:minmax(0,1.25fr) minmax(0,1fr); gap:12px; margin-top:4px; align-items:start;}
+.il-box{background:#fff; border:2.2px solid var(--navy); border-radius:12px; padding:8px 12px 10px;}
+.il-box .t{font-size:.46em; font-weight:bold; color:var(--navy); letter-spacing:.05em; display:flex; align-items:center; gap:10px;}
+.il-bell{margin-left:auto; width:22px; height:22px; border-radius:50%; border:2px solid #ccd3e8; display:inline-flex; align-items:center; justify-content:center; font-size:12px; color:#98a0c0; transition:.08s;}
+.il-bell.ring{background:var(--accent3); border-color:var(--accent3); color:#4a3500; box-shadow:0 0 10px rgba(242,181,60,.8);}
+.il-rows{display:flex; flex-direction:column; gap:6px; margin-top:7px;}
+.il-row{display:grid; grid-template-columns:120px 1fr 56px; gap:8px; align-items:center;}
+.il-name{font-size:.48em; font-weight:bold; color:var(--navy); display:flex; align-items:center; gap:6px;}
+.il-name .cpu{font-size:.72em; background:var(--accent1); color:#fff; border-radius:10px; padding:0 7px; opacity:0; transition:.05s;}
+.il-row.run .il-name .cpu{opacity:1;}
+.il-bar{height:16px; border-radius:8px; background:#eef1f8; border:1.5px solid #dde2f0; overflow:hidden;}
+.il-bar i{display:block; height:100%; background:var(--c); width:0%; transition:width .05s linear;}
+.il-row.dead .il-bar i{background:repeating-linear-gradient(45deg,#c0392b,#c0392b 4px,#f4c7c3 4px,#f4c7c3 8px);}
+.il-pct{font-family:'Courier New',monospace; font-weight:bold; font-size:.46em; color:#5b6488; text-align:right;}
+.il-stats{display:flex; gap:12px; margin-top:8px; font-size:.44em; color:#5b6488;}
+.il-stats b{font-family:'Courier New',monospace; color:var(--navy);}
+.il-ram{display:grid; grid-template-columns:repeat(16, 1fr); gap:3px; margin-top:7px;}
+.il-cell{height:20px; border-radius:4px; border:1.5px solid #dde2f0; background:#f4f6fb; transition:.15s; position:relative;}
+.il-cell.o{background:color-mix(in srgb, var(--c) 45%, #fff); border-color:var(--c);}
+.il-cell.os{background:repeating-linear-gradient(90deg,#222B5A,#222B5A 3px,#3a4480 3px,#3a4480 6px); border-color:var(--navy);}
+.il-cell.hit{box-shadow:0 0 0 3px var(--accent2); background:#fdeeec;}
+.il-cell.dead{background:repeating-linear-gradient(45deg,#c0392b,#c0392b 3px,#f4c7c3 3px,#f4c7c3 6px); border-color:#c0392b;}
+.il-key{display:flex; gap:10px; flex-wrap:wrap; margin-top:6px; font-size:.42em; color:#5b6488;}
+.il-key span{display:inline-flex; align-items:center; gap:4px;}
+.il-key i{width:12px; height:12px; border-radius:3px; display:inline-block; background:var(--c); border:1px solid var(--c);}
+.il-say{margin-top:7px; background:var(--navy); color:var(--ice); border-radius:9px; padding:7px 13px; font-size:.54em; line-height:1.45; min-height:2.2em;}
+.il-say b{color:#5FD6C9;} .il-say .bad{color:#ff9d95;}
+.il-gov{font-size:.44em; font-weight:bold; border-radius:14px; padding:2px 10px; margin-left:auto; border:1.5px solid;}
+.il-gov.on{color:#0d7a6e; border-color:var(--accent1); background:rgba(23,179,163,.1);}
+.il-gov.off{color:#c0392b; border-color:var(--accent2); background:rgba(240,101,91,.1);}
+
+/* ═══ U12a — the defragmenter ═══ */
+.df-main{display:grid; grid-template-columns:minmax(0,1.5fr) minmax(0,1fr); gap:12px; margin-top:4px; align-items:start;}
+.df-disk{background:#fff; border:2.2px solid var(--navy); border-radius:12px; padding:9px 12px 10px;}
+.df-disk .t{font-size:.46em; font-weight:bold; color:var(--navy); letter-spacing:.05em; display:flex; gap:10px; align-items:center;}
+.df-grid{display:grid; grid-template-columns:repeat(16, 1fr); gap:3px; margin-top:7px;}
+.df-cell{height:26px; border-radius:5px; border:1.5px solid #dde2f0; background:#f7f8fc; display:flex; align-items:center; justify-content:center;
+  font-family:'Courier New',monospace; font-weight:bold; font-size:.38em; color:#fff; transition:.2s;}
+.df-cell.o{background:var(--c); border-color:var(--c);}
+.df-cell.hd{box-shadow:0 0 0 3px var(--accent3);}
+.df-cell.mv{transform:scale(1.12); box-shadow:0 0 8px rgba(0,0,0,.25);}
+.df-head{height:8px; margin:5px 2px 0; position:relative;}
+.df-head i{position:absolute; top:0; width:12px; height:8px; background:var(--accent3); clip-path:polygon(50% 100%, 0 0, 100% 0); transition:left .18s linear;}
+.df-files{display:flex; gap:6px; flex-wrap:wrap; margin-top:7px;}
+.df-file{font-size:.44em; font-weight:bold; border-radius:14px; padding:2px 10px; border:1.6px solid var(--c); color:var(--c); background:color-mix(in srgb, var(--c) 10%, #fff); cursor:pointer;}
+.df-file.on{background:var(--c); color:#fff;}
+.df-file.gone{opacity:.3; text-decoration:line-through; cursor:default;}
+.df-side{background:#fff; border:2px solid #ccd3e8; border-radius:12px; padding:9px 12px;}
+.df-side .t{font-size:.46em; font-weight:bold; color:#5b6488; letter-spacing:.05em;}
+.df-cost{font-family:'Courier New',monospace; font-weight:bold; font-size:.9em; color:var(--navy); margin:4px 0 2px;}
+.df-cost small{font-family:'Calibri','Segoe UI',sans-serif; font-weight:normal; font-size:.5em; color:#8890b5; display:block;}
+.df-note{font-size:.46em; color:#5b6488; line-height:1.4; margin-top:6px;}
+.df-note b{color:var(--navy);}
+.df-say{margin-top:7px; background:var(--navy); color:var(--ice); border-radius:9px; padding:7px 13px; font-size:.54em; line-height:1.45; min-height:2.2em;}
+.df-say b{color:#5FD6C9;} .df-say .warn{color:var(--accent3);}
+.df-ssd{margin-left:auto; font-size:.44em; font-weight:bold; border-radius:14px; padding:2px 10px; border:1.5px solid #ccd3e8; color:#5b6488; cursor:pointer; background:#fff;}
+.df-ssd.on{border-color:var(--accent2); color:#c0392b; background:rgba(240,101,91,.08);}
+
+/* the software tree (system vs application) */
+.tree{display:grid; grid-template-columns:1fr 1fr; gap:10px; font-size:.5em;}
+.tree .n{border:2px solid var(--navy); border-radius:9px; padding:6px 10px; background:#fff; text-align:center; font-weight:bold; color:var(--navy);}
+.tree .kids{display:flex; gap:6px; margin-top:6px;}
+.tree .k{flex:1; border:1.6px solid #ccd3e8; border-radius:8px; padding:5px 8px; background:#f8fafd; text-align:center; font-size:.92em; line-height:1.3;}
+.tree .k b{display:block; color:var(--navy);}
+.tree .k.now{border-color:var(--accent1); background:rgba(23,179,163,.08);}
+.tree .k.next{border-color:var(--accent3); border-style:dashed;}
+/* the library slide's cell sits inside a .46em grid — give its code the size every other cell has */
+.pycell.roomy{grid-template-columns:2.4fr 1fr;}
+.pycell.roomy .pyta, .pycell.roomy .pyout{font-size:1.08em !important;}
+
+/* ═══ U12b — accent rules (the U-lane .rule has no coloured variants) ═══ */
+.rule.accent1{border-left-color:var(--accent1);} .rule.accent2{border-left-color:var(--accent2);} .rule.accent3{border-left-color:var(--accent3);}
+.two-col.narrow{font-size:.5em;}
+.pycell.pair{grid-template-columns:1fr;} .pycell.pair .pyta{grid-column:1; font-size:.46em !important;} .pycell.pair .pyout{grid-column:1; font-size:.46em !important; min-height:44px;}
+
+/* ═══ U12b — THE WIDGET: the two translators, side by side ═══ */
+.tt-main{display:grid; grid-template-columns:minmax(0,1fr) minmax(0,1fr) minmax(0,1fr); gap:10px; margin-top:4px; align-items:stretch;}
+.tt-box{background:#fff; border:2px solid #ccd3e8; border-radius:12px; padding:7px 10px 9px; min-width:0;}
+.tt-box.src{border-color:var(--navy);}
+.tt-box .t{font-size:.46em; font-weight:bold; letter-spacing:.05em; color:var(--navy); display:flex; justify-content:space-between; align-items:center; gap:8px;}
+.tt-box .t .mono{color:#8a5c00; background:rgba(242,181,60,.16); border-radius:12px; padding:1px 9px; font-size:.95em;}
+.tt-lines{margin-top:6px; display:flex; flex-direction:column; gap:2px;}
+.tt-ln{display:grid; grid-template-columns:22px 1fr; gap:6px; align-items:center; border-radius:6px; padding:1px 4px;}
+.tt-ln span{font-family:'Courier New',monospace; font-size:.42em; color:#9aa3c4; text-align:right;}
+.tt-ln input{font-family:'Courier New',monospace; font-weight:bold; font-size:.46em; color:var(--navy); border:none; border-bottom:1px solid #eef1f8; background:transparent; outline:none; width:100%; padding:1px 2px;}
+.tt-ln input:focus{border-bottom-color:var(--accent1);}
+.tt-ln.cur{background:rgba(23,179,163,.14); box-shadow:inset 3px 0 0 var(--accent1);}
+.tt-ln.err{background:rgba(240,101,91,.14); box-shadow:inset 3px 0 0 var(--accent2);}
+.tt-ln.err input{color:#c0392b;}
+.tt-ln.done input{color:#0d7a6e;}
+.tt-ln.dim input{color:#b5bcd6;}
+.tt-out{font-family:'Courier New',monospace; font-weight:bold; font-size:.44em; background:#151B3C; color:#5FD6C9; border-radius:8px; padding:6px 9px; min-height:74px; margin-top:6px; white-space:pre-wrap; line-height:1.35;}
+.tt-out .bad{color:#ff9d95;} .tt-out .dim{color:#8890b5; font-weight:normal;}
+.tt-stat{display:flex; gap:8px; margin-top:6px; font-size:.42em; color:#5b6488; flex-wrap:wrap;}
+.tt-stat b{font-family:'Courier New',monospace; color:var(--navy);}
+.tt-exe{display:inline-flex; align-items:center; gap:6px; font-size:.46em; font-weight:bold; color:#0d7a6e; background:rgba(23,179,163,.12); border:1.5px solid var(--accent1); border-radius:8px; padding:3px 10px; margin-top:6px;}
+.tt-exe.none{color:#9aa3c4; background:#f4f6fb; border-color:#dde2f0;}
+.tt-meter{height:10px; border-radius:5px; background:#f1f3fa; border:1px solid #dde2f0; overflow:hidden; margin-top:4px;}
+.tt-meter i{display:block; height:100%; width:0; background:var(--accent2); transition:width .3s;}
+.tt-say{margin-top:7px; background:var(--navy); color:var(--ice); border-radius:9px; padding:7px 13px; font-size:.54em; line-height:1.45; min-height:2.2em;}
+.tt-say b{color:#5FD6C9;} .tt-say .mono{color:var(--accent3);} .tt-say .bad{color:#ff9d95;}
+.tt-ship{display:grid; grid-template-columns:1fr 1fr; gap:8px; margin-top:6px; font-size:.44em;}
+.tt-parcel{border:1.5px dashed #ccd3e8; border-radius:8px; padding:5px 9px; color:#5b6488;}
+.tt-parcel b{color:var(--navy);} .tt-parcel .mono{color:#8a5c00;}
+
+/* ═══ U12b — the IDE, labelled ═══ */
+.ide-main{display:grid; grid-template-columns:minmax(0,1.35fr) minmax(0,1fr); gap:12px; margin-top:4px; align-items:start;}
+.ide{background:#1e2440; border-radius:12px; border:2px solid var(--navy); overflow:hidden; font-family:'Courier New',monospace; font-size:.46em; color:#dfe4f5; position:relative;}
+.ide .bar{position:static; height:auto; display:flex; gap:6px; align-items:center; padding:5px 10px; background:#151B3C; font-family:'Calibri','Segoe UI',sans-serif; font-weight:bold; color:#98a0c0;}
+.ide .bar i{width:9px; height:9px; border-radius:50%; display:inline-block;}
+.ide .run{margin-left:auto; background:var(--accent1); color:#fff; border-radius:6px; padding:1px 10px; cursor:pointer;}
+.ide .code{padding:6px 0; position:relative;}
+.ide .row{display:grid; grid-template-columns:34px 1fr; align-items:center; line-height:1.55; position:relative;}
+.ide .row .no{color:#5b6488; text-align:right; padding-right:10px; position:relative; cursor:pointer;}
+.ide .row.bp .no::before{content:''; position:absolute; left:6px; top:50%; transform:translateY(-50%); width:9px; height:9px; border-radius:50%; background:var(--accent2);}
+.ide .row.step{background:rgba(242,181,60,.22); box-shadow:inset 3px 0 0 var(--accent3);}
+.ide .kw{color:#c792ea; font-weight:bold;} .ide .fn{color:#82aaff;} .ide .str{color:#c3e88d;} .ide .num{color:#f78c6c;} .ide .cm{color:#5b6488; font-style:italic;}
+.ide .sq{text-decoration:underline wavy #ff5370; text-decoration-skip-ink:none; cursor:pointer;}
+.ide .fold{color:#89ddff; cursor:pointer;} .ide .fold em{color:#5b6488; font-style:normal;}
+.ide .fix{color:#c3e88d; border-bottom:1px dotted #c3e88d; cursor:pointer;}
+.ide .pop{position:absolute; left:150px; top:66px; background:#2b3357; border:1px solid #4a5590; border-radius:6px; padding:3px 0; z-index:2; cursor:pointer; box-shadow:0 4px 12px rgba(0,0,0,.4);}
+.ide .pop div{padding:1px 12px; color:#dfe4f5;} .ide .pop div.on{background:#3d4a86;}
+.ide .panes{display:grid; grid-template-columns:1fr 1fr; border-top:1px solid #2b3357;}
+.ide .pane{padding:5px 10px; min-height:58px; cursor:pointer;}
+.ide .pane + .pane{border-left:1px solid #2b3357;}
+.ide .pane .ph{font-family:'Calibri','Segoe UI',sans-serif; font-weight:bold; color:#98a0c0; font-size:.9em; letter-spacing:.05em; margin-bottom:2px;}
+.ide .pane .v{color:#89ddff;} .ide .pane .val{color:#f78c6c;}
+.ide .hot{cursor:pointer; transition:.12s;}
+.ide .hot.found{outline:1.5px dashed var(--accent3); outline-offset:1px; border-radius:3px;}
+.ide-side{display:flex; flex-direction:column; gap:7px;}
+.ide-box{background:#fff; border:2px solid #ccd3e8; border-radius:11px; padding:6px 10px 8px; font-size:.46em; color:var(--navy); line-height:1.38;}
+.ide-box .t{font-weight:bold; letter-spacing:.05em; display:flex; justify-content:space-between; align-items:center;}
+.ide-box .t .mono{color:#8a5c00; background:rgba(242,181,60,.16); border-radius:12px; padding:1px 9px; font-size:.95em;}
+.ide-box .nm{font-size:1.15em; font-weight:bold; color:#0d7a6e; margin-top:3px;}
+.ide-box .job{display:inline-block; background:rgba(124,58,237,.1); color:#7c3aed; border-radius:10px; padding:0 8px; font-weight:bold; margin:3px 0;}
+.ide-box .purpose{margin-top:3px;} .ide-box .trap{margin-top:4px; color:#c0392b;}
+.ide-list{display:grid; grid-template-columns:1fr 1fr; gap:2px 10px; margin-top:4px;}
+.ide-list span{color:#9aa3c4;} .ide-list span.on{color:var(--navy); font-weight:bold;}
+
+/* ═══ U13b — the hook comic ═══ */
+.hook-comic{width:100%; border-radius:12px; box-shadow:0 6px 18px rgba(0,0,0,.18); display:block;}
+
+/* ═══ U13b — the fourteen senses, clustered ═══ */
+.senses{display:grid; grid-template-columns:repeat(4, minmax(0,1fr)); gap:10px; margin-top:6px;}
+.sense-grp{background:#fff; border:2px solid #ccd3e8; border-radius:12px; padding:7px 10px 9px; min-width:0;}
+.sense-grp .t{font-size:.52em; font-weight:bold; letter-spacing:.04em; color:var(--navy); margin-bottom:5px; display:flex; align-items:center; gap:6px;}
+.sense-grp .t .big{font-size:1.5em;}
+.sense-grp.air{border-color:var(--accent1);} .sense-grp.water{border-color:#3b82f6;} .sense-grp.there{border-color:var(--accent2);} .sense-grp.me{border-color:var(--accent3);}
+.sense{display:grid; grid-template-columns:auto 1fr; gap:6px; align-items:baseline; font-size:.44em; line-height:1.3; padding:2px 0; border-top:1px solid #eef1f8;}
+.sense b{color:var(--navy); white-space:nowrap;} .sense span{color:#5b6488;}
+.sense i{color:#8890b5; font-style:normal; font-size:.92em;}
+.sense .zh{color:#8a5c00; font-style:normal;}
+
+/* ═══ U13b — the ring: eight sentences ═══ */
+.ring{display:grid; grid-template-columns:1fr 1fr; gap:12px; align-items:start;}
+.ring ol{margin:0; padding-left:22px; font-size:.5em; line-height:1.45;}
+.ring li{margin:2px 0;} .ring li b{color:var(--navy);} .ring li .mk{color:#c0392b; font-family:'Courier New',monospace; font-weight:bold; font-size:.9em;}
+.death{background:#fff; border:2px solid #f1c4c0; border-left:5px solid var(--accent2); border-radius:10px; padding:6px 11px; font-size:.47em; line-height:1.4; margin-top:6px;}
+.death b{color:#c0392b;}
+.drift{display:flex; gap:6px; align-items:flex-end; margin-top:6px; font-size:.44em; color:#5b6488;}
+.drift .dbar{position:static; height:auto; background:var(--accent1); border-radius:4px 4px 0 0; width:34px; display:flex; align-items:flex-end; justify-content:center; color:#fff; font-weight:bold; font-family:'Courier New',monospace;}
+
+/* ═══ U13b — THE WIDGET: the greenhouse ring ═══ */
+.gh-main{display:grid; grid-template-columns:minmax(0,1.25fr) minmax(0,1fr); gap:10px; margin-top:4px; align-items:stretch;}
+.gh-box{background:#fff; border:2px solid #ccd3e8; border-radius:12px; padding:7px 10px 9px; min-width:0; position:relative;}
+.gh-box .t{font-size:.46em; font-weight:bold; letter-spacing:.05em; color:var(--navy); display:flex; justify-content:space-between; align-items:center; gap:8px;}
+.gh-box .t .mono{color:#8a5c00; background:rgba(242,181,60,.16); border-radius:12px; padding:1px 9px; font-size:.95em;}
+.gh-plot{width:100%; height:190px; display:block; margin-top:4px;}
+.gh-loop{display:grid; grid-template-columns:repeat(5, minmax(0,1fr)); gap:4px; margin-top:6px; align-items:stretch;}
+.gh-node{border:2px solid #ccd3e8; border-radius:9px; padding:4px 5px; text-align:center; font-size:.4em; line-height:1.25; color:#5b6488; background:#f7f8fc; transition:.2s; min-height:44px; display:flex; flex-direction:column; justify-content:center;}
+.gh-node b{color:var(--navy); font-size:1.05em;}
+.gh-node.on{border-color:var(--accent1); background:rgba(23,179,163,.14); box-shadow:0 0 0 2px rgba(23,179,163,.25);}
+.gh-node.dead{opacity:.35; border-style:dashed;}
+.gh-fb{margin-top:4px; font-size:.44em; text-align:center; color:#8890b5; border:2px dashed #ccd3e8; border-radius:8px; padding:3px 6px; transition:.2s;}
+.gh-fb.on{color:#0d7a6e; border-color:var(--accent1); background:rgba(23,179,163,.1); font-weight:bold;}
+.gh-fb.dead{color:#c0392b; border-color:#f1c4c0; text-decoration:line-through;}
+.gh-log{font-family:'Courier New',monospace; font-weight:bold; font-size:.4em; background:#151B3C; color:#5FD6C9; border-radius:8px; padding:6px 9px; min-height:96px; margin-top:6px; white-space:pre-wrap; line-height:1.45;}
+.gh-log .k{color:var(--accent3);} .gh-log .bad{color:#ff9d95;} .gh-log .dim{color:#8890b5; font-weight:normal;}
+.gh-stat{display:flex; gap:8px; margin-top:6px; font-size:.44em; color:#5b6488; flex-wrap:wrap; align-items:center;}
+.gh-stat b{font-family:'Courier New',monospace; color:var(--navy);}
+.gh-stat input[type=range]{width:90px; vertical-align:middle;}
+.gh-say{margin-top:7px; background:var(--navy); color:var(--ice); border-radius:9px; padding:7px 13px; font-size:.52em; line-height:1.45; min-height:2.2em;}
+.gh-say b{color:#5FD6C9;} .gh-say .bad{color:#ff9d95;} .gh-say .mono{color:var(--accent3);}
+.gh-verd{margin-top:6px; font-size:.44em; border-radius:8px; padding:5px 9px; background:#f7f8fc; border:1.5px solid #eef1f8; color:#5b6488; line-height:1.4;}
+.gh-verd b{color:var(--navy);} .gh-verd.ctl{border-color:var(--accent1); background:rgba(23,179,163,.1);} .gh-verd.mon{border-color:var(--accent3); background:rgba(242,181,60,.12);}
+.fd-btn.on{background:var(--navy); color:#fff; border-color:var(--navy);}
+
+/* ═══ U13b — monitoring vs control, and the automated-systems table ═══ */
+.mvc{display:grid; grid-template-columns:1fr 1fr; gap:12px;}
+.mvc .box{background:#fff; border:2px solid #ccd3e8; border-radius:12px; padding:7px 12px 9px; font-size:.48em; line-height:1.4;}
+.mvc .box.mon{border-color:var(--accent3);} .mvc .box.ctl{border-color:var(--accent1);}
+.mvc .box .t{font-weight:bold; letter-spacing:.05em; color:var(--navy); margin-bottom:4px;}
+.mvc ul{margin:0; padding-left:18px;} .mvc li{margin:1px 0;}
+.mvc .real{margin-top:5px; border-top:1px dashed #ccd3e8; padding-top:4px; color:#5b6488; font-size:.95em;}
+table.auto{border-collapse:collapse; width:100%; font-size:.44em; margin-top:4px;}
+table.auto th, table.auto td{border:1px solid #c8cee0; padding:3px 8px; text-align:left; vertical-align:top;}
+table.auto th{background:#eef1fa; color:var(--navy);}
+table.auto td.who{color:#8a5c00; font-weight:bold; white-space:nowrap;}
+
+/* ═══ U13b — the VR cloze ═══ */
+.cloze{font-size:.6em; line-height:1.9; background:#fff; border:2px solid #ccd3e8; border-radius:12px; padding:10px 16px; text-align:left;}
+.cloze .gap{display:inline-block; min-width:150px; border-bottom:2px solid var(--accent2); cursor:pointer; color:#c0392b; font-weight:bold; text-align:center; padding:0 6px;}
+.cloze .gap.shown{border-bottom-color:var(--accent1); color:#0d7a6e; background:rgba(23,179,163,.1); border-radius:6px;}
+
+/* ═══ U13c — the phone clicker ═══ */
+.ph-main{display:grid; grid-template-columns:auto auto minmax(0,1fr); gap:14px; align-items:start; margin-top:4px; justify-content:center;}
+.ph-svg{width:232px; height:464px; display:block; cursor:crosshair; border-radius:14px;}
+.ph-side{min-width:0; text-align:left;}
+.ph-found{display:flex; flex-wrap:wrap; gap:5px; margin-top:6px;}
+.ph-chip{font-size:.44em; font-weight:bold; border-radius:8px; padding:2px 8px; border:1.5px solid #ccd3e8; color:#8890b5; background:#f7f8fc;}
+.ph-chip.in{border-color:var(--accent1); color:#0d7a6e; background:rgba(23,179,163,.12);}
+.ph-chip.out{border-color:var(--accent2); color:#c0392b; background:rgba(240,101,91,.1);}
+.ph-chip.both{border-color:var(--accent3); color:#8a5c00; background:rgba(242,181,60,.16);}
+.ph-chip.hid{border-style:dashed;}
+.ph-say{margin-top:8px; background:var(--navy); color:var(--ice); border-radius:9px; padding:8px 13px; font-size:.56em; line-height:1.45; min-height:3em;}
+.ph-say b{color:#5FD6C9;} .ph-say .bad{color:#ff9d95;} .ph-say .amb{color:var(--accent3);}
+.ph-count{font-family:'Courier New',monospace; font-weight:bold; font-size:.6em; color:var(--navy);}
+
+/* ═══ U13c — the transducer frame + the catalogue ═══ */
+.cat{display:grid; grid-template-columns:repeat(6, minmax(0,1fr)); gap:7px; margin-top:6px;}
+.cat .g{grid-column:span 6; font-size:.46em; font-weight:bold; letter-spacing:.05em; color:var(--navy); margin-top:2px;}
+.dev{background:#fff; border:2px solid #ccd3e8; border-radius:10px; padding:5px 7px; min-width:0; font-size:.42em; line-height:1.3; text-align:left;}
+.dev b{display:block; color:var(--navy); font-size:1.08em;}
+.dev.in{border-color:var(--accent1);} .dev.out{border-color:var(--accent2);} .dev.both{border-color:var(--accent3);}
+.dev .no{color:#c0392b;} .dev .yes{color:#0d7a6e;}
+.dev .al{display:inline-block; font-size:.9em; background:rgba(242,181,60,.18); color:#8a5c00; border-radius:6px; padding:0 5px; margin-top:2px;}
+
+/* ═══ U13c — THE WIDGET: built into ═══ */
+.bi-main{display:grid; grid-template-columns:minmax(0,1.1fr) minmax(0,1fr); gap:10px; margin-top:6px; align-items:start;}
+.bi-box{background:#fff; border:2px solid #ccd3e8; border-radius:12px; padding:7px 10px 9px; min-width:0;}
+.bi-box .t{font-size:.5em; font-weight:bold; letter-spacing:.05em; color:var(--navy); margin-bottom:5px;}
+.bi-scn{font-size:.56em; line-height:1.4; color:#1a2050; background:#f7f8fc; border-radius:9px; padding:6px 10px; border:1.5px solid #eef1f8;}
+.bi-scn b{color:var(--navy);}
+.bi-pal{display:flex; flex-wrap:wrap; gap:5px; margin-top:6px;}
+.bi-chip{font-size:.46em; font-weight:bold; border-radius:8px; padding:3px 9px; border:1.5px solid #ccd3e8; background:#fff; color:var(--navy); cursor:pointer; user-select:none; transition:.15s;}
+.bi-chip:hover{border-color:var(--navy);} .bi-chip.used{opacity:.35; cursor:default;}
+.bi-slot{min-height:36px; border:2px dashed #ccd3e8; border-radius:9px; padding:4px 6px; margin-top:4px; display:flex; flex-wrap:wrap; gap:5px; align-items:center;}
+.bi-slot .lbl{font-size:.44em; color:#8890b5; margin-right:4px;}
+.bi-ans{font-size:.46em; font-weight:bold; border-radius:8px; padding:3px 9px; border:1.5px solid #ccd3e8; background:#f7f8fc; color:var(--navy);}
+.bi-ans.ok{border-color:var(--accent1); background:rgba(23,179,163,.14); color:#0d5c54;} .bi-ans.no{border-color:var(--accent2); background:rgba(240,101,91,.12); color:#c0392b;} .bi-ans.vague{border-color:var(--accent3); background:rgba(242,181,60,.18); color:#8a5c00;} .bi-ans.extra{opacity:.45; text-decoration:line-through;}
+.bi-verd{font-size:.48em; line-height:1.4; margin-top:6px; border-radius:9px; padding:6px 10px; background:#f7f8fc; border:1.5px solid #eef1f8; color:#5b6488; min-height:4em;}
+.bi-verd b{color:var(--navy);} .bi-verd .no{color:#c0392b;} .bi-verd .ok{color:#0d7a6e;} .bi-verd .amb{color:#8a5c00;}
+.bi-say{margin-top:7px; background:var(--navy); color:var(--ice); border-radius:9px; padding:7px 13px; font-size:.54em; line-height:1.45; min-height:2.2em;}
+.bi-say b{color:#5FD6C9;} .bi-say .bad{color:#ff9d95;}
+
+/* ═══ U13c — mechanism slides ═══ */
+.mech{display:grid; grid-template-columns:1.2fr 1fr; gap:12px; align-items:start;}
+.mech video{width:100%; display:block; border-radius:10px; box-shadow:0 4px 14px rgba(0,0,0,.18);}
+.stages{background:#fff; border:2px solid #ccd3e8; border-radius:12px; padding:7px 12px 9px; font-size:.5em; line-height:1.45;}
+.stages .t{font-weight:bold; letter-spacing:.05em; color:var(--navy); margin-bottom:4px;}
+.stages ol{margin:0; padding-left:20px;} .stages li{margin:2px 0;} .stages b{color:var(--navy);}
+.stages .mp{color:#c0392b; font-family:'Courier New',monospace; font-weight:bold; font-size:.9em;}
+.stages.a{border-color:var(--accent1);} .stages.b{border-color:var(--accent2);} .stages.c{border-color:var(--accent3);}
+.nokia{display:grid; grid-template-columns:1fr 1.1fr; gap:14px; align-items:start;}
+.nokia img{width:100%; border-radius:12px; box-shadow:0 6px 18px rgba(0,0,0,.2);}
+
+/* ═══ U14a — the captured room ═══ */
+.cap{font-family:'Courier New',monospace; font-size:.46em; line-height:1.4; background:var(--navy); color:var(--ice); border-radius:10px; padding:9px 13px; text-align:left; white-space:pre;}
+.cap .k{color:var(--accent3);} .cap .g{color:#5FD6C9;} .cap .d{color:#8890b5;} .cap .r{color:#ff9d95;}
+
+/* ═══ U14a — the room widget ═══ */
+.rm-main{display:grid; grid-template-columns:minmax(0,1.25fr) minmax(0,1fr); gap:10px; margin-top:6px; align-items:start;}
+.rm-svg{width:100%; height:auto; display:block; background:#fff; border:2px solid #ccd3e8; border-radius:12px;}
+.rm-svg text{font-family:'Calibri','Segoe UI',sans-serif;}
+.rm-node{fill:#eef1fa; stroke:#3b4470; stroke-width:1;} .rm-node.srv{fill:#fbe3a5; stroke:#B8860B;} .rm-node.sw{fill:#d9f3ef; stroke:#0d7a6e;}
+.rm-node.sel{stroke:#F0655B; stroke-width:2.4;} .rm-node.hear{fill:#fde2df;} .rm-node.keep{fill:#bfe9e3;} .rm-node.lost{fill:#f4c7c3; stroke:#c0392b;}
+.rm-lbl{fill:#1a2050; font-size:3.4px; font-weight:bold; text-anchor:middle; dominant-baseline:central; pointer-events:none;}
+.rm-link{stroke:#98a0c0; stroke-width:.9; cursor:pointer;} .rm-link.hot{stroke:#F0655B; stroke-width:2.6;} .rm-link.cut{stroke:#c0392b; stroke-dasharray:2 1.6; opacity:.55;}
+.rm-link.bus{stroke:#3b4470; stroke-width:2.2;}
+.rm-hit{stroke:transparent; stroke-width:5; cursor:pointer;}
+.rm-side{min-width:0;}
+.rm-box{background:#fff; border:2px solid #ccd3e8; border-radius:10px; padding:5px 9px 7px; min-width:0; margin-top:6px;}
+.rm-box:first-child{margin-top:0;}
+.rm-box .t{font-size:.46em; font-weight:bold; letter-spacing:.05em; color:var(--navy); margin-bottom:3px;}
+.rm-stat{display:flex; gap:10px; flex-wrap:wrap; font-family:'Courier New',monospace; font-size:.5em; color:#1a2050;}
+.rm-stat b{color:#c0392b;}
+.rm-say{margin-top:6px; background:var(--navy); color:var(--ice); border-radius:9px; padding:6px 12px; font-size:.52em; line-height:1.45; min-height:3.2em;}
+.rm-say b{color:#5FD6C9;} .rm-say .bad{color:#ff9d95;} .rm-say .amb{color:var(--accent3);}
+.fd-btn.on{background:var(--navy); color:#fff; border-color:var(--navy);}
+.fd-btn.go{background:var(--accent1); color:#fff; border-color:var(--accent1);}
+.fd-btn.cut{border-color:var(--accent2); color:#c0392b;} .fd-btn.cut.on{background:var(--accent2); color:#fff;}
+.fd-sep{width:1px; height:18px; background:#ccd3e8; margin:0 3px;}
+
+/* ═══ U14a — the drawing check ═══ */
+.dw-main{display:grid; grid-template-columns:minmax(0,1fr) minmax(0,1.1fr); gap:10px; margin-top:6px; align-items:start;}
+table.dw{border-collapse:collapse; font-size:.46em; width:100%;}
+table.dw th{background:#eef1fa; color:var(--navy); padding:2px 6px; border:1px solid #d5dbee; text-align:left;}
+table.dw td{padding:2px 6px; border:1px solid #e6eaf5; color:#1a2050;}
+table.dw select{font-size:1em; font-family:inherit;}
+.dw-verd{font-size:.5em; line-height:1.45; margin-top:6px; border-radius:9px; padding:6px 10px; background:#f7f8fc; border:1.5px solid #eef1f8; color:#5b6488; min-height:3em;}
+.dw-verd b{color:var(--navy);} .dw-verd .ok{color:#0d7a6e;} .dw-verd .no{color:#c0392b;} .dw-verd .amb{color:#8a5c00;}
+
+/* ═══ U14a — the topology grid and the roles ═══ */
+.topo4{display:grid; grid-template-columns:repeat(4, minmax(0,1fr)); gap:8px;}
+.topo4 .box{background:#fff; border:2px solid #ccd3e8; border-radius:10px; padding:6px 9px 8px; font-size:.44em; line-height:1.38; text-align:left;}
+.topo4 .box .t{font-weight:bold; color:var(--navy); font-size:1.15em; margin-bottom:2px;}
+.topo4 .box .yes{color:#0d7a6e;} .topo4 .box .no{color:#c0392b;}
+.roles{display:grid; grid-template-columns:1fr 1fr; gap:12px;}
+.real{border:1.5px dashed #b9a6d9; border-radius:10px; padding:6px 11px; font-size:.5em; line-height:1.42; color:#3d2f66; background:#faf8fe; text-align:left;}
+.real b{color:#5a3fa0;}
+.baran{display:grid; grid-template-columns:1.3fr 1fr; gap:14px; align-items:start;}
+.baran img{width:100%; border-radius:10px; box-shadow:0 6px 18px rgba(0,0,0,.22);}
+</style>
+</head>
+<body>
+<div class="reveal"><div class="slides">
+
+<!-- ==================== H1 TITLE + OBJECTIVES ==================== -->
+<section>
+  <section class="dk" data-background-color="#151B3C">
+    <div class="bar" style="background:var(--accent1)"></div>
+    <div class="badges"><span class="bg bg-al">9618 §2.1 · Paper 1</span> <span class="bg bg-ig">0478 — not examined; the words U14b–d need</span></div>
+    <p style="font-size:.55em; color:var(--accent3); letter-spacing:.12em; margin-bottom:0;">COMPUTER SCIENCE · U14a · NETWORKS</p>
+    <h1 style="margin:.1em 0;">Twenty People and a Posting Board</h1>
+    <p style="font-size:.7em; margin-top:0;">What a network is, how far a LAN reaches, who may talk to whom — and the four shapes a room can be wired in</p>
+    <p style="font-size:.5em; color:#98a0c0; margin-top:2.2em;">
+      Navigation: <span class="mono">→</span> next idea &nbsp;·&nbsp; <span class="mono">↓</span> dig deeper
+      <span class="accent3">🕳️</span> &nbsp;·&nbsp; badges top-right show whose exam it's on
+    </p>
+    <p style="margin-top:1.6em;"><button id="obj-btn" onclick="Reveal.down()">🎯 objectives</button></p>
+
+</section>
+  <section class="dk" data-background-color="#151B3C">
+    <div class="bar" style="background:var(--accent3)"></div>
+    <div class="badges"><span class="bg bg-al">9618 §2.1</span></div>
+    <h2>🎯 Today you will be able to</h2>
+    <div class="rule"><strong class="accent1">1.</strong> Say what makes a network a <strong>LAN</strong> or a <strong>WAN</strong> in the scheme's sentences — area, ownership, transfer rate — and never by repeating the acronym</div>
+    <div class="rule"><strong class="accent1">2.</strong> Name the <strong>bus, star, mesh and hybrid</strong> topologies, trace <strong>one packet</strong> through each, draw a star the way the scheme marks it, and justify a topology for a room</div>
+    <div class="rule accent3"><strong class="accent3">3.</strong> Describe the roles of the devices in a <strong>client-server</strong> model for a given scenario, and the features and drawbacks of <strong>peer-to-peer</strong></div>
+    <div class="rule accent3"><strong class="accent3">4.</strong> Tell a <strong>thin client</strong> from a <strong>thick client</strong> by where the data and the processing live — and know why a converse pair scores once</div>
+  </section>
+</section>
+
+<!-- ==================== H2 HOOK: THIS ROOM'S OWN STAR ==================== -->
+<section class="lt" data-background-color="#F4F6FB">
+  <div class="bar" style="background:var(--accent1)"></div>
+  <div class="badges"><span class="bg bg-al">9618 §2.1</span> <span class="bg" style="background:rgba(23,179,163,.14); color:#0d7a6e;">▶ captured on a home Wi-Fi</span></div>
+  <h2>Every device in your home talks to <span class="accent1">exactly one box.</span></h2>
+  <div style="display:grid; grid-template-columns:1.1fr 1fr; gap:14px; align-items:start;">
+    <div class="cap"><span class="d">$ netstat -rn | grep default          (2026-09-12)</span>
+<span class="k">default</span>   <span class="g">192.168.220.1</span>   en0        <span class="d">← the one box: the router at the centre</span>
+
+<span class="d">$ arp -a                                 every device this laptop has talked to at home</span>
+? (192.168.220.1)    at 70:85:6c:<span class="d">xx:xx:xx</span>   <span class="d">← the router</span>
+? (192.168.220.4)    at 98:4a:6b:<span class="d">xx:xx:xx</span>
+? (192.168.220.21)   at 98:4a:6b:<span class="d">xx:xx:xx</span>
+? (192.168.220.40)   at c4:b2:5b:<span class="d">xx:xx:xx</span>
+? (192.168.220.54)   at 1c:ea:ac:<span class="d">xx:xx:xx</span>
+? (192.168.220.59)   at cc:4d:75:<span class="d">xx:xx:xx</span>
+? (192.168.220.60)   at 1c:ea:ac:<span class="d">xx:xx:xx</span>
+? (192.168.220.77)   at 8c:fd:49:<span class="d">xx:xx:xx</span>
+? (192.168.220.98)   at 3c:0f:02:<span class="d">xx:xx:xx</span>
+? (192.168.220.101)  at 7e:e1:a0:<span class="d">xx:xx:xx</span>
+? (192.168.220.112)  at 02:26:74:<span class="d">xx:xx:xx</span>   <span class="g">← this laptop</span>
+? (192.168.220.146)  at c0:35:32:<span class="d">xx:xx:xx</span>
+? (192.168.220.147)  at e2:53:cb:<span class="d">xx:xx:xx</span>
+? (192.168.220.185)  at 3e:02:b5:<span class="d">xx:xx:xx</span>
+? (192.168.220.198)  at 7c:4d:8f:<span class="d">xx:xx:xx</span>
+? (192.168.220.245)  at 7a:67:b6:<span class="d">xx:xx:xx</span>
+? (192.168.220.247)  at 32:c5:11:<span class="d">xx:xx:xx</span>
+<span class="d">… 17 devices, two numbers each: an IP address the router lent, a MAC address the factory burned in</span></div>
+    <div style="font-size:.52em;">
+      <div class="rule" style="margin-top:0;"><b>Two commands, one shape — captured on a home Wi-Fi.</b> The first asks the laptop where it sends anything it does not know how to deliver: <b>one address</b>, the router by the front door. The second lists every device it has exchanged a frame with in the last few minutes: seventeen of them — phones, a TV, a printer, a speaker — each with two numbers. Now the claim of the lesson: <b>none of these devices is wired to another. Every one is wired to the box at .1</b>, and the box is wired to all of them. <b>Your home is a star.</b> That shape has a name, and by minute thirty you will have drawn it the way the examiner wants, traced a packet through it, and said why a home chooses it.</div>
+      <div class="fragment rule accent1"><b>Two numbers per device.</b> The <b>IP address</b> (<span class="mono">192.168.220.112</span>) the router <em>lent</em> this laptop when it joined — U14c. The <b>MAC address</b> (<span class="mono">02:26:74:…</span>) the network card was <em>born with</em> — U14b. Tonight only the shape.</div>
+      <div class="fragment rule accent2"><b>Tonight, at home:</b> the same two commands on your family's Wi-Fi (<span class="mono">ipconfig</span> then <span class="mono">arp -a</span> on Windows). The number of devices is the number of people in the house, plus the TV, plus whatever else is listening — and every one of them is on its own cable-or-radio to the same box.</div>
+    </div>
+  </div>
+
+</section>
+
+<!-- ==================== H3 LAN AND WAN ==================== -->
+<section class="lt" data-background-color="#F4F6FB">
+  <div class="bar" style="background:var(--accent2)"></div>
+  <div class="badges"><span class="bg bg-al">9618 §2.1 — the characteristics of a LAN and a WAN</span></div>
+  <h2>LAN and WAN — <span class="accent2">the sentences, not the acronym</span></h2>
+  <div class="roles">
+    <div class="stages a"><div class="t">THE CLASSROOM'S LAN — N21/11 · J23/12 · a recent paper (the scheme's words)</div><ol><li>Covers a <b>small geographical area</b> — one room, one building, one site <span class="mp">[1]</span></li><li>The infrastructure is <b>privately owned</b> — the school's own cables, switches, access points; nothing leased, and the internet is not needed to send within the building <span class="mp">[1]</span></li><li>A <b>high data transfer rate</b> — say <em>rate</em>, not "faster" <span class="mp">[1]</span></li><li>Wired <em>or</em> wireless — "all LANs are wired" is a recent paper's misconception</li></ol><p style="margin:5px 0 0; color:#5b6488;"><b>Benefits are a different question</b> (J23/12): sharing files and data · sharing hardware and software · central management (backup, security). The report: benefits confused with characteristics, and "gives each computer internet access" — nothing in the question said internet.</p></div>
+    <div class="stages b"><div class="t">THE SCHOOL'S TWO SITES — A WAN (J23/13 · J25/12 · N24/13)</div><ol><li>Covers a <b>large geographical area</b> — two sites, a city, the world <span class="mp">[1]</span></li><li>Uses <b>external / public / leased</b> infrastructure — non-dedicated hardware, a telecoms company's lines <span class="mp">[1]</span></li><li>Connections are <b>often virtual</b> rather than physical; a <b>lower</b> transfer rate; harder to secure <span class="mp">[1]</span></li><li>A WAN is not "wireless" — the J25 misconception</li></ol><p style="margin:5px 0 0; color:#c0392b;"><b>A difference names both sides.</b> "A WAN covers a large area <em>and</em> a LAN a small one" scores; "a LAN is faster" does not — "the rate of transfer of data in a LAN is greater" does (J23 report).</p></div>
+  </div>
+  <div class="fragment real" style="margin-top:8px;"><b>Reality note — is the boundary blurring?</b> In practice, yes. A <b>VPN</b> makes a teacher's laptop at home behave as if it were on the school LAN, over the public internet; cloud services put the "server" a continent away while the app feels local; a campus Wi-Fi mesh stretches one LAN across a square kilometre. What still separates them — and what the scheme pays for — is <b>who owns the infrastructure</b> (yours, or leased from a telecoms company) and <b>how far it physically reaches</b>. A VPN is a WAN wearing a LAN's addresses, and the exam still calls it a WAN.</div>
+
+</section>
+
+<!-- ==================== H4 THE FOUR SHAPES (↓ cells) ==================== -->
+<section>
+  <section class="lt growslide" data-background-color="#F4F6FB">
+    <div class="bar" style="background:var(--accent1)"></div>
+    <div class="badges"><span class="bg bg-al">9618 §2.1 — bus, star, mesh, hybrid; how packets travel in each; justify a topology</span> <span class="bg" style="background:rgba(23,179,163,.14); color:#0d7a6e;">▶ live</span></div>
+    <h2>Four shapes, one packet — <span class="accent1">the posting board and the postman</span></h2>
+    <div id="rm-topo"></div>
+
+</section>
+  <section class="lt" data-background-color="#F4F6FB">
+    <div class="bar" style="background:var(--accent1)"></div>
+    <div class="badges"><span class="bg bg-al">9618 J24/11 Q8(a) — the tick table · N23/11 Q2(d) — star over bus · J25/12 Q6(d) — draw it</span></div>
+    <h2>The four, on the card — <span class="accent1">and what the scheme pays for each</span></h2>
+    <div><svg viewBox="0 0 960 300" xmlns="http://www.w3.org/2000/svg" font-family="Helvetica, Arial, sans-serif" font-size="12" style="width:96%; height:auto; display:block; margin:0 auto;">
+<text x="480" y="24" text-anchor="middle" fill="#888" font-weight="bold" font-size="15">Four topologies, and how a packet from A reaches D in each</text>
+<text x="130" y="52" text-anchor="middle" fill="#888" font-weight="bold">bus</text>
+<line x1="30" y1="150" x2="230" y2="150" stroke="#f59e0b" stroke-width="3"/>
+<line x1="55" y1="150" x2="55" y2="109" stroke="#888" stroke-width="1.5"/>
+<circle cx="55" cy="98" r="11" fill="rgba(136,136,136,0.12)" stroke="#f59e0b" stroke-width="1.5"/><text x="55" y="102" text-anchor="middle" fill="#f59e0b" font-size="11">A</text>
+<line x1="105" y1="150" x2="105" y2="109" stroke="#888" stroke-width="1.5"/>
+<circle cx="105" cy="98" r="11" fill="rgba(136,136,136,0.12)" stroke="#888" stroke-width="1.5"/><text x="105" y="102" text-anchor="middle" fill="#888" font-size="11">B</text>
+<line x1="155" y1="150" x2="155" y2="109" stroke="#888" stroke-width="1.5"/>
+<circle cx="155" cy="98" r="11" fill="rgba(136,136,136,0.12)" stroke="#888" stroke-width="1.5"/><text x="155" y="102" text-anchor="middle" fill="#888" font-size="11">C</text>
+<line x1="205" y1="150" x2="205" y2="109" stroke="#888" stroke-width="1.5"/>
+<circle cx="205" cy="98" r="11" fill="rgba(136,136,136,0.12)" stroke="#f59e0b" stroke-width="1.5"/><text x="205" y="102" text-anchor="middle" fill="#f59e0b" font-size="11">D</text>
+<text x="130" y="178" text-anchor="middle" fill="#888" font-size="11">one cable; A broadcasts, all hear,</text>
+<text x="130" y="192" text-anchor="middle" fill="#888" font-size="11">only D accepts; two talk at once</text>
+<text x="130" y="206" text-anchor="middle" fill="#888" font-size="11">= collision (CSMA/CD)</text>
+<text x="370" y="52" text-anchor="middle" fill="#888" font-weight="bold">star</text>
+<line x1="309.4" y1="95.7" x2="370.0" y2="132.0" stroke="#f59e0b" stroke-width="2.5"/>
+<line x1="430.6" y1="95.7" x2="370.0" y2="132.0" stroke="#888" stroke-width="1.5"/>
+<line x1="309.4" y1="169.2" x2="370.0" y2="132.0" stroke="#888" stroke-width="1.5"/>
+<line x1="430.6" y1="169.2" x2="370.0" y2="132.0" stroke="#f59e0b" stroke-width="2.5"/>
+<rect x="352" y="122" width="36" height="20" rx="3" fill="rgba(37,99,235,0.15)" stroke="#2563eb" stroke-width="1.5"/><text x="370" y="136" text-anchor="middle" fill="#2563eb" font-size="9">switch</text>
+<circle cx="300" cy="90" r="11" fill="rgba(136,136,136,0.12)" stroke="#f59e0b" stroke-width="1.5"/><text x="300" y="94" text-anchor="middle" fill="#f59e0b" font-size="11">A</text>
+<circle cx="440" cy="90" r="11" fill="rgba(136,136,136,0.12)" stroke="#888" stroke-width="1.5"/><text x="440" y="94" text-anchor="middle" fill="#888" font-size="11">B</text>
+<circle cx="300" cy="175" r="11" fill="rgba(136,136,136,0.12)" stroke="#888" stroke-width="1.5"/><text x="300" y="179" text-anchor="middle" fill="#888" font-size="11">C</text>
+<circle cx="440" cy="175" r="11" fill="rgba(136,136,136,0.12)" stroke="#f59e0b" stroke-width="1.5"/><text x="440" y="179" text-anchor="middle" fill="#f59e0b" font-size="11">D</text>
+<text x="370" y="205" text-anchor="middle" fill="#888" font-size="11">every node to one switch;</text>
+<text x="370" y="219" text-anchor="middle" fill="#888" font-size="11">A to switch to D, nobody else hears;</text>
+<text x="370" y="233" text-anchor="middle" fill="#888" font-size="11">switch dies, network dies</text>
+<text x="620" y="52" text-anchor="middle" fill="#888" font-weight="bold">mesh (full)</text>
+<line x1="561.0" y1="90.0" x2="679.0" y2="90.0" stroke="#888" stroke-width="1"/>
+<line x1="550.0" y1="101.0" x2="550.0" y2="164.0" stroke="#888" stroke-width="1"/>
+<line x1="559.4" y1="95.7" x2="680.6" y2="169.3" stroke="#f59e0b" stroke-width="2.5"/>
+<line x1="680.6" y1="95.7" x2="559.4" y2="169.3" stroke="#888" stroke-width="1"/>
+<line x1="690.0" y1="101.0" x2="690.0" y2="164.0" stroke="#888" stroke-width="1"/>
+<line x1="561.0" y1="175.0" x2="679.0" y2="175.0" stroke="#888" stroke-width="1"/>
+<circle cx="550" cy="90" r="11" fill="rgba(136,136,136,0.12)" stroke="#f59e0b" stroke-width="1.5"/><text x="550" y="94" text-anchor="middle" fill="#f59e0b" font-size="11">A</text>
+<circle cx="690" cy="90" r="11" fill="rgba(136,136,136,0.12)" stroke="#888" stroke-width="1.5"/><text x="690" y="94" text-anchor="middle" fill="#888" font-size="11">B</text>
+<circle cx="550" cy="175" r="11" fill="rgba(136,136,136,0.12)" stroke="#888" stroke-width="1.5"/><text x="550" y="179" text-anchor="middle" fill="#888" font-size="11">C</text>
+<circle cx="690" cy="175" r="11" fill="rgba(136,136,136,0.12)" stroke="#f59e0b" stroke-width="1.5"/><text x="690" y="179" text-anchor="middle" fill="#f59e0b" font-size="11">D</text>
+<text x="620" y="205" text-anchor="middle" fill="#888" font-size="11">every node to every other;</text>
+<text x="620" y="219" text-anchor="middle" fill="#888" font-size="11">A to D direct, or round via B or C;</text>
+<text x="620" y="233" text-anchor="middle" fill="#888" font-size="11">n(n−1)/2 cables — costly, robust</text>
+<text x="850" y="52" text-anchor="middle" fill="#888" font-weight="bold">hybrid</text>
+<line x1="770" y1="150" x2="840" y2="150" stroke="#f59e0b" stroke-width="3"/>
+<line x1="785" y1="150" x2="785" y2="109" stroke="#888" stroke-width="1.5"/>
+<circle cx="785" cy="98" r="11" fill="rgba(136,136,136,0.12)" stroke="#f59e0b" stroke-width="1.5"/><text x="785" y="102" text-anchor="middle" fill="#f59e0b" font-size="11">A</text>
+<line x1="825" y1="150" x2="825" y2="109" stroke="#888" stroke-width="1.5"/>
+<circle cx="825" cy="98" r="11" fill="rgba(136,136,136,0.12)" stroke="#888" stroke-width="1.5"/><text x="825" y="102" text-anchor="middle" fill="#888" font-size="11">B</text>
+<line x1="840" y1="150" x2="874" y2="150" stroke="#f59e0b" stroke-width="2.5"/>
+<rect x="874" y="141" width="28" height="18" rx="3" fill="rgba(37,99,235,0.15)" stroke="#2563eb" stroke-width="1.5"/>
+<line x1="902.0" y1="150.0" x2="922.0" y2="119.2" stroke="#888" stroke-width="1.5"/>
+<circle cx="928" cy="110" r="11" fill="rgba(136,136,136,0.12)" stroke="#888" stroke-width="1.5"/><text x="928" y="114" text-anchor="middle" fill="#888" font-size="11">C</text>
+<line x1="902.0" y1="150.0" x2="922.0" y2="180.8" stroke="#f59e0b" stroke-width="2.5"/>
+<circle cx="928" cy="190" r="11" fill="rgba(136,136,136,0.12)" stroke="#f59e0b" stroke-width="1.5"/><text x="928" y="194" text-anchor="middle" fill="#f59e0b" font-size="11">D</text>
+<text x="850" y="218" text-anchor="middle" fill="#888" font-size="11">a bus segment joined to a star:</text>
+<text x="850" y="232" text-anchor="middle" fill="#888" font-size="11">most real LANs are hybrids</text>
+<text x="480" y="280" text-anchor="middle" fill="#888" font-size="12">amber = the path A to D; 9618 asks you to trace it and to justify the choice — cost and cabling against robustness and collisions</text>
+</svg></div>
+    <div class="topo4" style="margin-top:6px;">
+      <div class="box"><div class="t">bus — the posting board</div>all devices to <b>one central cable</b> · every transmission is <b>broadcast</b>, only the addressed device keeps it · one at a time, so <b>collisions</b> · the cable fails, the network fails · cheap, hard to scale · <span class="no">✗ privacy: everyone hears</span></div>
+      <div class="box"><div class="t">star — the postman</div>all devices to <b>one central device</b> (a switch) · the sender sends to the switch, the switch <b>checks the destination address</b> and sends <b>only to the intended receiver</b> · <span class="yes">✓ no collisions, easy to add a node, one cable fault isolates one device</span> · <span class="no">✗ the switch is the single point of failure</span></div>
+      <div class="box"><div class="t">mesh — many roads</div>every device to <b>at least one other</b>, usually several · <b>multiple routes</b>; devices <b>relay</b> packets · <span class="yes">✓ a line fails and the rest keeps full function; no collisions</span> · <span class="no">✗ n(n−1)/2 cables — costly</span> · not "wireless": mesh is a shape</div>
+      <div class="box"><div class="t">hybrid — the school</div>any combination — stars joined by a backbone is nearly every real LAN · never asked on its own; it is what you draw when a scenario has two rooms</div>
+    </div>
+    <div class="fragment rule accent2" style="font-size:.5em; margin-top:6px;"><b>Drawing a star (J25/12, four marks):</b> <em>every device the stem lists</em> · <em>every one labelled</em> · <em>each connected directly to the switch, and to nothing else</em> · the internet device named. The J25 report: marks lost "not because they did not know how to draw a star topology, but because they omitted the labels or left out one or more devices". N23/12: "many diagrams incorrectly included other devices." The drawing check in the widget marks yours by exactly those lines.</div>
+    <div class="dig">⬇ dig: two cells — collisions counted, and what one cut costs each shape</div>
+
+</section>
+  <section class="lt" data-background-color="#F4F6FB">
+    <div class="bar" style="background:var(--accent1)"></div>
+    <div class="badges"><span class="bg bg-al">Python live — why your home (and the classroom) is a star</span></div>
+    <h2>Measured — <span class="accent1">why home is a star: collisions, and the price of a cut</span></h2>
+    <div style="display:grid; grid-template-columns:1fr 1fr; gap:10px; align-items:start;">
+      <div class="pycell tight pair"><script type="text/plain" class="pysrc">import random
+random.seed(7)
+SLOTS = 20                                      # one busy second of the classroom, cut into 20 moments
+def bus_collisions(n):                          # n devices on ONE cable; each picks a random moment to send
+    picks = [random.randrange(SLOTS) for _ in range(n)]
+    return sum(1 for s in set(picks) if picks.count(s) > 1)   # a moment two or more chose: a collision — both resend
+for n in (5, 10, 20, 40):
+    print("%2d devices | bus: %2d collisions in %d moments | star: 0 — each device has its own cable to the switch" % (n, bus_collisions(n), SLOTS))</script></div>
+      <div class="pycell tight pair"><script type="text/plain" class="pysrc">from collections import deque
+def links(n, topo):                             # devices 1..n and the server 0; a switch is "S" on the star
+    if topo == "bus":  return [(d, d + 1) for d in range(0, n)]              # one cable: server, then each device along it
+    if topo == "star": return [("S", d) for d in range(0, n + 1)]            # everyone to the switch, once
+    return [(a, b) for a in range(0, n + 1) for b in range(a + 1, n + 1)]    # mesh: every pair
+def reach_server(n, edges, cut):                # BFS from the server with one link removed
+    edges = [e for e in edges if e != cut]; seen = {0}; todo = deque([0])
+    while todo:
+        x = todo.popleft()
+        for a, b in edges:
+            for u, v in ((a, b), (b, a)):
+                if u == x and v not in seen: seen.add(v); todo.append(v)
+    return sum(1 for d in range(1, n + 1) if d in seen)
+for n in (4, 8, 20):
+    for topo in ("bus", "star", "mesh"):
+        e = links(n, topo); cut = e[n // 2] if topo == "bus" else e[1]   # cut the cable mid-way on the bus; one device's link otherwise
+        cables = 1 if topo == "bus" else len(e)
+        print("n=%2d %-4s | cables %3d | after one cut, %2d of %2d devices still reach the server" % (n, topo, cables, reach_server(n, e, cut), n))</script></div>
+    </div>
+    <div class="fragment rule accent1" style="font-size:.5em; margin-top:6px;"><b>Left:</b> twenty people writing on one board in one busy second — six moments with two writers; forty people, thirteen. A star has zero, because nobody shares a cable. <b>Right:</b> the cost of one cut — the bus loses half the room, the star loses one device, the mesh loses nobody — and the cables that buy it: 1, n + 1, n(n + 1)/2. Twenty devices: 210 cables for the mesh. That is the whole of "justify a topology for a given situation" — and why the box by your front door has one cable to everything: <b>home is a star</b> because nobody shares a cable and one broken lead loses one device.</div>
+
+</section>
+</section>
+
+<!-- ==================== H5 CLIENT-SERVER AND PEER-TO-PEER ==================== -->
+<section class="lt" data-background-color="#F4F6FB">
+  <div class="bar" style="background:var(--accent3)"></div>
+  <div class="badges"><span class="bg bg-al">9618 §2.1 — the client-server and peer-to-peer models; roles; justify for a situation</span></div>
+  <h2>Who asks, who answers — <span class="accent3">a server at the front, or twenty equals</span></h2>
+  <div class="roles">
+    <div class="stages c"><div class="t">CLIENT-SERVER — J24/11 Q5(a), the bank's app; J25/13 Q3(c), the browser game</div><ol><li><b>Name the server in the scenario</b>: the bank's server · the game's web server <span class="mp">[1]</span></li><li>Its role: <b>stores all the customer / game data</b>; <b>receives the requests</b>, <b>processes</b> them, sends the response <span class="mp">[1]</span></li><li><b>Name the client in the scenario</b>: the customer's smartphone running the app · the player's web browser — <em>a device or a program, never the person</em> <span class="mp">[1]</span></li><li>Its role: <b>sends requests</b>, waits, <b>displays the response</b> <span class="mp">[1]</span></li></ol><p style="margin:5px 0 0; color:#c0392b;">The J24 report: "'the server is the bank server and the client is the customer' is insufficient"; "many responses described the actions of the smartphone user." The J25 report: the browser is the client, "sometimes incorrectly identified as the server".</p></div>
+    <div class="stages b"><div class="t">PEER-TO-PEER — J21/11 Q4, Melinda and her friends</div><ol><li>All computers are of <b>equal status</b> — no central server <span class="mp">[1]</span></li><li>Each computer <b>provides access to its own resources and data</b> — the data is distributed <span class="mp">[1]</span></li><li>Each is <b>responsible for its own security</b> <span class="mp">[1]</span></li></ol><p style="margin:5px 0 0;"><b>Drawbacks need a reason (two marks each):</b> reduced security — <em>because there is no central management, and it is only as secure as the weakest computer</em> · no central backup — <em>if one computer's data is not backed up it is lost to all</em> · files are only available <em>while the computer that holds them is switched on</em>.</p><p style="margin:5px 0 0; color:#c0392b;">The J21 report: "just 'weak security' is not enough"; and "considerable confusion between a peer-to-peer network and a mesh topology" — a model is <em>who serves whom</em>; a topology is <em>how the cables run</em>.</p></div>
+  </div>
+  <div class="fragment rule accent3" style="font-size:.5em; margin-top:8px;"><b>The classroom decides.</b> The twenty computers and the server at the front are client-server: the server holds the files and the accounts, the twenty ask. Two friends sharing a folder over the Wi-Fi are peers. The same twenty computers, wired as a star, could run either model — the shape and the model are two different questions, and the exam asks them separately.</div>
+
+</section>
+
+<!-- ==================== H6 THIN AND THICK ==================== -->
+<section class="lt" data-background-color="#F4F6FB">
+  <div class="bar" style="background:var(--accent2)"></div>
+  <div class="badges"><span class="bg bg-al">9618 §2.1 — thin-client and thick-client and the differences between them</span></div>
+  <h2>Thin or thick — <span class="accent2">where the data lives, where the work is done</span></h2>
+  <div class="roles">
+    <div class="stages a"><div class="t">THIN CLIENT — J24/12 Q3(b) (the exam markers) · J23/13 Q2(c) · a recent paper</div><ol><li><b>Data is not stored on the client</b> — the papers stay on the server</li><li>The client is <b>reliant on access to the server</b> / <b>the connection</b> — the marker cannot mark when the server is down</li><li>It needs <b>few local resources</b> — a low-specification laptop will do</li><li>It performs <b>minimal processing</b> — sends requests, displays results; the server does the work</li></ol><p style="margin:5px 0 0; color:#c0392b;"><b>The table's second column is the mark:</b> "data is not stored on the client" scores nothing until it says <em>the exam papers are stored on the server, not on the examiner's computer</em>. And the <b>converse-pair rule</b>: "the server does most of the processing" then "the client does very little" is <em>one</em> characteristic, scored once.</p></div>
+    <div class="stages b"><div class="t">THICK CLIENT — J23/12 Q1(e)</div><ol><li>The client does <b>most of its own processing</b>, independently</li><li>Its <b>resources are installed locally</b> — the software, the storage</li><li>The server performs <b>minimal / some</b> processing for it</li><li>It works when the network does not</li></ol><p style="margin:5px 0 0;">The J23 report: a thick-client answer needs "at least one statement about the role of the client <em>and</em> another about the role of the server"; "many responses were too vague and could apply to any client-server model."</p><p style="margin:5px 0 0;"><b>The classroom:</b> twenty thin clients are cheap, centrally managed, and dead when the server is; twenty thick clients cost more, need updating one by one, and keep working when the server goes down.</p></div>
+  </div>
+  <div class="fragment real" style="margin-top:8px;"><b>Reality note — are thin and thick blurring?</b> Yes. A browser app that caches and works offline, a phone that runs its own AI models but keeps the data in the cloud, a console game whose world lives on a server: most modern software sits between the two ends. The exam's pairs are the <b>two ends of a spectrum</b>, and the marks are for saying which end a given system leans to and why — <em>where is the data, where is the processing, what dies without the connection</em>.</div>
+
+</section>
+
+<!-- ==================== H7 THE WIDGET + THE DRAWING CHECK ==================== -->
+<section>
+  <section class="lt growslide" data-background-color="#F4F6FB">
+    <div class="bar" style="background:var(--accent1)"></div>
+    <div class="badges"><span class="bg bg-al">9618 §2.1 — the room, free play</span> <span class="bg" style="background:rgba(23,179,163,.14); color:#0d7a6e;">▶ live</span></div>
+    <h2>The room — <span class="accent1">four shapes, any number of people, a pair of scissors</span></h2>
+    <div id="rm-host"></div>
+    <div class="dig">⬇ dig: the drawing check — the exam's star, marked by the scheme's four lines</div>
+
+</section>
+  <section class="lt growslide" data-background-color="#F4F6FB">
+    <div class="bar" style="background:var(--accent2)"></div>
+    <div class="badges"><span class="bg bg-al">9618 June 2025 P12 Q6(d) — draw the star; the four marks and the two reports</span> <span class="bg" style="background:rgba(23,179,163,.14); color:#0d7a6e;">▶ live</span></div>
+    <h2>The drawing check — <span class="accent2">every device, every label, only to the switch</span></h2>
+    <div id="dw-host"></div>
+
+</section>
+</section>
+
+<!-- ==================== H8 🕳 BARAN ==================== -->
+<section class="lt" data-background-color="#F4F6FB">
+  <div class="bar" style="background:var(--accent3)"></div>
+  <div class="badges"><span class="bg" style="background:rgba(242,181,60,.15); color:#B8860B; border:1.5px solid var(--accent3);">🕳️ beyond the exam</span></div>
+  <h2>🕳 Three drawings, 1964 — <span class="accent3">the shape that survives</span></h2>
+  <div class="baran">
+    <div><img src="_img/u14a-baran-comic.png" alt="a 1964 RAND memorandum page: centralized, decentralized and distributed networks"><p style="font-size:.42em; color:#8890b5; margin:4px 0 0;">Paul Baran, RAND Corporation, <em>On Distributed Communications</em>, 1964 — the figure every network textbook still redraws.</p></div>
+    <div style="font-size:.52em;">
+      <div class="rule" style="margin-top:0;"><b>A star, a hybrid of stars, a mesh.</b> Baran's question was not a classroom's: which shape of communications network survives an attack on its centre? The centralised one dies with its centre; the decentralised one loses a region; the distributed one — every node joined to three or four neighbours, messages cut into blocks and relayed by whichever road is still standing — keeps working with half its nodes gone. The ARPANET's first four nodes (1969) were wired as his mesh, and the internet still is: a mesh of meshes.</div>
+      <div class="fragment rule accent3"><b>And the classroom chose the drawing he rejected.</b> A star: one switch, twenty cables, a single point of failure — chosen because nobody is bombing the classroom, a switch costs fifty pounds, and 210 cables would not. That is the tick table's last two rows read as history: <em>robust if any line fails</em> is the mesh, and it is why the internet has no centre to strike; <em>one central device</em> is the star, and it is why your room has one.</div>
+      <div class="fragment rule accent2"><b>The message cut into blocks</b> is the other half of Baran's paper — the packet, and the switching of packets, which the A-level teaches in A12. Tonight: the shape.</div>
+    </div>
+  </div>
+
+</section>
+
+<!-- ==================== H9 GAME ==================== -->
+<section class="lt growslide" data-background-color="#F4F6FB">
+  <div class="bar" style="background:var(--accent3)"></div>
+  <div class="badges"><span class="bg bg-al">🎮 24 marks · unspent · 9618 only</span></div>
+  <div class="g-wrap">
+    <div class="g-head">
+      <span class="g-stage" id="g-stage"></span>
+      <span class="g-score" id="g-score"></span>
+      <div class="g-prog" id="g-prog"></div>
+      <span class="g-navwrap"><button id="g-back" class="g-skip" title="back to the previous stage">&larr; back</button><button id="g-skip" class="g-skip" title="skip to the next stage">next &rarr;</button></span>
+    </div>
+    <div class="g-q" id="g-q"></div>
+    <div id="g-body"></div>
+    <div class="g-say" id="g-say">&nbsp;</div>
+  </div>
+
+</section>
+
+<!-- ==================== H10 EXAM LENS ==================== -->
+<section class="lt" data-background-color="#F4F6FB">
+  <div class="bar" style="background:var(--accent2)"></div>
+  <div class="badges"><span class="bg bg-al">9618 — what Paper 1 actually does, 2021–2026</span> <span class="bg bg-ig">0478 — never asked</span></div>
+  <h2>How the papers actually ask this</h2>
+  <div class="two-col" style="font-size:.52em; margin-top:6px;">
+    <div>
+      <div class="rule accent1" style="margin-top:0;"><strong class="accent1">9618 — every sitting, one LAN scenario.</strong> Twenty question-parts on this slice, 2021–2025. Since June 2023 the shape is fixed: a company / a school / a business has a LAN — <b>characteristics or benefits</b> [2] · <b>draw the star</b> [2–4] (labels, every device, only to the switch) · <b>how packets travel</b> through the switch [2–3] · <b>thin or thick client</b> [2–4], often applied to the scenario's software. Around it: <b>LAN or WAN with justification</b> [3], <b>two differences</b> [2], the <b>tick table</b> (J24/11), <b>roles in a client-server scenario</b> [4] (the bank, the browser game), <b>star over bus</b> with a reason [2], a <b>mesh described</b> [2]. Peer-to-peer last asked in 2021.</div>
+    </div>
+    <div>
+      <div class="rule accent3" style="margin-top:0;"><strong class="accent3">Where the marks die — the reports, every year.</strong> "A LAN covers a local area" (the acronym) · a second difference too vague ("faster") · the diagram missing a device or a label, or with a hub the stem never mentioned · a star drawn as a bus or a mesh · "package" · thin and thick confused, and the converse pair claimed twice · the <em>user</em> described instead of the devices · a P2P drawback that any network has · "a WAN is wireless".</div>
+      <div class="rule" style="font-size:.95em;"><strong>Never asked:</strong> the hybrid topology on its own · the internet vs the WWW since 2021 · a topology <em>chosen</em> from scratch for a scenario with cost figures. <strong>0478:</strong> none of this slice — no LAN/WAN, no topology, no client-server on the 2023 syllabus, and nothing asked 2021–2026; its network questions are U14b's hardware and U14c's internet.</div>
+    </div>
+  </div>
+  <div class="fragment rule accent2" style="font-size:.52em;"><strong class="accent2">The four that decide the marks:</strong> <b>say the rule, not the acronym</b> · <b>a difference names both sides</b> · <b>a device, not a user</b> · <b>a converse pair scores once</b>.</div>
+
+</section>
+
+<!-- ==================== H11 VOCAB ==================== -->
+<section class="lt" data-background-color="#F4F6FB">
+  <div class="bar" style="background:var(--accent1)"></div>
+  <div class="badges"><span class="bg bg-al">9618 §2.1</span></div>
+  <h2>The words</h2>
+  <table class="vtab" style="font-size:.84em;">
+    <tr><th>term</th><th>中文</th><th>one line that earns the mark</th></tr>
+    <tr><td><b>LAN</b></td><td>局域网</td><td>covers a small geographical area, on privately owned infrastructure, at a high data transfer rate — wired or wireless</td></tr>
+    <tr><td><b>WAN</b></td><td>广域网</td><td>covers a large geographical area over external / leased infrastructure; connections often virtual; the internet is the largest</td></tr>
+    <tr><td><b>bus · star · mesh · hybrid</b></td><td>总线 · 星型 · 网状 · 混合</td><td>one shared cable (broadcast, collisions) · every device to one switch (checks the address, sends to one) · every device to several others (multiple routes) · any combination</td></tr>
+    <tr><td><b>switch</b></td><td>交换机</td><td>the star's centre: receives a packet, checks its destination address, sends it only to the intended receiver</td></tr>
+    <tr><td><b>client-server</b></td><td>客户端-服务器</td><td>the server stores the data and processes requests; the client sends requests and displays the response — name both in the scenario</td></tr>
+    <tr><td><b>peer-to-peer</b></td><td>对等网络</td><td>all computers of equal status; each provides its own resources and secures itself; no central server, so no central backup</td></tr>
+    <tr><td><b>thin client</b></td><td>瘦客户端</td><td>stores no data, does minimal processing, needs few resources, and nothing works without the server</td></tr>
+    <tr><td><b>thick client</b></td><td>胖客户端</td><td>does most of its own processing with resources installed locally; the server does little; it works when the network does not</td></tr>
+  </table>
+</section>
+
+<!-- ==================== H12 CLOSER ==================== -->
+<section class="dk" data-background-color="#151B3C">
+  <div class="bar" style="background:var(--accent1)"></div>
+  <div class="badges"><span class="bg bg-al">9618 §2.1</span></div>
+  <h2>A network is a set of devices, <span class="accent1">and the rule for who may talk to whom</span></h2>
+  <div class="rule" style="font-size:.62em;"><strong>Tonight's rules were the shape and the model:</strong> a posting board or a postman; a server at the front or twenty equals; a thin client that dies with the server or a thick one that keeps working. Every question on the paper is one of those rules with a scenario on it — and the mark is for the rule, said as the scheme says it.</div>
+  <div class="fragment rule accent3" style="font-size:.62em;"><strong class="accent3">🍦 The Switch</strong> — <span class="mono">challenge_U14a_TheSwitch.py</span>. <em>With a pen first:</em> fill a switch's table for six frames — learn the source, send a known destination out of one port, flood an unknown one. Then write <span class="mono">Switch.receive</span>; the judge checks the floods stop as the table fills, and the scoop puts the same six frames on a bus and counts the collisions.</div>
+  <div class="fragment rule accent2" style="font-size:.62em;"><strong class="accent2">Next lesson:</strong> the wire itself — copper, glass and air, and what each can carry how far; the switch's cousin the <strong>router</strong>; the number the network card was born with; and what happens on a posting board when two people write at once. <strong>U14b: the wire, the box, and the collision.</strong></div>
+
+</section>
+
+</div></div>
+
+<button id="fs-btn" title="fullscreen">⛶</button>
+<button id="llmchip">⚡ no reader — click for help</button>
+<div id="llmhelp"><span class="x" id="llmhelp-x">✕</span><b>Live marking needs the marking server.</b><br>
+Two steps, on the teacher's Mac:<br>1. open the <b>CS_Materials</b> folder<br>2. double-click <b>Start-LLM-Marking.command</b><br>
+This chip lights up by itself a few seconds after the server starts — no reload needed. Without it, the pattern marks still work; the reader adds the marker that reads for <i>meaning</i> — and photos of handwritten answers need it too.</div>
+<div id="py-chip">🐍 waking Python…</div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/reveal.js/4.6.1/reveal.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/reveal.js/4.6.1/plugin/notes/notes.min.js"></script>
+<script src="https://cdn.jsdelivr.net/pyodide/v0.26.4/full/pyodide.js"></script>
+<script>
+/* ===== Python runtime (Pyodide) — the audited house harness ===== */
+var pyPromise=null, pyBusy=false, currentOut=null, activeInput=null;
+function setRunButtons(e,l){document.querySelectorAll('.pyrun').forEach(function(b){b.disabled=!e;b.textContent=e?'▶ Run':(l||'… running');});}
+window.__pyInput=function(p){return new Promise(function(res,rej){var o=currentOut;if(!o){res('');return;}
+  var row=document.createElement('span'),lbl=document.createElement('span');lbl.className='pyin-lbl';lbl.textContent=p;
+  var inp=document.createElement('input');inp.className='pyin';inp.setAttribute('autocomplete','off');inp.spellcheck=false;
+  row.appendChild(lbl);row.appendChild(inp);o.appendChild(row);activeInput={row:row,reject:rej};
+  setTimeout(function(){inp.focus();},60);
+  inp.addEventListener('keydown',function(ev){if(ev.key==='Enter'){ev.stopPropagation();var v=inp.value;row.remove();activeInput=null;res(v);}});});};
+function stopPy(){if(activeInput){var r=activeInput.reject;activeInput.row.remove();activeInput=null;r(new Error('__pyStop__'));}}
+function bootPython(){
+  if(pyPromise) return pyPromise;
+  pyPromise=loadPyodide().then(function(py){
+    py.runPython("import builtins, js\n"+
+      "async def __ainput(prompt=''):\n"+
+      "    v = await js.window.__pyInput(str(prompt))\n"+
+      "    v = '' if v is None else str(v)\n"+
+      "    print(str(prompt) + v)\n"+
+      "    return v\n"+
+      "def _input_fallback(prompt=''):\n"+
+      "    v = js.window.prompt(str(prompt))\n"+
+      "    v = '' if v is None else str(v)\n"+
+      "    print(str(prompt) + v)\n"+
+      "    return v\n"+
+      "builtins.input = _input_fallback\n"+
+      "builtins.__ainput = __ainput\n");
+    var c=document.getElementById('py-chip'); c.textContent='🐍 Python ready'; c.className='ready';
+    if(!pyBusy) setRunButtons(true);
+    return py;});
+  return pyPromise;
+}
+function runPy(code,outEl,cb){
+  if(pyBusy) return;
+  pyBusy=true; setRunButtons(false); currentOut=outEl;
+  outEl.style.display='block'; outEl.className='pyout'; outEl.textContent='';
+  var crashed=false,errLine='',saw=false;
+  bootPython().then(function(py){
+    function emit(s){saw=true;outEl.appendChild(document.createTextNode(s+'\n'));}
+    py.setStdout({batched:emit}); py.setStderr({batched:emit});
+    var src=code.replace(/\binput\s*\(/g,'await __ainput(');
+    var ns=py.toPy({});
+    return py.runPythonAsync(src,{globals:ns}).catch(function(e){
+      crashed=true;
+      var ls=String(e.message||e).trim().split('\n').filter(function(l){return l.trim();});
+      errLine=ls[ls.length-1]||'Error';
+      if(String(e.message||e).indexOf('__pyStop__')!==-1) errLine='__stopped__';
+    }).finally(function(){ns.destroy();});
+  }).then(function(){
+    if(activeInput){activeInput.row.remove();activeInput=null;}
+    if(!saw&&!crashed) outEl.textContent='(no output)';
+    if(crashed){var sp=document.createElement('span');sp.className='crash';
+      sp.textContent=(errLine==='__stopped__')?'⏹ stopped':'💥 '+errLine; outEl.appendChild(sp);}
+    pyBusy=false; setRunButtons(true); currentOut=null; if(cb) cb(crashed);
+  });
+}
+function initPyCells(){
+  document.querySelectorAll('.pycell').forEach(function(cell){
+    var srcEl=cell.querySelector('.pysrc');
+    var code=srcEl?srcEl.textContent.replace(/^\n/,'').replace(/\s+$/,''):'';
+    var locked=cell.getAttribute('data-locked')==='1';
+    cell.innerHTML='';
+    var bar=document.createElement('div'); bar.className='pybar';
+    var dots=document.createElement('div'); dots.className='pydots';
+    ['#F0655B','#F2B53C','#17B3A3'].forEach(function(c){var i=document.createElement('i');i.style.background=c;dots.appendChild(i);});
+    bar.appendChild(dots);
+    var run=document.createElement('button'); run.className='pyrun'; run.textContent='⏳ waking…'; run.disabled=true; bar.appendChild(run);
+    if(locked){var lk=document.createElement('button');lk.className='pylock';lk.textContent='🔓 investigate';bar.appendChild(lk);}
+    var stp=document.createElement('button'); stp.className='pylock'; stp.textContent='⏹';
+    stp.title='stop a program waiting for input'; stp.style.padding='3px 9px';
+    stp.addEventListener('click',stopPy); bar.appendChild(stp);
+    var st=document.createElement('span'); st.className='pystate'; st.textContent=locked?'locked — predict first':'editable'; bar.appendChild(st);
+    var ta=document.createElement('textarea'); ta.className='pyta'; ta.value=code;
+    ta.rows=Math.max(2,code.split('\n').length); ta.spellcheck=false; if(locked) ta.readOnly=true;
+    var out=document.createElement('pre'); out.className='pyout'; out.style.display='none';
+    cell.appendChild(bar); cell.appendChild(ta); cell.appendChild(out);
+    run.addEventListener('click',function(){runPy(ta.value,out, cell.getAttribute('data-log')?function(){hookLog(out);}:null);});
+    if(locked){bar.querySelector('.pylock').addEventListener('click',function(){
+      ta.readOnly=false; st.textContent='editable — investigate!'; this.style.display='none'; ta.focus();});}
+  });
+  bootPython();
+}
+function autoSizePyTextareas(scope){
+  (scope||document).querySelectorAll('.pyta').forEach(function(ta){
+    ta.style.height='auto'; ta.style.height=(ta.scrollHeight+4)+'px';});
+}
+/* Tab must INDENT in py-cells (house rule) */
+document.addEventListener('keydown',function(e){
+  var t=e.target;
+  if(e.key!=='Tab'||!t||!t.matches||!t.matches('textarea.pyta')) return;
+  if(t.readOnly) return;
+  e.preventDefault(); e.stopPropagation();
+  if(e.shiftKey){
+    var ls=t.value.lastIndexOf('\n',t.selectionStart-1)+1,n=0;
+    while(n<4&&t.value.charAt(ls+n)===' ')n++;
+    if(n)t.setRangeText('',ls,ls+n,'preserve');
+  }else{t.setRangeText('    ',t.selectionStart,t.selectionEnd,'end');}
+},true);
+
+</script>
+<script>
+var G = {i:0, score:0, locked:false, earned:{}, llmBusy:false};
+
+function gEl(id){ return document.getElementById(id); }
+function gAwardAt(idx, n){
+  G.earned[idx] = n;
+  var t = 0;
+  for(var k in G.earned) if(G.earned.hasOwnProperty(k)) t += G.earned[k];
+  G.score = t;
+  var sc = gEl('g-score');
+  if(sc) sc.textContent = G.score > 0 ? ('score ' + G.score) : '';
+}
+function gAward(n){ gAwardAt(G.i, n); }
+
+/* an arrow may be typed as ←, <- or = ; normalise before the regexes look */
+function normPseudo(t){ return String(t||'').replace(/<-|:=/g, '←').replace(/−|–/g, '-'); }
+
+
+
+
+
+
+
+
+
+
+
+
+
+/* ═══ the room — twenty people and a posting board; four shapes, one packet ═══ */
+var RM_INST = {};
+function rmMake(hostId, opt){
+  var host = document.getElementById(hostId); if(!host) return;
+  opt = opt || {};
+  var I = {id:hostId, topo:opt.topo || 'star', n:opt.n || 8, cut:{}, sel:null, mode:'send', collisions:0, sent:0, timer:null, opt:opt, hot:{}, hear:{}, keep:null};
+  RM_INST[hostId] = I;
+  var topos = opt.topos || ['bus','star','mesh','hybrid'], ns = opt.ns || [4, 8, 20];
+  var bar = '<div class="fd-bar" style="justify-content:flex-start; flex-wrap:wrap; gap:4px;">';
+  if(topos.length > 1) bar += topos.map(function(t){ return '<button class="fd-btn" id="' + hostId + '-T-' + t + '" onclick="rmTopo(\'' + hostId + '\',\'' + t + '\')">' + t + '</button>'; }).join('') + '<span class="fd-sep"></span>';
+  if(ns.length > 1) bar += ns.map(function(k){ return '<button class="fd-btn" id="' + hostId + '-N-' + k + '" onclick="rmN(\'' + hostId + '\',' + k + ')">' + k + ' devices</button>'; }).join('') + '<span class="fd-sep"></span>';
+  bar += '<button class="fd-btn go" id="' + hostId + '-M-send" onclick="rmMode(\'' + hostId + '\',\'send\')">send: click a sender, then a receiver</button>'
+       + '<button class="fd-btn" onclick="rmAll(\'' + hostId + '\')">everyone sends at once</button>'
+       + '<button class="fd-btn cut" id="' + hostId + '-M-cut" onclick="rmMode(\'' + hostId + '\',\'cut\')">cut: click a cable</button>'
+       + '<button class="fd-btn" onclick="rmReset(\'' + hostId + '\')">reset</button></div>';
+  host.innerHTML = bar + '<div class="rm-main"><div><svg class="rm-svg" id="' + hostId + '-svg" viewBox="0 0 100 60"></svg></div>'
+    + '<div class="rm-side"><div class="rm-box"><div class="t">THE ROOM</div><div class="rm-stat" id="' + hostId + '-stat"></div></div>'
+    + '<div class="rm-say" id="' + hostId + '-say"></div></div></div>';
+  rmBuild(I); rmDraw(I);
+}
+function rmEl(I, s){ return document.getElementById(I.id + '-' + s); }
+function rmTopo(id, t){ var I = RM_INST[id]; I.topo = t; rmReset(id); }
+function rmN(id, k){ var I = RM_INST[id]; I.n = k; rmReset(id); }
+function rmMode(id, m){ var I = RM_INST[id]; I.mode = m; I.sel = null; rmDraw(I); rmSay(I, m === 'cut' ? 'Click a cable to cut it (click again to mend). The switch can be cut too: click it. Red devices can no longer reach the server.' : 'Click a sender, then a receiver.'); }
+function rmReset(id){ var I = RM_INST[id]; I.cut = {}; I.sel = null; I.collisions = 0; I.sent = 0; I.hot = {}; I.hear = {}; I.keep = null; rmBuild(I); rmDraw(I); rmSay(I, rmIntro(I)); }
+function rmIntro(I){ return {bus:'<b>Bus — the posting board.</b> One cable. Every message goes on the board; everyone reads it; only the one it is addressed to keeps it. Two people writing at once make a mess: a <b>collision</b>.',
+  star:'<b>Star — the postman.</b> Every device has its own cable to the switch. The sending device sends the packet to the switch; the switch reads the destination address and sends it <b>only to the intended receiver</b>.',
+  mesh:'<b>Mesh — many roads.</b> Every device connected to several others (here: all). Multiple routes: cut a cable and the packet goes round.',
+  hybrid:'<b>Hybrid — the school.</b> Two stars joined by a backbone. Most real LANs are one.'}[I.topo]; }
+function rmBuild(I){
+  var n = I.n, nodes = {}, links = [];
+  function ell(names, cx, cy, rx, ry, start){ names.forEach(function(nm, i){ var a = start + i * 2 * Math.PI / names.length; nodes[nm] = [cx + rx * Math.cos(a), cy + ry * Math.sin(a)]; }); }
+  var devs = []; for(var i = 1; i <= n; i++) devs.push('D' + i);
+  if(I.topo === 'bus'){
+    var all = ['Srv'].concat(devs), gap = 92 / (all.length - 1 || 1);
+    all.forEach(function(nm, i){ nodes[nm] = [4 + i * gap, (i % 2 ? 50 : 24)]; links.push([nm, 'BUS']); });
+    I.busY = 37;
+  } else if(I.topo === 'star'){
+    nodes['Sw'] = [50, 31]; ell(['Srv'].concat(devs), 50, 31, 44, 25, -Math.PI / 2);
+    ['Srv'].concat(devs).forEach(function(nm){ links.push([nm, 'Sw']); });
+  } else if(I.topo === 'mesh'){
+    var all2 = ['Srv'].concat(devs); ell(all2, 50, 31, 44, 25, -Math.PI / 2);
+    for(var a = 0; a < all2.length; a++) for(var b = a + 1; b < all2.length; b++) links.push([all2[a], all2[b]]);
+  } else {
+    nodes['Sw1'] = [26, 31]; nodes['Sw2'] = [74, 31];
+    var left = ['Srv'].concat(devs.slice(0, Math.ceil(n / 2))), right = devs.slice(Math.ceil(n / 2));
+    ell(left, 26, 31, 20, 25, -Math.PI / 2); ell(right, 74, 31, 20, 25, -Math.PI / 2);
+    left.forEach(function(nm){ links.push([nm, 'Sw1']); }); right.forEach(function(nm){ links.push([nm, 'Sw2']); }); links.push(['Sw1', 'Sw2']);
+  }
+  I.nodes = nodes; I.links = links; I.devs = devs;
+}
+function rmKey(a, b){ return a < b ? a + '|' + b : b + '|' + a; }
+function rmAdj(I){ var adj = {}; Object.keys(I.nodes).forEach(function(k){ adj[k] = []; }); if(I.topo === 'bus'){ adj['BUS'] = []; }
+  I.links.forEach(function(l){ if(I.cut[rmKey(l[0], l[1])]) return; if(I.cut[l[0]] || I.cut[l[1]]) return; if(!adj[l[0]]) adj[l[0]] = []; if(!adj[l[1]]) adj[l[1]] = []; adj[l[0]].push(l[1]); adj[l[1]].push(l[0]); }); return adj; }
+function rmPath(I, a, b){ var adj = rmAdj(I), prev = {}; prev[a] = null; var q = [a];
+  while(q.length){ var u = q.shift(); if(u === b) break; (adj[u] || []).forEach(function(v){ if(!(v in prev)){ prev[v] = u; q.push(v); } }); }
+  if(!(b in prev)) return null; var p = [b]; while(prev[p[0]] !== null) p.unshift(prev[p[0]]); return p; }
+function rmReach(I){ var adj = rmAdj(I), seen = {Srv:1}, q = ['Srv']; while(q.length){ var u = q.shift(); (adj[u] || []).forEach(function(v){ if(!seen[v]){ seen[v] = 1; q.push(v); } }); } return seen; }
+function rmCables(I){ return I.topo === 'bus' ? 1 : I.links.length; }
+function rmClickNode(id, nm){
+  var I = RM_INST[id];
+  if(I.mode === 'cut'){ if(nm === 'Sw' || nm === 'Sw1' || nm === 'Sw2'){ I.cut[nm] = !I.cut[nm]; rmDraw(I); var r = rmReach(I), lost = I.devs.filter(function(d){ return !r[d]; }); rmSay(I, (I.cut[nm] ? '<b>The switch is dead.</b> ' : 'The switch is back. ') + (lost.length ? '<span class="bad">' + lost.length + ' of ' + I.devs.length + ' devices cannot reach the server</span> — the star\'s single point of failure.' : 'Everyone reaches the server.')); } return; }
+  if(nm === 'Sw' || nm === 'Sw1' || nm === 'Sw2') return;
+  if(!I.sel){ I.sel = nm; I.hot = {}; I.hear = {}; I.keep = null; rmDraw(I); rmSay(I, '<b>' + nm + '</b> will send. Click the receiver.'); return; }
+  if(I.sel === nm){ I.sel = null; rmDraw(I); return; }
+  rmSend(id, I.sel, nm); I.sel = null;
+}
+function rmSend(id, a, b){
+  var I = RM_INST[id]; I.hot = {}; I.hear = {}; I.keep = null; I.sent++;
+  if(I.topo === 'bus'){
+    if(I.cut['BUS']){ rmSay(I, '<span class="bad">The cable is cut</span> — the posting board is gone; nobody can send anything.'); rmDraw(I); return {ok:false}; }
+    I.hot['BUS'] = 1; Object.keys(I.nodes).forEach(function(k){ if(k !== a) I.hear[k] = 1; }); I.keep = b;
+    rmSay(I, '<b>' + a + ' → ' + b + ' on the bus:</b> the packet is <b>broadcast</b> on the one cable; <b>every</b> device hears it (' + (Object.keys(I.nodes).length - 1) + ' of them); only <b>' + b + '</b>, whose address it carries, keeps it. Nobody else was meant to hear — a <span class="amb">privacy cost</span>; and while it is on the cable, nobody else may send.');
+    rmDraw(I); return {ok:true, hops:['BUS']};
+  }
+  var p = rmPath(I, a, b);
+  if(!p){ rmSay(I, '<span class="bad">No route from ' + a + ' to ' + b + '</span> — the cut has split the network.'); rmDraw(I); return {ok:false}; }
+  for(var i = 0; i + 1 < p.length; i++) I.hot[rmKey(p[i], p[i + 1])] = 1;
+  I.keep = b;
+  var msg;
+  if(I.topo === 'star') msg = '<b>' + a + ' → ' + b + ' on the star:</b> ' + a + ' sends the packet <b>to the switch</b> · the switch <b>checks the destination address</b> · and sends it <b>only to ' + b + '</b>. Nobody else hears it; nobody else\'s cable is busy.';
+  else if(I.topo === 'mesh') msg = '<b>' + a + ' → ' + b + ' on the mesh:</b> ' + (p.length === 2 ? 'a <b>direct</b> cable — one hop.' : 'the direct cable is cut, so the packet is <b>relayed</b>: ' + p.join(' → ') + ' (' + (p.length - 1) + ' hops). Multiple routes: that is what the mesh buys.');
+  else msg = '<b>' + a + ' → ' + b + ' on the hybrid:</b> ' + p.join(' → ') + ' — ' + (p.length > 3 ? 'across the backbone between the two switches.' : 'inside one star.');
+  rmSay(I, msg); rmDraw(I); return {ok:true, hops:p};
+}
+function rmAll(id){
+  var I = RM_INST[id]; I.hot = {}; I.hear = {}; I.keep = null; I.sel = null; var n = I.devs.length;
+  if(I.topo === 'bus'){ I.collisions += n - 1; I.hot['BUS'] = 1; Object.keys(I.nodes).forEach(function(k){ I.hear[k] = 1; });
+    rmSay(I, '<b>All ' + n + ' send at once on the bus:</b> one cable, one message at a time — <span class="bad">' + (n - 1) + ' collide</span> and must wait a random time and try again (Ethernet\'s rule, next lesson). Total so far: <b>' + I.collisions + ' collisions</b>.'); }
+  else { I.links.forEach(function(l){ if(l[0] !== 'BUS' && !I.cut[rmKey(l[0], l[1])]) I.hot[rmKey(l[0], l[1])] = 1; });
+    rmSay(I, '<b>All ' + n + ' send at once on the ' + I.topo + ':</b> each packet is on its own cable to the switch' + (I.topo === 'mesh' ? 'es and cables' : '') + ' — <b>0 collisions</b>' + (I.topo === 'star' ? '; the switch queues them and delivers each to one receiver.' : '.')); }
+  rmDraw(I);
+}
+function rmClickLink(id, a, b){
+  var I = RM_INST[id]; if(I.mode !== 'cut') return; var k = a === 'BUS' || b === 'BUS' ? 'BUS' : rmKey(a, b); I.cut[k] = !I.cut[k]; rmDraw(I);
+  var r = rmReach(I), lost = I.devs.filter(function(d){ return !r[d]; });
+  rmSay(I, (I.cut[k] ? '<b>Cut.</b> ' : 'Mended. ') + (lost.length ? '<span class="bad">' + lost.length + ' of ' + I.devs.length + ' devices cannot reach the server.</span>' + (I.topo === 'bus' ? ' One cable: cut it anywhere and the network is in pieces.' : I.topo === 'star' ? ' A star loses only the device on that cable.' : '') : '<b>Everyone still reaches the server</b>' + (I.topo === 'mesh' ? ' — the packets go round the cut.' : '.')));
+}
+function rmDraw(I){
+  var svg = rmEl(I, 'svg'), s = '', reach = rmReach(I);
+  if(I.topo === 'bus'){ var y = I.busY; s += '<line class="rm-link bus' + (I.hot['BUS'] ? ' hot' : '') + (I.cut['BUS'] ? ' cut' : '') + '" x1="2" y1="' + y + '" x2="98" y2="' + y + '" onclick="rmClickLink(\'' + I.id + '\',\'BUS\',\'BUS\')"/>';
+    Object.keys(I.nodes).forEach(function(nm){ var p = I.nodes[nm]; s += '<line class="rm-link" x1="' + p[0] + '" y1="' + p[1] + '" x2="' + p[0] + '" y2="' + y + '" style="pointer-events:none"/>'; }); }
+  else I.links.forEach(function(l){ var a = I.nodes[l[0]], b = I.nodes[l[1]], k = rmKey(l[0], l[1]); s += '<line class="rm-link' + (I.hot[k] ? ' hot' : '') + (I.cut[k] ? ' cut' : '') + '" x1="' + a[0] + '" y1="' + a[1] + '" x2="' + b[0] + '" y2="' + b[1] + '" onclick="rmClickLink(\'' + I.id + '\',\'' + l[0] + '\',\'' + l[1] + '\')"/><line class="rm-hit" x1="' + a[0] + '" y1="' + a[1] + '" x2="' + b[0] + '" y2="' + b[1] + '" onclick="rmClickLink(\'' + I.id + '\',\'' + l[0] + '\',\'' + l[1] + '\')"/>'; });
+  Object.keys(I.nodes).forEach(function(nm){ var p = I.nodes[nm], isSw = nm.indexOf('Sw') === 0, r = isSw ? 4.6 : (nm === 'Srv' ? 4.2 : (I.n > 8 ? 2.6 : 3.4));
+    var cls = 'rm-node' + (nm === 'Srv' ? ' srv' : '') + (isSw ? ' sw' : '') + (I.sel === nm ? ' sel' : '') + (I.keep === nm ? ' keep' : I.hear[nm] && nm !== I.keep ? ' hear' : '') + (!isSw && !reach[nm] ? ' lost' : '') + (isSw && I.cut[nm] ? ' lost' : '');
+    s += (isSw ? '<rect class="' + cls + '" x="' + (p[0] - 6) + '" y="' + (p[1] - 3.2) + '" width="12" height="6.4" rx="1.5"' : '<circle class="' + cls + '" cx="' + p[0] + '" cy="' + p[1] + '" r="' + r + '"') + ' onclick="rmClickNode(\'' + I.id + '\',\'' + nm + '\')" style="cursor:pointer"/>'
+      + '<text class="rm-lbl" x="' + p[0] + '" y="' + p[1] + '"' + (I.n > 8 && !isSw && nm !== 'Srv' ? ' style="font-size:2.4px"' : '') + '>' + (isSw ? 'switch' : nm === 'Srv' ? 'server' : nm) + '</text>'; });
+  svg.innerHTML = s;
+  var lost = I.devs.filter(function(d){ return !reach[d]; }).length;
+  rmEl(I, 'stat').innerHTML = '<span>' + I.topo + '</span><span>devices <b>' + I.devs.length + '</b></span><span>cables <b>' + rmCables(I) + '</b>' + (I.topo === 'mesh' ? ' = n(n−1)/2' : '') + '</span><span>collisions <b>' + I.collisions + '</b></span><span>cut off <b>' + lost + '</b></span>';
+}
+function rmSay(I, t){ var el = rmEl(I, 'say'); if(el) el.innerHTML = t; }
+
+/* ═══ the drawing check — J25/12's star, marked by the scheme's four lines ═══ */
+var DW_DEV = [
+  {id:'srv', name:'server', n:1, opts:['the switch','a computer','the router','nothing']},
+  {id:'c1', name:'computer 1', n:1, opts:['the switch','the server','another computer','nothing']},
+  {id:'c2', name:'computer 2', n:1, opts:['the switch','the server','another computer','nothing']},
+  {id:'c3', name:'computer 3', n:1, opts:['the switch','the server','another computer','nothing']},
+  {id:'c4', name:'computer 4', n:1, opts:['the switch','the server','another computer','nothing']},
+  {id:'p1', name:'printer 1', n:1, opts:['the switch','the server','a computer','the other printer','nothing']},
+  {id:'p2', name:'printer 2', n:1, opts:['the switch','the server','a computer','the other printer','nothing']},
+  {id:'rt', name:'router (internet access)', n:1, opts:['the switch','the server','a computer','nothing']},
+  {id:'hub', name:'a hub (not in the question)', n:0, opts:['the switch','nothing']}
+];
+function dwBuild(){
+  var host = document.getElementById('dw-host'); if(!host) return;
+  var rows = DW_DEV.map(function(d){ return '<tr><td><input type="checkbox" id="dw-on-' + d.id + '"' + (d.n ? ' checked' : '') + ' onchange="dwDraw()"> ' + d.name + '</td><td><input type="checkbox" id="dw-lb-' + d.id + '" checked onchange="dwDraw()"> labelled</td><td>connected to <select id="dw-to-' + d.id + '" onchange="dwDraw()">' + d.opts.map(function(o){ return '<option>' + o + '</option>'; }).join('') + '</select></td></tr>'; }).join('');
+  host.innerHTML = '<div class="dw-main"><div><table class="dw"><tr><th>device</th><th>label</th><th>connection</th></tr>' + rows + '</table>'
+    + '<div class="fd-bar" style="justify-content:flex-start;"><button class="fd-btn go" onclick="dwMark()">mark my drawing</button><button class="fd-btn" onclick="dwTrap()">the common wrong drawing</button><button class="fd-btn" onclick="dwBuild()">reset</button></div></div>'
+    + '<div><svg class="rm-svg" id="dw-svg" viewBox="0 0 100 60"></svg><div class="dw-verd" id="dw-verd">The question (June 2025 P12 Q6(d)): four wired computers, one server, two printers, one central switch and a device providing a single point of access for the internet, as a star. Draw it by choosing where each device connects, then mark it.</div></div></div>';
+  dwDraw();
+}
+function dwState(){ var st = {}; DW_DEV.forEach(function(d){ st[d.id] = {on:document.getElementById('dw-on-' + d.id).checked, lb:document.getElementById('dw-lb-' + d.id).checked, to:document.getElementById('dw-to-' + d.id).value}; }); return st; }
+function dwTrap(){ dwBuild(); document.getElementById('dw-lb-c3').checked = false; document.getElementById('dw-on-p2').checked = false; document.getElementById('dw-to-rt').value = 'nothing'; document.getElementById('dw-on-hub').checked = true; dwDraw(); dwMark(); }
+function dwDraw(){
+  var st = dwState(), svg = document.getElementById('dw-svg'), s = '';
+  var pos = {sw:[50,30], srv:[50,7], c1:[14,16], c2:[14,44], c3:[86,16], c4:[86,44], p1:[30,54], p2:[70,54], rt:[50,53], hub:[80,30]};
+  var anchor = {'the switch':'sw','the server':'srv','a computer':'c1','another computer':'c1','the router':'rt','the other printer':'p1'};
+  DW_DEV.forEach(function(d){ if(!st[d.id].on) return; var to = st[d.id].to; if(to === 'nothing') return; var t = anchor[to]; if(d.id === 'p2' && to === 'the other printer') t = 'p1'; if(d.id === 'p1' && to === 'the other printer') t = 'p2'; if(d.id === 'c1' && to === 'another computer') t = 'c2';
+    var a = pos[d.id], b = pos[t]; s += '<line class="rm-link" x1="' + a[0] + '" y1="' + a[1] + '" x2="' + b[0] + '" y2="' + b[1] + '"/>'; });
+  s += '<rect class="rm-node sw" x="44" y="26.8" width="12" height="6.4" rx="1.5"/><text class="rm-lbl" x="50" y="30">switch</text>';
+  DW_DEV.forEach(function(d){ if(!st[d.id].on) return; var p = pos[d.id]; s += '<circle class="rm-node' + (d.id === 'srv' ? ' srv' : '') + '" cx="' + p[0] + '" cy="' + p[1] + '" r="4"/><text class="rm-lbl" x="' + p[0] + '" y="' + p[1] + '" style="font-size:2.6px">' + (st[d.id].lb ? d.name.replace(' (internet access)', '').replace(' (not in the question)', '') : '?') + '</text>'; });
+  svg.innerHTML = s;
+}
+function dwMark(){
+  dwDraw(); var st = dwState(), L = [], got = 0;
+  function ok(id){ return st[id].on && st[id].lb; }
+  var m1 = ok('srv') && st.srv.to === 'the switch';
+  L.push((m1 ? '<span class="ok">✔' : '<span class="no">✖') + ' server directly connected to the switch</span>' + (m1 ? '' : st.srv.on ? (st.srv.lb ? ' — connected to ' + st.srv.to : ' — unlabelled') : ' — missing')); got += m1;
+  var cs = ['c1','c2','c3','c4'], m2 = cs.every(function(c){ return ok(c) && st[c].to === 'the switch'; });
+  L.push((m2 ? '<span class="ok">✔' : '<span class="no">✖') + ' four labelled computers, each directly to the switch</span>' + (m2 ? '' : ' — ' + cs.filter(function(c){ return !(ok(c) && st[c].to === 'the switch'); }).map(function(c){ return st[c].on ? (st[c].lb ? c.replace('c','computer ') + ' to ' + st[c].to : c.replace('c','computer ') + ' unlabelled') : c.replace('c','computer ') + ' missing'; }).join(', '))); got += m2;
+  var pOK = function(p){ return ok(p) && ['the switch','the server','a computer'].indexOf(st[p].to) > -1; }, m3 = pOK('p1') && pOK('p2');
+  L.push((m3 ? '<span class="ok">✔' : '<span class="no">✖') + ' two printers, each directly to the switch / server / a computer</span>' + (m3 ? '' : ' — the scheme accepts a printer on the switch, the server or a computer; printer-to-printer or missing loses it')); got += m3;
+  var m4 = ok('rt') && ['the switch','the server'].indexOf(st.rt.to) > -1;
+  L.push((m4 ? '<span class="ok">✔' : '<span class="no">✖') + ' the router / internet device directly to the switch (or server)</span>' + (m4 ? '' : ' — the J25 report: "candidates were expected to identify the device providing internet access; frequently this was not done"')); got += m4;
+  if(st.hub.on) L.push('<span class="amb">⚠ a hub the question never mentioned</span> — N23/12\'s report: "many diagrams incorrectly included other devices"; J23/12\'s: "not necessarily required"');
+  document.getElementById('dw-verd').innerHTML = '<b>' + got + ' / 4</b><br>' + L.join('<br>');
+}
+function initU14a(){
+  rmMake('rm-hook', {topo:'bus', n:20, topos:['bus','star'], ns:[]});
+  rmMake('rm-topo', {topo:'star', n:8, topos:['bus','star','mesh','hybrid'], ns:[]});
+  rmMake('rm-host', {topo:'star', n:8});
+  dwBuild();
+}
+
+/* ── U14a marker helpers ── */
+function lanSaid(x){ return /\bLAN\b|local area network/i.test(String(x||'')) && !/^\s*WAN\b/i.test(String(x||'')); }
+function lanWhyPts(x){ var t = String(x||''), n = 0;
+  if(/(small|limited|one|single) (geograph|area|site|building|room|campus|school)|within (one|a single|the) (building|site|school)|(small|limited) (geographical )?area/i.test(t) && !/^[^.]*local area[^.]*$/i.test(t)) n++;
+  if(/(no|not|without|does not|doesn'?t).{0,40}(leas|rent|external|third.party|public|telecom|internet)|(own|private|privately).{0,30}(infrastructure|cables|hardware|equipment|owned)|not (use|using) the internet/i.test(t)) n++;
+  return n; }
+function acronymOnly(x){ var t = String(x||''); return /local area/i.test(t) && !/(small|limited|one|single|building|site|own|private|leas|external|internet|rate|fast)/i.test(t.replace(/local area/ig,'')); }
+function diffPts(x){ var t = String(x||''), n = 0;
+  var both = /\bLAN\b/i.test(t) && /\bWAN\b/i.test(t);
+  if(!both) return 0;
+  if(/(large|wide|big|greater|larger).{0,50}(area|distance|region|geograph)/i.test(t) && /(small|limited|smaller).{0,50}(area|site|building|geograph)/i.test(t)) n++;
+  if(/(private|own|owned|company)/i.test(t) && /(public|leas|external|third.party|telecom|rent)/i.test(t)) n++;
+  if(/(transfer rate|data rate|bandwidth|speed of transfer|rate of transfer)/i.test(t) && /(high|low|greater|lower|faster|slower)/i.test(t)) n++;
+  if(/physical/i.test(t) && /virtual/i.test(t)) n++;
+  if(/secur/i.test(t) && /(easier|harder|more|less)/i.test(t)) n++;
+  return Math.min(2, n); }
+function tickPts(x){ var t = String(x||'').toLowerCase(), n = 0, want = ['star','bus','mesh','mesh','bus'];
+  want.forEach(function(w, i){ var m = t.match(new RegExp('(?:^|[^0-9])' + (i + 1) + '\\s*[:.)\\-–]?\\s*(star|bus|mesh)')); if(m && m[1] === w) n++; });
+  return n; }
+function starPktPts(x){ var t = String(x||''), n = 0;
+  if(/(send|transmit|goes|sent).{0,40}(to|into) the (switch|central device|hub|router)|(switch|central device).{0,20}(receives|first)/i.test(t)) n++;
+  if(/(switch|central device|router|hub).{0,60}(check|read|look|examin|inspect|uses).{0,40}(destination|address)/i.test(t) || /(destination|address).{0,60}(forward|send|deliver).{0,40}(only|directly|to that|to the (intended|correct|right))/i.test(t)) n++;
+  return n; }
+function packageWord(x){ return /\bpackage/i.test(String(x||'')); }
+function advPts(x){ var t = String(x||''), n = 0;
+  if(/(resilien|fault|fail|robust|no single cable|not one cable)|(fewer|less|no) collisions|(easier|easy) to add|scalab|fault.?find|(easier|easy) to (find|locate|identify) (a )?(fault|problem)/i.test(t)) n++;
+  if(/(because|as|since|so that|so |which means).{0,90}(no single cable|only connected to the switch|directly to the switch|own cable|one cable|other devices (keep|continue|still)|rest of the (network|room|class)|one device|does not (affect|stop))/i.test(t)) n++;
+  return n; }
+function rolePts(x){ var t = String(x||''), n = 0;
+  if(/bank'?s? (server|computer)|server.{0,30}(bank|at the bank)/i.test(t)) n++;
+  if(/(store|hold|keep|contain).{0,40}(data|account|customer|record|balance)|(receiv|process|handl|respond).{0,30}request/i.test(t)) n++;
+  if(/(smartphone|phone|device|app(lication)?|mobile).{0,30}(is|as) (the )?client|client.{0,20}(is|=)?.{0,20}(smartphone|phone|device|app)/i.test(t)) n++;
+  if(/(send|make|submit).{0,30}request|(wait|display|output|show).{0,40}(response|result|reply|balance|data)/i.test(t)) n++;
+  return n; }
+function userNotDevice(x){ var t = String(x||''); return /(customer|user).{0,30}(logs? in|taps|opens|types|checks|enters)/i.test(t) && !/(server|client)/i.test(t); }
+function thinPts(x){ var t = String(x||''), cats = 0, applied = 0;
+  var c1 = /(data|papers?|files?).{0,40}(not|never).{0,20}(stored|saved|kept|held).{0,30}(client|marker|local|their (own )?(computer|device))|(stored|kept|held).{0,20}(on|in) the server/i.test(t);
+  var c2 = /(reliant|relies|depend|needs?|require).{0,40}(server|connection|network|internet)|(cannot|can'?t|unable|will not|won'?t).{0,40}(without|if).{0,30}(server|connection|network|internet)|(server|network).{0,20}(down|goes down|fails)/i.test(t);
+  var c3 = /(few|little|low|minimal|less).{0,30}(local )?(resources|memory|storage|processing power|spec)|(cheap|basic|low.spec).{0,20}(device|computer|machine)/i.test(t);
+  var c4 = /(minimal|little|few|not much|hardly any) (processing|functions|work)|(server|servers?) (does|do|perform).{0,30}(most|all).{0,20}(processing|work)|processing.{0,30}(on|by) the server/i.test(t);
+  cats = [c1, c2, c3, c4].filter(Boolean).length;
+  var parts = t.split(/\n|;/); parts.forEach(function(p){ if(/(paper|marker|marking|exam|assessment|software)/i.test(p) && /(server|client|connection|network|device|stored|process)/i.test(p)) applied++; });
+  return {cats:Math.min(2, cats), applied:Math.min(2, applied)}; }
+function p2pPts(x){ var t = String(x||''), n = 0;
+  if(/(equal|same) (status|level|rank)|no (central|main|dedicated) (server|controller|computer)|no server|without a server|every (computer|peer|node) is (both|a client and a server)/i.test(t)) n++;
+  if(/(each|every|all).{0,30}(provide|share|offer|give).{0,40}(resource|data|file|storage)|data is (distributed|spread|shared)|(each|every).{0,30}responsible for (its|their) own (security|backup)/i.test(t)) n++;
+  return Math.min(2, n); }
+function meshConfused(x){ var t = String(x||''); return /(connected to (every|each|all) other|multiple (paths|routes)|topolog)/i.test(t) && !/(equal|server|share|resource)/i.test(t); }
+
+var STAGES = [
+
+ { name:'Stage 1 · LAN or WAN — the sentences, not the acronym', paper:'P1',
+   q:'<b>9618 November 2021 Paper 11 Q8(a) — 3 marks, verbatim.</b> A school is setting up a network within one of its buildings. <b>(a)</b> State whether the network will be a LAN (local area network) or a WAN (wide area network). Justify your choice. '
+    + '<b>+ June 2023 Paper 13 Q2(a) — 2 marks, verbatim.</b> <b>(b)</b> Identify <b>two</b> differences between a WAN and a LAN. '
+    + '<span style="color:#c0392b;">The J23 report: "statements that simply repeat words from the acronym, such as \'a LAN covers a local area while a WAN covers a wide area\', were insufficient" · "\'a LAN is faster\' was not enough — \'the rate of transfer of data in a LAN is greater\'."</span>',
+   parts:[{key:'w', rows:3, lbl:'<b>(a)</b> LAN or WAN — and two justifications [3]:'},
+          {key:'d', rows:3, lbl:'<b>(b)</b> two differences, each saying what the WAN has <em>and</em> what the LAN has [2]:'}],
+   groupCaps:{w:3, d:2}, total:5, cap:5,
+   llmTask:'U14a-s1', llmFn:'LANorWAN', llmCap:5, llmGrp:['w','d'],
+   model:'(a) LAN · it covers a small geographical area — one building · it does not lease external infrastructure / does not use the internet to transmit within the building\n(b) any two — a WAN covers a large geographical area, a LAN a small one · a WAN\'s infrastructure is leased / public, a LAN\'s privately owned · a LAN has a higher data transfer rate than a WAN · LAN connections are physical, WAN connections often virtual · a LAN is easier to secure',
+   mps:[
+    {grp:'w', pts:1, fn:function(x){ return lanSaid(x); }, label:'(a) <b>LAN</b>'},
+    {grp:'w', pts:1, fn:function(x){ return !acronymOnly(x) && lanWhyPts(x) >= 1; }, label:'(a) a <b>small geographical area</b> — one building (not "a local area")'},
+    {grp:'w', pts:1, fn:function(x){ return !acronymOnly(x) && lanWhyPts(x) >= 2; }, label:'(a) <b>no leased / external infrastructure</b> — the school owns it; no internet needed inside the building'},
+    {grp:'w', pts:0, fn:function(x){ return !x || !acronymOnly(x); }, label:'the gate: "covers a local area" repeats the acronym (no marks on this line)'},
+    {grp:'d', pts:1, fn:function(x){ return diffPts(x) >= 1; }, label:'(b) one difference with <b>both sides</b> — area · ownership · transfer rate · physical vs virtual · security'},
+    {grp:'d', pts:1, fn:function(x){ return diffPts(x) >= 2; }, label:'(b) a second, different one — both sides again'}]
+ },
+
+ { name:'Stage 2 · the shape — the tick table, the packet through the switch, star over bus', paper:'P1',
+   q:'<b>9618 June 2024 Paper 11 Q8(a) — 5 marks, verbatim.</b> A business is creating a LAN in its office and is deciding which topology to use. Identify the topology (bus, star or mesh) each statement describes: <b>1</b> all devices connect to one central device · <b>2</b> all devices connect to a central cable · <b>3</b> multiple paths for the packets to travel along · <b>4</b> robust against damage because if any line fails, the rest of the network retains full functionality · <b>5</b> most likely to lose data through collisions. '
+    + '<b>+ June 2024 Paper 13 Q5(b) — 2 marks, verbatim.</b> <b>(b)</b> Part of the wired LAN is a star topology. Explain how packets are transmitted between two devices in a star topology. '
+    + '<b>+ November 2023 Paper 11 Q2(d) — 2 marks, verbatim.</b> <b>(c)</b> A new classroom is being set up with 20 computers and a switch. Explain <b>one</b> advantage of implementing a star topology instead of a bus topology in the new classroom. '
+    + '<span style="color:#c0392b;">The J24 report: "\'package\' is not acceptable instead of \'packet\'." The N23 scheme: one mark for the advantage, one for its corresponding expansion.</span>',
+   parts:[{key:'t', rows:1, lbl:'<b>(a)</b> write the five answers as <span class="mono">1 star, 2 …, 3 …, 4 …, 5 …</span>:'},
+          {key:'p', rows:2, lbl:'<b>(b)</b> how a packet travels on a star [2]:'},
+          {key:'a', rows:2, lbl:'<b>(c)</b> one advantage of the star over the bus in the classroom, with its reason [2]:'}],
+   groupCaps:{t:5, p:2, a:2}, total:9, cap:9,
+   llmTask:'U14a-s2', llmFn:'TheShape', llmCap:4, llmGrp:['p','a'],
+   model:'(a) 1 star · 2 bus · 3 mesh · 4 mesh · 5 bus\n(b) the sending computer transmits the packet directly to the switch · the switch checks the destination address and forwards it directly to that device\n(c) any pair — fewer collisions, because each device is connected only to the switch · more resilient to faults, because there is no single cable · easier to add a computer, because it connects directly to the switch',
+   mps:[
+    {grp:'t', pts:1, fn:function(x){ return tickPts(x) >= 1; }, label:'(a) one row right'},
+    {grp:'t', pts:1, fn:function(x){ return tickPts(x) >= 2; }, label:'(a) two rows'},
+    {grp:'t', pts:1, fn:function(x){ return tickPts(x) >= 3; }, label:'(a) three rows'},
+    {grp:'t', pts:1, fn:function(x){ return tickPts(x) >= 4; }, label:'(a) four rows'},
+    {grp:'t', pts:1, fn:function(x){ return tickPts(x) >= 5; }, label:'(a) all five: <b>star · bus · mesh · mesh · bus</b>'},
+    {grp:'p', pts:1, fn:function(x){ return !packageWord(x) && starPktPts(x) >= 1; }, label:'(b) the sender transmits the packet <b>to the switch</b>'},
+    {grp:'p', pts:1, fn:function(x){ return !packageWord(x) && starPktPts(x) >= 2; }, label:'(b) the switch <b>checks the destination address</b> and forwards it <b>only to that device</b>'},
+    {grp:'p', pts:0, fn:function(x){ return !x || !packageWord(x); }, label:'the gate: "package" is not a packet (no marks on this line)'},
+    {grp:'a', pts:1, fn:function(x){ return advPts(x) >= 1; }, label:'(c) an advantage — <b>fewer collisions</b> / <b>resilient to faults</b> / <b>easy to add a node</b> / easier fault-finding'},
+    {grp:'a', pts:1, fn:function(x){ return advPts(x) >= 2; }, label:'(c) …with its <b>reason</b>: each device only on its own cable to the switch / no single cable'}]
+ },
+
+ { name:'Stage 3 · who asks, who answers — the roles in the bank\'s app', paper:'P1',
+   q:'<b>9618 June 2024 Paper 11 Q5(a) — 4 marks, verbatim.</b> A bank allows customers to access their accounts using an application that they can download onto a device such as a smartphone. The system that allows customers to access their accounts using the application is a client-server model. Describe the roles of the different devices in this model. '
+    + '<span style="color:#c0392b;">The report: "bland statements such as \'the server is the bank server and the client is the customer\' are insufficient. Many responses described the actions of the smartphone user, when the question asked for the roles of the different devices. The minimum expected for the server is a statement about the storage of all the customer data and another about receiving and processing requests."</span>',
+   parts:[{key:'r', rows:4, lbl:'the two devices, named in the scenario, and what each one does [4]:'}],
+   groupCaps:{r:4}, total:4, cap:4,
+   llmTask:'U14a-s3', llmFn:'WhoAsks', llmCap:4, llmGrp:['r'],
+   model:'the server is the bank\'s server · it stores all the customer / account data, receives the requests from the app, processes them and sends the response · the client is the customer\'s smartphone running the app · it sends requests to the server, waits, and displays the response (the balance, the statement)',
+   mps:[
+    {grp:'r', pts:1, fn:function(x){ return rolePts(x) >= 1; }, label:'the <b>server</b> identified in the scenario — <b>the bank\'s server</b>'},
+    {grp:'r', pts:1, fn:function(x){ return rolePts(x) >= 2; }, label:'its role — <b>stores the customer data</b>; <b>receives and processes the requests</b>'},
+    {grp:'r', pts:1, fn:function(x){ return rolePts(x) >= 3; }, label:'the <b>client</b> identified — <b>the customer\'s smartphone / the app</b>, a device, not the customer'},
+    {grp:'r', pts:1, fn:function(x){ return rolePts(x) >= 4; }, label:'its role — <b>sends requests</b>, waits, <b>displays the response</b>'},
+    {grp:'r', pts:0, fn:function(x){ return !x || !userNotDevice(x); }, label:'the gate: "the customer logs in and checks the balance" describes the user, not a device (no marks on this line)'}]
+ },
+
+ { name:'BOSS · thin, thick, peer — and the converse-pair rule', paper:'P1',
+   q:'<b>9618 June 2024 Paper 12 Q3(b) — 4 marks, verbatim.</b> An assessment board scans exam papers and stores the digitised papers on a server. Exam markers download the digitised papers to mark. The exam markers use software that operates as a thin-client. <b>(a)</b> Identify <b>two</b> characteristics of a thin-client and describe how each characteristic will be used in this software. '
+    + '<b>+ June 2021 Paper 11 Q4(a) — 2 marks, verbatim.</b> Melinda and her friends set up a peer-to-peer network between their computers to share data. <b>(b)</b> Describe the key features of a peer-to-peer network. '
+    + '<span style="color:#c0392b;">The J24 report: "marks will not be awarded twice when one characteristic is the converse of the other" · "descriptions simply repeated the characteristic with no reference to the software." The J21 report: "considerable confusion between a peer-to-peer network and a mesh topology."</span>',
+   parts:[{key:'c', rows:4, lbl:'<b>(a)</b> two characteristics, each on its own line, each followed by how the marking software uses it [4]:'},
+          {key:'p', rows:2, lbl:'<b>(b)</b> the key features of a peer-to-peer network [2]:'}],
+   groupCaps:{c:4, p:2}, total:6, cap:6,
+   llmTask:'U14a-boss', llmFn:'ThinThickPeer', llmCap:6, llmGrp:['c','p'],
+   model:'(a) data is not stored on the client — the exam papers stay on the server, not on the marker\'s computer · the client is reliant on access to the server / the network — the marker cannot mark if the server is down or the connection is lost · (or) the client needs few local resources — a low-specification laptop runs the marking software · (not both "the server does the processing" and "the client does little processing")\n(b) any two — all computers are of equal status, no central server · each computer provides its own resources and data (the data is distributed) · each is responsible for its own security',
+   mps:[
+    {grp:'c', pts:1, fn:function(x){ return thinPts(x).cats >= 1; }, label:'(a) a thin-client <b>characteristic</b>: data not on the client / reliant on the server or the connection / few local resources / minimal processing'},
+    {grp:'c', pts:1, fn:function(x){ return thinPts(x).applied >= 1; }, label:'(a) …<b>applied to the marking software</b> (the papers, the markers, the server going down)'},
+    {grp:'c', pts:1, fn:function(x){ return thinPts(x).cats >= 2; }, label:'(a) a <b>second, different</b> characteristic — not the converse of the first'},
+    {grp:'c', pts:1, fn:function(x){ return thinPts(x).applied >= 2; }, label:'(a) …applied to the software again'},
+    {grp:'p', pts:1, fn:function(x){ return !meshConfused(x) && p2pPts(x) >= 1; }, label:'(b) all computers of <b>equal status</b> — no central server'},
+    {grp:'p', pts:1, fn:function(x){ return !meshConfused(x) && p2pPts(x) >= 2; }, label:'(b) each <b>provides its own resources</b> / data distributed / <b>responsible for its own security</b>'},
+    {grp:'p', pts:0, fn:function(x){ return !x || !meshConfused(x); }, label:'the gate: "connected to every other computer" is the mesh topology, not peer-to-peer (no marks on this line)'}]
+ }
+];
+var LLM = {url:'http://127.0.0.1:8788', available:false, on:true};
+function llmChip(){
+  var c = gEl('llmchip'); if(!c) return;
+  if(!LLM.available){ c.className='off'; c.textContent='⚡ no reader — click for help'; return; }
+  c.className = LLM.on ? 'on' : 'off';
+  c.textContent = LLM.on ? '⚡ reader on' : '⚡ reader off';
+}
+function llmHelp(show){ var h = gEl('llmhelp'); if(h) h.style.display = show ? 'block' : 'none'; }
+function llmDetect(cb){
+  var ctl = new AbortController(); var t = setTimeout(function(){ ctl.abort(); }, 1200);
+  fetch(LLM.url + '/ping', {signal: ctl.signal, cache:'no-store'})
+    .then(function(r){ return r.json(); })
+    .then(function(j){ clearTimeout(t); LLM.available = !!(j && j.ok && j.key); llmChip(); if(LLM.available) llmHelp(false); if(cb) cb(); })
+    .catch(function(){ clearTimeout(t); LLM.available = false; llmChip(); if(cb) cb(); });
+}
+function llmWatch(){ setInterval(function(){ if(LLM.available || document.hidden) return; llmDetect(); }, 5000); }
+function llmBind(){
+  var c = gEl('llmchip'); if(!c || c.__bound) return; c.__bound = true;
+  c.addEventListener('click', function(){
+    if(!LLM.available){ c.textContent='⚡ looking for the server…'; llmHelp(true); llmDetect(); return; }
+    LLM.on = !LLM.on; llmChip();
+  });
+  var x = gEl('llmhelp-x'); if(x) x.addEventListener('click', function(){ llmHelp(false); });
+  llmDetect(); llmWatch();
+}
+if(document.readyState === 'loading') document.addEventListener('DOMContentLoaded', llmBind);
+else llmBind();
+
+function gPick(idx, n, btn){
+  var s = STAGES[idx]; n = Math.min(n, s.total);
+  gAwardAt(idx, n);
+  if(idx === G.i){ var pt = gEl('g-prose-tot'); if(pt) pt.textContent = n + ' / ' + s.total; }
+  if(btn){
+    Array.prototype.forEach.call(btn.parentNode.querySelectorAll('.g-pick'), function(x){ x.classList.remove('on'); });
+    btn.classList.add('on');
+  }
+}
+function pickButtons(r, l, det){
+  det = det || 0;
+  var idx = G.i, s = STAGES[idx]; r = Math.min(r, s.total); l = Math.min(l, s.total);
+  if(r === l) return '';
+  return '<div class="g-pickrow">Which mark stands? '
+       + '<button class="g-pick" onclick="gPick(' + idx + ', ' + (det + r) + ', this)">keep the pattern’s ' + r + '</button>'
+       + '<button class="g-pick" onclick="gPick(' + idx + ', ' + (det + l) + ', this)">take the reader’s ' + l + '</button>'
+       + '<span class="g-pickn">— the total moves with your choice.</span></div>';
+}
+function proseConsensus(regexRaw, llmAwarded, cap, det){
+  det = det || 0;
+  var r = Math.min(regexRaw, cap), l = Math.min(llmAwarded, cap);
+  if(l > r)
+    return '<div class="g-cons split"><b>pattern ' + r + '/' + cap + '</b> &nbsp;·&nbsp; <b>reader ' + l + '/' + cap + '</b>'
+         + ' — <b>take the reader’s mark: ' + l + '.</b> The pattern hunts for particular words, so it misses a point made '
+         + 'in your own words and cannot forgive a typo. An examiner marks the <b>idea</b>, which is what the reader just did.' + pickButtons(r, l, det) + '</div>';
+  if(l < r)
+    return '<div class="g-cons split"><b>pattern ' + r + '/' + cap + '</b> &nbsp;·&nbsp; <b>reader ' + l + '/' + cap + '</b>'
+         + ' — <b>the reader is stricter here.</b> The words are present but it did not think the idea was. '
+         + '<b>Worth a human eye.</b>' + pickButtons(r, l, det) + '</div>';
+  return '<div class="g-cons agree"><b>pattern ' + r + '/' + cap + '</b> &nbsp;·&nbsp; <b>reader ' + l + '/' + cap + '</b>'
+       + ' — <b>both markers agree.</b> On a written answer that is about as certain as marking gets.</div>';
+}
+function gWaiting(on){
+  G.llmBusy = !!on;
+  var h = gEl('g-nexthint');
+  if(!h){
+    var say = gEl('g-say'); if(!say) return;
+    h = document.createElement('div'); h.id = 'g-nexthint'; h.style.marginTop = '5px';
+    say.appendChild(h);
+  }
+  if(on){
+    if(h.getAttribute('data-orig') === null) h.setAttribute('data-orig', h.innerHTML);
+    h.style.opacity = '1';
+    h.innerHTML = '<span style="color:#8a5a00;">⚡ <b>the reader is still marking…</b> give it a few seconds — clicking now moves on without it.</span>';
+  } else {
+    var orig = h.getAttribute('data-orig');
+    h.style.opacity = '.65';
+    if(orig !== null){ h.innerHTML = orig; h.removeAttribute('data-orig'); }
+    else h.textContent = '';
+  }
+}
+function llmMarkProse(task, fn, answer, regexRaw, cap, host, det){
+  det = det || 0;
+  var idx = G.i;
+  if(!LLM.available || !LLM.on || !host) return;
+  var grid = host.closest ? host.closest('.g-grid') : null;
+  if(grid) grid.classList.add('three');
+  host.innerHTML = '<p class="g-lbl">a second marker is reading it… <span class="conf">(this one marks the idea, not the words)</span></p>';
+  var ctl = new AbortController();
+  var timedOut = false, t0 = Date.now();
+  var t = setTimeout(function(){ timedOut = true; ctl.abort(); }, 90000);
+  gWaiting(true);
+  fetch(LLM.url + '/mark', {
+    method:'POST', signal: ctl.signal, headers:{'Content-Type':'application/json'},
+    body: JSON.stringify({task: task, fn: fn, lang:'py', code: answer})
+  }).then(function(r){ return r.json(); })
+    .then(function(j){
+      clearTimeout(t); gWaiting(false);
+      if(!j || j.error){ host.innerHTML = '<p class="g-lbl">second marker unavailable <span class="conf">(' + ((j && j.error) || 'no reply') + ')</span></p>'; return; }
+      var rows = j.marks.map(function(m){
+        return '<li><span class="' + (m.awarded?'y':'n') + '">' + (m.awarded?'✓':'✗') + '</span> '
+             + m.point + (m.why ? ' <span class="conf">— ' + m.why + '</span>' : '') + '</li>';
+      }).join('');
+      host.innerHTML = '<p class="g-lbl">what a second marker says — <b>it marked the idea, not the words</b></p>'
+                     + '<ul class="g-mp">' + rows + '</ul>'
+                     + proseConsensus(regexRaw, j.awarded, cap, det)
+                     + (j.missed ? '<p style="font-size:.48em; margin:4px 0 0;">' + j.missed + '</p>' : '');
+      var better = Math.min(j.awarded, cap) - Math.min(regexRaw, cap);
+      if(better > 0) gAwardAt(idx, det + Math.min(j.awarded, cap));
+    })
+    .catch(function(){
+      clearTimeout(t); gWaiting(false);
+      var __s = Math.round((Date.now() - t0) / 1000);
+      host.innerHTML = timedOut
+        ? '<p class="g-lbl">the reader gave up after ' + __s + ' s <span class="conf">(the model is busy, not broken — the pattern marks stand. Press mark again to retry.)</span></p>'
+        : '<p class="g-lbl">could not reach the reader <span class="conf">(nothing answered on 127.0.0.1:8788 — is the Terminal window still open?)</span></p>';
+    });
+}
+/* ── photos: shrink in the browser; an iPhone HEIC goes to the server first,
+   where sips (macOS's own converter) turns it into a JPEG the browser can read.
+   Kepei: "when I airdrop from my phone, no other things have to be done." ── */
+function shrinkData(src, cb, revoke, fallbackFile){
+  var img = new Image();
+  img.onload = function(){
+    var W = img.naturalWidth, H = img.naturalHeight, m = Math.max(W, H), k = m > 1400 ? 1400 / m : 1;
+    var c = document.createElement('canvas'); c.width = Math.round(W*k); c.height = Math.round(H*k);
+    c.getContext('2d').drawImage(img, 0, 0, c.width, c.height);
+    if(revoke) URL.revokeObjectURL(src);
+    cb(c.toDataURL('image/jpeg', 0.82));
+  };
+  img.onerror = function(){
+    if(revoke) URL.revokeObjectURL(src);
+    /* the browser could not decode it — one more chance via the server converter */
+    if(fallbackFile){ convertOnServer(fallbackFile, cb); } else cb(null, 'unreadable');
+  };
+  img.src = src;
+}
+function convertOnServer(file, cb){
+  if(!LLM.available){ cb(null, 'heic-noserver'); return; }
+  var fr = new FileReader();
+  fr.onload = function(){
+    var ctl = new AbortController(); var t = setTimeout(function(){ ctl.abort(); }, 30000);
+    fetch(LLM.url + '/convert', {method:'POST', signal: ctl.signal, headers:{'Content-Type':'application/json'},
+      body: JSON.stringify({image: fr.result, name: file.name || ''})})
+      .then(function(r){ return r.json(); })
+      .then(function(j){ clearTimeout(t); if(j && j.image) shrinkData(j.image, cb); else cb(null, (j && j.error) || 'the server could not convert it'); })
+      .catch(function(){ clearTimeout(t); cb(null, 'the converter did not answer'); });
+  };
+  fr.onerror = function(){ cb(null, 'unreadable'); };
+  fr.readAsDataURL(file);
+}
+function shrinkPhoto(file, cb){
+  var isHeic = /hei[cf]/i.test(file.type || '') || /\.hei[cf]$/i.test(file.name || '');
+  if(isHeic){ convertOnServer(file, cb); return; }
+  shrinkData(URL.createObjectURL(file), cb, true, file);
+}
+function llmMarkPhoto(task, fn, dataUrl, cb){
+  var ctl = new AbortController(), timedOut = false, t0 = Date.now();
+  var t = setTimeout(function(){ timedOut = true; ctl.abort(); }, 150000);
+  gWaiting(true);
+  fetch(LLM.url + '/mark', {method:'POST', signal: ctl.signal, headers:{'Content-Type':'application/json'},
+    body: JSON.stringify({task: task, fn: fn, lang:'photo', code:'', image: dataUrl})})
+   .then(function(r){ return r.json(); })
+   .then(function(j){ clearTimeout(t); gWaiting(false); cb(j && !j.error ? j : null, j && j.error ? j.error : 'no reply'); })
+   .catch(function(){ clearTimeout(t); gWaiting(false); cb(null, timedOut ? 'the reader gave up after ' + Math.round((Date.now()-t0)/1000) + ' s — the model is busy, not broken; press mark again' : 'could not reach the reader (is the Terminal window still open?)'); });
+}
+
+function markOne(ans, mps, cap, quiet, groupCaps, partText){
+  var got=0, rows=[], listed=0, byGrp={};
+  mps.forEach(function(m){
+    var t = (partText && m.grp && partText[m.grp] != null) ? partText[m.grp] : ans;
+    var ok = false; try{ ok = !!m.fn(t); }catch(e){}
+    if(ok){
+      if(groupCaps && m.grp){
+        byGrp[m.grp] = (byGrp[m.grp] || 0) + m.pts;
+        if(byGrp[m.grp] <= groupCaps[m.grp]) got += m.pts;
+      } else got += m.pts;
+    }
+    listed += m.pts;
+    rows.push('<li><span class="'+(ok?'y':'n')+'">'+(ok?'✓':'✗')+'</span> '+m.label+' <b>['+m.pts+']</b></li>');
+  });
+  var missed = listed - got;
+  if(cap && got > cap) got = cap;
+  if(cap && listed > cap && !quiet){
+    rows.push('<li style="color:#8890b5;">the published scheme lists <b>'+listed+'</b> bullets for a maximum of <b>'+cap
+            + '</b> mark' + (cap>1?'s':'') + ' — schemes are generous on purpose, so you do not have to hit every one</li>');
+  }
+  return {got:got, html:'<ul class="g-mp">'+rows.join('')+'</ul>'};
+}
+
+
+/* exact-value stage: labelled input fields, marked by normalised comparison */
+function gDrawVals(s, b){
+  if(s.pre){ var pre = document.createElement('div'); pre.innerHTML = s.pre; b.appendChild(pre); }
+  var wrap = document.createElement('div'); wrap.className = 'g-vals'; b.appendChild(wrap);
+  var inputs = [];
+  s.vals.forEach(function(row, ri){
+    var r = document.createElement('div'); r.className = 'g-valrow';
+    var lab = document.createElement('span'); lab.className = 'g-vallbl'; lab.innerHTML = row.lbl; r.appendChild(lab);
+    row.fields.forEach(function(f){
+      var l2 = document.createElement('span'); l2.className = 'g-valfl'; l2.innerHTML = f.lbl; r.appendChild(l2);
+      var inp = document.createElement('input'); inp.className = 'g-val'; inp.spellcheck = false; inp.autocomplete = 'off';
+      r.appendChild(inp); inputs.push({inp:inp, f:f, ri:ri});
+    });
+    wrap.appendChild(r);
+  });
+  var sub = document.createElement('button'); sub.className = 'g-sub'; sub.textContent = 'mark it, out of ' + s.total;
+  sub.addEventListener('click', function(){
+    if(G.locked) return; G.locked = true; sub.style.display = 'none';
+    var got = 0;
+    s.vals.forEach(function(row, ri){
+      var ok = true;
+      inputs.filter(function(o){ return o.ri === ri; }).forEach(function(o){
+        var v = o.inp.value.trim().toUpperCase().replace(/\s+/g, '');
+        var want = [o.f.want].concat(o.f.alt || []).map(function(w){ return String(w).toUpperCase().replace(/\s+/g, ''); });
+        var hit = v.length > 0 && want.indexOf(v) > -1;
+        o.inp.classList.add(hit ? 'ok' : 'bad'); o.inp.readOnly = true;
+        if(!hit){ ok = false; o.inp.value = (o.inp.value || '·') + '  → ' + o.f.want; }
+      });
+      if(ok) got += (row.pts || 1);
+    });
+    gAward(got);
+    b.querySelectorAll('.g-shrink').forEach(function(el){ el.style.display = 'none'; });
+    gSay('<b>' + got + ' / ' + s.total + '</b>' + (s.valNote ? ' — ' + s.valNote : '')
+       + (s.model ? '<div class="g-model" style="margin-top:5px;">' + s.model + '</div>' : '')
+       + '<div id="g-nexthint" style="margin-top:5px; opacity:.65;">press next → when you are ready</div>', got >= s.total ? 'ok' : 'bad');
+    if(typeof Reveal !== 'undefined' && Reveal.layout) Reveal.layout();
+  });
+  b.appendChild(sub);
+}
+
+function gDrawMatch(s, b){
+  var M = s.match, sel = {};
+  var wrap = document.createElement('div');
+  var html = '<table class="mt">';
+  M.defs.forEach(function(d, i){
+    html += '<tr><td class="mt-d">'+d.t+'</td><td class="mt-c">'
+          + M.terms.map(function(t){ return '<button class="mt-b" data-i="'+i+'" data-t="'+t+'">'+t+'</button>'; }).join('')
+          + '</td></tr>';
+  });
+  html += '</table>';
+  wrap.innerHTML = html;
+  b.appendChild(wrap);
+  wrap.querySelectorAll('.mt-b').forEach(function(btn){
+    btn.addEventListener('click', function(){
+      if(G.locked) return;
+      var i = this.getAttribute('data-i');
+      sel[i] = this.getAttribute('data-t');
+      wrap.querySelectorAll('.mt-b[data-i="'+i+'"]').forEach(function(x){ x.classList.remove('on'); });
+      this.classList.add('on');
+    });
+  });
+  var sub = document.createElement('button'); sub.className='g-sub'; sub.textContent='mark it, out of '+s.total;
+  sub.addEventListener('click', function(){
+    if(G.locked) return;
+    var got = 0;
+    M.defs.forEach(function(d, i){
+      var ok = sel[i] === d.want;
+      if(ok) got++;
+      wrap.querySelectorAll('.mt-b[data-i="'+i+'"]').forEach(function(x){
+        var t = x.getAttribute('data-t');
+        x.disabled = true;
+        if(t === d.want) x.classList.add(sel[i] === d.want ? 'yes' : 'want');
+        else if(t === sel[i]) x.classList.add('no');
+      });
+    });
+    gAward(got); G.locked = true; sub.style.display='none';
+    gSay('<b>' + got + ' / ' + s.total + '</b> — ' + (got === s.total
+        ? 'every line drawn true. ' + M.spareNote
+        : 'the green frames mark the scheme’s pairings; a red chip is the line you drew instead. ' + M.spareNote)
+        + '<div id="g-nexthint" style="margin-top:5px; opacity:.65;">press next → when you are ready</div>',
+        got === s.total ? 'ok' : 'bad');
+  });
+  b.appendChild(sub);
+}
+
+function gProg(){
+  var p = gEl('g-prog'); p.innerHTML='';
+  STAGES.forEach(function(_, k){
+    var i = document.createElement('i');
+    i.className = k < G.i ? 'done' : (k === G.i ? 'cur' : '');
+    p.appendChild(i);
+  });
+}
+function gSay(html, cls){
+  var s = gEl('g-say'); s.innerHTML = html || '&nbsp;'; s.className = 'g-say' + (cls ? ' ' + cls : '');
+  if(G.llmBusy) gWaiting(true);
+}
+
+function gDraw(){
+  var s = STAGES[G.i];
+  gEl('g-stage').textContent = s.name;
+  gEl('g-score').textContent = G.score > 0 ? ('score ' + G.score) : '';
+  gNavState();
+  gEl('g-q').innerHTML = s.q;
+  var b = gEl('g-body'); b.innerHTML=''; G.locked=false; gSay('');
+  gProg();
+  if(typeof Reveal !== 'undefined' && Reveal.layout) Reveal.layout();
+
+  if(s.match){ gDrawMatch(s, b); return; }
+  if(s.vals){ gDrawVals(s, b); return; }
+
+  if(s.pre){ var pre = document.createElement('div'); pre.innerHTML = s.pre; b.appendChild(pre); }
+  /* the generic typed stage: one box per lettered part (house rule), photo optional */
+  var parts = s.parts && s.parts.length ? s.parts : [{key:null, lbl:null, rows:s.rows||2}];
+  var tas = [];
+  var pc = b;
+  if(parts.length >= 4){ pc = document.createElement('div'); pc.style.cssText='display:grid; grid-template-columns:1fr 1fr; gap:0 14px;'; b.appendChild(pc); }
+  parts.forEach(function(p, idx){
+    var cell = (pc === b) ? b : document.createElement('div');
+    if(p.lbl){
+      var lab = document.createElement('p'); lab.className='g-lbl'; lab.style.cssText='margin:'+(idx && pc===b?'6px':'2px')+' 0 2px; color:#3f4770;';
+      lab.innerHTML = p.lbl; cell.appendChild(lab);
+    }
+    var t = document.createElement('textarea'); t.className='g-ta'; t.rows=p.rows||2; t.spellcheck=false;
+    t.style.marginTop='0';
+    cell.appendChild(t); tas.push(t);
+    if(cell !== b) pc.appendChild(cell);
+  });
+  var joined = function(){
+    return parts.map(function(p, i){
+      var v = tas[i].value.trim();
+      return p.key ? ('(' + p.key + ') ' + v) : v;
+    }).join('\n');
+  };
+  var photoData = null;
+  if(s.photo){
+    var ph = document.createElement('div'); ph.className='g-photo';
+    ph.innerHTML = '<label class="g-photo-btn">📷 or a photo of your handwritten answer <input type="file" accept="image/*,.heic,.heif" capture="environment" id="g-photo-in" style="display:none;"></label>'
+                 + '<span class="g-photo-note" id="g-photo-note">' + (LLM.available ? 'the page is read by Kimi K3 and marked from its transcript — iPhone HEIC photos are converted on the server' : 'a photo needs the reader (the ⚡ chip) — until then, type') + '</span>'
+                 + '<img id="g-photo-thumb" class="g-photo-thumb" alt="" style="display:none;"><button class="g-skip" id="g-photo-x" style="display:none;">✕ remove photo</button>';
+    b.appendChild(ph);
+    gEl('g-photo-in').addEventListener('change', function(){
+      var f = this.files && this.files[0]; if(!f) return;
+      gEl('g-photo-note').textContent = 'reading the photo…';
+      shrinkPhoto(f, function(d, err){
+        photoData = d; var th = gEl('g-photo-thumb'), x = gEl('g-photo-x');
+        if(d){ th.src = d; th.style.display='inline-block'; x.style.display='inline-block'; gEl('g-photo-note').textContent='photo attached — press mark.'; }
+        else gEl('g-photo-note').textContent = (err === 'heic-noserver')
+          ? 'an iPhone HEIC needs the marking server (the ⚡ chip) — start it, then pick the photo again'
+          : 'that file could not be read as an image' + (err ? ' (' + err + ')' : '');
+      });
+    });
+    gEl('g-photo-x').addEventListener('click', function(){
+      photoData = null; gEl('g-photo-in').value='';
+      gEl('g-photo-thumb').style.display='none'; this.style.display='none';
+      gEl('g-photo-note').textContent = '';
+    });
+  }
+  var sub = document.createElement('button'); sub.className='g-sub'; sub.textContent='mark it, out of '+s.total;
+  sub.addEventListener('click', function(){
+    if(G.locked) return;
+    var answer = joined();
+    if(photoData){
+      if(!LLM.available || !LLM.on){ gSay('<b>A photo needs the reader.</b> The server on the teacher’s Mac is not answering (the ⚡ chip) — start it, or type the answer.', 'bad'); return; }
+      sub.disabled = true; sub.textContent = '📷 Kimi K3 is reading the page…';
+      gSay('<span style="color:#8a5a00;">⚡ <b>the reader is reading your photo</b> — it transcribes the page, then both markers mark the transcript.</span>', '');
+      llmMarkPhoto(s.llmTask, s.llmFn, photoData, function(j, err){
+        sub.disabled = false; sub.textContent = 'mark it, out of ' + s.total;
+        if(!j){ gSay('<b>The reader could not mark the photo</b> — ' + err + '. Type the answer instead and press mark.', 'bad'); return; }
+        var transcript = (j.transcript || []).join('\n');
+        var rr = markOne(transcript, s.mps, s.cap, false, s.groupCaps, null);
+        gAward(rr.got); sub.style.display='none';
+        /* the transcript pane IS the answer that was marked — the (empty) typed
+           boxes and the photo row under it are dead height on a 720 stage */
+        b.querySelectorAll('.g-ta, .g-lbl, .g-photo').forEach(function(el){ el.style.display = 'none'; });
+        gSay('<div class="g-grid three"><div><p class="g-lbl">what the reader read off your page</p><pre class="g-ans" style="max-height:120px;">' + (transcript ? transcript.replace(/&/g,'&amp;').replace(/</g,'&lt;') : '(nothing legible)') + '</pre>'
+           + '<b id="g-prose-tot">' + rr.got + ' / ' + s.total + '</b>' + rr.html + '</div><div><p class="g-lbl">model answer</p><div class="g-model' + (s.modelCode ? ' code' : '') + '">' + s.model + '</div></div><div id="g-llm-p" class="g-llm"></div></div>'
+           + '<div id="g-nexthint" style="margin-top:5px; opacity:.65;">press next → when you are ready</div>', rr.got >= s.total ? 'ok' : 'bad');
+        var host = gEl('g-llm-p');
+        var rows = (j.marks||[]).map(function(m){ return '<li><span class="' + (m.awarded?'y':'n') + '">' + (m.awarded?'✓':'✗') + '</span> ' + m.point + (m.why ? ' <span class="conf">— ' + m.why + '</span>' : '') + '</li>'; }).join('');
+        host.innerHTML = '<p class="g-lbl">what the reader says — <b>it marked the idea, from the page</b></p><ul class="g-mp">' + rows + '</ul>'
+                       + proseConsensus(rr.got, j.awarded, s.total) + (j.missed ? '<p style="font-size:.48em; margin:4px 0 0;">' + j.missed + '</p>' : '');
+        if(Math.min(j.awarded, s.total) > rr.got) gAwardAt(G.i, Math.min(j.awarded, s.total));
+        G.locked = true;
+        if(typeof Reveal !== 'undefined' && Reveal.layout) Reveal.layout();
+      });
+      return;
+    }
+    var partText = null;
+    if(s.parts){ partText = {}; parts.forEach(function(p, i){ if(p.key) partText[p.key] = tas[i].value; }); }
+    var r = markOne(answer, s.mps, s.cap, false, s.groupCaps, partText);
+    gAward(r.got);
+    sub.style.display='none';
+    b.querySelectorAll('.g-shrink').forEach(function(el){ el.style.display = 'none'; });
+    /* the answer stays on screen (house rule) — but in a 2-row scroll window,
+       or a long question plus a marked panel walks off the 720 stage (S2 sat
+       at 819 with the boxes left full-height) */
+    tas.forEach(function(t){
+      var __lines = (t.value.match(/\n/g) || []).length + 1;
+      t.readOnly = true;
+      t.rows = Math.min(2, Math.max(1, __lines));
+      t.style.resize = 'none';
+    });
+    var useLLM = !!(s.llmTask && LLM.available && LLM.on);
+    gSay('<div class="g-grid"><div>'
+       + '<b id="g-prose-tot">' + r.got + ' / ' + s.total + '</b>' + r.html
+       + '</div><div><p class="g-lbl">model answer</p><div class="g-model' + (s.modelCode ? ' code' : '') + '">' + s.model + '</div></div>'
+       + '<div id="g-llm-p" class="g-llm"></div></div>'
+       + '<div id="g-nexthint" style="margin-top:5px; opacity:.65;">press next → when you are ready</div>',
+       r.got === s.total ? 'ok' : 'bad');
+    if(useLLM){
+      var proseTxt = answer, proseRaw = r.got, proseCap = s.llmCap || s.total;
+      if(s.llmGrp && partText){
+        proseTxt = parts.filter(function(p){ return s.llmGrp.indexOf(p.key) > -1; }).map(function(p){ return partText[p.key] || ''; }).join('\n');
+        proseRaw = markOne(answer, s.mps.filter(function(m){ return s.llmGrp.indexOf(m.grp) > -1; }), proseCap, true, s.groupCaps, partText).got;
+      }
+      llmMarkProse(s.llmTask, s.llmFn, proseTxt, proseRaw, proseCap, gEl('g-llm-p'), r.got - proseRaw);
+    }
+    if(!G.locked){ G.locked = true; }
+    if(typeof Reveal !== 'undefined' && Reveal.layout) Reveal.layout();
+  });
+  b.appendChild(sub);
+}
+
+window.gReplay = function(){
+  G.i = 0; G.score = 0; G.earned = {};
+  var sk = gEl('g-skip'); if(sk) sk.style.display = '';
+  var bk = gEl('g-back'); if(bk) bk.style.display = '';
+  gDraw();
+};
+function gSkip(){
+  G.locked = true;
+  G.i++;
+  if(G.i >= STAGES.length){ gFinish(); } else { gDraw(); }
+}
+function gBack(){
+  if(G.i <= 0) return;
+  G.locked = true;
+  G.i--;
+  gDraw();
+}
+function gNavState(){
+  var b = gEl('g-back');
+  if(b) b.style.visibility = (G.i > 0) ? '' : 'hidden';
+}
+function gSkipBind(){
+  var b = gEl('g-skip'), k = gEl('g-back');
+  if(!b){ document.addEventListener('DOMContentLoaded', gSkipBind); return; }
+  if(!b.__bound){ b.__bound = true;
+    b.addEventListener('click', function(ev){ ev.stopPropagation(); gSkip(); }); }
+  if(k && !k.__bound){ k.__bound = true;
+    k.addEventListener('click', function(ev){ ev.stopPropagation(); gBack(); }); }
+  gNavState();
+}
+gSkipBind();
+
+
+
+
+
+
+
+function gFinish(){
+  var sk = gEl('g-skip'); if(sk) sk.style.display='none';
+  var bk = gEl('g-back'); if(bk) bk.style.display='none';
+  gEl('g-stage').textContent='done';
+  gEl('g-q').innerHTML='';
+  gEl('g-prog').innerHTML='';
+  gEl('g-score').textContent='';
+  gEl('g-body').innerHTML=
+    '<div class="g-fin"><div class="big">'+G.score+'</div>'+
+    '<p style="margin:6px 0 0;">Twenty-four marks of §2.1 — six real Paper 1s, 2021 to 2024: LAN or WAN with the reasons, the tick table, the packet through the switch, star over bus with its reason, the bank\'s two devices, thin against thick, and what a peer is.</p>'+
+    '<p style="margin:6px 0 0; font-size:.9em; color:#5b6488;">The four that decide the marks: <b>say the rule, not the acronym</b> · <b>a difference names both sides</b> · <b>a device, not a user</b> · <b>a converse pair scores once</b>. The unit\'s sentence held: a network is a set of devices and the rule for who may talk to whom.</p>'+
+    '<button class="g-sub" onclick="gReplay();">play again</button></div>';
+  gSay('');
+}
+
+initU14a();
+
+</script>
+<script>
+document.getElementById('fs-btn').addEventListener('click',function(){
+  var d=document.documentElement;
+  if(document.fullscreenElement){document.exitFullscreen();}
+  else if(d.requestFullscreen){d.requestFullscreen();}
+});
+
+Reveal.initialize({
+  hash:true, slideNumber:'c/t', width:1280, height:720, margin:.06,
+  plugins:[RevealNotes], transition:'slide', backgroundTransition:'fade'
+}).then(function(){ initPyCells(); gDraw(); });
+Reveal.on('ready', function(e){ autoSizePyTextareas(e.currentSlide); });
+Reveal.on('slidechanged', function(e){ autoSizePyTextareas(e.currentSlide); });
+</script>
+</body>
+</html>

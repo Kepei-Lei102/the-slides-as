@@ -1,0 +1,229 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>U05d · Giving Instructions Names</title>
+<link href="https://cdnjs.cloudflare.com/ajax/libs/reveal.js/4.6.1/reveal.min.css" rel="stylesheet"/>
+<style>
+:root{
+  --dark:#151B3C; --light:#F4F6FB; --accent1:#17B3A3; --accent2:#F0655B;
+  --accent3:#F2B53C; --navy:#222B5A; --ice:#E8EEF9; --white:#fff;
+}
+.reveal{font-family:'Calibri','Segoe UI','PingFang SC','Microsoft YaHei',system-ui,sans-serif; font-size:26px;}
+.reveal h1,.reveal h2,.reveal h3{font-family:'Georgia','Times New Roman','PingFang SC','Microsoft YaHei',serif; text-transform:none; letter-spacing:-.02em;}
+.reveal section{text-align:left;}
+.dk{color:var(--ice);} .dk h1,.dk h2,.dk h3{color:var(--white);}
+.lt{color:var(--navy);} .lt h2,.lt h3{color:var(--navy);}
+.bar{position:absolute; top:0; left:0; right:0; height:5px;}
+.card{background:var(--white); border-radius:10px; padding:16px 20px; box-shadow:0 4px 12px rgba(0,0,0,.07); text-align:left;}
+.rule{background:var(--white); border-radius:8px; padding:11px 16px; box-shadow:0 3px 10px rgba(0,0,0,.05); border-left:5px solid var(--accent1); margin:10px 0; text-align:left; font-size:.74em;}
+.rule.accent2{border-left-color:var(--accent2);} .rule.accent3{border-left-color:var(--accent3);} .rule.navy{border-left-color:var(--navy);}
+.dk .rule{background:rgba(255,255,255,.06); color:var(--ice);}
+.two-col{display:flex; gap:28px; align-items:flex-start;} .two-col>*{flex:1;}
+.three-col{display:flex; gap:18px;} .three-col>*{flex:1;}
+.sgrid{display:grid; grid-template-columns:1fr 1fr; gap:14px; font-size:.6em;}
+.scard{background:rgba(255,255,255,.08); border-radius:10px; padding:14px; text-align:left; border-top:3px solid var(--accent1);}
+.smaller{font-size:.7em;}
+.center{text-align:center;}
+.accent1{color:var(--accent1);} .accent2{color:var(--accent2);} .accent3{color:var(--accent3);}
+.mono{font-family:'Courier New',monospace; font-weight:bold;}
+
+.badges{position:absolute; top:-14px; right:0; display:flex; gap:6px; z-index:5;}
+.bg{font-size:.44em; font-weight:bold; letter-spacing:.03em; padding:3px 12px; border-radius:20px; font-family:'Calibri','Segoe UI',sans-serif;}
+.bg-both{background:rgba(23,179,163,.15); color:var(--accent1); border:1.5px solid var(--accent1);}
+.bg-hole{background:rgba(242,181,60,.15); color:#B8860B; border:1.5px solid var(--accent3);}
+.dk .bg-both{background:rgba(23,179,163,.22); color:#5FD6C9;}
+.dk .bg-hole{color:var(--accent3);}
+
+.dig{position:absolute; bottom:-34px; left:50%; transform:translateX(-50%); font-size:.5em; color:#98a0c0; animation:bob 2s ease-in-out infinite;}
+@keyframes bob{0%,100%{transform:translateX(-50%) translateY(0);}50%{transform:translateX(-50%) translateY(5px);}}
+
+#obj-btn{background:rgba(255,255,255,.08); color:var(--ice); border:1px solid rgba(255,255,255,.25); border-radius:8px; padding:5px 14px; cursor:pointer; font-size:.42em; opacity:.55; transition:opacity .2s;}
+#obj-btn:hover{opacity:1;}
+
+/* ===== py-cell: live Python on the slide ===== */
+.pycell{background:var(--navy); border-radius:12px; padding:10px 12px 12px; box-shadow:0 4px 14px rgba(0,0,0,.14); text-align:left;}
+.pycell .pybar{display:flex; gap:8px; align-items:center; margin-bottom:6px;}
+.pycell .pydots{display:flex; gap:5px;}
+.pycell .pydots i{width:9px; height:9px; border-radius:50%; display:block;}
+.pyta{width:100%; box-sizing:border-box; background:#1b234d; color:var(--ice); border:none; border-radius:8px;
+  font-family:'Courier New',monospace; font-weight:bold; font-size:.62em; line-height:1.5; padding:10px 12px; resize:none; outline:none; display:block;}
+.pyta[readonly]{color:#aeb8dd;}
+.pyta:focus{box-shadow:0 0 0 2px var(--accent1);}
+.pyrun{background:var(--accent1); color:#fff; border:none; border-radius:7px; padding:4px 16px; font-size:.5em; font-weight:bold; cursor:pointer; font-family:'Calibri','Segoe UI',sans-serif;}
+.pyrun:hover{background:#12907f;}
+.pyrun:disabled{background:#5a6394; cursor:wait;}
+.pylock{background:transparent; color:#98a0c0; border:1.5px solid #454e82; border-radius:7px; padding:3px 12px; font-size:.5em; font-weight:bold; cursor:pointer;}
+.pylock:hover{color:var(--accent3); border-color:var(--accent3);}
+.pyout{background:#0d1230; color:#5FD6C9; border-radius:8px; font-family:'Courier New',monospace; font-weight:bold;
+  font-size:.58em; line-height:1.5; padding:9px 12px; margin:8px 0 0; min-height:1.4em; white-space:pre-wrap; text-align:left;}
+.pyout.err{color:var(--accent2);}
+.pyout .crash{color:var(--accent2);}
+.pyin-lbl{color:#5FD6C9;}
+.pyin{background:#1b234d; border:2px solid var(--accent1); border-radius:6px; color:var(--ice);
+  font-family:'Courier New',monospace; font-weight:bold; font-size:1em; padding:1px 8px; width:130px; outline:none; vertical-align:middle; margin-left:2px;}
+.pyin:focus{box-shadow:0 0 6px rgba(23,179,163,.55);}
+.pystate{font-size:.46em; color:#98a0c0; margin-left:auto;}
+
+/* karel figure */
+.circ{position:relative; margin:0 auto;}
+.circ svg{width:100%; display:block;}
+.clbl{position:absolute; font-family:'Calibri','Segoe UI',sans-serif; font-size:.5em; color:#7a83a8; transform:translate(-50%,-50%);}
+
+/* type train */
+.train{display:flex; gap:4px; align-items:center; justify-content:center;}
+.carriage{width:54px; height:54px; border-radius:9px; background:var(--white); border:2.5px solid var(--accent1);
+  display:flex; align-items:center; justify-content:center; font-family:'Courier New',monospace; font-weight:bold; font-size:.7em; color:var(--navy);}
+.carriage.solo{border-color:var(--accent3); background:rgba(242,181,60,.1);}
+
+/* game grammar */
+.mg-stage{font-size:.72em; font-weight:bold; color:var(--navy); background:rgba(242,181,60,.18); border:2px solid var(--accent3); border-radius:24px; padding:4px 26px; text-align:center;}
+.mg-prog{display:flex; gap:7px; justify-content:center;}
+.mg-prog .pd{width:11px; height:11px; border-radius:50%; background:#d4d9ea; transition:all .2s;}
+.mg-prog .pd.done{background:var(--accent1);}
+.mg-prog .pd.cur{background:var(--accent3); transform:scale(1.3);}
+.mg-gbtn{background:var(--white); border:2px solid #c6cde4; border-radius:10px; padding:8px 16px; font-size:.6em; font-weight:bold; color:var(--navy); cursor:pointer; font-family:'Courier New',monospace; text-align:left;}
+.mg-gbtn:hover{border-color:var(--accent1);}
+.mg-gbtn.no{animation:shake .4s; border-color:var(--accent2);}
+@keyframes shake{0%,100%{transform:translateX(0);}25%{transform:translateX(-6px);}75%{transform:translateX(6px);}}
+.mg-status{font-size:.6em; font-weight:bold; min-height:1.6em; text-align:center;}
+.mg-status.ok{color:var(--accent1);}
+.mg-status.bad{color:var(--accent2);}
+.mg-btn{background:var(--navy); color:var(--white); border:none; border-radius:8px; padding:6px 18px; font-size:.62em; font-weight:bold; cursor:pointer;}
+.mg-btn:hover{background:var(--accent1);}
+.pp-code{background:var(--navy); color:var(--ice); border-radius:10px; font-family:'Courier New',monospace; font-weight:bold; font-size:.6em; line-height:1.55; padding:12px 16px; text-align:left; white-space:pre;}
+.pp-line{display:block; border-radius:6px; padding:1px 8px; margin:1px 0; cursor:default;}
+.pp-line.clickable{cursor:pointer;}
+.pp-line.clickable:hover{background:rgba(242,181,60,.18);}
+.pp-line.picked{background:rgba(23,179,163,.25);}
+.pp-line.wrong{animation:shake .4s; background:rgba(240,101,91,.25);}
+.pp-tada{font-size:1.05em; font-weight:bold; color:var(--accent3); text-align:center; animation:pop .5s ease-out;}
+@keyframes pop{0%{transform:scale(.3); opacity:0;}70%{transform:scale(1.15);}100%{transform:scale(1); opacity:1;}}
+
+.pbtn{background:var(--navy); color:var(--white); border:none; border-radius:10px; padding:16px 38px; font-size:.8em; font-weight:bold; cursor:pointer;}
+.pbtn:hover{background:var(--accent1);}
+.src{font-size:.5em; color:#98a0c0; margin-top:12px;}
+
+.vtab{width:100%; border-collapse:collapse; font-size:.62em;}
+.vtab th{background:var(--navy); color:var(--white); padding:7px 12px; text-align:left;}
+.vtab td{background:var(--white); padding:6px 12px; border-bottom:1px solid #e3e7f2;}
+.xt{font-size:.6em; width:100%; border-collapse:collapse;}
+.xt td,.xt th{padding:6px 10px; border-bottom:1px solid #e3e7f2; background:var(--white); vertical-align:top;}
+.xt th{background:var(--navy); color:var(--white);}
+
+#fs-btn{position:fixed; bottom:18px; right:18px; z-index:99; background:rgba(30,39,97,.7); color:var(--ice); border:none; border-radius:8px; padding:6px 16px; cursor:pointer; font-size:18px; opacity:.7; transition:opacity .2s;}
+#fs-btn:hover{opacity:1;}
+:fullscreen #fs-btn,:-webkit-full-screen #fs-btn{display:none;}
+#py-chip{position:fixed; bottom:18px; left:18px; z-index:99; font-size:15px; font-weight:bold; padding:6px 14px; border-radius:20px; background:rgba(30,39,97,.75); color:#98a0c0;}
+#py-chip.ready{color:#5FD6C9;}
+
+</style>
+<style>.reveal{font-size:26px}.reveal .slides section:not(.stack){box-sizing:border-box;top:28px!important;padding:22px 18px 10px;line-height:1.28}.reveal h2{font-size:38px;margin:10px 0 18px}.reveal h1{font-size:64px;margin:32px 0 20px}.reveal p{font-size:23px;margin:12px 0}.rule{font-size:22px;line-height:1.35;margin:10px 0;padding:12px 16px}.two-col{gap:24px}.two-col>*{min-width:0}.dk .card{background:#252e55;color:var(--ice)}.bar{background:var(--accent1)}.badges{top:0;right:18px}.bg{font-size:12px;color:#278478;border:1px solid #17b3a3;background:#e1f5f0}.dk .bg{color:#5fd6c9;background:#253e52}.lanes{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-top:16px;font-size:16px;line-height:1.3}.lanes>div{border-top:2px solid var(--accent3);padding:8px 12px;background:#eceff7;border-radius:5px}.lanes b{display:block;font-size:12px;letter-spacing:.06em;margin-bottom:4px}.dk .lanes>div{background:#252e55}.dk .lanes{color:var(--ice)}.return-link,.dig-link{display:inline-block;font-size:18px;color:#596b95;margin-top:10px}.dk a{color:#7be2d8}button,.reveal button{font-family:inherit;font-size:18px;border:1px solid #b9c6dd;border-radius:8px;background:#fff;color:var(--navy);padding:7px 13px;cursor:pointer}button:hover{border-color:var(--accent1)}button:disabled{opacity:.5;cursor:default}button:focus-visible,a:focus-visible{outline:3px solid var(--accent3);outline-offset:3px}#obj-btn{font-size:20px;opacity:1;display:inline-block;margin-top:25px}#aud-chip,#aud-sub{font-size:18px}#fs-btn{font-size:14px;bottom:7px;right:70px}#py-chip{font-size:13px;bottom:7px;left:15px}.pycell{padding:12px}.pyta{font-size:19px;line-height:1.42;white-space:pre;overflow:auto;resize:none;height:215px;padding:12px;font-weight:normal;tab-size:4}.pyout{font-size:18px;line-height:1.4;height:132px;max-height:132px;overflow:auto;margin:8px 0 0;box-sizing:border-box;white-space:pre-wrap;overflow-wrap:anywhere}.pybar{flex-wrap:wrap}.pybar button{font-size:14px;padding:5px 9px;background:#303e70;color:#e8eef9}.pybar .pyrun{background:#138579;color:white}.pystate{font-size:12px}.pyrow{display:grid;grid-template-columns:1.1fr 1fr;gap:12px}.pyrow .pyta,.pyrow .pyout{height:320px;max-height:320px;margin:0}.pyrow .pyta{font-size:18px}.pyin{max-width:110px;font-size:17px}.xt,.vtab{font-size:21px;line-height:1.25}.xt th,.xt td,.vtab th,.vtab td{padding:9px 12px}.code{background:#222b5a;color:#e8eef9;font:21px/1.45 'Courier New',monospace;padding:18px;border-radius:10px;white-space:pre-wrap}.code .accent3{color:#ffd064}.symbols{display:flex;gap:14px;margin-top:16px}.symbols>div{flex:1;text-align:center;background:white;border-bottom:4px solid #17b3a3;border-radius:10px;padding:15px;font-size:18px}.symbols b{font:40px Georgia;display:block}.steps{display:flex;gap:8px;align-items:stretch;margin:25px 0}.steps>div{flex:1;background:white;border-top:4px solid var(--accent1);padding:18px 10px;border-radius:10px;font-size:22px;text-align:center}.steps>span{align-self:center}.note{font-size:18px!important;color:#697698}.game-nav{display:flex;gap:8px;align-items:center;margin-bottom:14px}.game-nav span{margin-left:auto;font-size:18px}.game-main{display:grid;grid-template-columns:1fr 1fr;gap:20px;min-height:225px}.game-main .code{font-size:21px;min-height:140px;margin:0}.game-main h3{font-family:inherit;font-size:23px;margin:0 0 12px}.options{display:grid;grid-template-columns:1fr 1fr;gap:8px}.options button.selected{border:3px solid #e4a42a;background:#fff4d1}.game-feedback{min-height:28px;font-size:20px;margin:10px 0}.game-main .pyout{height:105px;max-height:105px}.linepick{display:block;width:100%;text-align:left;background:#222b5a;color:#e8eef9;font:19px/1.3 monospace;padding:7px;margin:3px 0}.linepick.selected{border:2px solid var(--accent3);color:#ffdb88}.exact label{display:block;font-size:19px;margin:8px 0}.exact input{box-sizing:border-box;width:100%;font:20px monospace;padding:7px;border:2px solid #c6cde4;border-radius:7px}.exact .feedback{font-size:20px;min-height:28px;margin-top:10px}.exact .solution{font-size:18px;background:#e4f5ef;padding:10px;white-space:pre-wrap;border-radius:7px}.train{justify-content:start;margin:14px}.carriage{font-size:24px}.reveal .slides section .fragment{transition:opacity .18s ease!important}.reveal .slides section{transition-duration:.22s!important}.reveal pre{box-shadow:none;max-width:100%;width:auto}.reveal .slides section[data-hole] .bar{background:var(--accent3)}.reveal [hidden]{display:none!important}@media(prefers-reduced-motion:reduce){*,*::before,*::after{animation:none!important;transition:none!important;scroll-behavior:auto!important}}@media print{#fs-btn,#py-chip{display:none}}
+.pyta{height:185px}.pyrow .pyta,.pyrow .pyout{height:260px;max-height:260px}.exact[data-check="ig"]{display:grid;grid-template-columns:1fr 1fr;gap:6px 16px}.exact[data-check="ig"] label{margin:0}.exact[data-check="ig"] .feedback,.exact[data-check="ig"] .solution{grid-column:1/-1}.exact[data-check="ig"] .solution{font-size:17px}.reveal .linepick{background:#222b5a;color:#e8eef9;font:19px/1.3 monospace;text-align:left;padding:7px}.reveal .linepick.selected{border:2px solid var(--accent3);color:#ffdb88;background:#303758}.pyta[readonly]{color:#d2d8f0}
+#title h2{font-size:64px;margin:36px 0 24px}#title>p:first-of-type{font-size:18px;letter-spacing:.12em}
+
+/* U-lane visual sweep, 20 September 2026: brief entrance motion; no extra clicks. */
+.reveal .slides section{transition-duration:220ms!important}
+.reveal .backgrounds .slide-background{transition-duration:220ms!important}
+.reveal .slides section.lt .card,.reveal .slides section.lt .rule{box-shadow:0 2px 8px rgba(34,43,90,.065)}
+.reveal .slides section.dk .card,.reveal .slides section.dk .rule{box-shadow:0 3px 12px rgba(0,0,0,.12)}
+.reveal .slides section .pycell{box-shadow:0 5px 16px rgba(21,27,60,.12)}
+.reveal .slides section .dig-link,.reveal .slides section .return-link{text-decoration:underline;text-underline-offset:4px;text-decoration-color:rgba(23,179,163,.45)}
+.reveal .slides section button{transition:background-color .14s ease,border-color .14s ease,box-shadow .14s ease}
+.reveal .slides section button:focus-visible{outline:3px solid #f2b53c;outline-offset:3px}
+@keyframes u-enter{from{opacity:.15;transform:translateY(6px)}to{opacity:1;transform:translateY(0)}}
+@keyframes u-rule{from{transform:scaleX(.94);opacity:.3}to{transform:scaleX(1);opacity:1}}
+@media(prefers-reduced-motion:no-preference){
+ .reveal:not(.none) .slides section.present:not(.stack)>:is(h1,h2){animation:u-enter .22s ease-out both}
+ .reveal:not(.none) .slides section.present:not(.stack)>:is(.rule,.card,.two-col,.three-col,.pycell,.xt,.vtab):not(.fragment){animation:u-enter .24s ease-out both;animation-delay:35ms}
+ .reveal:not(.none) .slides section.present:not(.stack)>.bar{transform-origin:left;animation:u-rule .24s ease-out both}
+}
+.reveal.none .slides section,.reveal.none .slides section *{animation:none!important;transition:none!important}
+@media(prefers-reduced-motion:reduce){.reveal .slides section,.reveal .slides section *{animation:none!important;transition:none!important}}
+@media print{.reveal .slides section,.reveal .slides section *{animation:none!important;transition:none!important}}
+</style><style>.slides section[id]{padding-bottom:24px} #trace-state{font-size:25px} #trace-output{color:#17b3a3} .reveal .slides section .code{font-size:25px}</style></head>
+<body>
+<div class="reveal"><div class="slides"><section class="dk" data-background-color="#151B3C" id="title"><div class="badges"><span class="bg">IG + AS</span></div><div class="bar"></div><h2>Giving Instructions Names</h2><p class="accent3">U05d · PSEUDOCODE FOUNDATIONS</p><p>A name. A value. A step another person can follow.</p><div id="aud-btns"><button onclick="setAud('ig')">IGCSE 0478 ▶</button> <button onclick="setAud('al')">AS 9618 ▶</button></div><p id="aud-sub"></p><p hidden="" id="aud-chip"></p><a href="#/objectives" id="obj-btn">🎯 Today’s objectives →</a>
+</section><section class="lt" data-background-color="#F4F6FB" id="objectives"><div class="badges"><span class="bg">IG + AS</span></div><div class="bar"></div><h2>From an instruction to a precise statement</h2><div class="rule">Name the information a small task must remember.</div><div class="rule">Declare a type; initialise a value; trace a later assignment.</div><div class="rule">Use a constant, INPUT and OUTPUT in a short sequence.</div><div class="rule">Use your board’s spelling; explain CHAR and STRING.<span data-aud="al"> AS also uses DATE.</span></div>
+</section><section class="lt" data-background-color="#F4F6FB" id="opener"><div class="badges"><span class="bg">IG + AS</span></div><div class="bar"></div><h2>While we settle: run a tiny ticket desk</h2><div class="rule">A ticket costs 8 currency units. One visitor buys 3 tickets; the next buys 5.</div><div class="rule">On paper: write both totals. Circle what changes between visitors. Underline what stays fixed.</div><div class="rule">Give each piece of information a clear name. No code or computer needed.</div><div class="rule">4 minutes · work independently · no marks</div>
+</section><section class="lt" data-background-color="#F4F6FB" id="names"><div class="badges"><span class="bg">IG + AS</span></div><div class="bar"></div><h2>What does the desk need to remember?</h2><table class="xt"><tr><th>Name</th><th>Role</th><th>First visitor</th></tr><tr><td>TicketCount</td><td>How many tickets</td><td>3</td></tr><tr><td>TicketPrice</td><td>Fixed price per ticket</td><td>8</td></tr><tr><td>Total</td><td>Amount due</td><td>24</td></tr></table><div class="rule">An identifier is a name you choose. A variable’s value may change.</div><div class="rule">A constant holds a value fixed during this run. Tomorrow’s source-code edit is a different event.</div><div class="rule">Pseudocode writes precise instructions for a reader. This lesson uses Cambridge’s conventions.</div>
+</section><section class="lt" data-background-color="#F4F6FB" id="declare"><div class="badges"><span class="bg">IG + AS</span></div><div class="bar"></div><h2>A name, a starting value, a later change</h2><table class="xt"><tr><th>Action</th><th>Meaning</th><th>Statement</th></tr><tr><td>Declare</td><td>Introduce name and type</td><td>DECLARE TicketCount : INTEGER</td></tr><tr><td>Initialise</td><td>Give its first value</td><td>TicketCount ← 3</td></tr><tr><td>Assign later</td><td>Replace its stored value</td><td>TicketCount ← 5</td></tr></table><div class="rule">DECLARE alone does not give TicketCount the value zero.</div><div class="rule">Read the arrow as “receives”. The value goes into the name on the left.</div>
+</section><section class="lt" data-background-color="#F4F6FB" id="types"><div class="badges"><span class="bg">IG + AS</span></div><div class="bar"></div><h2>Five kinds of value</h2><table class="xt"><tr><th>Type</th><th>Meaning</th><th>Example</th></tr><tr><td>INTEGER</td><td>Whole number</td><td>−3</td></tr><tr><td>REAL</td><td>May have a fractional part</td><td>4.75</td></tr><tr><td>BOOLEAN</td><td>Logical value</td><td>TRUE / FALSE</td></tr><tr><td>CHAR</td><td>One character</td><td>'R'</td></tr><tr><td>STRING</td><td>Zero or more characters</td><td>"Room 7"</td></tr></table>
+</section><section class="lt" data-background-color="#F4F6FB" id="char"><div class="badges"><span class="bg">IG + AS</span></div><div class="bar"></div><h2>One letter. Two possible contracts.</h2><pre class="code">DECLARE Initial : CHAR
+DECLARE Label : STRING
+Initial ← 'R'
+Label ← "R"</pre><div class="rule">CHAR requires one character, written in single quotes.</div><div class="rule">STRING can have zero, one or many characters, written in double quotes.</div><div class="rule">"" is an empty STRING. It is not a CHAR.</div>
+</section><section class="lt" data-aud="al" data-background-color="#F4F6FB" id="date-al"><div class="badges"><span class="bg">AS 9618</span></div><div class="bar"></div><h2>AS: a calendar day is a value</h2><pre class="code">DECLARE VisitDate : DATE
+VisitDate ← 15/04/2027</pre><div class="rule">DATE represents a valid calendar date. Here the format is dd/mm/yyyy.</div><div class="rule">31/04/2027 is not a valid calendar date.</div><div class="rule">"15/04/2027" is a quoted STRING; the DATE above is not quoted.</div>
+</section><section class="lt" data-background-color="#F4F6FB" id="arrow"><div class="badges"><span class="bg">IG + AS</span></div><div class="bar"></div><h2>The right side is read first</h2><pre class="code">DECLARE Count : INTEGER
+Count ← 3
+Count ← Count + 2
+OUTPUT Count</pre><div class="rule">Read old Count: 3 → calculate 3 + 2 → store 5.</div><div class="rule">Count ← Count + 2 changes the state; it is not an equation.</div><div class="rule">Count = 5 asks whether the values are equal. It does not change Count.</div>
+</section><section class="lt" data-aud="ig" data-background-color="#F4F6FB" id="constant-ig"><div class="badges"><span class="bg">IGCSE 0478</span></div><div class="bar"></div><h2>IGCSE: one price, one definition</h2><pre class="code">CONSTANT TicketPrice ← 8</pre><div class="rule">Use TicketPrice wherever the fixed price is needed.</div><div class="rule">Define the price once; avoid inconsistent copies; make a later update in one place.</div><div class="rule">The declaration uses a literal value here, not a calculation or another name.</div>
+</section><section class="lt" data-aud="al" data-background-color="#F4F6FB" id="constant-al"><div class="badges"><span class="bg">AS 9618</span></div><div class="bar"></div><h2>AS: one price, one definition</h2><pre class="code">CONSTANT TicketPrice = 8</pre><div class="rule">Use TicketPrice wherever the fixed price is needed.</div><div class="rule">Define the price once; avoid inconsistent copies; make a later update in one place.</div><div class="rule">The declaration uses a literal value here, not a calculation or another name.</div>
+</section><section class="lt" data-background-color="#F4F6FB" id="io"><div class="badges"><span class="bg">IG + AS</span></div><div class="bar"></div><h2>Input brings a value in. Output sends one out.</h2><pre class="code">DECLARE TicketCount : INTEGER
+OUTPUT "How many tickets?"
+INPUT TicketCount
+OUTPUT TicketCount</pre><div class="rule">OUTPUT displays a message or value. A prompt does not store an answer.</div><div class="rule">INPUT TicketCount reads and stores the entered value in TicketCount.</div><div class="rule">For this task, assume the user enters a valid whole number.</div>
+</section><section class="lt" data-background-color="#F4F6FB" id="plan"><div class="badges"><span class="bg">IG + AS</span></div><div class="bar"></div><h2>Before statements: follow the data</h2><div class="rule">A badge costs 6. Read a visitor label and a valid whole-number quantity. Display the label and total.</div><div class="rule">First draw or number the steps: read label → read quantity → calculate total → output both.</div><div class="rule">List the names and types. Which name should be a constant?</div>
+</section><section class="lt" data-aud="ig" data-background-color="#F4F6FB" id="notation-ig"><div class="badges"><span class="bg">IGCSE 0478</span></div><div class="bar"></div><h2>IGCSE: the exam spelling</h2><pre class="code">DECLARE Label : STRING
+DECLARE Quantity : INTEGER
+DECLARE Total : INTEGER
+CONSTANT BadgePrice ← 6
+INPUT Label
+INPUT Quantity
+Total ← BadgePrice * Quantity
+OUTPUT Label, ": ", Total</pre><div class="rule">For input "Visitor", 4 the output is Visitor: 24.</div>
+</section><section class="lt" data-aud="al" data-background-color="#F4F6FB" id="notation-al"><div class="badges"><span class="bg">AS 9618</span></div><div class="bar"></div><h2>AS: the exam spelling</h2><pre class="code">DECLARE Label : STRING
+DECLARE Quantity : INTEGER
+DECLARE Total : INTEGER
+CONSTANT BadgePrice = 6
+INPUT Label
+INPUT Quantity
+Total ← BadgePrice * Quantity
+OUTPUT Label, ": ", Total</pre><div class="rule">For input "Visitor", 4 the output is Visitor: 24.</div>
+</section><section class="lt" data-background-color="#F4F6FB" id="trace"><div class="badges"><span class="bg">IG + AS</span></div><div class="bar"></div><h2>🎮 Be the ticket desk</h2><pre class="code">DECLARE Count : INTEGER
+DECLARE Total : INTEGER
+Count ← 3
+Total ← Count * 8
+Count ← 5
+OUTPUT Total</pre><p>Predict the next state before revealing each step.</p><div class="steps"><div id="trace-line">Not started</div><div id="trace-state">Count: not initialised · Total: not initialised</div></div><p id="trace-output">Output: none</p><button id="trace-back">← Back</button> <button id="trace-next">Next step →</button> <button id="trace-reset">Restart</button>
+</section><section class="lt" data-aud="ig" data-background-color="#F4F6FB" id="rehearsal-ig"><div class="badges"><span class="bg">IGCSE 0478</span></div><div class="bar"></div><h2>IGCSE: write it before checking</h2><div class="rule">Fresh authored rehearsal. Declare Label as STRING and assign "The garden". Declare Initial as CHAR and assign 'G'. Write one statement in each box. [2]</div><div class="exact" data-check="ig"><label>Declare Label<input aria-label="Declare Label"/></label><label>Assign Label<input aria-label="Assign Label"/></label><label>Declare Initial<input aria-label="Declare Initial"/></label><label>Assign Initial<input aria-label="Assign Initial"/></label><button class="check">Check statements</button> <button class="reset">Retry</button><div aria-live="polite" class="feedback"></div><div class="solution" hidden=""></div></div><div class="lanes"><div><b>📝 IN THE EXAM</b>This authored instance follows a published shape; the displayed points apply to this task.</div><div><b>🏛 IN REALITY</b>This local checker supports the stated statement forms. It does not judge open-ended explanations.</div></div>
+</section><section class="lt" data-aud="ig" data-background-color="#F4F6FB" id="lens-ig"><div class="badges"><span class="bg">IGCSE 0478</span></div><div class="bar"></div><h2>IGCSE: how the questions ask</h2><table class="xt"><tr><th>Shape</th><th>Stem</th><th>Marks here</th><th>Common loss</th></tr><tr><td>Declare + assign</td><td>Write the statements</td><td>2 IG / 3 AS</td><td>Missing type or starting value</td></tr><tr><td>Types</td><td>Choose a type; give an example</td><td>1 per item</td><td>CHAR versus STRING; quoted Boolean</td></tr><tr><td>I/O sequence</td><td>Write an algorithm</td><td>Read the task</td><td>Output used where input was needed</td></tr></table><div class="rule">These are authored practice tariffs. Read the actual task and mark total.</div><div class="rule">IG: use pseudocode for coding solutions outside the permitted extended scenario.</div>
+</section><section class="lt" data-aud="al" data-background-color="#F4F6FB" id="rehearsal-al"><div class="badges"><span class="bg">AS 9618</span></div><div class="bar"></div><h2>AS: write it before checking</h2><div class="rule">Fresh authored rehearsal. Declare VisitDate as DATE and assign 06/10/2026 (dd/mm/yyyy). [3]</div><div class="exact" data-check="al"><label>Declare VisitDate<input aria-label="Declare VisitDate"/></label><label>Assign VisitDate<input aria-label="Assign VisitDate"/></label><button class="check">Check statements</button> <button class="reset">Retry</button><div aria-live="polite" class="feedback"></div><div class="solution" hidden=""></div></div><div class="lanes"><div><b>📝 IN THE EXAM</b>This authored instance follows a published shape; the displayed points apply to this task.</div><div><b>🏛 IN REALITY</b>This local checker supports the stated statement forms. It does not judge open-ended explanations.</div></div>
+</section><section class="lt" data-aud="al" data-background-color="#F4F6FB" id="lens-al"><div class="badges"><span class="bg">AS 9618</span></div><div class="bar"></div><h2>AS: how the questions ask</h2><table class="xt"><tr><th>Shape</th><th>Stem</th><th>Marks here</th><th>Common loss</th></tr><tr><td>Declare + assign</td><td>Write the statements</td><td>2 IG / 3 AS</td><td>Missing type or starting value</td></tr><tr><td>Types</td><td>Choose a type; give an example</td><td>1 per item</td><td>CHAR versus STRING; quoted Boolean</td></tr><tr><td>I/O sequence</td><td>Write an algorithm</td><td>Read the task</td><td>Output used where input was needed</td></tr></table><div class="rule">These are authored practice tariffs. Read the actual task and mark total.</div><div class="rule">AS Paper 2 algorithm answers use pseudocode. Python is voluntary classroom practice.</div>
+</section><section class="lt" data-background-color="#F4F6FB" id="vocab"><div class="badges"><span class="bg">IG + AS</span></div><div class="bar"></div><h2>Vocabulary · 词汇</h2><table class="xt"><tr><th>Word</th><th>中文 · pinyin</th><th>Ask yourself</th></tr><tr><td>identifier</td><td>标识符 · biāo shí fú</td><td>What is this name for?</td></tr><tr><td>declaration</td><td>声明 · shēng míng</td><td>What kind of value?</td></tr><tr><td>initialisation</td><td>初始化 · chū shǐ huà</td><td>What starting value?</td></tr><tr><td>assignment</td><td>赋值 · fù zhí</td><td>What value replaces the old one?</td></tr><tr><td>input / output</td><td>输入 / 输出 · shū rù / shū chū</td><td>Into storage, or out to the reader?</td></tr></table>
+</section><section class="dk" data-background-color="#151B3C" id="exit"><div class="badges"><span class="bg">IG + AS</span></div><div class="bar"></div><h2>Can someone else follow your instructions?</h2><div class="rule">Write the declaration for a whole-number counter. Initialise it to 4, increase it by 3, then output it.</div><div class="rule">Explain why the output is 7, rather than an equation to solve.</div><div class="rule">Next foundations: choices and repetition. Later, U08b compares a complete algorithm as words, diagrams and code.</div>
+</section></div></div>
+<button id="fs-btn" onclick="document.documentElement.requestFullscreen().catch(()=&gt;{})">⛶ Fullscreen</button>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/reveal.js/4.6.1/reveal.min.js"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/reveal.js/4.6.1/plugin/notes/notes.min.js"></script><script>var AUD=new URLSearchParams(location.search).get('aud');if(!['ig','al'].includes(AUD))AUD=null;
+function setAud(a){let u=new URL(location.href);if(a)u.searchParams.set('aud',a);else u.searchParams.delete('aud');u.hash='/title';location.href=u.href}
+(function(){if(!AUD){document.querySelectorAll('.slides>section').forEach((x,i)=>{if(i)x.remove()});document.getElementById('objectives')?.remove();document.getElementById('obj-btn')?.remove();document.getElementById('py-chip')?.remove();return}document.querySelectorAll('[data-aud]').forEach(x=>{if(x.dataset.aud!==AUD)x.remove()});document.querySelectorAll('.slides>section:not([id])').forEach(x=>{if(!x.querySelector('section'))x.remove()});let chip=document.getElementById('aud-chip');chip.hidden=false;chip.innerHTML=(AUD==='ig'?'IGCSE 0478':'AS 9618')+' route · <a href="javascript:void(0)" onclick="setAud(null)">Change route</a>';document.getElementById('aud-btns').hidden=true;document.getElementById('aud-sub').textContent='→ Follow the lesson · predict before each step';})();
+</script><script>function initChecks(){
+ const normal=s=>s.trim().replace(/[“”]/g,'"').replace(/[‘’]/g,"'");
+ document.querySelectorAll('.exact').forEach(host=>{
+  const inputs=[...host.querySelectorAll('input')],fb=host.querySelector('.feedback'),sol=host.querySelector('.solution');
+  const clear=()=>{fb.textContent='Answer changed. Check this version.';sol.hidden=true;sol.textContent=''};
+  inputs.forEach(i=>{i.addEventListener('input',clear);i.addEventListener('keydown',e=>e.stopPropagation())});
+  host.querySelector('.reset').onclick=()=>{inputs.forEach(x=>x.value='');fb.textContent='Ready for a fresh attempt.';sol.hidden=true;sol.textContent=''};
+  host.querySelector('.check').onclick=()=>{
+   let a=inputs.map(x=>normal(x.value)),score=0,cap=0,model='',flags=[];
+   if(a.every(x=>!x)){fb.textContent='Not attempted — enter your answer first.';sol.hidden=true;return}
+   if(host.dataset.check==='ig'){
+    flags=[/^DECLARE\s+Label\s*:\s*STRING$/i.test(a[0]),/^Label\s*(?:←|<-)\s*"The garden"$/.test(a[1].replace(/^label/i,'Label')),/^DECLARE\s+Initial\s*:\s*CHAR$/i.test(a[2]),/^Initial\s*(?:←|<-)\s*'G'$/.test(a[3].replace(/^initial/i,'Initial'))];
+    score=Math.floor(flags.filter(Boolean).length/2);cap=2;model='DECLARE Label : STRING\nLabel ← "The garden"\nDECLARE Initial : CHAR\nInitial ← \'G\'\nOne mark for any two correct lines; maximum 2.';
+   }else if(host.dataset.check==='al'){
+    const assignment=/^VisitDate\s*(?:←|<-)\s*(\d{1,2})\s*\/\s*(\d{1,2})\s*\/\s*(\d{4})$/i.exec(a[1]);
+    flags=[/^DECLARE\s+VisitDate\s*:\s*DATE$/i.test(a[0]),!!assignment,!!assignment&&+assignment[1]===6&&+assignment[2]===10&&+assignment[3]===2026];score=flags.filter(Boolean).length;cap=3;
+    model='DECLARE VisitDate : DATE\nVisitDate ← 06/10/2026\n[1] declaration; [1] assignment to VisitDate; [1] correct date value (dd/mm/yyyy).';
+   }else{
+    flags=[a[0]==='1',/^DATE$/i.test(a[1])];score=flags.filter(Boolean).length;cap=2;model='Line 1 is the declaration. DATE is the type. Line 2 assigns its starting value.';
+   }
+   fb.textContent=`${score} / ${cap} · `+flags.map((v,i)=>`${v?'✓':'✗'} ${i+1}`).join('   ');sol.textContent=model;sol.hidden=false;
+  };
+ });
+}
+</script><script>function initTrace(){let i=0;const states=[['Not started','not initialised','not initialised','none'],['DECLARE Count : INTEGER','not initialised','not initialised','none'],['DECLARE Total : INTEGER','not initialised','not initialised','none'],['Count ← 3',3,'not initialised','none'],['Total ← Count * 8',3,24,'none'],['Count ← 5',5,24,'none'],['OUTPUT Total',5,24,24]];function draw(){let s=states[i];document.getElementById('trace-line').textContent=s[0];document.getElementById('trace-state').textContent='Count: '+s[1]+' · Total: '+s[2];document.getElementById('trace-output').textContent='Output: '+s[3];document.getElementById('trace-back').disabled=i===0;document.getElementById('trace-next').disabled=i===6}document.getElementById('trace-next').onclick=()=>{i=Math.min(6,i+1);draw()};document.getElementById('trace-back').onclick=()=>{i=Math.max(0,i-1);draw()};document.getElementById('trace-reset').onclick=()=>{i=0;draw()};draw()}
+Reveal.initialize({hash:true,slideNumber:'c/t',width:1280,height:720,margin:.04,center:false,transition:matchMedia('(prefers-reduced-motion: reduce)').matches?'none':'fade',transitionSpeed:'fast',backgroundTransition:'none',plugins:[RevealNotes]}).then(()=>{if(AUD){initChecks();initTrace()}});</script><script type="application/json" id="course-routes">{"ig": {"slides": 17, "cells": 0}, "al": {"slides": 18, "cells": 0}}</script><script type="application/json" id="paper-spend">[]</script></body>
+</html>
