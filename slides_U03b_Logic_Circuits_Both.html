@@ -173,11 +173,17 @@ button:disabled{opacity:.4;cursor:default}
 .reveal.none .slides section,.reveal.none .slides section *{animation:none!important;transition:none!important}
 @media(prefers-reduced-motion:reduce){.reveal .slides section,.reveal .slides section *{animation:none!important;transition:none!important}}
 @media print{.reveal .slides section,.reveal .slides section *{animation:none!important;transition:none!important}}
+</style><meta name="classroom-submissions" content="disabled-human-review">
+<style id="classroom-foundations">
+.classroom-nav{font-size:.43em!important;line-height:1.35!important;color:#536183;margin:10px 0 0!important;}
+.dk .classroom-nav{color:#b8c7e9;}
+.companion-status{font-size:.48em!important;line-height:1.35!important;padding:8px 12px;border:1px solid #8fa1cb;border-radius:8px;}
+.classroom-reference{max-height:430px;overflow:auto;}
+@media(prefers-reduced-motion:reduce){.reveal *{animation-duration:0s!important;transition-duration:0s!important;}}
 </style></head>
 <body>
 <div class="reveal"><div class="slides"><section><section class="dk" data-background-color="#151B3C" id="title"><div class="badges"><span class="bg bg-hole">IG + AS</span></div>
 <div class="bar" style="background:var(--accent1)"></div>
-
 <p style="font-size:.55em; color:var(--accent3); letter-spacing:.12em; margin-bottom:0;">COMPUTER SCIENCE · U3b · LOGIC CIRCUITS</p>
 <h1 style="margin:.1em 0;">Logic Circuits</h1>
 <p style="font-size:.7em; margin-top:0;">Words into Wires</p>
@@ -186,18 +192,17 @@ button:disabled{opacity:.4;cursor:default}
       <span class="accent3">🕳️</span>  ·  badges top-right show whose exam it's on
     </p>
 <p style="margin-top:1.6em;"><button id="obj-btn" onclick="Reveal.down()">🎯 objectives</button></p>
-
-<div id="aud-btns"><button onclick="setAud('ig')">IGCSE 0478 ▶</button> <button onclick="setAud('al')">AS 9618 ▶</button></div><p id="aud-sub"></p><p id="aud-chip" style="display:none"></p></section><section class="dk" data-background-color="#151B3C" id="objectives"><div class="badges"><span class="bg bg-hole">IG + AS</span></div>
+<div id="aud-btns"><button onclick="setAud('ig')">IGCSE 0478 ▶</button> <button onclick="setAud('al')">AS 9618 ▶</button></div><p id="aud-sub"></p><p id="aud-chip" style="display:none"></p>
+</section><section class="dk" data-background-color="#151B3C" id="objectives"><div class="badges"><span class="bg bg-hole">IG + AS</span></div>
 <div class="bar" style="background:var(--accent3)"></div>
-
 <h2>🎯 Today you will be able to</h2>
 <div class="rule"><strong class="accent1">1.</strong> Translate between problem statement, logic expression, circuit and truth table — in <em>any</em> direction</div>
 <div class="rule"><strong class="accent1">2.</strong> Build a working circuit for a real problem (a burglar alarm)</div>
 <div class="rule accent3"><strong class="accent3">3.</strong> Work backward from a truth table to a circuit that produces it</div>
 <div class="rule accent2">4. Explore NAND constructions, addition and feedback as <b>enrichment for both groups</b>.</div>
-</section></section><section class="lt" data-background-color="#F4F6FB" id="nand-question"><div class="badges"><span class="bg bg-hole">SHARED · ENRICHMENT</span></div>
-<div class="bar" style="background:var(--accent2)"></div>
 
+</section></section><section data-classroom-stack="nand-question"><section class="lt" data-background-color="#F4F6FB" id="nand-question"><div class="badges"><span class="bg bg-hole">SHARED · ENRICHMENT</span></div>
+<div class="bar" style="background:var(--accent2)"></div>
 <h2>The debt is due: can one gate do it?</h2>
 <div class="two-col">
 <div style="font-size:.74em;">
@@ -207,7 +212,7 @@ button:disabled{opacity:.4;cursor:default}
 <div class="center fragment" data-fragment-index="1">
 <div class="card center" style="display:inline-block; padding:22px 34px;">
 <div class="circ" style="width:190px;">
-<svg viewBox="0 0 130 70">
+<svg viewbox="0 0 130 70">
 <line stroke="#222B5A" stroke-width="3" x1="0" x2="30" y1="20" y2="20"></line>
 <line stroke="#222B5A" stroke-width="3" x1="0" x2="30" y1="50" y2="50"></line>
 <path d="M30 8 H62 A27 27 0 0 1 62 62 H30 Z" fill="none" stroke="#222B5A" stroke-width="3"></path>
@@ -220,16 +225,15 @@ button:disabled{opacity:.4;cursor:default}
 </div>
 </div>
 </div>
-
-<div class="lanes"><div><b>📝 IN THE EXAM</b>Enrichment for both groups; it is not a required AS/IG method.</div><div><b>🏛 IN REALITY</b>Use the stated model; device delays and implementation details still matter.</div></div></section><section><section class="lt" data-background-color="#F4F6FB" id="nand-proof"><div class="badges"><span class="bg bg-hole">SHARED · ENRICHMENT</span></div>
+<div class="lanes"><div><b>📝 IN THE EXAM</b>Enrichment for both groups; it is not a required AS/IG method.</div><div><b>🏛 IN REALITY</b>Use the stated model; device delays and implementation details still matter.</div></div>
+<p class="classroom-nav">Write / explain first · ↓ optional check and worked reference · → next idea</p></section><section class="lt" data-background-color="#F4F6FB" id="nand-proof"><div class="badges"><span class="bg bg-hole">SHARED · ENRICHMENT</span></div>
 <div class="bar" style="background:var(--accent2)"></div>
-
 <h2>Watch one gate become three</h2>
 <div class="three-col" style="font-size:.62em;">
 <div class="card">
 <strong class="accent1">① NOT — tie the inputs together</strong>
 <div class="circ" style="width:230px; margin:8px auto;">
-<svg viewBox="0 0 300 90">
+<svg viewbox="0 0 300 90">
 <line stroke="#222B5A" stroke-width="2.5" x1="26" x2="48" y1="44" y2="44"></line>
 <circle cx="48" cy="44" fill="#222B5A" r="4"></circle>
 <line stroke="#222B5A" stroke-width="2.5" x1="48" x2="48" y1="44" y2="29"></line>
@@ -252,7 +256,7 @@ button:disabled{opacity:.4;cursor:default}
 <div class="card fragment">
 <strong class="accent1">② AND — flip the flip</strong>
 <div class="circ" style="width:250px; margin:8px auto;">
-<svg viewBox="0 0 300 90">
+<svg viewbox="0 0 300 90">
 <line stroke="#222B5A" stroke-width="2.5" x1="24" x2="60" y1="29" y2="29"></line>
 <line stroke="#222B5A" stroke-width="2.5" x1="24" x2="60" y1="59" y2="59"></line>
 <g transform="translate(30,9)">
@@ -281,7 +285,7 @@ button:disabled{opacity:.4;cursor:default}
 <div class="card fragment">
 <strong class="accent1">③ OR — De Morgan's re-costume</strong>
 <div class="circ" style="width:250px; margin:8px auto;">
-<svg viewBox="0 0 320 150">
+<svg viewbox="0 0 320 150">
 <line stroke="#222B5A" stroke-width="2.5" x1="26" x2="40" y1="30" y2="30"></line>
 <circle cx="40" cy="30" fill="#222B5A" r="4"></circle>
 <line stroke="#222B5A" stroke-width="2.5" x1="40" x2="40" y1="30" y2="25"></line><line stroke="#222B5A" stroke-width="2.5" x1="40" x2="80" y1="25" y2="25"></line>
@@ -318,20 +322,18 @@ button:disabled{opacity:.4;cursor:default}
 </div>
 <div class="fragment rule accent2" style="margin-top:8px;"><b>Logical sufficiency:</b> these constructions provide NOT, AND and OR from NAND. That proves what can be built, not what every chip contains. Real designs choose from many cell functions.</div>
 <div class="dig">⬇ the other universal gate went to the Moon 🕳️</div>
-
-<div class="lanes"><div><b>📝 IN THE EXAM</b>Enrichment for both groups; it is not a required AS/IG method.</div><div><b>🏛 IN REALITY</b>Use the stated model; device delays and implementation details still matter.</div></div></section><section class="lt" data-background-color="#F4F6FB" data-hole="true" id="apollo"><div class="badges"><span class="bg bg-hole">↓ SHARED · ENRICHMENT</span></div>
+<div class="lanes"><div><b>📝 IN THE EXAM</b>Enrichment for both groups; it is not a required AS/IG method.</div><div><b>🏛 IN REALITY</b>Use the stated model; device delays and implementation details still matter.</div></div>
+</section><section class="lt" data-background-color="#F4F6FB" data-hole="true" id="apollo"><div class="badges"><span class="bg bg-hole">↓ SHARED · ENRICHMENT</span></div>
 <div class="bar" style="background:var(--accent3)"></div>
-
 <h2>The other universal gate — and the Moon</h2>
 <div class="two-col" style="font-size:.68em;">
 <div class="card"><b>🌗 NOR reached the Moon.</b><br/>The Apollo Guidance Computer used dual three-input NOR devices for its logic. That is a documented hardware choice, not a rule for all computers.<br/><br/><b>Try the mirrored construction:</b> NOR(A,A) gives NOT A. Inverting NOR(A,B) gives OR.</div>
 <div class="card"><b>Can NOR also make AND?</b><br/>First form NOT A and NOT B using tied-input NOR gates. Feed them to another NOR.<br/><br/>Check all four rows: NOT((NOT A) OR (NOT B)) gives <b>0001</b>. Three NORs have become AND.</div>
 </div>
 <div class="rule" style="margin-top:14px;"><b>Keep the distinction:</b> a universal gate can build every Boolean function; a real computer also needs memory, timing, power and interfaces. The historical three-input NOR is beyond these boards’ gate-drawing scope.</div>
-
-<p class="source"><a href="https://www.klabs.org/history/ech/scd/" rel="noopener" target="_blank">NASA Office of Logic Design: Apollo NOR specifications</a></p><div class="lanes"><div><b>📝 IN THE EXAM</b>Enrichment for both groups; it is not a required AS/IG method.</div><div><b>🏛 IN REALITY</b>Use the stated model; device delays and implementation details still matter.</div></div></section></section><section class="lt" data-background-color="#F4F6FB" id="four-languages"><div class="badges"><span class="bg bg-hole">IG + AS</span></div>
+<p class="source"><a href="https://www.klabs.org/history/ech/scd/" rel="noopener" target="_blank">NASA Office of Logic Design: Apollo NOR specifications</a></p><div class="lanes"><div><b>📝 IN THE EXAM</b>Enrichment for both groups; it is not a required AS/IG method.</div><div><b>🏛 IN REALITY</b>Use the stated model; device delays and implementation details still matter.</div></div>
+</section></section><section class="lt" data-background-color="#F4F6FB" id="four-languages"><div class="badges"><span class="bg bg-hole">IG + AS</span></div>
 <div class="bar" style="background:var(--accent1)"></div>
-
 <h2>Four languages, one decision</h2>
 <div class="two-col">
 <div>
@@ -353,10 +355,9 @@ button:disabled{opacity:.4;cursor:default}
 <div class="rule accent3"><strong class="accent3">Meet today's specimen — the burglar alarm:</strong><br/><br/><em>"The alarm <span class="mono">A</span> sounds if the window sensor <span class="mono">W</span> and the motion sensor <span class="mono">M</span> both fire, or if the panic button <span class="mono">P</span> is pressed."</em><br/><br/>By the end of the hour this one sentence will have worn all four costumes.</div>
 </div>
 </div>
-
-<div class="lanes"><div><b>📝 IN THE EXAM</b>Follow the supplied representation; NOT has one input, the other gates two.</div><div><b>🏛 IN REALITY</b>Equivalent Boolean functions may have different physical implementations.</div></div></section><section class="lt" data-background-color="#F4F6FB" id="words"><div class="badges"><span class="bg bg-hole">IG + AS</span></div>
+<div class="lanes"><div><b>📝 IN THE EXAM</b>Follow the supplied representation; NOT has one input, the other gates two.</div><div><b>🏛 IN REALITY</b>Equivalent Boolean functions may have different physical implementations.</div></div>
+</section><section data-classroom-stack="words"><section class="lt" data-background-color="#F4F6FB" id="words"><div class="badges"><span class="bg bg-hole">IG + AS</span></div>
 <div class="bar" style="background:var(--accent1)"></div>
-
 <h2>English → expression</h2>
 <div class="two-col">
 <div style="font-size:.72em;">
@@ -375,11 +376,11 @@ button:disabled{opacity:.4;cursor:default}
 <tr><td>Exactly one sensor fires</td><td>W XOR M</td></tr>
 </table>
 <div class="fragment rule" style="margin-top:12px;"><strong class="accent1">Your turn (30 s):</strong> "The pump <span class="mono">X</span> runs if the tank is not full (<span class="mono">F</span>) and the switch <span class="mono">S</span> is on."<br/>
-<span style="font-size:.86em; color:#8890b5; font-style:italic;">Write it down before you look — the answer is on the next slide.</span></div>
+<span style="font-size:.86em; color:#8890b5; font-style:italic;">Write it down before you look — the answer is in the optional reference below.</span></div>
 </div>
 </div>
-
-<p class="source">Read the whole condition. Words such as “unless” need their context; define what a 1 means for each input.</p><div class="lanes"><div><b>📝 IN THE EXAM</b>Follow the supplied representation; NOT has one input, the other gates two.</div><div><b>🏛 IN REALITY</b>Equivalent Boolean functions may have different physical implementations.</div></div></section><section class="lt" data-background-color="#F4F6FB" id="pump-answer"><div class="badges"><span class="bg bg-hole">IG + AS</span></div>
+<p class="source">Read the whole condition. Words such as “unless” need their context; define what a 1 means for each input.</p><div class="lanes"><div><b>📝 IN THE EXAM</b>Follow the supplied representation; NOT has one input, the other gates two.</div><div><b>🏛 IN REALITY</b>Equivalent Boolean functions may have different physical implementations.</div></div>
+<p class="classroom-nav">Write / explain first · ↓ optional check and worked reference · → next idea</p></section><section class="lt" data-background-color="#F4F6FB" id="pump-answer"><div class="badges"><span class="bg bg-hole">IG + AS</span></div>
 <div class="bar" style="background:var(--accent1)"></div>
 <h2>Your turn — the answer</h2>
 <div class="rule" style="font-size:.9em;">
@@ -388,10 +389,9 @@ button:disabled{opacity:.4;cursor:default}
   </div>
 <p class="center" style="font-size:1.5em; margin:18px 0;"><span class="mono accent1"><strong>X = (NOT F) AND S</strong></span></p>
 <div class="rule" style="font-size:.82em;"><b>Negate the intended input.</b> With NOT evaluated first, NOT F AND S already means (NOT F) AND S. NOT(F AND S) is different: for F=0, S=0 it gives 1 even though the switch is off.</div>
-
-<div class="lanes"><div><b>📝 IN THE EXAM</b>Follow the supplied representation; NOT has one input, the other gates two.</div><div><b>🏛 IN REALITY</b>Equivalent Boolean functions may have different physical implementations.</div></div></section><section><section class="lt" data-background-color="#F4F6FB" id="einstein"><div class="badges"><span class="bg bg-hole">SHARED · ENRICHMENT</span></div>
+<div class="lanes"><div><b>📝 IN THE EXAM</b>Follow the supplied representation; NOT has one input, the other gates two.</div><div><b>🏛 IN REALITY</b>Equivalent Boolean functions may have different physical implementations.</div></div>
+</section></section><section><section class="lt" data-background-color="#F4F6FB" id="einstein"><div class="badges"><span class="bg bg-hole">SHARED · ENRICHMENT</span></div>
 <div class="bar" style="background:var(--accent3)"></div>
-
 <h2>Einstein's puzzle 🧩</h2>
 <div class="two-col">
 <div style="font-size:.7em;">
@@ -419,20 +419,18 @@ button:disabled{opacity:.4;cursor:default}
 </div>
 </div>
 <div class="dig">⬇ for the winners 🕳️</div>
-
-<div class="lanes"><div><b>📝 IN THE EXAM</b>Shared enrichment: practise satisfying every condition.</div><div><b>🏛 IN REALITY</b>A constraint model can describe many possible assignments, not just gate inputs.</div></div></section><section class="lt" data-background-color="#F4F6FB" data-hole="true" id="constraints"><div class="badges"><span class="bg bg-hole">↓ SHARED · ENRICHMENT</span></div>
+<div class="lanes"><div><b>📝 IN THE EXAM</b>Shared enrichment: practise satisfying every condition.</div><div><b>🏛 IN REALITY</b>A constraint model can describe many possible assignments, not just gate inputs.</div></div>
+</section><section class="lt" data-background-color="#F4F6FB" data-hole="true" id="constraints"><div class="badges"><span class="bg bg-hole">↓ SHARED · ENRICHMENT</span></div>
 <div class="bar" style="background:var(--accent3)"></div>
-
 <h2>For the winners — and for the machines</h2>
 <div class="two-col" style="font-size:.68em;">
 <div class="card"><strong class="accent3">🏆 The prize</strong><br/>Crack the 3-house version and you get the <strong>original</strong>: 5 houses, 5 nationalities, 5 drinks, 5 hobbies, 5 pets — 15 interlocking clues. The question is still the fish. It is printed, it is yours, and it is <em>not</em> going on this screen.</div>
 <div class="card"><strong class="accent1">🤖 What a machine does with it</strong><br/>Turn every attribute into a Boolean variable ("house 2 is blue" = one bit). Every clue becomes a constraint on those bits. Solving = finding an assignment where every clue outputs 1 — <strong>working backward from a table</strong>, which is related to the backward reasoning in this lesson… at industrial scale.</div>
 </div>
 <div class="rule" style="margin-top:14px;"><b>From puzzle to verification:</b> express a design’s requirements as constraints. A solver can search for an assignment that violates a property: a counterexample. The model and the property must describe the intended system.</div>
-
-<div class="lanes"><div><b>📝 IN THE EXAM</b>Shared enrichment: practise satisfying every condition.</div><div><b>🏛 IN REALITY</b>A constraint model can describe many possible assignments, not just gate inputs.</div></div></section></section><section class="lt" data-background-color="#F4F6FB" id="expression-circuit"><div class="badges"><span class="bg bg-hole">IG + AS</span></div>
+<div class="lanes"><div><b>📝 IN THE EXAM</b>Shared enrichment: practise satisfying every condition.</div><div><b>🏛 IN REALITY</b>A constraint model can describe many possible assignments, not just gate inputs.</div></div>
+</section></section><section class="lt" data-background-color="#F4F6FB" id="expression-circuit"><div class="badges"><span class="bg bg-hole">IG + AS</span></div>
 <div class="bar" style="background:var(--accent1)"></div>
-
 <h2>Expression → circuit</h2>
 <div class="two-col">
 <div style="font-size:.7em;">
@@ -442,7 +440,7 @@ button:disabled{opacity:.4;cursor:default}
 </div>
 <div class="center">
 <div class="circ" style="width:400px;">
-<svg viewBox="0 0 340 120">
+<svg viewbox="0 0 340 120">
 <g class="fragment" data-fragment-index="1">
 <line stroke="#222B5A" stroke-width="2.5" x1="26" x2="212" y1="85" y2="85"></line>
 <g transform="translate(180,35)">
@@ -471,15 +469,14 @@ button:disabled{opacity:.4;cursor:default}
 <p class="fragment smaller" data-fragment-index="2" style="color:#7a83a8; margin-top:4px; max-width:400px;">the OR is outside all brackets — so it went down first, at the output; the bracket became the AND that feeds it</p>
 </div>
 </div>
-
-<div class="lanes"><div><b>📝 IN THE EXAM</b>Follow the supplied representation; NOT has one input, the other gates two.</div><div><b>🏛 IN REALITY</b>Equivalent Boolean functions may have different physical implementations.</div></div></section><section class="lt" data-background-color="#F4F6FB" id="circuit-expression"><div class="badges"><span class="bg bg-hole">IG + AS</span></div>
+<div class="lanes"><div><b>📝 IN THE EXAM</b>Follow the supplied representation; NOT has one input, the other gates two.</div><div><b>🏛 IN REALITY</b>Equivalent Boolean functions may have different physical implementations.</div></div>
+</section><section class="lt" data-background-color="#F4F6FB" id="circuit-expression"><div class="badges"><span class="bg bg-hole">IG + AS</span></div>
 <div class="bar" style="background:var(--accent1)"></div>
-
 <h2>Circuit → expression <span class="smaller" style="color:#7a83a8;">(reading in reverse)</span></h2>
 <div class="two-col">
 <div class="center">
 <div class="circ" style="width:420px;">
-<svg viewBox="0 0 360 110">
+<svg viewbox="0 0 360 110">
 <line stroke="#222B5A" stroke-width="2.5" x1="26" x2="104" y1="28" y2="28"></line>
 <line stroke="#222B5A" stroke-width="2.5" x1="26" x2="104" y1="56" y2="56"></line>
 <g transform="translate(70,7)">
@@ -514,10 +511,9 @@ button:disabled{opacity:.4;cursor:default}
 <div class="fragment rule accent2"><strong>The bubble trap:</strong> <span class="mono">NOT (A AND B)</span> and <span class="mono">(NOT A) AND B</span> are <em>different circuits</em>. Where the bubble sits decides what gets flipped — the whole gate's output, or one input. Brackets are how you say which.</div>
 </div>
 </div>
-
-<div class="lanes"><div><b>📝 IN THE EXAM</b>Follow the supplied representation; NOT has one input, the other gates two.</div><div><b>🏛 IN REALITY</b>Equivalent Boolean functions may have different physical implementations.</div></div></section><section class="lt" data-background-color="#F4F6FB" id="forward-table"><div class="badges"><span class="bg bg-hole">IG + AS</span></div>
+<div class="lanes"><div><b>📝 IN THE EXAM</b>Follow the supplied representation; NOT has one input, the other gates two.</div><div><b>🏛 IN REALITY</b>Equivalent Boolean functions may have different physical implementations.</div></div>
+</section><section class="lt" data-background-color="#F4F6FB" id="forward-table"><div class="badges"><span class="bg bg-hole">IG + AS</span></div>
 <div class="bar" style="background:var(--accent1)"></div>
-
 <h2>Anything → truth table <span class="smaller" style="color:#7a83a8;">(you own this)</span></h2>
 <div class="two-col">
 <div style="font-size:.7em;">
@@ -539,10 +535,9 @@ button:disabled{opacity:.4;cursor:default}
 </table>
 </div>
 </div>
-
-<div class="lanes"><div><b>📝 IN THE EXAM</b>Follow the supplied representation; NOT has one input, the other gates two.</div><div><b>🏛 IN REALITY</b>Equivalent Boolean functions may have different physical implementations.</div></div></section><section><section class="lt" data-background-color="#F4F6FB" id="backward"><div class="badges"><span class="bg bg-hole">IG + AS</span></div>
+<div class="lanes"><div><b>📝 IN THE EXAM</b>Follow the supplied representation; NOT has one input, the other gates two.</div><div><b>🏛 IN REALITY</b>Equivalent Boolean functions may have different physical implementations.</div></div>
+</section><section><section class="lt" data-background-color="#F4F6FB" id="backward"><div class="badges"><span class="bg bg-hole">IG + AS</span></div>
 <div class="bar" style="background:var(--accent2)"></div>
-
 <h2>Working backward: table → circuit</h2>
 <div class="two-col">
 <div style="font-size:.7em;">
@@ -571,20 +566,18 @@ button:disabled{opacity:.4;cursor:default}
 </div>
 </div>
 <div class="dig">⬇ the pro's version 🕳️</div>
-
-<div class="lanes"><div><b>📝 IN THE EXAM</b>Follow the supplied representation; NOT has one input, the other gates two.</div><div><b>🏛 IN REALITY</b>Equivalent Boolean functions may have different physical implementations.</div></div></section><section class="lt" data-background-color="#F4F6FB" data-hole="true" id="simplification"><div class="badges"><span class="bg bg-hole">↓ SHARED · ENRICHMENT</span></div>
+<div class="lanes"><div><b>📝 IN THE EXAM</b>Follow the supplied representation; NOT has one input, the other gates two.</div><div><b>🏛 IN REALITY</b>Equivalent Boolean functions may have different physical implementations.</div></div>
+</section><section class="lt" data-background-color="#F4F6FB" data-hole="true" id="simplification"><div class="badges"><span class="bg bg-hole">↓ SHARED · ENRICHMENT</span></div>
 <div class="bar" style="background:var(--accent3)"></div>
-
 <h2>The pro's version</h2>
 <div class="two-col" style="font-size:.68em;">
 <div class="card"><b>The row-by-row construction can be long.</b> The alarm has five output-1 rows. Each three-signal AND term needs two two-input AND gates; combining five terms needs four two-input OR gates, plus input inversion.</div>
 <div class="card"><strong class="accent1">There is an algebra that dismantles the bloat.</strong><br/>One glimpse: <span class="mono">(W·M·P) OR (W·M·NOT P)</span> — two terms differing in exactly one letter — merge into <span class="mono">W·M</span>, and the letter <em>vanishes</em>. Rule by rule, the longer construction can be replaced by two gates. There's even a visual tool that does it by eye.</div>
 </div>
 <div class="rule" style="margin-top:14px;"><b>Optional A2 preview:</b> algebra and Karnaugh maps can reduce a construction’s gate count. Physical cost also depends on the cells and wiring. In AS/IG questions, follow the supplied structure; this is not an extra simplification requirement.</div>
-
-<div class="lanes"><div><b>📝 IN THE EXAM</b>Enrichment for both groups; it is not a required AS/IG method.</div><div><b>🏛 IN REALITY</b>Use the stated model; device delays and implementation details still matter.</div></div></section></section><section class="lt" data-background-color="#F4F6FB" id="forge"><div class="badges"><span class="bg bg-hole">IG + AS</span></div>
+<div class="lanes"><div><b>📝 IN THE EXAM</b>Enrichment for both groups; it is not a required AS/IG method.</div><div><b>🏛 IN REALITY</b>Use the stated model; device delays and implementation details still matter.</div></div>
+</section></section><section class="lt" data-background-color="#F4F6FB" id="forge"><div class="badges"><span class="bg bg-hole">IG + AS</span></div>
 <div class="bar" style="background:var(--accent3)"></div>
-
 <h2 style="margin-bottom:6px;">🎮 Circuit Forge</h2>
 <div style="display:flex; flex-direction:column; gap:8px; align-items:center;">
 <span class="g-navwrap"><button class="g-skip" id="fg-back" title="back to the previous question">← back</button><button class="g-skip" id="fg-skip" title="on to the next question, answered or not">next →</button></span><div class="mg-stage" id="fg-stage">Stage 1</div>
@@ -593,7 +586,7 @@ button:disabled{opacity:.4;cursor:default}
 <div>
 <!-- panel A2 -->
 <div class="circ" id="fgp-a2" style="width:300px; display:none;">
-<svg viewBox="0 0 340 110">
+<svg viewbox="0 0 340 110">
 <line stroke="#222B5A" stroke-width="2.5" x1="30" x2="120" y1="35" y2="35"></line>
 <line stroke="#222B5A" stroke-width="2.5" x1="30" x2="120" y1="73" y2="73"></line>
 <line stroke="#222B5A" stroke-width="2.5" x1="196" x2="240" y1="54" y2="54"></line>
@@ -605,7 +598,7 @@ button:disabled{opacity:.4;cursor:default}
 </div>
 <!-- panel B3 -->
 <div class="circ" id="fgp-b3" style="width:340px; display:none;">
-<svg viewBox="0 0 340 190">
+<svg viewbox="0 0 340 190">
 <line stroke="#222B5A" stroke-width="2.5" x1="30" x2="90" y1="42" y2="42"></line>
 <line stroke="#222B5A" stroke-width="2.5" x1="30" x2="90" y1="68" y2="68"></line>
 <line stroke="#222B5A" stroke-width="2.5" x1="166" x2="195" y1="55" y2="55"></line>
@@ -623,7 +616,7 @@ button:disabled{opacity:.4;cursor:default}
 </div>
 <!-- panel HA -->
 <div class="circ" id="fgp-ha" style="width:340px; display:none;">
-<svg viewBox="0 0 340 190">
+<svg viewbox="0 0 340 190">
 <line stroke="#222B5A" stroke-width="2.5" x1="30" x2="150" y1="34" y2="34"></line>
 <circle cx="62" cy="34" fill="#222B5A" r="4"></circle>
 <line stroke="#222B5A" stroke-width="2.5" x1="62" x2="62" y1="34" y2="124"></line>
@@ -655,15 +648,14 @@ button:disabled{opacity:.4;cursor:default}
 </div>
 </div>
 </div>
-
-<p class="source" id="forge-scope">Shared translation practice. The final two-output addition stage is enrichment for both groups.</p><div class="lanes"><div><b>📝 IN THE EXAM</b>Core stages practise translations; the two-output finale is enrichment.</div><div><b>🏛 IN REALITY</b>Matching the table establishes the function for the tested Boolean inputs.</div></div></section><section><section class="lt" data-background-color="#F4F6FB" id="half-adder"><div class="badges"><span class="bg bg-hole">SHARED · ENRICHMENT</span></div>
+<p class="source" id="forge-scope">Shared translation practice. The final two-output addition stage is enrichment for both groups.</p><div class="lanes"><div><b>📝 IN THE EXAM</b>Core stages practise translations; the two-output finale is enrichment.</div><div><b>🏛 IN REALITY</b>Matching the table establishes the function for the tested Boolean inputs.</div></div>
+</section><section><section class="lt" data-background-color="#F4F6FB" id="half-adder"><div class="badges"><span class="bg bg-hole">SHARED · ENRICHMENT</span></div>
 <div class="bar" style="background:var(--accent2)"></div>
-
 <h2>Two gates just did arithmetic</h2>
 <div class="two-col">
 <div class="center">
 <div class="circ" style="width:360px;">
-<svg viewBox="0 0 340 190">
+<svg viewbox="0 0 340 190">
 <line stroke="#222B5A" stroke-width="2.5" x1="30" x2="150" y1="34" y2="34"></line>
 <circle cx="62" cy="34" fill="#222B5A" r="4"></circle>
 <line stroke="#222B5A" stroke-width="2.5" x1="62" x2="62" y1="34" y2="124"></line>
@@ -698,10 +690,9 @@ button:disabled{opacity:.4;cursor:default}
 </div>
 </div>
 <div class="dig">⬇ watch the carry ripple 🕳️</div>
-
-<div class="lanes"><div><b>📝 IN THE EXAM</b>Enrichment for both groups; it is not a required AS/IG method.</div><div><b>🏛 IN REALITY</b>Use the stated model; device delays and implementation details still matter.</div></div></section><section class="lt" data-background-color="#F4F6FB" data-hole="true" id="ripple"><div class="badges"><span class="bg bg-hole">↓ SHARED · ENRICHMENT</span></div>
+<div class="lanes"><div><b>📝 IN THE EXAM</b>Enrichment for both groups; it is not a required AS/IG method.</div><div><b>🏛 IN REALITY</b>Use the stated model; device delays and implementation details still matter.</div></div>
+</section><section class="lt" data-background-color="#F4F6FB" data-hole="true" id="ripple"><div class="badges"><span class="bg bg-hole">↓ SHARED · ENRICHMENT</span></div>
 <div class="bar" style="background:var(--accent3)"></div>
-
 <h2>Watch the carry ripple</h2>
 <div class="center" style="font-size:.7em; margin:14px 0;">
 <div style="display:inline-flex; gap:10px; align-items:center;">
@@ -719,17 +710,16 @@ button:disabled{opacity:.4;cursor:default}
 <div class="card"><strong class="accent1">Try 0111 + 0001 in your head.</strong> Bit 0: 1+1 = write 0, carry 1. Bit 1: 1+0+carry = write 0, carry 1. Bit 2: same again. Bit 3: 0+0+carry = 1. Answer 1000 — the carry <strong>swept left like 0999+1 → 1000</strong>. That sweep is a real electrical wave crossing the chip.</div>
 <div class="card"><b>A bridge to subtraction:</b> an adder can be reused by supplying the complemented second operand and an initial carry of 1. Controllable inversion and carry-input circuitry make that selection possible. U06 explains why the arithmetic works.</div>
 </div>
-
-<div class="lanes"><div><b>📝 IN THE EXAM</b>Enrichment for both groups; it is not a required AS/IG method.</div><div><b>🏛 IN REALITY</b>Use the stated model; device delays and implementation details still matter.</div></div></section></section><section class="lt" data-background-color="#F4F6FB" id="drill"><div class="badges"><span class="bg bg-hole">IG + AS</span></div>
+<div class="lanes"><div><b>📝 IN THE EXAM</b>Enrichment for both groups; it is not a required AS/IG method.</div><div><b>🏛 IN REALITY</b>Use the stated model; device delays and implementation details still matter.</div></div>
+</section></section><section data-classroom-stack="drill"><section class="lt" data-background-color="#F4F6FB" id="drill"><div class="badges"><span class="bg bg-hole">IG + AS</span></div>
 <div class="bar" style="background:var(--accent2)"></div>
-
 <h2>Drill — exam wording, exam speed</h2>
 <div class="three-col" style="font-size:.64em;">
 <div class="card"><strong>1. English → expression.</strong><br/>"The heater <span class="mono">H</span> turns on if the temperature is low (<span class="mono">L</span>) and the window is not open (<span class="mono">W</span>)."<br/><br/>
 </div>
 <div class="card"><strong>2. Circuit → expression.</strong><br/>
 <div class="circ" style="width:220px; margin:6px auto;">
-<svg viewBox="0 0 340 190">
+<svg viewbox="0 0 340 190">
 <line stroke="#222B5A" stroke-width="3" x1="30" x2="90" y1="42" y2="42"></line>
 <line stroke="#222B5A" stroke-width="3" x1="30" x2="90" y1="68" y2="68"></line>
 <g transform="translate(60,20)">
@@ -755,18 +745,16 @@ button:disabled{opacity:.4;cursor:default}
 <br/>
 </div>
 </div>
-
-
-<div class="lanes"><div><b>📝 IN THE EXAM</b>Follow the supplied representation; NOT has one input, the other gates two.</div><div><b>🏛 IN REALITY</b>Equivalent Boolean functions may have different physical implementations.</div></div></section><section class="lt" data-background-color="#F4F6FB" id="drill-answer"><div class="badges"><span class="bg bg-hole">IG + AS</span></div>
+<div class="lanes"><div><b>📝 IN THE EXAM</b>Follow the supplied representation; NOT has one input, the other gates two.</div><div><b>🏛 IN REALITY</b>Equivalent Boolean functions may have different physical implementations.</div></div>
+<p class="classroom-nav">Write / explain first · ↓ optional check and worked reference · → next idea</p></section><section class="lt" data-background-color="#F4F6FB" id="drill-answer"><div class="badges"><span class="bg bg-hole">IG + AS</span></div>
 <div class="bar" style="background:var(--accent2)"></div>
-
 <h2>Check the three translations</h2>
 <div class="three-col" style="font-size:.64em;">
 <div class="card"><strong>1. English → expression.</strong><br/>"The heater <span class="mono">H</span> turns on if the temperature is low (<span class="mono">L</span>) and the window is not open (<span class="mono">W</span>)."<br/><br/>
 <span class="mono accent1">H = L AND (NOT W)</span></div>
 <div class="card"><strong>2. Circuit → expression.</strong><br/>
 <div class="circ" style="width:220px; margin:6px auto;">
-<svg viewBox="0 0 340 190">
+<svg viewbox="0 0 340 190">
 <line stroke="#222B5A" stroke-width="3" x1="30" x2="90" y1="42" y2="42"></line>
 <line stroke="#222B5A" stroke-width="3" x1="30" x2="90" y1="68" y2="68"></line>
 <g transform="translate(60,20)">
@@ -793,9 +781,10 @@ button:disabled{opacity:.4;cursor:default}
 <span class="" style="color:#7a83a8;">one 1-row = one AND term — the H9 recipe at its smallest</span></div>
 </div>
 <div class="rule accent2" style="margin-top:12px;"><strong>Habit check:</strong> brackets explicit · bubbles read as whole-gate flips · every branch gets its junction dot · working columns in every table.</div>
-
-<div class="lanes"><div><b>📝 IN THE EXAM</b>Follow the supplied representation; NOT has one input, the other gates two.</div><div><b>🏛 IN REALITY</b>Equivalent Boolean functions may have different physical implementations.</div></div></section><section class="lt" data-aud="ig" data-background-color="#F4F6FB" id="draw-ig"><div class="badges"><span class="bg bg-hole">IGCSE 0478</span></div><div class="bar"></div><h2>IG — draw it before revealing</h2><p class="source">0478 June 2022 /12 Q5, © UCLES. Original expressions; response layout adapted.</p><div class="rule"><b>X = ((A OR B) AND (NOT (B XOR C)) AND C)</b></div><div class="rule">Draw the circuit on paper. [5] Preserve the supplied expression. NOT has one input; all other gates have two.</div><div class="rule">Label the signals and show each connection clearly. Then move forward to compare with the model.</div><div class="draw-space">✎ Paper first · diagram and labels</div><div class="lanes"><div><b>📝 IN THE EXAM</b>Use this question’s mark allocation; there is no universal marks-per-gate rule.</div><div><b>🏛 IN REALITY</b>Human rubric checks drawings; local table checks assess the entered values.</div></div></section><section class="lt" data-aud="ig" data-background-color="#F4F6FB" id="draw-answer-ig"><div class="badges"><span class="bg bg-hole">IGCSE 0478</span></div><div class="bar"></div><h2>IG — compare the connections</h2><p class="source">0478 June 2022 /12 Q5, © UCLES. Original expressions; response layout adapted.</p><div class="two-col"><div><div class="circ" style="width:100%; max-width:400px; margin-top:6px;">
-<svg viewBox="0 0 560 250">
+<div class="lanes"><div><b>📝 IN THE EXAM</b>Follow the supplied representation; NOT has one input, the other gates two.</div><div><b>🏛 IN REALITY</b>Equivalent Boolean functions may have different physical implementations.</div></div>
+</section></section><section data-classroom-stack="draw-ig" data-aud="ig"><section class="lt" data-aud="ig" data-background-color="#F4F6FB" id="draw-ig"><div class="badges"><span class="bg bg-hole">IGCSE 0478</span></div><div class="bar"></div><h2>IG — draw it before revealing</h2><p class="source">0478 June 2022 /12 Q5, © UCLES. Original expressions; response layout adapted.</p><div class="rule"><b>X = ((A OR B) AND (NOT (B XOR C)) AND C)</b></div><div class="rule">Draw the circuit on paper. [5] Preserve the supplied expression. NOT has one input; all other gates have two.</div><div class="rule">Label the signals and show each connection clearly. Then move forward to compare with the model.</div><div class="draw-space">✎ Paper first · diagram and labels</div><div class="lanes"><div><b>📝 IN THE EXAM</b>Use this question’s mark allocation; there is no universal marks-per-gate rule.</div><div><b>🏛 IN REALITY</b>Human rubric checks drawings; local table checks assess the entered values.</div></div>
+<p class="classroom-nav">Write / explain first · ↓ optional check and worked reference · → next idea</p></section><section class="lt" data-aud="ig" data-background-color="#F4F6FB" id="draw-answer-ig"><div class="badges"><span class="bg bg-hole">IGCSE 0478</span></div><div class="bar"></div><h2>IG — compare the connections</h2><p class="source">0478 June 2022 /12 Q5, © UCLES. Original expressions; response layout adapted.</p><div class="two-col"><div><div class="circ" style="width:100%; max-width:400px; margin-top:6px;">
+<svg viewbox="0 0 560 250">
 <line stroke="#222B5A" stroke-width="3" x1="24" x2="110" y1="30" y2="30"></line>
 <line stroke="#222B5A" stroke-width="3" x1="24" x2="50" y1="90" y2="90"></line>
 <circle cx="50" cy="90" fill="#222B5A" r="4.5"></circle>
@@ -845,7 +834,9 @@ button:disabled{opacity:.4;cursor:default}
 <span class="gtag" style="left:45%; top:34%;">NOT</span>
 <span class="gtag" style="left:64%; top:22%;">AND</span>
 <span class="gtag" style="left:84%; top:41%;">AND</span>
-</div></div><div class="rubric" data-total="5"><p>Human check: tick only points present in your own drawing.</p><label><input type="checkbox"/> OR with inputs A and B</label><label><input type="checkbox"/> XOR with inputs B and C</label><label><input type="checkbox"/> NOT applied to that XOR output</label><label><input type="checkbox"/> AND combining OR and NOT outputs</label><label><input type="checkbox"/> AND combining the intermediate result and C</label><b class="draw-score">0 / 5</b> <button class="draw-reset">Reset checks</button></div></div><p class="source">Alternative layouts with the same required connections are valid. This is a self-check rubric, not automatic sketch recognition.</p><div class="lanes"><div><b>📝 IN THE EXAM</b>Use this question’s mark allocation; there is no universal marks-per-gate rule.</div><div><b>🏛 IN REALITY</b>Human rubric checks drawings; local table checks assess the entered values.</div></div></section><section class="lt" data-aud="ig" data-background-color="#F4F6FB" id="table-ig"><div class="badges"><span class="bg bg-hole">IGCSE 0478</span></div><div class="bar"></div><h2>IG — trace every input row</h2><p class="source">0478 June 2022 /12 Q5, © UCLES. Original expressions; response layout adapted.</p><div class="rule"><b>X = ((A OR B) AND (NOT (B XOR C)) AND C)</b></div><div class="rule">Complete the output column. [4] Make working columns on paper if useful; enter one output per row below.</div><div data-board="ig" id="marker-ig"></div><div class="lanes"><div><b>📝 IN THE EXAM</b>Use this question’s mark allocation; there is no universal marks-per-gate rule.</div><div><b>🏛 IN REALITY</b>Human rubric checks drawings; local table checks assess the entered values.</div></div></section><section class="lt" data-aud="ig" data-background-color="#F4F6FB" id="table-answer-ig"><div class="badges"><span class="bg bg-hole">IGCSE 0478</span></div><div class="bar"></div><h2>IG — the output column</h2><p class="source">0478 June 2022 /12 Q5, © UCLES. Original expressions; response layout adapted.</p><div class="two-col"><div class="center"><table class="tt" style="margin:6px auto; font-size:.95em;">
+</div></div><div class="rubric" data-total="5"><p>Human check: tick only points present in your own drawing.</p><label><input type="checkbox"/> OR with inputs A and B</label><label><input type="checkbox"/> XOR with inputs B and C</label><label><input type="checkbox"/> NOT applied to that XOR output</label><label><input type="checkbox"/> AND combining OR and NOT outputs</label><label><input type="checkbox"/> AND combining the intermediate result and C</label><b class="draw-score">0 / 5</b> <button class="draw-reset">Reset checks</button></div></div><p class="source">Alternative layouts with the same required connections are valid. This is a self-check rubric, not automatic sketch recognition.</p><div class="lanes"><div><b>📝 IN THE EXAM</b>Use this question’s mark allocation; there is no universal marks-per-gate rule.</div><div><b>🏛 IN REALITY</b>Human rubric checks drawings; local table checks assess the entered values.</div></div>
+</section></section><section data-classroom-stack="table-ig" data-aud="ig"><section class="lt" data-aud="ig" data-background-color="#F4F6FB" id="table-ig"><div class="badges"><span class="bg bg-hole">IGCSE 0478</span></div><div class="bar"></div><h2>IG — trace every input row</h2><p class="source">0478 June 2022 /12 Q5, © UCLES. Original expressions; response layout adapted.</p><div class="rule"><b>X = ((A OR B) AND (NOT (B XOR C)) AND C)</b></div><div class="rule">Complete the output column. [4] Make working columns on paper if useful; enter one output per row below.</div><div data-board="ig" id="marker-ig"></div><div class="lanes"><div><b>📝 IN THE EXAM</b>Use this question’s mark allocation; there is no universal marks-per-gate rule.</div><div><b>🏛 IN REALITY</b>Human rubric checks drawings; local table checks assess the entered values.</div></div>
+<p class="classroom-nav">Write / explain first · ↓ optional check and worked reference · → next idea</p></section><section class="lt" data-aud="ig" data-background-color="#F4F6FB" id="table-answer-ig"><div class="badges"><span class="bg bg-hole">IGCSE 0478</span></div><div class="bar"></div><h2>IG — the output column</h2><p class="source">0478 June 2022 /12 Q5, © UCLES. Original expressions; response layout adapted.</p><div class="two-col"><div class="center"><table class="tt" style="margin:6px auto; font-size:.95em;">
 <tr><th>A</th><th>B</th><th>C</th><th>X</th></tr>
 <tr><td>0</td><td>0</td><td>0</td><td class="">0</td></tr>
 <tr><td>0</td><td>0</td><td>1</td><td class="">0</td></tr>
@@ -855,8 +846,11 @@ button:disabled{opacity:.4;cursor:default}
 <tr><td>1</td><td>0</td><td>1</td><td class="">0</td></tr>
 <tr><td>1</td><td>1</td><td>0</td><td class="">0</td></tr>
 <tr><td>1</td><td>1</td><td>1</td><td class="hit">1</td></tr>
-</table></div><div><div class="rule">X=1 only for 011 and 111. C must be 1 and B must match C; then A OR B is 1.</div><div class="rule">4 marks for8 correct outputs;3 for6–7;2 for4–5;1 for2–3.</div><div class="rule">The scheme awards no separate marks for the working columns in this question.</div></div></div><div class="lanes"><div><b>📝 IN THE EXAM</b>Use this question’s mark allocation; there is no universal marks-per-gate rule.</div><div><b>🏛 IN REALITY</b>Human rubric checks drawings; local table checks assess the entered values.</div></div></section><section class="lt" data-aud="ig" data-background-color="#F4F6FB" id="lens-ig"><div class="badges"><span class="bg bg-hole">IGCSE 0478</span></div><div class="bar"></div><h2>IG — the exam shapes</h2><table class="xt lens"><tr><th>Shape</th><th>How the stem reads</th><th>Marks</th><th>Where marks die</th></tr><tr><td>Circuit from a supplied expression</td><td>Draw a logic circuit…</td><td>5 here: each correct gate + inputs</td><td>Changed structure, missing inversion, wrong connections.</td></tr><tr><td>Complete a truth table</td><td>Complete the output column…</td><td>4 here: by number of correct outputs</td><td>Missed rows; incorrect bracket or bubble scope.</td></tr><tr><td>Construct an expression</td><td>Write an expression for the statement / circuit / table.</td><td>Question-specific</td><td>Wrong grouping, inversion or output-1 rows.</td></tr><tr><td>Construct a circuit from behaviour</td><td>Draw the circuit for the statement / table.</td><td>Question-specific</td><td>Missing a condition; using gates with too many inputs.</td></tr></table><div class="lanes"><div><b>📝 IN THE EXAM</b>Use this question’s mark allocation; there is no universal marks-per-gate rule.</div><div><b>🏛 IN REALITY</b>Human rubric checks drawings; local table checks assess the entered values.</div></div></section><section class="lt" data-aud="al" data-background-color="#F4F6FB" id="draw-al"><div class="badges"><span class="bg bg-hole">AS 9618</span></div><div class="bar"></div><h2>AS — draw it before revealing</h2><p class="source">9618 June 2023 /12 Q6, © UCLES. Original expressions; response layout adapted.</p><div class="rule"><b>Z = (R XOR S) AND (NOT T NOR P)</b></div><div class="rule">Draw the circuit on paper. [2] Preserve the supplied expression. NOT has one input; all other gates have two.</div><div class="rule">Label the signals and show each connection clearly. Then move forward to compare with the model.</div><div class="draw-space">✎ Paper first · diagram and labels</div><div class="lanes"><div><b>📝 IN THE EXAM</b>Use this question’s mark allocation; there is no universal marks-per-gate rule.</div><div><b>🏛 IN REALITY</b>Human rubric checks drawings; local table checks assess the entered values.</div></div></section><section class="lt" data-aud="al" data-background-color="#F4F6FB" id="draw-answer-al"><div class="badges"><span class="bg bg-hole">AS 9618</span></div><div class="bar"></div><h2>AS — compare the connections</h2><p class="source">9618 June 2023 /12 Q6, © UCLES. Original expressions; response layout adapted.</p><div class="two-col"><div><div class="circ" style="width:100%; max-width:380px; margin-top:6px;">
-<svg viewBox="0 0 470 220">
+</table></div><div><div class="rule">X=1 only for 011 and 111. C must be 1 and B must match C; then A OR B is 1.</div><div class="rule">4 marks for8 correct outputs;3 for6–7;2 for4–5;1 for2–3.</div><div class="rule">The scheme awards no separate marks for the working columns in this question.</div></div></div><div class="lanes"><div><b>📝 IN THE EXAM</b>Use this question’s mark allocation; there is no universal marks-per-gate rule.</div><div><b>🏛 IN REALITY</b>Human rubric checks drawings; local table checks assess the entered values.</div></div>
+</section></section><section class="lt" data-aud="ig" data-background-color="#F4F6FB" id="lens-ig"><div class="badges"><span class="bg bg-hole">IGCSE 0478</span></div><div class="bar"></div><h2>IG — the exam shapes</h2><table class="xt lens"><tr><th>Shape</th><th>How the stem reads</th><th>Marks</th><th>Where marks die</th></tr><tr><td>Circuit from a supplied expression</td><td>Draw a logic circuit…</td><td>5 here: each correct gate + inputs</td><td>Changed structure, missing inversion, wrong connections.</td></tr><tr><td>Complete a truth table</td><td>Complete the output column…</td><td>4 here: by number of correct outputs</td><td>Missed rows; incorrect bracket or bubble scope.</td></tr><tr><td>Construct an expression</td><td>Write an expression for the statement / circuit / table.</td><td>Question-specific</td><td>Wrong grouping, inversion or output-1 rows.</td></tr><tr><td>Construct a circuit from behaviour</td><td>Draw the circuit for the statement / table.</td><td>Question-specific</td><td>Missing a condition; using gates with too many inputs.</td></tr></table><div class="lanes"><div><b>📝 IN THE EXAM</b>Use this question’s mark allocation; there is no universal marks-per-gate rule.</div><div><b>🏛 IN REALITY</b>Human rubric checks drawings; local table checks assess the entered values.</div></div>
+</section><section data-classroom-stack="draw-al" data-aud="al"><section class="lt" data-aud="al" data-background-color="#F4F6FB" id="draw-al"><div class="badges"><span class="bg bg-hole">AS 9618</span></div><div class="bar"></div><h2>AS — draw it before revealing</h2><p class="source">9618 June 2023 /12 Q6, © UCLES. Original expressions; response layout adapted.</p><div class="rule"><b>Z = (R XOR S) AND (NOT T NOR P)</b></div><div class="rule">Draw the circuit on paper. [2] Preserve the supplied expression. NOT has one input; all other gates have two.</div><div class="rule">Label the signals and show each connection clearly. Then move forward to compare with the model.</div><div class="draw-space">✎ Paper first · diagram and labels</div><div class="lanes"><div><b>📝 IN THE EXAM</b>Use this question’s mark allocation; there is no universal marks-per-gate rule.</div><div><b>🏛 IN REALITY</b>Human rubric checks drawings; local table checks assess the entered values.</div></div>
+<p class="classroom-nav">Write / explain first · ↓ optional check and worked reference · → next idea</p></section><section class="lt" data-aud="al" data-background-color="#F4F6FB" id="draw-answer-al"><div class="badges"><span class="bg bg-hole">AS 9618</span></div><div class="bar"></div><h2>AS — compare the connections</h2><p class="source">9618 June 2023 /12 Q6, © UCLES. Original expressions; response layout adapted.</p><div class="two-col"><div><div class="circ" style="width:100%; max-width:380px; margin-top:6px;">
+<svg viewbox="0 0 470 220">
 <line stroke="#222B5A" stroke-width="3" x1="24" x2="94" y1="30" y2="30"></line>
 <line stroke="#222B5A" stroke-width="3" x1="24" x2="94" y1="60" y2="60"></line>
 <g transform="translate(60,10)">
@@ -896,7 +890,9 @@ button:disabled{opacity:.4;cursor:default}
 <span class="gtag" style="left:22%; top:48%;">NOT</span>
 <span class="gtag" style="left:53%; top:56%;">NOR</span>
 <span class="gtag" style="left:80%; top:37%;">AND</span>
-</div></div><div class="rubric" data-total="2"><p>Human check: tick only points present in your own drawing.</p><label><input type="checkbox"/> XOR and final AND, both with correct inputs</label><label><input type="checkbox"/> NOT and NOR, both with correct inputs</label><b class="draw-score">0 / 2</b> <button class="draw-reset">Reset checks</button></div></div><p class="source">Alternative layouts with the same required connections are valid. This is a self-check rubric, not automatic sketch recognition.</p><div class="lanes"><div><b>📝 IN THE EXAM</b>Use this question’s mark allocation; there is no universal marks-per-gate rule.</div><div><b>🏛 IN REALITY</b>Human rubric checks drawings; local table checks assess the entered values.</div></div></section><section class="lt" data-aud="al" data-background-color="#F4F6FB" id="table-al"><div class="badges"><span class="bg bg-hole">AS 9618</span></div><div class="bar"></div><h2>AS — trace every input row</h2><p class="source">9618 June 2023 /12 Q6, © UCLES. Original expressions; response layout adapted.</p><div class="rule"><b>Z = (NOT P OR Q) XOR (R NOR Q)</b></div><div class="rule">Complete the output column. [2] Make working columns on paper if useful; enter one output per row below.</div><div data-board="al" id="marker-al"></div><div class="lanes"><div><b>📝 IN THE EXAM</b>Use this question’s mark allocation; there is no universal marks-per-gate rule.</div><div><b>🏛 IN REALITY</b>Human rubric checks drawings; local table checks assess the entered values.</div></div></section><section class="lt" data-aud="al" data-background-color="#F4F6FB" id="table-answer-al"><div class="badges"><span class="bg bg-hole">AS 9618</span></div><div class="bar"></div><h2>AS — the output column</h2><p class="source">9618 June 2023 /12 Q6, © UCLES. Original expressions; response layout adapted.</p><div class="two-col"><div class="center"><table class="tt" style="margin:6px auto; font-size:.95em;">
+</div></div><div class="rubric" data-total="2"><p>Human check: tick only points present in your own drawing.</p><label><input type="checkbox"/> XOR and final AND, both with correct inputs</label><label><input type="checkbox"/> NOT and NOR, both with correct inputs</label><b class="draw-score">0 / 2</b> <button class="draw-reset">Reset checks</button></div></div><p class="source">Alternative layouts with the same required connections are valid. This is a self-check rubric, not automatic sketch recognition.</p><div class="lanes"><div><b>📝 IN THE EXAM</b>Use this question’s mark allocation; there is no universal marks-per-gate rule.</div><div><b>🏛 IN REALITY</b>Human rubric checks drawings; local table checks assess the entered values.</div></div>
+</section></section><section data-classroom-stack="table-al" data-aud="al"><section class="lt" data-aud="al" data-background-color="#F4F6FB" id="table-al"><div class="badges"><span class="bg bg-hole">AS 9618</span></div><div class="bar"></div><h2>AS — trace every input row</h2><p class="source">9618 June 2023 /12 Q6, © UCLES. Original expressions; response layout adapted.</p><div class="rule"><b>Z = (NOT P OR Q) XOR (R NOR Q)</b></div><div class="rule">Complete the output column. [2] Make working columns on paper if useful; enter one output per row below.</div><div data-board="al" id="marker-al"></div><div class="lanes"><div><b>📝 IN THE EXAM</b>Use this question’s mark allocation; there is no universal marks-per-gate rule.</div><div><b>🏛 IN REALITY</b>Human rubric checks drawings; local table checks assess the entered values.</div></div>
+<p class="classroom-nav">Write / explain first · ↓ optional check and worked reference · → next idea</p></section><section class="lt" data-aud="al" data-background-color="#F4F6FB" id="table-answer-al"><div class="badges"><span class="bg bg-hole">AS 9618</span></div><div class="bar"></div><h2>AS — the output column</h2><p class="source">9618 June 2023 /12 Q6, © UCLES. Original expressions; response layout adapted.</p><div class="two-col"><div class="center"><table class="tt" style="margin:6px auto; font-size:.95em;">
 <tr><th>P</th><th>Q</th><th>R</th><th>Z</th></tr>
 <tr><td>0</td><td>0</td><td>0</td><td class="">0</td></tr>
 <tr><td>0</td><td>0</td><td>1</td><td class="hit">1</td></tr>
@@ -906,9 +902,10 @@ button:disabled{opacity:.4;cursor:default}
 <tr><td>1</td><td>0</td><td>1</td><td class="">0</td></tr>
 <tr><td>1</td><td>1</td><td>0</td><td class="hit">1</td></tr>
 <tr><td>1</td><td>1</td><td>1</td><td class="hit">1</td></tr>
-</table></div><div><div class="rule">First compute NOT P, then (NOT P OR Q) and (R NOR Q); XOR those two results.</div><div class="rule">1 mark for the complete first four outputs;1 for the complete last four.</div><div class="rule">The scheme awards no separate marks for the working columns in this question.</div></div></div><div class="lanes"><div><b>📝 IN THE EXAM</b>Use this question’s mark allocation; there is no universal marks-per-gate rule.</div><div><b>🏛 IN REALITY</b>Human rubric checks drawings; local table checks assess the entered values.</div></div></section><section class="lt" data-aud="al" data-background-color="#F4F6FB" id="lens-al"><div class="badges"><span class="bg bg-hole">AS 9618</span></div><div class="bar"></div><h2>AS — the exam shapes</h2><table class="xt lens"><tr><th>Shape</th><th>How the stem reads</th><th>Marks</th><th>Where marks die</th></tr><tr><td>Circuit from a supplied expression</td><td>Draw a logic circuit…</td><td>2 here: two specified gate groups</td><td>Changed structure, missing inversion, wrong connections.</td></tr><tr><td>Complete a truth table</td><td>Complete the output column…</td><td>2 here: one per complete half</td><td>Missed rows; incorrect bracket or bubble scope.</td></tr><tr><td>Construct an expression</td><td>Write an expression for the statement / circuit / table.</td><td>Question-specific</td><td>Wrong grouping, inversion or output-1 rows.</td></tr><tr><td>Construct a circuit from behaviour</td><td>Draw the circuit for the statement / table.</td><td>Question-specific</td><td>Missing a condition; using gates with too many inputs.</td></tr></table><div class="lanes"><div><b>📝 IN THE EXAM</b>Use this question’s mark allocation; there is no universal marks-per-gate rule.</div><div><b>🏛 IN REALITY</b>Human rubric checks drawings; local table checks assess the entered values.</div></div></section><section><section class="dk" data-background-color="#151B3C" id="memory"><div class="badges"><span class="bg bg-hole">SHARED · ENRICHMENT</span></div>
+</table></div><div><div class="rule">First compute NOT P, then (NOT P OR Q) and (R NOR Q); XOR those two results.</div><div class="rule">1 mark for the complete first four outputs;1 for the complete last four.</div><div class="rule">The scheme awards no separate marks for the working columns in this question.</div></div></div><div class="lanes"><div><b>📝 IN THE EXAM</b>Use this question’s mark allocation; there is no universal marks-per-gate rule.</div><div><b>🏛 IN REALITY</b>Human rubric checks drawings; local table checks assess the entered values.</div></div>
+</section></section><section class="lt" data-aud="al" data-background-color="#F4F6FB" id="lens-al"><div class="badges"><span class="bg bg-hole">AS 9618</span></div><div class="bar"></div><h2>AS — the exam shapes</h2><table class="xt lens"><tr><th>Shape</th><th>How the stem reads</th><th>Marks</th><th>Where marks die</th></tr><tr><td>Circuit from a supplied expression</td><td>Draw a logic circuit…</td><td>2 here: two specified gate groups</td><td>Changed structure, missing inversion, wrong connections.</td></tr><tr><td>Complete a truth table</td><td>Complete the output column…</td><td>2 here: one per complete half</td><td>Missed rows; incorrect bracket or bubble scope.</td></tr><tr><td>Construct an expression</td><td>Write an expression for the statement / circuit / table.</td><td>Question-specific</td><td>Wrong grouping, inversion or output-1 rows.</td></tr><tr><td>Construct a circuit from behaviour</td><td>Draw the circuit for the statement / table.</td><td>Question-specific</td><td>Missing a condition; using gates with too many inputs.</td></tr></table><div class="lanes"><div><b>📝 IN THE EXAM</b>Use this question’s mark allocation; there is no universal marks-per-gate rule.</div><div><b>🏛 IN REALITY</b>Human rubric checks drawings; local table checks assess the entered values.</div></div>
+</section><section><section class="dk" data-background-color="#151B3C" id="memory"><div class="badges"><span class="bg bg-hole">SHARED · ENRICHMENT</span></div>
 <div class="bar" style="background:var(--accent2)"></div>
-
 <h2 style="margin-top:.4em;">Everything you built today… forgets</h2>
 <div class="two-col">
 <div style="font-size:.78em;">
@@ -919,7 +916,7 @@ button:disabled{opacity:.4;cursor:default}
 </div>
 <div class="center fragment">
 <div class="circ" style="width:320px;">
-<svg viewBox="0 0 300 130">
+<svg viewbox="0 0 300 130">
 <line stroke="#98a0c0" stroke-width="3" x1="40" x2="120" y1="85" y2="85"></line>
 <g transform="translate(90,20)">
 <path d="M30 8 H62 A27 27 0 0 1 62 62 H30 Z" fill="none" stroke="#E8EEF9" stroke-width="3"></path>
@@ -935,10 +932,10 @@ button:disabled{opacity:.4;cursor:default}
 </div>
 <div class="fragment rule accent3" style="margin-top:8px; font-size:.72em;"><b>Investigate below:</b> the arrangement and delay matter. A feedback connection can support stable state, oscillation or other behaviour; the loop alone is not a memory guarantee.</div>
 <div class="dig">⬇ the cellar 🕳️</div>
-
-<div class="lanes"><div><b>📝 IN THE EXAM</b>Enrichment for both groups; it is not a required AS/IG method.</div><div><b>🏛 IN REALITY</b>Use the stated model; device delays and implementation details still matter.</div></div></section><section class="dk" data-background-color="#151B3C" data-hole="true" id="feedback"><div class="badges"><span class="bg bg-hole">↓ SHARED · ENRICHMENT</span></div><div class="bar"></div><h2>The loop changes the question</h2><div class="two-col"><div class="card"><h3>Three NOT gates: a delayed ring</h3><svg aria-label="Three inverters connected in a ring" role="img" viewBox="0 0 510 150"><path d="M75 55 L75 95 L120 75 Z" fill="none" stroke="#E8EEF9" stroke-width="3"></path><circle cx="128" cy="75" fill="none" r="7" stroke="#E8EEF9" stroke-width="3"></circle><text fill="#98a0c0" font-size="16" text-anchor="middle" x="103" y="40">NOT 1</text><text fill="#17B3A3" font-size="22" id="ring-v0" x="153" y="64">0</text><path d="M135 75 H225" fill="none" id="ring-w0" stroke="#17B3A3" stroke-width="3"></path><path d="M225 55 L225 95 L270 75 Z" fill="none" stroke="#E8EEF9" stroke-width="3"></path><circle cx="278" cy="75" fill="none" r="7" stroke="#E8EEF9" stroke-width="3"></circle><text fill="#98a0c0" font-size="16" text-anchor="middle" x="253" y="40">NOT 2</text><text fill="#17B3A3" font-size="22" id="ring-v1" x="303" y="64">0</text><path d="M285 75 H375" fill="none" id="ring-w1" stroke="#17B3A3" stroke-width="3"></path><path d="M375 55 L375 95 L420 75 Z" fill="none" stroke="#E8EEF9" stroke-width="3"></path><circle cx="428" cy="75" fill="none" r="7" stroke="#E8EEF9" stroke-width="3"></circle><text fill="#98a0c0" font-size="16" text-anchor="middle" x="403" y="40">NOT 3</text><text fill="#17B3A3" font-size="22" id="ring-v2" x="453" y="64">0</text><path d="M435 75 H480 V125 H30 V75 H75" fill="none" id="ring-w2" stroke="#17B3A3" stroke-width="3"></path></svg><p id="ring-state"></p><button id="ring-step">Step</button> <button id="ring-play">Play</button> <button id="ring-reset">Reset</button><p class="small">Equal-delay toy model: each step recomputes every gate from the previous outputs. Start at 100; predict the next state.</p></div><div class="card"><h3>Two NOT gates: two stable states</h3><div class="stable-pair"><span id="stable-q">0</span> ⇄ NOT ⇄ <span id="stable-r">1</span></div><p>Each output feeds the other inverter’s input. Both 01 and 10 satisfy the two NOT operations.</p><button id="seed-zero">Initialise 01</button> <button id="seed-one">Initialise 10</button><p class="small">These buttons set an initial state in the model. A real memory cell needs circuitry to write and read it, and power to retain its state.</p></div></div><p class="source">Model, not an analogue simulation. Physical oscillation depends on device gain and delay; no Boolean fixed point alone does not prove it.</p><p class="source"><a href="https://wiki.analog.com/university/courses/alm1k/alm-lab-ring-osc" rel="noopener" target="_blank">Analog Devices: three-inverter ring oscillator experiment</a></p><div class="lanes"><div><b>📝 IN THE EXAM</b>Enrichment for both groups; it is not a required AS/IG method.</div><div><b>🏛 IN REALITY</b>Use the stated model; device delays and implementation details still matter.</div></div></section></section><section class="lt" data-background-color="#F4F6FB" id="vocabulary"><div class="badges"><span class="bg bg-hole">IG + AS</span></div>
+<div class="lanes"><div><b>📝 IN THE EXAM</b>Enrichment for both groups; it is not a required AS/IG method.</div><div><b>🏛 IN REALITY</b>Use the stated model; device delays and implementation details still matter.</div></div>
+</section><section class="dk" data-background-color="#151B3C" data-hole="true" id="feedback"><div class="badges"><span class="bg bg-hole">↓ SHARED · ENRICHMENT</span></div><div class="bar"></div><h2>The loop changes the question</h2><div class="two-col"><div class="card"><h3>Three NOT gates: a delayed ring</h3><svg aria-label="Three inverters connected in a ring" role="img" viewbox="0 0 510 150"><path d="M75 55 L75 95 L120 75 Z" fill="none" stroke="#E8EEF9" stroke-width="3"></path><circle cx="128" cy="75" fill="none" r="7" stroke="#E8EEF9" stroke-width="3"></circle><text fill="#98a0c0" font-size="16" text-anchor="middle" x="103" y="40">NOT 1</text><text fill="#17B3A3" font-size="22" id="ring-v0" x="153" y="64">0</text><path d="M135 75 H225" fill="none" id="ring-w0" stroke="#17B3A3" stroke-width="3"></path><path d="M225 55 L225 95 L270 75 Z" fill="none" stroke="#E8EEF9" stroke-width="3"></path><circle cx="278" cy="75" fill="none" r="7" stroke="#E8EEF9" stroke-width="3"></circle><text fill="#98a0c0" font-size="16" text-anchor="middle" x="253" y="40">NOT 2</text><text fill="#17B3A3" font-size="22" id="ring-v1" x="303" y="64">0</text><path d="M285 75 H375" fill="none" id="ring-w1" stroke="#17B3A3" stroke-width="3"></path><path d="M375 55 L375 95 L420 75 Z" fill="none" stroke="#E8EEF9" stroke-width="3"></path><circle cx="428" cy="75" fill="none" r="7" stroke="#E8EEF9" stroke-width="3"></circle><text fill="#98a0c0" font-size="16" text-anchor="middle" x="403" y="40">NOT 3</text><text fill="#17B3A3" font-size="22" id="ring-v2" x="453" y="64">0</text><path d="M435 75 H480 V125 H30 V75 H75" fill="none" id="ring-w2" stroke="#17B3A3" stroke-width="3"></path></svg><p id="ring-state"></p><button id="ring-step">Step</button> <button id="ring-play">Play</button> <button id="ring-reset">Reset</button><p class="small">Equal-delay toy model: each step recomputes every gate from the previous outputs. Start at 100; predict the next state.</p></div><div class="card"><h3>Two NOT gates: two stable states</h3><div class="stable-pair"><span id="stable-q">0</span> ⇄ NOT ⇄ <span id="stable-r">1</span></div><p>Each output feeds the other inverter’s input. Both 01 and 10 satisfy the two NOT operations.</p><button id="seed-zero">Initialise 01</button> <button id="seed-one">Initialise 10</button><p class="small">These buttons set an initial state in the model. A real memory cell needs circuitry to write and read it, and power to retain its state.</p></div></div><p class="source">Model, not an analogue simulation. Physical oscillation depends on device gain and delay; no Boolean fixed point alone does not prove it.</p><p class="source"><a href="https://wiki.analog.com/university/courses/alm1k/alm-lab-ring-osc" rel="noopener" target="_blank">Analog Devices: three-inverter ring oscillator experiment</a></p><div class="lanes"><div><b>📝 IN THE EXAM</b>Enrichment for both groups; it is not a required AS/IG method.</div><div><b>🏛 IN REALITY</b>Use the stated model; device delays and implementation details still matter.</div></div>
+</section></section><section class="lt" data-background-color="#F4F6FB" id="vocabulary"><div class="badges"><span class="bg bg-hole">IG + AS</span></div>
 <div class="bar" style="background:var(--accent1)"></div>
-
 <h2>Vocabulary <span class="smaller accent1">词汇</span></h2>
 <table class="vtab">
 <tr><th>English</th><th>中文 (pīnyīn)</th><th>Meaning check</th></tr>
@@ -951,9 +948,9 @@ button:disabled{opacity:.4;cursor:default}
 <tr class="fragment"><td><strong>sum / carry</strong></td><td>和 / 进位 (hé / jìnwèi)</td><td>the written digit / the overflow to the next column</td></tr>
 <tr class="fragment"><td><strong>feedback</strong></td><td>反馈 (fǎnkuì)</td><td>an output wired back toward its own input — 🔥</td></tr>
 </table>
+
 </section><section class="dk" data-background-color="#151B3C" id="recap"><div class="badges"><span class="bg bg-hole">IG + AS</span></div>
 <div class="bar" style="background:var(--accent1)"></div>
-
 <h2>What you can do now</h2>
 <div class="sgrid" style="margin-top:14px;">
 <div class="scard"><b>One gate can construct the others</b><br/>NAND universality is a statement about Boolean functions, not the components inside every chip.</div>
@@ -964,9 +961,18 @@ button:disabled{opacity:.4;cursor:default}
 <div class="rule accent2" style="margin-top:18px; font-size:.72em;"><strong>Still open:</strong> a wire looped from a gate's output back into its own input — what happens in there? 🔥</div>
 <p style="font-size:.55em; color:#98a0c0; margin-top:10px;">…and a debt from Binary still stands: writing 32 bits by hand hurts. Next lesson, we fix the <em>writing</em>.</p>
 
-</section><section class="lt" data-background-color="#F4F6FB" id="exit"><div class="badges"><span class="bg bg-hole">IG + AS</span></div><div class="bar"></div><h2>Before you leave</h2><div class="rule">1. A fan runs when enabled E=1 and hot H=1, or whenever override O=1. Write its expression.</div><div class="rule">2. Sketch that circuit with two-input gates; label the intermediate signal.</div><div class="rule">3. For a two-input table with output0011 in order00,01,10,11, is XOR correct? Explain.</div><div class="rule">4. Why can two circuits have the same Boolean table but behave differently as physical hardware?</div><div class="lanes"><div><b>📝 IN THE EXAM</b>Follow the supplied representation; NOT has one input, the other gates two.</div><div><b>🏛 IN REALITY</b>Equivalent Boolean functions may have different physical implementations.</div></div></section><section class="lt" data-background-color="#F4F6FB" id="exit-answer"><div class="badges"><span class="bg bg-hole">IG + AS</span></div><div class="bar"></div><h2>Check the exit</h2><div class="rule">1. F = (E AND H) OR O.</div><div class="rule">2. AND takes E,H and produces T; OR takes T,O and produces F. Both gates have two inputs.</div><div class="rule">3. No:0011 simply copies A. XOR is0110; output positions matter.</div><div class="rule">4. The table records the Boolean function for stable inputs. Delays, power and implementation can differ.</div><div class="lanes"><div><b>📝 IN THE EXAM</b>Follow the supplied representation; NOT has one input, the other gates two.</div><div><b>🏛 IN REALITY</b>Equivalent Boolean functions may have different physical implementations.</div></div></section><section class="dk" data-background-color="#151B3C" id="ledger"><div class="badges"><span class="bg bg-hole">IG + AS</span></div><div class="bar"></div><h2>🧾 Outside the exam hall</h2><div class="rule"><b>Keep:</b> translate the required behaviour faithfully; a counterexample is enough to disprove equivalence.</div><div class="rule"><b>For the exam:</b> follow the supplied structure, gate limits and published mark allocation. Working is useful; marks are question-specific.</div><div class="rule"><b>In hardware:</b> gates have delay, analogue voltage ranges and physical costs. Functional equivalence does not make those properties equal.</div><div class="rule"><b>Beyond the syllabus:</b> universality, adders and feedback explain what these ideas can build. The labels tell you which journey you are on.</div></section></div></div>
+</section><section data-classroom-stack="exit"><section class="lt" data-background-color="#F4F6FB" id="exit"><div class="badges"><span class="bg bg-hole">IG + AS</span></div><div class="bar"></div><h2>Before you leave</h2><div class="rule">1. A fan runs when enabled E=1 and hot H=1, or whenever override O=1. Write its expression.</div><div class="rule">2. Sketch that circuit with two-input gates; label the intermediate signal.</div><div class="rule">3. For a two-input table with output0011 in order00,01,10,11, is XOR correct? Explain.</div><div class="rule">4. Why can two circuits have the same Boolean table but behave differently as physical hardware?</div><div class="lanes"><div><b>📝 IN THE EXAM</b>Follow the supplied representation; NOT has one input, the other gates two.</div><div><b>🏛 IN REALITY</b>Equivalent Boolean functions may have different physical implementations.</div></div>
+<p class="classroom-nav">Write / explain first · ↓ optional check and worked reference · → next idea</p></section><section class="lt" data-background-color="#F4F6FB" id="exit-answer"><div class="badges"><span class="bg bg-hole">IG + AS</span></div><div class="bar"></div><h2>Check the exit</h2><div class="rule">1. F = (E AND H) OR O.</div><div class="rule">2. AND takes E,H and produces T; OR takes T,O and produces F. Both gates have two inputs.</div><div class="rule">3. No:0011 simply copies A. XOR is0110; output positions matter.</div><div class="rule">4. The table records the Boolean function for stable inputs. Delays, power and implementation can differ.</div><div class="lanes"><div><b>📝 IN THE EXAM</b>Follow the supplied representation; NOT has one input, the other gates two.</div><div><b>🏛 IN REALITY</b>Equivalent Boolean functions may have different physical implementations.</div></div>
+</section></section><section class="dk" data-background-color="#151B3C" id="ledger"><div class="badges"><span class="bg bg-hole">IG + AS</span></div><div class="bar"></div><h2>🧾 Outside the exam hall</h2><div class="rule"><b>Keep:</b> translate the required behaviour faithfully; a counterexample is enough to disprove equivalence.</div><div class="rule"><b>For the exam:</b> follow the supplied structure, gate limits and published mark allocation. Working is useful; marks are question-specific.</div><div class="rule"><b>In hardware:</b> gates have delay, analogue voltage ranges and physical costs. Functional equivalence does not make those properties equal.</div><div class="rule"><b>Beyond the syllabus:</b> universality, adders and feedback explain what these ideas can build. The labels tell you which journey you are on.</div>
+</section></div></div>
 <button id="fs-btn" onclick="document.documentElement.requestFullscreen().catch(()=&gt;{})">⛶ Fullscreen</button>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/reveal.js/4.6.1/reveal.min.js"></script>
+<script id="classroom-route-cleanup">(function(){
+var aud=new URLSearchParams(location.search).get('aud');
+if(!['ig','al'].includes(aud))return;
+var stacks=[...document.querySelectorAll('.slides section')].filter(s=>s.querySelector('section'));
+document.querySelectorAll('.slides [data-aud]').forEach(n=>{if(!['both',aud].includes(n.dataset.aud))n.remove();});
+stacks.reverse().forEach(s=>{if(s.isConnected&&!s.querySelector('section'))s.remove();});
+})();</script><script src="https://cdnjs.cloudflare.com/ajax/libs/reveal.js/4.6.1/reveal.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/reveal.js/4.6.1/plugin/notes/notes.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/contrib/auto-render.min.js"></script>

@@ -212,11 +212,17 @@ button:disabled {opacity:.4;cursor:default}
 .reveal.none .slides section,.reveal.none .slides section *{animation:none!important;transition:none!important}
 @media(prefers-reduced-motion:reduce){.reveal .slides section,.reveal .slides section *{animation:none!important;transition:none!important}}
 @media print{.reveal .slides section,.reveal .slides section *{animation:none!important;transition:none!important}}
+</style><meta name="classroom-submissions" content="disabled-human-review">
+<style id="classroom-foundations">
+.classroom-nav{font-size:.43em!important;line-height:1.35!important;color:#536183;margin:10px 0 0!important;}
+.dk .classroom-nav{color:#b8c7e9;}
+.companion-status{font-size:.48em!important;line-height:1.35!important;padding:8px 12px;border:1px solid #8fa1cb;border-radius:8px;}
+.classroom-reference{max-height:430px;overflow:auto;}
+@media(prefers-reduced-motion:reduce){.reveal *{animation-duration:0s!important;transition-duration:0s!important;}}
 </style></head>
 <body>
 <div class="reveal"><div class="slides"><section><section class="dk" data-background-color="#151B3C" id="title"><div class="badges"><span class="bg bg-both">IG + AS</span></div>
 <div class="bar" style="background:var(--accent1)"></div>
-
 <p style="font-size:.55em; color:var(--accent3); letter-spacing:.12em; margin-bottom:0;">COMPUTER SCIENCE · U3a · LOGIC GATES</p>
 <h1 style="margin:.1em 0;">Logic Gates</h1>
 <p style="font-size:.7em; margin-top:0;">The Payoff</p>
@@ -225,18 +231,17 @@ button:disabled {opacity:.4;cursor:default}
       <span class="accent3">🕳️</span>  ·  badges top-right show whose exam it's on
     </p>
 <p style="margin-top:1.6em;"><button id="obj-btn" onclick="Reveal.down()">🎯 objectives</button></p>
-
-<div id="aud-btns"><button onclick="setAud('ig')">IGCSE 0478 ▶</button> <button onclick="setAud('al')">AS 9618 ▶</button></div><p id="aud-sub"></p><p id="aud-chip" style="display:none"></p></section><section class="dk" data-background-color="#151B3C" id="objectives"><div class="badges"><span class="bg bg-both">IG + AS</span></div>
+<div id="aud-btns"><button onclick="setAud('ig')">IGCSE 0478 ▶</button> <button onclick="setAud('al')">AS 9618 ▶</button></div><p id="aud-sub"></p><p id="aud-chip" style="display:none"></p>
+</section><section class="dk" data-background-color="#151B3C" id="objectives"><div class="badges"><span class="bg bg-both">IG + AS</span></div>
 <div class="bar" style="background:var(--accent3)"></div>
-
 <h2>🎯 Today you will be able to</h2>
 <div class="rule"><strong class="accent1">1.</strong> Explain why computers use two voltage states — and therefore binary</div>
 <div class="rule"><strong class="accent1">2.</strong> Know the six logic gates: symbol, behaviour, truth table</div>
 <div class="rule accent3"><strong class="accent3">3.</strong> Complete a truth table for a gate or a simple circuit (2ⁿ rows)</div>
 <div class="rule accent2"><strong class="accent2">4.</strong> Never confuse XOR with OR again</div>
+
 </section></section><section><section class="lt" data-background-color="#F4F6FB" id="why-binary"><div class="badges"><span class="bg bg-both">IG + AS</span></div>
 <div class="bar" style="background:var(--accent2)"></div>
-
 <h2>The debt is due: why only two symbols?</h2>
 <div class="two-col">
 <div style="font-size:.72em;">
@@ -249,7 +254,7 @@ button:disabled {opacity:.4;cursor:default}
 <div style="flex:1;"><strong>10 levels</strong></div>
 <div style="flex:1;"><strong>2 levels</strong></div>
 </div>
-<svg aria-label="Illustrative spacing of ten levels compared with two; not a device specification" style="width:100%; max-width:360px;" viewBox="0 0 360 270">
+<svg aria-label="Illustrative spacing of ten levels compared with two; not a device specification" style="width:100%; max-width:360px;" viewbox="0 0 360 270">
 <line stroke="#98a0c0" stroke-width="2" x1="30" x2="30" y1="8" y2="262"></line>
 <line stroke="#98a0c0" stroke-width="2" x1="230" x2="230" y1="8" y2="262"></line>
 <g id="lv10"></g>
@@ -268,10 +273,10 @@ button:disabled {opacity:.4;cursor:default}
 </div>
 <div class="fragment rule" style="margin-top:6px;"><b>Restoration has limits.</b> A valid LOW input produces a valid output range for the required logic value. Noise within the margin is tolerated; a disturbance crossing a threshold can cause an error.</div>
 <div class="dig">⬇ did anyone try anything else? 🕳️</div>
-
-<p class="source">Illustrative level spacing; actual voltage limits come from the device specification.</p><div class="lanes"><div><b>📝 IN THE EXAM</b> Recognise gate symbols and binary behaviour.</div><div><b>🏛 IN REALITY</b> Signals have ranges, noise margins and switching delays.</div></div></section><section class="lt" data-background-color="#F4F6FB" data-hole="true" id="more-levels"><div class="badges"><span class="bg bg-both">↓ OPTIONAL INVESTIGATION</span></div><div class="bar"></div><h2>Could we use three — or ten?</h2><div class="three-col"><div class="card"><h3>2 levels</h3><p>On a toy 0–3 V scale: 0, 3 V. Neighbour spacing: 3 V.</p></div><div class="card"><h3>3 levels</h3><p>0, 1.5, 3 V. Neighbour spacing: 1.5 V.</p></div><div class="card"><h3>10 levels</h3><p>Equally spaced from 0 to 3 V. Neighbour spacing: ⅓ V.</p></div></div><div class="rule">Predict: each level can shift by ±0.2 V. Which neighbouring uncertainty bands overlap?</div><div class="rule">Ten-level bands overlap: 0.4 V total width exceeds ⅓ V spacing. The two- and three-level bands remain separate.</div><div class="rule">This toy comparison explains a trade-off. It does not prove that other number systems cannot work.</div><div class="lanes"><div><b>📝 IN THE EXAM</b> Recognise gate symbols and binary behaviour.</div><div><b>🏛 IN REALITY</b> Signals have ranges, noise margins and switching delays.</div></div></section></section><section><section class="lt" data-background-color="#F4F6FB" id="switch"><div class="badges"><span class="bg bg-both">IG + AS</span></div>
+<p class="source">Illustrative level spacing; actual voltage limits come from the device specification.</p><div class="lanes"><div><b>📝 IN THE EXAM</b> Recognise gate symbols and binary behaviour.</div><div><b>🏛 IN REALITY</b> Signals have ranges, noise margins and switching delays.</div></div>
+</section><section class="lt" data-background-color="#F4F6FB" data-hole="true" id="more-levels"><div class="badges"><span class="bg bg-both">↓ OPTIONAL INVESTIGATION</span></div><div class="bar"></div><h2>Could we use three — or ten?</h2><div class="three-col"><div class="card"><h3>2 levels</h3><p>On a toy 0–3 V scale: 0, 3 V. Neighbour spacing: 3 V.</p></div><div class="card"><h3>3 levels</h3><p>0, 1.5, 3 V. Neighbour spacing: 1.5 V.</p></div><div class="card"><h3>10 levels</h3><p>Equally spaced from 0 to 3 V. Neighbour spacing: ⅓ V.</p></div></div><div class="rule">Predict: each level can shift by ±0.2 V. Which neighbouring uncertainty bands overlap?</div><div class="rule">Ten-level bands overlap: 0.4 V total width exceeds ⅓ V spacing. The two- and three-level bands remain separate.</div><div class="rule">This toy comparison explains a trade-off. It does not prove that other number systems cannot work.</div><div class="lanes"><div><b>📝 IN THE EXAM</b> Recognise gate symbols and binary behaviour.</div><div><b>🏛 IN REALITY</b> Signals have ranges, noise margins and switching delays.</div></div>
+</section></section><section><section class="lt" data-background-color="#F4F6FB" id="switch"><div class="badges"><span class="bg bg-both">IG + AS</span></div>
 <div class="bar" style="background:var(--accent1)"></div>
-
 <h2>A switch that switches itself</h2>
 <div class="three-col" style="font-size:.68em; margin-top:10px;">
 <div class="card center"><div style="font-size:2.2em;">🖐️</div><strong>A switch</strong><br/>flipped by a hand.</div>
@@ -280,17 +285,16 @@ button:disabled {opacity:.4;cursor:default}
 </div>
 <div class="fragment rule accent3" style="margin-top:18px;"><strong>If a switch can flip a switch… switches can make decisions.</strong> Wire a few together so the output answers a question about the inputs — that object is a <strong>logic gate</strong>. Definition: <em>a logic gate is an electronic component that performs a Boolean operation on one or more binary inputs and produces a single binary output.</em></div>
 <div class="dig">⬇ see a real one 🕳️</div>
-
-<div class="lanes"><div><b>📝 IN THE EXAM</b> Recognise gate symbols and binary behaviour.</div><div><b>🏛 IN REALITY</b> Signals have ranges, noise margins and switching delays.</div></div></section><section class="lt" data-background-color="#F4F6FB" data-hole="true" id="cmos-model"><div class="badges"><span class="bg bg-both">↓ OPTIONAL INVESTIGATION</span></div>
+<div class="lanes"><div><b>📝 IN THE EXAM</b> Recognise gate symbols and binary behaviour.</div><div><b>🏛 IN REALITY</b> Signals have ranges, noise margins and switching delays.</div></div>
+</section><section class="lt" data-background-color="#F4F6FB" data-hole="true" id="cmos-model"><div class="badges"><span class="bg bg-both">↓ OPTIONAL INVESTIGATION</span></div>
 <div class="bar" style="background:var(--accent3)"></div>
-
 <h2>A real gate — feel it, don't parse it</h2>
 <p style="font-size:.62em; color:#7a83a8;">Simplified static CMOS NAND: four idealised switches. Predict the output, then test all four input combinations.</p>
 <div class="cm-wrap">
 <div style="max-width:340px;">
 <p class="center" style="font-size:.5em; color:#7a83a8; margin:0 0 2px;">3.3 V — the HIGH rail</p>
 <div style="position:relative;">
-<svg id="cmos" style="width:100%;" viewBox="0 0 340 300">
+<svg id="cmos" style="width:100%;" viewbox="0 0 340 300">
 <line stroke="#98a0c0" stroke-width="3" x1="60" x2="280" y1="10" y2="10"></line>
 <!-- PMOS pair (parallel) -->
 <rect fill="#eef0f8" height="44" id="cm-pa" rx="8" stroke="#c6cde4" stroke-width="2.5" width="70" x="85" y="30"></rect>
@@ -325,15 +329,14 @@ button:disabled {opacity:.4;cursor:default}
 </div>
 </div>
 <p class="center" style="font-size:.55em; color:#7a83a8;">Illustrative 3.3 V supply. Real devices have voltage ranges, switching delays and non-ideal behaviour.</p>
-
-<div class="lanes"><div><b>📝 IN THE EXAM</b> Recognise gate symbols and binary behaviour.</div><div><b>🏛 IN REALITY</b> Signals have ranges, noise margins and switching delays.</div></div></section></section><section class="lt" data-background-color="#F4F6FB" id="and"><div class="badges"><span class="bg bg-both">IG + AS</span></div>
+<div class="lanes"><div><b>📝 IN THE EXAM</b> Recognise gate symbols and binary behaviour.</div><div><b>🏛 IN REALITY</b> Signals have ranges, noise margins and switching delays.</div></div>
+</section></section><section class="lt" data-background-color="#F4F6FB" id="and"><div class="badges"><span class="bg bg-both">IG + AS</span></div>
 <div class="bar" style="background:var(--accent1)"></div>
-
 <h2>AND — the strict gate</h2>
 <div class="two-col">
 <div>
 <div style="position:relative; max-width:340px;">
-<svg style="width:100%;" viewBox="0 0 340 80">
+<svg style="width:100%;" viewbox="0 0 340 80">
 <line stroke="#222B5A" stroke-width="3" x1="10" x2="60" y1="55" y2="55"></line>
 <line stroke="#F0655B" stroke-width="3" x1="60" x2="85" y1="55" y2="37"></line>
 <circle cx="60" cy="55" fill="#222B5A" r="4"></circle><circle cx="90" cy="55" fill="#222B5A" r="4"></circle>
@@ -352,7 +355,7 @@ button:disabled {opacity:.4;cursor:default}
 <div class="rule" style="margin-top:10px;"><strong class="accent1">AND outputs 1 only if BOTH inputs are 1.</strong> Expression: <span class="mono">A AND B</span>, written A·B. 〔exam phrasing: "the output is 1 <em>if and only if</em> all inputs are 1"〕</div>
 </div>
 <div class="center">
-<svg style="width:150px;" viewBox="0 0 130 70">
+<svg style="width:150px;" viewbox="0 0 130 70">
 <line stroke="#222B5A" stroke-width="3" x1="0" x2="30" y1="20" y2="20"></line>
 <line stroke="#222B5A" stroke-width="3" x1="0" x2="30" y1="50" y2="50"></line>
 <path d="M30 8 H62 A27 27 0 0 1 62 62 H30 Z" fill="none" stroke="#222B5A" stroke-width="3"></path>
@@ -367,15 +370,14 @@ button:disabled {opacity:.4;cursor:default}
 </table>
 </div>
 </div>
-
-<div class="lanes"><div><b>📝 IN THE EXAM</b> Keep the supplied expression; include every input combination.</div><div><b>🏛 IN REALITY</b> The table describes a Boolean function, not its physical timing.</div></div></section><section class="lt" data-background-color="#F4F6FB" id="or"><div class="badges"><span class="bg bg-both">IG + AS</span></div>
+<div class="lanes"><div><b>📝 IN THE EXAM</b> Keep the supplied expression; include every input combination.</div><div><b>🏛 IN REALITY</b> The table describes a Boolean function, not its physical timing.</div></div>
+</section><section class="lt" data-background-color="#F4F6FB" id="or"><div class="badges"><span class="bg bg-both">IG + AS</span></div>
 <div class="bar" style="background:var(--accent1)"></div>
-
 <h2>OR — the generous gate</h2>
 <div class="two-col">
 <div>
 <div style="position:relative; max-width:340px;">
-<svg style="width:100%;" viewBox="0 0 340 116">
+<svg style="width:100%;" viewbox="0 0 340 116">
 <line stroke="#222B5A" stroke-width="3" x1="10" x2="50" y1="61" y2="61"></line>
 <line stroke="#222B5A" stroke-width="3" x1="50" x2="50" y1="26" y2="96"></line>
 <line stroke="#222B5A" stroke-width="3" x1="50" x2="110" y1="26" y2="26"></line>
@@ -400,7 +402,7 @@ button:disabled {opacity:.4;cursor:default}
 <div class="fragment rule accent2"><strong class="accent2">The trap:</strong> in English, "tea or coffee?" means pick <em>one</em>. In logic, OR means <strong>at least one — possibly both</strong>. The "exactly one" version exists… and you're about to meet it in a box.</div>
 </div>
 <div class="center">
-<svg style="width:150px;" viewBox="0 0 130 70">
+<svg style="width:150px;" viewbox="0 0 130 70">
 <line stroke="#222B5A" stroke-width="3" x1="0" x2="34" y1="20" y2="20"></line>
 <line stroke="#222B5A" stroke-width="3" x1="0" x2="34" y1="50" y2="50"></line>
 <path d="M28 8 Q52 8 68 16 Q86 25 94 35 Q86 45 68 54 Q52 62 28 62 Q40 35 28 8 Z" fill="none" stroke="#222B5A" stroke-width="3"></path>
@@ -415,9 +417,9 @@ button:disabled {opacity:.4;cursor:default}
 </table>
 </div>
 </div>
-<div class="lanes"><div><b>📝 IN THE EXAM</b> Keep the supplied expression; include every input combination.</div><div><b>🏛 IN REALITY</b> The table describes a Boolean function, not its physical timing.</div></div></section><section class="lt" data-background-color="#F4F6FB" id="not"><div class="badges"><span class="bg bg-both">IG + AS</span></div>
+<div class="lanes"><div><b>📝 IN THE EXAM</b> Keep the supplied expression; include every input combination.</div><div><b>🏛 IN REALITY</b> The table describes a Boolean function, not its physical timing.</div></div>
+</section><section class="lt" data-background-color="#F4F6FB" id="not"><div class="badges"><span class="bg bg-both">IG + AS</span></div>
 <div class="bar" style="background:var(--accent1)"></div>
-
 <h2>NOT — the contrarian</h2>
 <div class="two-col">
 <div>
@@ -425,7 +427,7 @@ button:disabled {opacity:.4;cursor:default}
 <div class="fragment rule accent3"><strong>Remember the little circle.</strong> The triangle is just a buffer; the <strong>bubble</strong> is what means "invert". Keep an eye on that bubble — it's about to start sneaking onto other gates.</div>
 </div>
 <div class="center">
-<svg style="width:170px;" viewBox="0 0 150 60">
+<svg style="width:170px;" viewbox="0 0 150 60">
 <line stroke="#222B5A" stroke-width="3" x1="0" x2="34" y1="30" y2="30"></line>
 <path d="M34 10 L34 50 L78 30 Z" fill="none" stroke="#222B5A" stroke-width="3"></path>
 <circle cx="86" cy="30" fill="none" r="7" stroke="#F0655B" stroke-width="3"></circle>
@@ -438,9 +440,9 @@ button:disabled {opacity:.4;cursor:default}
 </table>
 </div>
 </div>
-<div class="lanes"><div><b>📝 IN THE EXAM</b> Keep the supplied expression; include every input combination.</div><div><b>🏛 IN REALITY</b> The table describes a Boolean function, not its physical timing.</div></div></section><section class="lt" data-background-color="#F4F6FB" id="mystery"><div class="badges"><span class="bg bg-both">IG + AS</span></div>
+<div class="lanes"><div><b>📝 IN THE EXAM</b> Keep the supplied expression; include every input combination.</div><div><b>🏛 IN REALITY</b> The table describes a Boolean function, not its physical timing.</div></div>
+</section><section class="lt" data-background-color="#F4F6FB" id="mystery"><div class="badges"><span class="bg bg-both">IG + AS</span></div>
 <div class="bar" style="background:var(--accent2)"></div>
-
 <h2>🎮 The Mystery Gate</h2>
 <div class="mg-wrap">
 <span class="g-navwrap"><button class="g-skip" id="mg-back" title="back to the previous question">← back</button><button class="g-skip" id="mg-skip" title="on to the next question, answered or not">next →</button></span><div class="mg-stage" id="mg-stage"></div>
@@ -472,45 +474,43 @@ button:disabled {opacity:.4;cursor:default}
 <div class="mg-status" id="mg-status"> </div>
 <div class="mg-btnrow"><button class="mg-btn" id="mg-new">new game</button></div>
 </div>
-
-<div class="lanes"><div><b>📝 IN THE EXAM</b> Keep the supplied expression; include every input combination.</div><div><b>🏛 IN REALITY</b> The table describes a Boolean function, not its physical timing.</div></div></section><section><section class="lt" data-background-color="#F4F6FB" id="six-gates"><div class="badges"><span class="bg bg-both">IG + AS</span></div>
+<div class="lanes"><div><b>📝 IN THE EXAM</b> Keep the supplied expression; include every input combination.</div><div><b>🏛 IN REALITY</b> The table describes a Boolean function, not its physical timing.</div></div>
+</section><section><section class="lt" data-background-color="#F4F6FB" id="six-gates"><div class="badges"><span class="bg bg-both">IG + AS</span></div>
 <div class="bar" style="background:var(--accent1)"></div>
-
 <h2>The full lineup</h2>
 <div class="three-col" style="font-size:.85em;">
 <div class="gcard">
-<svg style="width:110px;" viewBox="0 0 130 70"><line stroke="#222B5A" stroke-width="3" x1="0" x2="30" y1="20" y2="20"></line><line stroke="#222B5A" stroke-width="3" x1="0" x2="30" y1="50" y2="50"></line><path d="M30 8 H62 A27 27 0 0 1 62 62 H30 Z" fill="none" stroke="#222B5A" stroke-width="3"></path><line stroke="#222B5A" stroke-width="3" x1="90" x2="125" y1="35" y2="35"></line></svg>
+<svg style="width:110px;" viewbox="0 0 130 70"><line stroke="#222B5A" stroke-width="3" x1="0" x2="30" y1="20" y2="20"></line><line stroke="#222B5A" stroke-width="3" x1="0" x2="30" y1="50" y2="50"></line><path d="M30 8 H62 A27 27 0 0 1 62 62 H30 Z" fill="none" stroke="#222B5A" stroke-width="3"></path><line stroke="#222B5A" stroke-width="3" x1="90" x2="125" y1="35" y2="35"></line></svg>
 <div class="gname">AND</div><div class="gexp">A·B</div><div class="gsays">1 iff both are 1</div>
 </div>
 <div class="gcard">
-<svg style="width:110px;" viewBox="0 0 130 70"><line stroke="#222B5A" stroke-width="3" x1="0" x2="34" y1="20" y2="20"></line><line stroke="#222B5A" stroke-width="3" x1="0" x2="34" y1="50" y2="50"></line><path d="M28 8 Q52 8 68 16 Q86 25 94 35 Q86 45 68 54 Q52 62 28 62 Q40 35 28 8 Z" fill="none" stroke="#222B5A" stroke-width="3"></path><line stroke="#222B5A" stroke-width="3" x1="94" x2="125" y1="35" y2="35"></line></svg>
+<svg style="width:110px;" viewbox="0 0 130 70"><line stroke="#222B5A" stroke-width="3" x1="0" x2="34" y1="20" y2="20"></line><line stroke="#222B5A" stroke-width="3" x1="0" x2="34" y1="50" y2="50"></line><path d="M28 8 Q52 8 68 16 Q86 25 94 35 Q86 45 68 54 Q52 62 28 62 Q40 35 28 8 Z" fill="none" stroke="#222B5A" stroke-width="3"></path><line stroke="#222B5A" stroke-width="3" x1="94" x2="125" y1="35" y2="35"></line></svg>
 <div class="gname">OR</div><div class="gexp">A+B</div><div class="gsays">1 iff at least one is 1</div>
 </div>
 <div class="gcard">
-<svg style="width:110px;" viewBox="0 0 130 70"><line stroke="#222B5A" stroke-width="3" x1="0" x2="34" y1="30" y2="30"></line><path d="M34 10 L34 50 L78 30 Z" fill="none" stroke="#222B5A" stroke-width="3"></path><circle cx="86" cy="30" fill="none" r="7" stroke="#222B5A" stroke-width="3"></circle><line stroke="#222B5A" stroke-width="3" x1="93" x2="125" y1="30" y2="30"></line></svg>
+<svg style="width:110px;" viewbox="0 0 130 70"><line stroke="#222B5A" stroke-width="3" x1="0" x2="34" y1="30" y2="30"></line><path d="M34 10 L34 50 L78 30 Z" fill="none" stroke="#222B5A" stroke-width="3"></path><circle cx="86" cy="30" fill="none" r="7" stroke="#222B5A" stroke-width="3"></circle><line stroke="#222B5A" stroke-width="3" x1="93" x2="125" y1="30" y2="30"></line></svg>
 <div class="gname">NOT</div><div class="gexp">Ā</div><div class="gsays">flips its one input</div>
 </div>
 </div>
 <div class="three-col fragment" style="font-size:.85em; margin-top:12px;">
 <div class="gcard">
-<svg style="width:110px;" viewBox="0 0 130 70"><line stroke="#222B5A" stroke-width="3" x1="0" x2="30" y1="20" y2="20"></line><line stroke="#222B5A" stroke-width="3" x1="0" x2="30" y1="50" y2="50"></line><path d="M30 8 H62 A27 27 0 0 1 62 62 H30 Z" fill="none" stroke="#222B5A" stroke-width="3"></path><circle cx="97" cy="35" fill="none" r="7" stroke="#F0655B" stroke-width="3"></circle><line stroke="#222B5A" stroke-width="3" x1="104" x2="125" y1="35" y2="35"></line></svg>
+<svg style="width:110px;" viewbox="0 0 130 70"><line stroke="#222B5A" stroke-width="3" x1="0" x2="30" y1="20" y2="20"></line><line stroke="#222B5A" stroke-width="3" x1="0" x2="30" y1="50" y2="50"></line><path d="M30 8 H62 A27 27 0 0 1 62 62 H30 Z" fill="none" stroke="#222B5A" stroke-width="3"></path><circle cx="97" cy="35" fill="none" r="7" stroke="#F0655B" stroke-width="3"></circle><line stroke="#222B5A" stroke-width="3" x1="104" x2="125" y1="35" y2="35"></line></svg>
 <div class="gname">NAND</div><div class="gexp">(A·B) with a bubble</div><div class="gsays">AND, then flipped — 0 only when both are 1</div>
 </div>
 <div class="gcard">
-<svg style="width:110px;" viewBox="0 0 130 70"><line stroke="#222B5A" stroke-width="3" x1="0" x2="34" y1="20" y2="20"></line><line stroke="#222B5A" stroke-width="3" x1="0" x2="34" y1="50" y2="50"></line><path d="M28 8 Q52 8 68 16 Q86 25 94 35 Q86 45 68 54 Q52 62 28 62 Q40 35 28 8 Z" fill="none" stroke="#222B5A" stroke-width="3"></path><circle cx="101" cy="35" fill="none" r="7" stroke="#F0655B" stroke-width="3"></circle><line stroke="#222B5A" stroke-width="3" x1="108" x2="125" y1="35" y2="35"></line></svg>
+<svg style="width:110px;" viewbox="0 0 130 70"><line stroke="#222B5A" stroke-width="3" x1="0" x2="34" y1="20" y2="20"></line><line stroke="#222B5A" stroke-width="3" x1="0" x2="34" y1="50" y2="50"></line><path d="M28 8 Q52 8 68 16 Q86 25 94 35 Q86 45 68 54 Q52 62 28 62 Q40 35 28 8 Z" fill="none" stroke="#222B5A" stroke-width="3"></path><circle cx="101" cy="35" fill="none" r="7" stroke="#F0655B" stroke-width="3"></circle><line stroke="#222B5A" stroke-width="3" x1="108" x2="125" y1="35" y2="35"></line></svg>
 <div class="gname">NOR</div><div class="gexp">(A+B) with a bubble</div><div class="gsays">OR, then flipped — 1 only when both are 0</div>
 </div>
 <div class="gcard" style="outline:2.5px solid var(--accent2);">
-<svg style="width:110px;" viewBox="0 0 130 70"><line stroke="#222B5A" stroke-width="3" x1="0" x2="34" y1="20" y2="20"></line><line stroke="#222B5A" stroke-width="3" x1="0" x2="34" y1="50" y2="50"></line><path d="M20 8 Q32 35 20 62" fill="none" stroke="#222B5A" stroke-width="3"></path><path d="M28 8 Q52 8 68 16 Q86 25 94 35 Q86 45 68 54 Q52 62 28 62 Q40 35 28 8 Z" fill="none" stroke="#222B5A" stroke-width="3"></path><line stroke="#222B5A" stroke-width="3" x1="94" x2="125" y1="35" y2="35"></line></svg>
+<svg style="width:110px;" viewbox="0 0 130 70"><line stroke="#222B5A" stroke-width="3" x1="0" x2="34" y1="20" y2="20"></line><line stroke="#222B5A" stroke-width="3" x1="0" x2="34" y1="50" y2="50"></line><path d="M20 8 Q32 35 20 62" fill="none" stroke="#222B5A" stroke-width="3"></path><path d="M28 8 Q52 8 68 16 Q86 25 94 35 Q86 45 68 54 Q52 62 28 62 Q40 35 28 8 Z" fill="none" stroke="#222B5A" stroke-width="3"></path><line stroke="#222B5A" stroke-width="3" x1="94" x2="125" y1="35" y2="35"></line></svg>
 <div class="gname">XOR</div><div class="gexp">A⊕B</div><div class="gsays">1 iff inputs DIFFER</div>
 </div>
 </div>
 <div class="fragment rule accent2" style="margin-top:14px;"><strong>A useful contrast</strong> <span class="mono">1 OR 1 = 1</span>  but  <span class="mono">1 XOR 1 = 0</span>. If both inputs are 1, OR says yes — XOR says <em>no, you two match</em>.</div>
 <div class="dig">⬇ XOR is stranger than it looks 🕳️</div>
-
-<div class="lanes"><div><b>📝 IN THE EXAM</b> Keep the supplied expression; include every input combination.</div><div><b>🏛 IN REALITY</b> The table describes a Boolean function, not its physical timing.</div></div></section><section class="lt" data-background-color="#F4F6FB" data-hole="true" id="xor"><div class="badges"><span class="bg bg-both">↓ OPTIONAL INVESTIGATION</span></div>
+<div class="lanes"><div><b>📝 IN THE EXAM</b> Keep the supplied expression; include every input combination.</div><div><b>🏛 IN REALITY</b> The table describes a Boolean function, not its physical timing.</div></div>
+</section><section class="lt" data-background-color="#F4F6FB" data-hole="true" id="xor"><div class="badges"><span class="bg bg-both">↓ OPTIONAL INVESTIGATION</span></div>
 <div class="bar" style="background:var(--accent3)"></div>
-
 <h2>XOR, the difference detector</h2>
 <div class="two-col" style="font-size:.7em;">
 <div class="card"><b>XOR compares two bits.</b><br/>Try 1010 XOR 1001, bit by bit. Which positions differ?<br/><b>0011</b>: the final two. To decide whether whole files differ, compare their lengths and corresponding bits, then combine the differences.</div>
@@ -520,15 +520,15 @@ button:disabled {opacity:.4;cursor:default}
       XOR computes the <em>write</em> column. Perfectly. Every row.</div>
 </div>
 <div class="rule accent2" style="margin-top:16px;"><strong>So who computes the carry?</strong> Check AND's table against "when do you carry?"… Interesting. <strong>Hold that thought.</strong></div>
-<div class="lanes"><div><b>📝 IN THE EXAM</b> Keep the supplied expression; include every input combination.</div><div><b>🏛 IN REALITY</b> The table describes a Boolean function, not its physical timing.</div></div></section></section><section><section class="lt" data-background-color="#F4F6FB" id="sets"><div class="badges"><span class="bg bg-both">IG + AS</span></div>
+<div class="lanes"><div><b>📝 IN THE EXAM</b> Keep the supplied expression; include every input combination.</div><div><b>🏛 IN REALITY</b> The table describes a Boolean function, not its physical timing.</div></div>
+</section></section><section><section class="lt" data-background-color="#F4F6FB" id="sets"><div class="badges"><span class="bg bg-both">IG + AS</span></div>
 <div class="bar" style="background:var(--accent1)"></div>
-
 <h2>Set membership becomes a bit</h2>
 <p style="font-size:.7em;">Choose one object: A=1 means it belongs to set A; B=1 means it belongs to set B. Now read each shaded region as an output of 1.</p>
 <div class="three-col" style="font-size:.62em;">
 <div class="card center">
-<svg style="width:130px;" viewBox="0 0 120 70">
-<clipPath id="clipL"><circle cx="45" cy="35" r="26"></circle></clipPath>
+<svg style="width:130px;" viewbox="0 0 120 70">
+<clippath id="clipL"><circle cx="45" cy="35" r="26"></circle></clippath>
 <circle cx="45" cy="35" fill="none" r="26" stroke="#222B5A" stroke-width="2"></circle>
 <circle cx="75" cy="35" fill="none" r="26" stroke="#222B5A" stroke-width="2"></circle>
 <circle clip-path="url(#clipL)" cx="75" cy="35" fill="rgba(23,179,163,.35)" r="26"></circle>
@@ -536,14 +536,14 @@ button:disabled {opacity:.4;cursor:default}
 <strong>A ∩ B</strong> — in both sets<br/>= <strong class="accent1">A AND B</strong>
 </div>
 <div class="card center">
-<svg style="width:130px;" viewBox="0 0 120 70">
+<svg style="width:130px;" viewbox="0 0 120 70">
 <circle cx="45" cy="35" fill="rgba(23,179,163,.35)" r="26" stroke="#222B5A" stroke-width="2"></circle>
 <circle cx="75" cy="35" fill="rgba(23,179,163,.35)" r="26" stroke="#222B5A" stroke-width="2"></circle>
 </svg>
 <strong>A ∪ B</strong> — in either set<br/>= <strong class="accent1">A OR B</strong>
 </div>
 <div class="card center">
-<svg style="width:130px;" viewBox="0 0 120 70">
+<svg style="width:130px;" viewbox="0 0 120 70">
 <rect fill="rgba(23,179,163,.35)" height="62" rx="6" stroke="#98a0c0" stroke-width="1.5" width="112" x="4" y="4"></rect>
 <circle cx="60" cy="35" fill="#F4F6FB" r="24" stroke="#222B5A" stroke-width="2"></circle>
 </svg>
@@ -553,10 +553,9 @@ button:disabled {opacity:.4;cursor:default}
 <div class="fragment rule accent3" style="margin-top:10px;"><b>Try De Morgan:</b> NOT(A OR B) and (NOT A) AND (NOT B) both give 1000 for rows 00, 01, 10, 11. Check the rows or shade “outside both”.</div>
 <div class="fragment rule"><strong class="accent1">And one habit to keep forever:</strong> truth-table rows <strong>count upward in binary</strong> — a 3-input table's rows are just 0 to 7 (000, 001, 010 … 111). Every table you ever fill is binary practice. Never miss a row again.</div>
 <div class="dig">⬇ one algebra, three costumes 🕳️</div>
-
-<div class="lanes"><div><b>📝 IN THE EXAM</b> Keep the supplied expression; include every input combination.</div><div><b>🏛 IN REALITY</b> The table describes a Boolean function, not its physical timing.</div></div></section><section class="lt" data-background-color="#F4F6FB" data-hole="true" id="three-costumes"><div class="badges"><span class="bg bg-both">↓ OPTIONAL INVESTIGATION</span></div>
+<div class="lanes"><div><b>📝 IN THE EXAM</b> Keep the supplied expression; include every input combination.</div><div><b>🏛 IN REALITY</b> The table describes a Boolean function, not its physical timing.</div></div>
+</section><section class="lt" data-background-color="#F4F6FB" data-hole="true" id="three-costumes"><div class="badges"><span class="bg bg-both">↓ OPTIONAL INVESTIGATION</span></div>
 <div class="bar" style="background:var(--accent3)"></div>
-
 <h2>One algebra, three costumes</h2>
 <table class="xt" style="max-width:820px; margin:10px auto;">
 <tr><th>Sets (maths)</th><th>Logic (statements)</th><th>Circuits (silicon)</th></tr>
@@ -567,9 +566,9 @@ button:disabled {opacity:.4;cursor:default}
 <tr><td>De Morgan by shading</td><td>De Morgan by truth table</td><td>De Morgan by rewiring</td></tr>
 </table>
 <div class="rule" style="margin-top:14px;"><b>Investigate:</b> shade outside A∪B. Then shade outside A AND outside B. Explain why the regions match. The truth-table check gives the same Boolean function; physical circuits may still have different timing.</div>
-<div class="lanes"><div><b>📝 IN THE EXAM</b> Keep the supplied expression; include every input combination.</div><div><b>🏛 IN REALITY</b> The table describes a Boolean function, not its physical timing.</div></div></section></section><section class="lt" data-background-color="#F4F6FB" id="trace"><div class="badges"><span class="bg bg-both">IG + AS</span></div>
+<div class="lanes"><div><b>📝 IN THE EXAM</b> Keep the supplied expression; include every input combination.</div><div><b>🏛 IN REALITY</b> The table describes a Boolean function, not its physical timing.</div></div>
+</section></section><section class="lt" data-background-color="#F4F6FB" id="trace"><div class="badges"><span class="bg bg-both">IG + AS</span></div>
 <div class="bar" style="background:var(--accent1)"></div>
-
 <h2>Reading a circuit</h2>
 <div class="two-col">
 <div>
@@ -591,28 +590,33 @@ button:disabled {opacity:.4;cursor:default}
 <p class="fragment smaller" data-fragment-index="2" style="color:#7a83a8; margin-top:8px;">F is 1 in exactly one situation: A off, B on.<br/>The middle column records your working. Add it when space allows.</p>
 </div>
 </div>
-<div class="lanes"><div><b>📝 IN THE EXAM</b> Keep the supplied expression; include every input combination.</div><div><b>🏛 IN REALITY</b> The table describes a Boolean function, not its physical timing.</div></div></section><section class="lt" data-background-color="#F4F6FB" id="trace-three"><div class="badges"><span class="bg bg-both">IG + AS</span></div><div class="bar"></div><h2>One more input. The same method.</h2><div class="rule"><b>F = (A OR B) AND NOT C</b>. First form P=A OR B and Q=NOT C; then compute F=P AND Q.</div><div class="rule">For ABC=101: P=1, Q=0, so F=0. For ABC=100: P=1, Q=1, so F=1.</div><div class="rule">Try all eight rows: 000, 001, 010, 011, 100, 101, 110, 111. Keep the supplied expression.</div><div class="rule">Check: P=00111111; Q=10101010; F=<b>00101010</b>.</div><p class="source">Our example. Both groups trace three inputs. IG circuits have at most three inputs and one output.</p><div class="lanes"><div><b>📝 IN THE EXAM</b> Keep the supplied expression; include every input combination.</div><div><b>🏛 IN REALITY</b> The table describes a Boolean function, not its physical timing.</div></div></section><section class="lt" data-background-color="#F4F6FB" id="drill"><div class="badges"><span class="bg bg-both">IG + AS</span></div>
+<div class="lanes"><div><b>📝 IN THE EXAM</b> Keep the supplied expression; include every input combination.</div><div><b>🏛 IN REALITY</b> The table describes a Boolean function, not its physical timing.</div></div>
+</section><section class="lt" data-background-color="#F4F6FB" id="trace-three"><div class="badges"><span class="bg bg-both">IG + AS</span></div><div class="bar"></div><h2>One more input. The same method.</h2><div class="rule"><b>F = (A OR B) AND NOT C</b>. First form P=A OR B and Q=NOT C; then compute F=P AND Q.</div><div class="rule">For ABC=101: P=1, Q=0, so F=0. For ABC=100: P=1, Q=1, so F=1.</div><div class="rule">Try all eight rows: 000, 001, 010, 011, 100, 101, 110, 111. Keep the supplied expression.</div><div class="rule">Check: P=00111111; Q=10101010; F=<b>00101010</b>.</div><p class="source">Our example. Both groups trace three inputs. IG circuits have at most three inputs and one output.</p><div class="lanes"><div><b>📝 IN THE EXAM</b> Keep the supplied expression; include every input combination.</div><div><b>🏛 IN REALITY</b> The table describes a Boolean function, not its physical timing.</div></div>
+</section><section data-classroom-stack="drill"><section class="lt" data-background-color="#F4F6FB" id="drill"><div class="badges"><span class="bg bg-both">IG + AS</span></div>
 <div class="bar" style="background:var(--accent2)"></div>
-
 <h2>Drill — exam wording, exam speed</h2>
 <div class="two-col" style="font-size:.68em;">
 <div>
 <div class="card"><strong>1.</strong> Complete the truth table for a <strong>NAND</strong> gate.<br/>
-<span class="fragment mono accent1">00→1 · 01→1 · 10→1 · 11→0</span></div>
+</div>
 <div class="card" style="margin-top:10px;"><strong>2.</strong> Complete the truth table for an <strong>XOR</strong> gate.<br/>
-<span class="fragment mono accent1">00→0 · 01→1 · 10→1 · 11→0</span></div>
+</div>
 </div>
 <div>
 <div class="card"><strong>3.</strong> Complete the truth table for <span class="mono">F = (A OR B) AND (NOT B)</span>.<br/>
-<span class="fragment mono accent1">00→0 · 01→0 · 10→1 · 11→0</span><span class="fragment" style="color:#7a83a8;">00→0 · 01→0 · 10→1 · 11→0 — trace the supplied expression, gate by gate.</span></div>
+</div>
 <div class="card" style="margin-top:10px;"><strong>4.</strong> A 2-input gate outputs 1 <em>only</em> when both inputs are 0. Name the gate.<br/>
-<span class="fragment mono accent1">NOR</span></div>
 </div>
 </div>
-<div class="fragment rule accent2" style="margin-top:12px;"><strong>Habit check:</strong> rows in binary order, all 2ⁿ present, working columns shown. The marks live in the table, not just the final cell.</div>
-<div class="lanes"><div><b>📝 IN THE EXAM</b> Keep the supplied expression; include every input combination.</div><div><b>🏛 IN REALITY</b> The table describes a Boolean function, not its physical timing.</div></div></section><section class="lt" data-aud="ig" data-background-color="#F4F6FB" id="paper-ig"><div class="badges"><span class="bg bg-both">IGCSE 0478</span></div><div class="bar"></div><h2>IG — name, then tabulate</h2><p class="source">0478 June 2022 /13 Q3, © UCLES. Response layout adapted.</p><p class="small">(a) Which of AND, OR, XOR satisfy each statement? Give all applicable names.</p><div class="statements">① Both inputs 0 → output 0 · ② Different inputs → output 1<br/>③ Both inputs 1 → output 1 · ④ Same inputs → output always 0</div><div id="mark-ig"></div><div class="lanes"><div><b>📝 IN THE EXAM</b> Four property rows; separate name and table marks.</div><div><b>🏛 IN REALITY</b> This local check does not assess a hand-drawn symbol.</div></div></section><section class="lt" data-aud="al" data-background-color="#F4F6FB" id="paper-al"><div class="badges"><span class="bg bg-both">AS 9618</span></div><div class="bar"></div><h2>AS — follow the expression</h2><p class="source">9618 June 2022 /12 Q7, © UCLES. Response layout adapted.</p><div class="rule">Complete the output column for <b>X = (A XOR B) AND NOT C</b>. [2]</div><div class="rule">Rows: 000, 001, 010, 011, 100, 101, 110, 111. Use working columns for A XOR B and NOT C.</div><div id="mark-al"></div><div class="lanes"><div><b>📝 IN THE EXAM</b> Keep the supplied expression; include every input combination.</div><div><b>🏛 IN REALITY</b> The table describes a Boolean function, not its physical timing.</div></div></section><section class="lt" data-aud="ig" data-background-color="#F4F6FB" id="lens-ig"><div class="badges"><span class="bg bg-both">IGCSE 0478</span></div><div class="bar"></div><h2>IG — the exam shapes</h2><table class="xt lens"><tr><th>Shape</th><th>How the stem reads</th><th>Marks</th><th>Where marks die</th></tr><tr><td>Gate behaviour</td><td>Name / tick the gates that…</td><td>1 per row here</td><td>Omitting a gate; treating XOR as OR.</td></tr><tr><td>Name + truth table</td><td>Name two other gates; complete each table.</td><td>1 name + 1 table each here</td><td>Counting the name as part of the table mark.</td></tr><tr><td>Representations</td><td>Draw / complete a circuit, expression or table.</td><td>As allocated</td><td>Missing inversion; missing input combinations; changing the supplied expression.</td></tr></table><div class="lanes"><div><b>📝 IN THE EXAM</b> Keep the supplied expression; include every input combination.</div><div><b>🏛 IN REALITY</b> The table describes a Boolean function, not its physical timing.</div></div></section><section class="lt" data-aud="al" data-background-color="#F4F6FB" id="lens-al"><div class="badges"><span class="bg bg-both">AS 9618</span></div><div class="bar"></div><h2>AS — the exam shapes</h2><table class="xt lens"><tr><th>Shape</th><th>How the stem reads</th><th>Marks</th><th>Where marks die</th></tr><tr><td>Truth table</td><td>Complete the table for the expression…</td><td>2 here: 1 per half</td><td>Skipping a row; losing brackets or inversion.</td></tr><tr><td>Gate / circuit</td><td>Identify, draw or write an expression…</td><td>As allocated</td><td>Confusing symbols; omitting a gate or a bubble.</td></tr><tr><td>Given expression</td><td>Draw / trace the supplied expression.</td><td>As allocated</td><td>Replacing it with a different structure without being asked.</td></tr></table><div class="lanes"><div><b>📝 IN THE EXAM</b> Keep the supplied expression; include every input combination.</div><div><b>🏛 IN REALITY</b> The table describes a Boolean function, not its physical timing.</div></div></section><section><section class="dk" data-background-color="#151B3C" id="cliffhanger"><div class="badges"><span class="bg bg-both">IG + AS</span></div>
+</div>
+<div class="lanes"><div><b>📝 IN THE EXAM</b> Keep the supplied expression; include every input combination.</div><div><b>🏛 IN REALITY</b> The table describes a Boolean function, not its physical timing.</div></div>
+<p class="classroom-nav">Write / explain first · ↓ optional check and worked reference · → next idea</p></section><section id="drill-answer" class="lt" data-background-color="#F4F6FB"><div class="bar"></div><h2>Drill — check every row</h2><div class="rule">Rows AB: 00, 01, 10, 11.</div><div class="rule">1. NAND: 1, 1, 1, 0. 2. XOR: 0, 1, 1, 0.</div><div class="rule">3. (A OR B) AND NOT B: 0, 0, 1, 0.</div><div class="rule">4. NOR outputs 1 only at 00.</div><div class="rule">For 3, show A OR B and NOT B as working columns. Do not change the supplied expression.</div>
+</section></section><section class="lt" data-aud="ig" data-background-color="#F4F6FB" id="paper-ig"><div class="badges"><span class="bg bg-both">IGCSE 0478</span></div><div class="bar"></div><h2>IG — name, then tabulate</h2><p class="source">0478 June 2022 /13 Q3, © UCLES. Response layout adapted.</p><p class="small">(a) Which of AND, OR, XOR satisfy each statement? Give all applicable names.</p><div class="statements">① Both inputs 0 → output 0 · ② Different inputs → output 1<br/>③ Both inputs 1 → output 1 · ④ Same inputs → output always 0</div><div id="mark-ig"></div><div class="lanes"><div><b>📝 IN THE EXAM</b> Four property rows; separate name and table marks.</div><div><b>🏛 IN REALITY</b> This local check does not assess a hand-drawn symbol.</div></div>
+</section><section class="lt" data-aud="al" data-background-color="#F4F6FB" id="paper-al"><div class="badges"><span class="bg bg-both">AS 9618</span></div><div class="bar"></div><h2>AS — follow the expression</h2><p class="source">9618 June 2022 /12 Q7, © UCLES. Response layout adapted.</p><div class="rule">Complete the output column for <b>X = (A XOR B) AND NOT C</b>. [2]</div><div class="rule">Rows: 000, 001, 010, 011, 100, 101, 110, 111. Use working columns for A XOR B and NOT C.</div><div id="mark-al"></div><div class="lanes"><div><b>📝 IN THE EXAM</b> Keep the supplied expression; include every input combination.</div><div><b>🏛 IN REALITY</b> The table describes a Boolean function, not its physical timing.</div></div>
+</section><section class="lt" data-aud="ig" data-background-color="#F4F6FB" id="lens-ig"><div class="badges"><span class="bg bg-both">IGCSE 0478</span></div><div class="bar"></div><h2>IG — the exam shapes</h2><table class="xt lens"><tr><th>Shape</th><th>How the stem reads</th><th>Marks</th><th>Where marks die</th></tr><tr><td>Gate behaviour</td><td>Name / tick the gates that…</td><td>1 per row here</td><td>Omitting a gate; treating XOR as OR.</td></tr><tr><td>Name + truth table</td><td>Name two other gates; complete each table.</td><td>1 name + 1 table each here</td><td>Counting the name as part of the table mark.</td></tr><tr><td>Representations</td><td>Draw / complete a circuit, expression or table.</td><td>As allocated</td><td>Missing inversion; missing input combinations; changing the supplied expression.</td></tr></table><div class="lanes"><div><b>📝 IN THE EXAM</b> Keep the supplied expression; include every input combination.</div><div><b>🏛 IN REALITY</b> The table describes a Boolean function, not its physical timing.</div></div>
+</section><section class="lt" data-aud="al" data-background-color="#F4F6FB" id="lens-al"><div class="badges"><span class="bg bg-both">AS 9618</span></div><div class="bar"></div><h2>AS — the exam shapes</h2><table class="xt lens"><tr><th>Shape</th><th>How the stem reads</th><th>Marks</th><th>Where marks die</th></tr><tr><td>Truth table</td><td>Complete the table for the expression…</td><td>2 here: 1 per half</td><td>Skipping a row; losing brackets or inversion.</td></tr><tr><td>Gate / circuit</td><td>Identify, draw or write an expression…</td><td>As allocated</td><td>Confusing symbols; omitting a gate or a bubble.</td></tr><tr><td>Given expression</td><td>Draw / trace the supplied expression.</td><td>As allocated</td><td>Replacing it with a different structure without being asked.</td></tr></table><div class="lanes"><div><b>📝 IN THE EXAM</b> Keep the supplied expression; include every input combination.</div><div><b>🏛 IN REALITY</b> The table describes a Boolean function, not its physical timing.</div></div>
+</section><section><section class="dk" data-background-color="#151B3C" id="cliffhanger"><div class="badges"><span class="bg bg-both">IG + AS</span></div>
 <div class="bar" style="background:var(--accent2)"></div>
-
 <h2 style="margin-top:.4em;">Six tools. Could one do the job?</h2>
 <div class="two-col">
 <div class="center">
@@ -632,10 +636,9 @@ button:disabled {opacity:.4;cursor:default}
 </div>
 <div class="fragment rule accent3" style="margin-top:10px; font-size:.72em;"><strong>Next lesson: the proof.</strong> (Impatient? There's a cellar under this slide. ↓)</div>
 <div class="dig">⬇ the cellar 🕳️</div>
-
-<div class="lanes"><div><b>📝 IN THE EXAM</b> Use the gates requested in the question.</div><div><b>🏛 IN REALITY</b> Universality is logical sufficiency, not a chip inventory.</div></div></section><section class="dk" data-background-color="#151B3C" data-hole="true" id="nand-cellar"><div class="badges"><span class="bg bg-both">↓ OPTIONAL INVESTIGATION</span></div>
+<div class="lanes"><div><b>📝 IN THE EXAM</b> Use the gates requested in the question.</div><div><b>🏛 IN REALITY</b> Universality is logical sufficiency, not a chip inventory.</div></div>
+</section><section class="dk" data-background-color="#151B3C" data-hole="true" id="nand-cellar"><div class="badges"><span class="bg bg-both">↓ OPTIONAL INVESTIGATION</span></div>
 <div class="bar" style="background:var(--accent3)"></div>
-
 <h2>The cellar: why Turing Complete starts you with NAND</h2>
 <div class="two-col" style="align-items:center;">
 <div style="font-size:.72em; flex:1.35;">
@@ -648,10 +651,9 @@ button:disabled {opacity:.4;cursor:default}
 <p style="font-size:.5em; color:#98a0c0; margin:4px 0 0;">Turing Complete's opening move: one input, wired into both pins — NOT, built from NAND</p>
 </div>
 </div>
-
-<div class="lanes"><div><b>📝 IN THE EXAM</b> Use the gates requested in the question.</div><div><b>🏛 IN REALITY</b> Universality is logical sufficiency, not a chip inventory.</div></div></section></section><section class="lt" data-background-color="#F4F6FB" id="vocabulary"><div class="badges"><span class="bg bg-both">IG + AS</span></div>
+<div class="lanes"><div><b>📝 IN THE EXAM</b> Use the gates requested in the question.</div><div><b>🏛 IN REALITY</b> Universality is logical sufficiency, not a chip inventory.</div></div>
+</section></section><section class="lt" data-background-color="#F4F6FB" id="vocabulary"><div class="badges"><span class="bg bg-both">IG + AS</span></div>
 <div class="bar" style="background:var(--accent1)"></div>
-
 <h2>Vocabulary <span class="smaller accent1">词汇</span></h2>
 <table class="vtab">
 <tr><th>English</th><th>中文 (pīnyīn)</th><th>Meaning check</th></tr>
@@ -665,9 +667,9 @@ button:disabled {opacity:.4;cursor:default}
 <tr class="fragment"><td><strong>XOR</strong></td><td>异或门 (yìhuò mén)</td><td>1 iff inputs differ</td></tr>
 <tr class="fragment"><td><strong>input / output</strong></td><td>输入 / 输出 (shūrù / shūchū)</td><td>what goes in / the one bit that comes out</td></tr>
 </table>
+
 </section><section class="dk" data-background-color="#151B3C" id="recap"><div class="badges"><span class="bg bg-both">IG + AS</span></div>
 <div class="bar" style="background:var(--accent1)"></div>
-
 <h2>What you can do now</h2>
 <div class="sgrid" style="margin-top:14px;">
 <div class="scard"><b>Why binary?</b><br/>Two separated ranges make reliable signalling convenient. Restoration works within specified margins.</div>
@@ -676,11 +678,21 @@ button:disabled {opacity:.4;cursor:default}
 <div class="scard" style="border-top-color:var(--accent2);"><b>Membership becomes logic</b><br/>In both → AND; in either → OR; outside → NOT. Check identities by every input row.</div>
 </div>
 <div class="rule accent2" style="margin-top:18px; font-size:.72em;"><b>Still open:</b> how can NAND alone implement all six functions?</div>
-</section><section class="lt" data-background-color="#F4F6FB" id="exit"><div class="badges"><span class="bg bg-both">IG + AS</span></div><div class="bar"></div><h2>Before you leave</h2><div class="rule">1. NOT: write the outputs for input 0, then 1.</div><div class="rule">2. Draw NAND and NOR; explain what their output bubbles do.</div><div class="rule">3. Trace F=(A OR B) AND NOT C for ABC=011 and 110.</div><div class="rule">4. Does NAND universality prove every real chip uses only NAND? Explain.</div><div class="lanes"><div><b>📝 IN THE EXAM</b> Keep the supplied expression; include every input combination.</div><div><b>🏛 IN REALITY</b> The table describes a Boolean function, not its physical timing.</div></div></section><section class="lt" data-background-color="#F4F6FB" id="exit-answer"><div class="badges"><span class="bg bg-both">IG + AS</span></div><div class="bar"></div><h2>Check the exit</h2><div class="rule">1. <b>1, 0.</b> NOT has one input.</div><div class="rule">2. NAND: AND body + output bubble. NOR: OR body + output bubble. Each bubble inverts the preceding result. Compare your drawings with the six-gate lineup.</div><div class="rule">3. 011: 1 AND 0 = <b>0</b>. 110: 1 AND 1 = <b>1</b>.</div><div class="rule">4. <b>No.</b> It proves logical sufficiency; a physical design can choose many cell types.</div><div class="lanes"><div><b>📝 IN THE EXAM</b> Keep the supplied expression; include every input combination.</div><div><b>🏛 IN REALITY</b> The table describes a Boolean function, not its physical timing.</div></div></section><section class="dk" data-background-color="#151B3C" id="ledger"><div class="badges"><span class="bg bg-both">IG + AS</span></div><div class="bar"></div><h2>🧾 Outside the exam hall</h2><div class="rule"><b>Keep:</b> gate → operation → output; test every defined input combination.</div><div class="rule"><b>Qualify:</b> 0 and 1 are voltage ranges. Noise tolerance has limits.</div><div class="rule"><b>Distinguish:</b> equal truth tables give equal Boolean functions, not equal timing or power.</div><div class="rule"><b>Carry forward:</b> one universal gate can construct the others. Real design also chooses suitable hardware.</div></section></div></div>
+
+</section><section data-classroom-stack="exit"><section class="lt" data-background-color="#F4F6FB" id="exit"><div class="badges"><span class="bg bg-both">IG + AS</span></div><div class="bar"></div><h2>Before you leave</h2><div class="rule">1. NOT: write the outputs for input 0, then 1.</div><div class="rule">2. Draw NAND and NOR; explain what their output bubbles do.</div><div class="rule">3. Trace F=(A OR B) AND NOT C for ABC=011 and 110.</div><div class="rule">4. Does NAND universality prove every real chip uses only NAND? Explain.</div><div class="lanes"><div><b>📝 IN THE EXAM</b> Keep the supplied expression; include every input combination.</div><div><b>🏛 IN REALITY</b> The table describes a Boolean function, not its physical timing.</div></div>
+<p class="classroom-nav">Write / explain first · ↓ optional check and worked reference · → next idea</p></section><section class="lt" data-background-color="#F4F6FB" id="exit-answer"><div class="badges"><span class="bg bg-both">IG + AS</span></div><div class="bar"></div><h2>Check the exit</h2><div class="rule">1. <b>1, 0.</b> NOT has one input.</div><div class="rule">2. NAND: AND body + output bubble. NOR: OR body + output bubble. Each bubble inverts the preceding result. Compare your drawings with the six-gate lineup.</div><div class="rule">3. 011: 1 AND 0 = <b>0</b>. 110: 1 AND 1 = <b>1</b>.</div><div class="rule">4. <b>No.</b> It proves logical sufficiency; a physical design can choose many cell types.</div><div class="lanes"><div><b>📝 IN THE EXAM</b> Keep the supplied expression; include every input combination.</div><div><b>🏛 IN REALITY</b> The table describes a Boolean function, not its physical timing.</div></div>
+</section></section><section class="dk" data-background-color="#151B3C" id="ledger"><div class="badges"><span class="bg bg-both">IG + AS</span></div><div class="bar"></div><h2>🧾 Outside the exam hall</h2><div class="rule"><b>Keep:</b> gate → operation → output; test every defined input combination.</div><div class="rule"><b>Qualify:</b> 0 and 1 are voltage ranges. Noise tolerance has limits.</div><div class="rule"><b>Distinguish:</b> equal truth tables give equal Boolean functions, not equal timing or power.</div><div class="rule"><b>Carry forward:</b> one universal gate can construct the others. Real design also chooses suitable hardware.</div>
+</section></div></div>
 
 
 <button id="fs-btn" onclick="document.documentElement.requestFullscreen().catch(()=&gt;{})">⛶ Fullscreen</button>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/reveal.js/4.6.1/reveal.min.js"></script>
+<script id="classroom-route-cleanup">(function(){
+var aud=new URLSearchParams(location.search).get('aud');
+if(!['ig','al'].includes(aud))return;
+var stacks=[...document.querySelectorAll('.slides section')].filter(s=>s.querySelector('section'));
+document.querySelectorAll('.slides [data-aud]').forEach(n=>{if(!['both',aud].includes(n.dataset.aud))n.remove();});
+stacks.reverse().forEach(s=>{if(s.isConnected&&!s.querySelector('section'))s.remove();});
+})();</script><script src="https://cdnjs.cloudflare.com/ajax/libs/reveal.js/4.6.1/reveal.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/reveal.js/4.6.1/plugin/notes/notes.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/contrib/auto-render.min.js"></script>
@@ -943,5 +955,5 @@ function initMysteryGate(){
  renderMathInElement(document.querySelector('.reveal'),{delimiters:[{left:'$$',right:'$$',display:true},{left:'\\(',right:'\\)',display:false}],throwOnError:false});
  document.querySelectorAll('.mg-tog').forEach(x=>{x.tabIndex=0;x.setAttribute('role','button');x.addEventListener('keydown',e=>{if(e.key===' '||e.key==='Enter'){e.preventDefault();x.click();}});});
 });
-</script><script type="application/json" id="course-routes">{"ig": {"slides": 26, "cells": 0}, "al": {"slides": 26, "cells": 0}}</script><script type="application/json" id="paper-spend">[["0478", "J22", "13", "3"], ["9618", "J22", "12", "7"]]</script></body>
+</script><script type="application/json" id="course-routes">{"ig": {"slides": 27, "cells": 0}, "al": {"slides": 27, "cells": 0}}</script><script type="application/json" id="paper-spend">[["0478", "J22", "13", "3"], ["9618", "J22", "12", "7"]]</script></body>
 </html>

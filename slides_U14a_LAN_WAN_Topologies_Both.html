@@ -1,10 +1,10 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
 <title>Twenty People and a Posting Board — LAN, WAN, Topologies</title>
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/reveal.js/4.6.1/reveal.min.css">
+<link href="https://cdnjs.cloudflare.com/ajax/libs/reveal.js/4.6.1/reveal.min.css" rel="stylesheet"/>
 <style>
 :root{
   --dark:#151B3C; --light:#F4F6FB; --accent1:#17B3A3; --accent2:#F0655B;
@@ -737,47 +737,45 @@ table.dw select{font-size:1em; font-family:inherit;}
 .baran{display:grid; grid-template-columns:1.3fr 1fr; gap:14px; align-items:start;}
 .baran img{width:100%; border-radius:10px; box-shadow:0 6px 18px rgba(0,0,0,.22);}
 </style>
-</head>
-<body>
+<script>const AUD=new URLSearchParams(location.search).get('aud')==='al'?'al':'ig';function setAud(a){let u=new URL(location.href);u.searchParams.set('aud',a);u.hash='';location.href=u.href;}</script><style>.as-primary{top:20px!important}.as-primary h2{font-size:36px}.as-primary .as-code{font:24px/1.18 ui-monospace,monospace;white-space:pre-wrap;text-align:left;background:#e8eef9;color:#222b5a;padding:12px;border-left:4px solid #17b3a3}.as-primary p{font-size:24px;line-height:1.25}.as-primary .as-caption{font-size:20px}.as-primary .as-output{font:23px/1.3 ui-monospace,monospace;white-space:pre-wrap;text-align:left}.as-optional{font-size:19px}.as-optional[open]{max-height:380px;overflow:auto}</style><meta content="disabled-human-review" name="classroom-submissions"/><script id="course-routes" type="application/json">{"ig": {"slides": 19, "cells": 2, "horizontal": 11}, "al": {"slides": 27, "cells": 0, "horizontal": 11}}</script><style id="rollout-networks-security">.reveal .slides section.rollout-page{top:32px!important;text-align:left;padding:22px 42px;box-sizing:border-box;width:100%;font-size:26px;line-height:1.35}.rollout-page h2{font-size:42px;line-height:1.1;margin:14px 0 25px}.rollout-page p{font-size:26px;line-height:1.4;margin:18px 0}.rollout-page .rollout-label,.rollout-page .rollout-nav{font-size:19px;color:#4e5b77}.rollout-page .rollout-work{border-left:5px solid #17B3A3;padding:16px 24px;background:#E8EEF9;margin:22px 0;min-height:80px}.rollout-page .rollout-check{background:#E8EEF9;border-left:5px solid #17B3A3;padding:18px 24px;font-size:27px}.rollout-page .rollout-limit{font-size:23px;padding:12px 20px;border-left:4px solid #F2B53C}.rollout-nav{color:#5b6488;font-size:18px!important}.reveal .slides section.rollout-game{top:18px!important}.rollout-game #g-q{max-height:185px;overflow:auto;font-size:23px;line-height:1.25}.rollout-game #g-body{margin-top:5px}.rollout-game #g-body .g-ta{height:64px!important;min-height:64px!important;max-height:64px!important;resize:none;font-size:21px}.rollout-game .g-lbl{font-size:21px!important;line-height:1.25;margin:5px 0!important}.rollout-parts{display:flex;gap:8px}.rollout-parts button[aria-pressed=true]{outline:2px solid #17B3A3}.rollout-rubric{max-height:225px;overflow:auto;padding:10px 16px;background:#e8eef9;color:#222b5a;text-align:left;font-size:20px;line-height:1.25;border-left:4px solid #17b3a3}.rollout-rubric p,.rollout-rubric li{font-size:20px!important;line-height:1.25;margin:6px 0}.rollout-rubric ul{display:block;margin:7px 0 7px 24px}.rollout-reference{background:#fff;color:#222b5a;padding:8px;margin-top:8px}.rollout-reference summary{cursor:pointer;font-size:20px}.rollout-reference>div{padding:12px;font-size:20px;line-height:1.35}.rollout-caution{border-left:3px solid #f2b53c;padding-left:10px}.rollout-game .g-sub{font-size:20px;padding:7px 15px;margin:6px 0}.rollout-game #g-say{margin-top:5px}.rollout-game .g-head{margin-bottom:5px}.rollout-game h2{margin-bottom:12px}.rollout-game .g-fin p{font-size:25px}.rollout-game .g-head .g-title{font-size:25px}.rollout-game #llmchip,.rollout-game #llmhelp{display:none!important}[hidden]{display:none!important}.reveal .slides section.rollout-topology{top:20px!important}.rollout-topology .rx{margin-top:12px!important}.rollout-topology .topo4 .box{font-size:20px!important;line-height:1.2!important;padding:10px!important}.rollout-topology .topo4 .t{font-size:21px!important;margin-bottom:5px!important}.rollout-topology .rx{font-size:18px!important;line-height:1.2!important;margin-top:8px!important}.rollout-topology .hint{font-size:18px!important}.rollout-topology td{font-size:22px!important;line-height:1.2!important;padding:8px!important}#game-al.rollout-game #g-q{max-height:155px}.reveal .slides section.rollout-ig-code-fit{top:28px!important}.rollout-ig-code-fit .pyta{max-height:270px!important;overflow:auto!important}.rollout-ig-code-fit .pyout{max-height:120px!important;overflow:auto!important}#chain-code .pyta{max-height:290px!important;overflow:auto!important}#chain-code .pyout{max-height:95px!important;overflow:auto!important}.rollout-ig-code-fit h2{font-size:36px!important;margin-bottom:8px!important}#game-al.rollout-game .rollout-rubric{max-height:195px}#topology-compare-check .topo4{display:grid;grid-template-columns:1fr 1fr;gap:14px;font-size:21px;line-height:1.25}#topology-compare-check .topo4 .box{font-size:22px!important;line-height:1.25!important;padding:12px;background:#e8eef9}#topology-compare-check .topo4 .t{font-size:23px;font-weight:bold}#topology-compare-check .rule{font-size:21px!important;line-height:1.25!important;margin-top:12px!important}#topology-compare-check .dig{font-size:18px!important}.rollout-code-fit pre.as-code{font-size:21px!important;line-height:1.22!important}
+</style></head>
+<body><div id="as-route-controls" style="position:fixed;top:8px;right:12px;z-index:1000;font:16px sans-serif"><button onclick="setAud('ig')">IG · original</button> <button onclick="setAud('al')">AS · pseudocode</button></div>
 <div class="reveal"><div class="slides">
-
 <!-- ==================== H1 TITLE + OBJECTIVES ==================== -->
 <section>
-  <section class="dk" data-background-color="#151B3C">
-    <div class="bar" style="background:var(--accent1)"></div>
-    <div class="badges"><span class="bg bg-al">9618 §2.1 · Paper 1</span> <span class="bg bg-ig">0478 — not examined; the words U14b–d need</span></div>
-    <p style="font-size:.55em; color:var(--accent3); letter-spacing:.12em; margin-bottom:0;">COMPUTER SCIENCE · U14a · NETWORKS</p>
-    <h1 style="margin:.1em 0;">Twenty People and a Posting Board</h1>
-    <p style="font-size:.7em; margin-top:0;">What a network is, how far a LAN reaches, who may talk to whom — and the four shapes a room can be wired in</p>
-    <p style="font-size:.5em; color:#98a0c0; margin-top:2.2em;">
-      Navigation: <span class="mono">→</span> next idea &nbsp;·&nbsp; <span class="mono">↓</span> dig deeper
-      <span class="accent3">🕳️</span> &nbsp;·&nbsp; badges top-right show whose exam it's on
+<section class="dk" data-background-color="#151B3C" id="legacy-1">
+<div class="bar" style="background:var(--accent1)"></div>
+<div class="badges"><span class="bg bg-al">9618 §2.1 · Paper 1</span> <span class="bg bg-ig">0478 — not examined; the words U14b–d need</span></div>
+<p style="font-size:.55em; color:var(--accent3); letter-spacing:.12em; margin-bottom:0;">COMPUTER SCIENCE · U14a · NETWORKS</p>
+<h1 style="margin:.1em 0;">Twenty People and a Posting Board</h1>
+<p style="font-size:.7em; margin-top:0;">What a network is, how far a LAN reaches, who may talk to whom — and the four shapes a room can be wired in</p>
+<p style="font-size:.5em; color:#98a0c0; margin-top:2.2em;">
+      Navigation: <span class="mono">→</span> next idea  ·  <span class="mono">↓</span> dig deeper
+      <span class="accent3">🕳️</span>  ·  badges top-right show whose exam it's on
     </p>
-    <p style="margin-top:1.6em;"><button id="obj-btn" onclick="Reveal.down()">🎯 objectives</button></p>
+<p style="margin-top:1.6em;"><button id="obj-btn" onclick="Reveal.down()">🎯 objectives</button></p>
 
 </section>
-  <section class="dk" data-background-color="#151B3C">
-    <div class="bar" style="background:var(--accent3)"></div>
-    <div class="badges"><span class="bg bg-al">9618 §2.1</span></div>
-    <h2>🎯 Today you will be able to</h2>
-    <div class="rule"><strong class="accent1">1.</strong> Say what makes a network a <strong>LAN</strong> or a <strong>WAN</strong> in the scheme's sentences — area, ownership, transfer rate — and never by repeating the acronym</div>
-    <div class="rule"><strong class="accent1">2.</strong> Name the <strong>bus, star, mesh and hybrid</strong> topologies, trace <strong>one packet</strong> through each, draw a star the way the scheme marks it, and justify a topology for a room</div>
-    <div class="rule accent3"><strong class="accent3">3.</strong> Describe the roles of the devices in a <strong>client-server</strong> model for a given scenario, and the features and drawbacks of <strong>peer-to-peer</strong></div>
-    <div class="rule accent3"><strong class="accent3">4.</strong> Tell a <strong>thin client</strong> from a <strong>thick client</strong> by where the data and the processing live — and know why a converse pair scores once</div>
-  </section>
+<section class="dk" data-background-color="#151B3C" id="legacy-2">
+<div class="bar" style="background:var(--accent3)"></div>
+<div class="badges"><span class="bg bg-al">9618 §2.1</span></div>
+<h2>🎯 Today you will be able to</h2>
+<div class="rule"><strong class="accent1">1.</strong> Say what makes a network a <strong>LAN</strong> or a <strong>WAN</strong> in the scheme's sentences — area, ownership, transfer rate — and never by repeating the acronym</div>
+<div class="rule"><strong class="accent1">2.</strong> Name the <strong>bus, star, mesh and hybrid</strong> topologies, trace <strong>one packet</strong> through each, draw a star the way the scheme marks it, and justify a topology for a room</div>
+<div class="rule accent3"><strong class="accent3">3.</strong> Describe the roles of the devices in a <strong>client-server</strong> model for a given scenario, and the features and drawbacks of <strong>peer-to-peer</strong></div>
+<div class="rule accent3"><strong class="accent3">4.</strong> Tell a <strong>thin client</strong> from a <strong>thick client</strong> by where the data and the processing live — and know why a converse pair scores once</div>
 </section>
-
+</section>
 <!-- ==================== H2 HOOK: THIS ROOM'S OWN STAR ==================== -->
-<section class="lt" data-background-color="#F4F6FB">
-  <div class="bar" style="background:var(--accent1)"></div>
-  <div class="badges"><span class="bg bg-al">9618 §2.1</span> <span class="bg" style="background:rgba(23,179,163,.14); color:#0d7a6e;">▶ captured on a home Wi-Fi</span></div>
-  <h2>Every device in your home talks to <span class="accent1">exactly one box.</span></h2>
-  <div style="display:grid; grid-template-columns:1.1fr 1fr; gap:14px; align-items:start;">
-    <div class="cap"><span class="d">$ netstat -rn | grep default          (2026-09-12)</span>
-<span class="k">default</span>   <span class="g">192.168.220.1</span>   en0        <span class="d">← the one box: the router at the centre</span>
-
+<section class="lt" data-background-color="#F4F6FB" id="legacy-3">
+<div class="bar" style="background:var(--accent1)"></div>
+<div class="badges"><span class="bg bg-al">9618 §2.1</span> <span class="bg" style="background:rgba(23,179,163,.14); color:#0d7a6e;">▶ captured on a home Wi-Fi</span></div>
+<h2>Every device in your home talks to <span class="accent1">exactly one box.</span></h2>
+<div style="display:grid; grid-template-columns:1.1fr 1fr; gap:14px; align-items:start;">
+<div class="cap"><span class="d">$ netstat -rn | grep default          (2026-09-12)</span>
+<span class="k">default</span> <span class="g">192.168.220.1</span>   en0        <span class="d">← the one box: the router at the centre</span>
 <span class="d">$ arp -a                                 every device this laptop has talked to at home</span>
-? (192.168.220.1)    at 70:85:6c:<span class="d">xx:xx:xx</span>   <span class="d">← the router</span>
+? (192.168.220.1)    at 70:85:6c:<span class="d">xx:xx:xx</span> <span class="d">← the router</span>
 ? (192.168.220.4)    at 98:4a:6b:<span class="d">xx:xx:xx</span>
 ? (192.168.220.21)   at 98:4a:6b:<span class="d">xx:xx:xx</span>
 ? (192.168.220.40)   at c4:b2:5b:<span class="d">xx:xx:xx</span>
@@ -787,7 +785,7 @@ table.dw select{font-size:1em; font-family:inherit;}
 ? (192.168.220.77)   at 8c:fd:49:<span class="d">xx:xx:xx</span>
 ? (192.168.220.98)   at 3c:0f:02:<span class="d">xx:xx:xx</span>
 ? (192.168.220.101)  at 7e:e1:a0:<span class="d">xx:xx:xx</span>
-? (192.168.220.112)  at 02:26:74:<span class="d">xx:xx:xx</span>   <span class="g">← this laptop</span>
+? (192.168.220.112)  at 02:26:74:<span class="d">xx:xx:xx</span> <span class="g">← this laptop</span>
 ? (192.168.220.146)  at c0:35:32:<span class="d">xx:xx:xx</span>
 ? (192.168.220.147)  at e2:53:cb:<span class="d">xx:xx:xx</span>
 ? (192.168.220.185)  at 3e:02:b5:<span class="d">xx:xx:xx</span>
@@ -795,115 +793,113 @@ table.dw select{font-size:1em; font-family:inherit;}
 ? (192.168.220.245)  at 7a:67:b6:<span class="d">xx:xx:xx</span>
 ? (192.168.220.247)  at 32:c5:11:<span class="d">xx:xx:xx</span>
 <span class="d">… 17 devices, two numbers each: an IP address the router lent, a MAC address the factory burned in</span></div>
-    <div style="font-size:.52em;">
-      <div class="rule" style="margin-top:0;"><b>Two commands, one shape — captured on a home Wi-Fi.</b> The first asks the laptop where it sends anything it does not know how to deliver: <b>one address</b>, the router by the front door. The second lists every device it has exchanged a frame with in the last few minutes: seventeen of them — phones, a TV, a printer, a speaker — each with two numbers. Now the claim of the lesson: <b>none of these devices is wired to another. Every one is wired to the box at .1</b>, and the box is wired to all of them. <b>Your home is a star.</b> That shape has a name, and by minute thirty you will have drawn it the way the examiner wants, traced a packet through it, and said why a home chooses it.</div>
-      <div class="fragment rule accent1"><b>Two numbers per device.</b> The <b>IP address</b> (<span class="mono">192.168.220.112</span>) the router <em>lent</em> this laptop when it joined — U14c. The <b>MAC address</b> (<span class="mono">02:26:74:…</span>) the network card was <em>born with</em> — U14b. Tonight only the shape.</div>
-      <div class="fragment rule accent2"><b>Tonight, at home:</b> the same two commands on your family's Wi-Fi (<span class="mono">ipconfig</span> then <span class="mono">arp -a</span> on Windows). The number of devices is the number of people in the house, plus the TV, plus whatever else is listening — and every one of them is on its own cable-or-radio to the same box.</div>
-    </div>
-  </div>
+<div style="font-size:.52em;">
+<div class="rule" style="margin-top:0;"><b>Two commands, one shape — captured on a home Wi-Fi.</b> The first asks the laptop where it sends anything it does not know how to deliver: <b>one address</b>, the router by the front door. The second lists every device it has exchanged a frame with in the last few minutes: seventeen of them — phones, a TV, a printer, a speaker — each with two numbers. Now the claim of the lesson: <b>none of these devices is wired to another. Every one is wired to the box at .1</b>, and the box is wired to all of them. <b>Your home is a star.</b> That shape has a name, and by minute thirty you will have drawn it the way the examiner wants, traced a packet through it, and said why a home chooses it.</div>
+<div class="fragment rule accent1"><b>Two numbers per device.</b> The <b>IP address</b> (<span class="mono">192.168.220.112</span>) the router <em>lent</em> this laptop when it joined — U14c. The <b>MAC address</b> (<span class="mono">02:26:74:…</span>) the network card was <em>born with</em> — U14b. Tonight only the shape.</div>
+<div class="fragment rule accent2"><b>Tonight, at home:</b> the same two commands on your family's Wi-Fi (<span class="mono">ipconfig</span> then <span class="mono">arp -a</span> on Windows). The number of devices is the number of people in the house, plus the TV, plus whatever else is listening — and every one of them is on its own cable-or-radio to the same box.</div>
+</div>
+</div>
 
 </section>
-
 <!-- ==================== H3 LAN AND WAN ==================== -->
-<section class="lt" data-background-color="#F4F6FB">
-  <div class="bar" style="background:var(--accent2)"></div>
-  <div class="badges"><span class="bg bg-al">9618 §2.1 — the characteristics of a LAN and a WAN</span></div>
-  <h2>LAN and WAN — <span class="accent2">the sentences, not the acronym</span></h2>
-  <div class="roles">
-    <div class="stages a"><div class="t">THE CLASSROOM'S LAN — N21/11 · J23/12 · a recent paper (the scheme's words)</div><ol><li>Covers a <b>small geographical area</b> — one room, one building, one site <span class="mp">[1]</span></li><li>The infrastructure is <b>privately owned</b> — the school's own cables, switches, access points; nothing leased, and the internet is not needed to send within the building <span class="mp">[1]</span></li><li>A <b>high data transfer rate</b> — say <em>rate</em>, not "faster" <span class="mp">[1]</span></li><li>Wired <em>or</em> wireless — "all LANs are wired" is a recent paper's misconception</li></ol><p style="margin:5px 0 0; color:#5b6488;"><b>Benefits are a different question</b> (J23/12): sharing files and data · sharing hardware and software · central management (backup, security). The report: benefits confused with characteristics, and "gives each computer internet access" — nothing in the question said internet.</p></div>
-    <div class="stages b"><div class="t">THE SCHOOL'S TWO SITES — A WAN (J23/13 · J25/12 · N24/13)</div><ol><li>Covers a <b>large geographical area</b> — two sites, a city, the world <span class="mp">[1]</span></li><li>Uses <b>external / public / leased</b> infrastructure — non-dedicated hardware, a telecoms company's lines <span class="mp">[1]</span></li><li>Connections are <b>often virtual</b> rather than physical; a <b>lower</b> transfer rate; harder to secure <span class="mp">[1]</span></li><li>A WAN is not "wireless" — the J25 misconception</li></ol><p style="margin:5px 0 0; color:#c0392b;"><b>A difference names both sides.</b> "A WAN covers a large area <em>and</em> a LAN a small one" scores; "a LAN is faster" does not — "the rate of transfer of data in a LAN is greater" does (J23 report).</p></div>
-  </div>
-  <div class="fragment real" style="margin-top:8px;"><b>Reality note — is the boundary blurring?</b> In practice, yes. A <b>VPN</b> makes a teacher's laptop at home behave as if it were on the school LAN, over the public internet; cloud services put the "server" a continent away while the app feels local; a campus Wi-Fi mesh stretches one LAN across a square kilometre. What still separates them — and what the scheme pays for — is <b>who owns the infrastructure</b> (yours, or leased from a telecoms company) and <b>how far it physically reaches</b>. A VPN is a WAN wearing a LAN's addresses, and the exam still calls it a WAN.</div>
+<section class="lt" data-background-color="#F4F6FB" id="legacy-4">
+<div class="bar" style="background:var(--accent2)"></div>
+<div class="badges"><span class="bg bg-al">9618 §2.1 — the characteristics of a LAN and a WAN</span></div>
+<h2>LAN and WAN — <span class="accent2">the sentences, not the acronym</span></h2>
+<div class="roles">
+<div class="stages a"><div class="t">THE CLASSROOM'S LAN — N21/11 · J23/12 · a recent paper (the scheme's words)</div><ol><li>Covers a <b>small geographical area</b> — one room, one building, one site <span class="mp">[1]</span></li><li>The infrastructure is <b>privately owned</b> — the school's own cables, switches, access points; nothing leased, and the internet is not needed to send within the building <span class="mp">[1]</span></li><li>A <b>high data transfer rate</b> — say <em>rate</em>, not "faster" <span class="mp">[1]</span></li><li>Wired <em>or</em> wireless — "all LANs are wired" is a recent paper's misconception</li></ol><p style="margin:5px 0 0; color:#5b6488;"><b>Benefits are a different question</b> (J23/12): sharing files and data · sharing hardware and software · central management (backup, security). The report: benefits confused with characteristics, and "gives each computer internet access" — nothing in the question said internet.</p></div>
+<div class="stages b"><div class="t">THE SCHOOL'S TWO SITES — A WAN (J23/13 · J25/12 · N24/13)</div><ol><li>Covers a <b>large geographical area</b> — two sites, a city, the world <span class="mp">[1]</span></li><li>Uses <b>external / public / leased</b> infrastructure — non-dedicated hardware, a telecoms company's lines <span class="mp">[1]</span></li><li>Connections are <b>often virtual</b> rather than physical; a <b>lower</b> transfer rate; harder to secure <span class="mp">[1]</span></li><li>A WAN is not "wireless" — the J25 misconception</li></ol><p style="margin:5px 0 0; color:#c0392b;"><b>A difference names both sides.</b> "A WAN covers a large area <em>and</em> a LAN a small one" scores; "a LAN is faster" does not — "the rate of transfer of data in a LAN is greater" does (J23 report).</p></div>
+</div>
+<div class="fragment real" style="margin-top:8px;"><b>Reality note — is the boundary blurring?</b> In practice, yes. A <b>VPN</b> makes a teacher's laptop at home behave as if it were on the school LAN, over the public internet; cloud services put the "server" a continent away while the app feels local; a campus Wi-Fi mesh stretches one LAN across a square kilometre. What still separates them — and what the scheme pays for — is <b>who owns the infrastructure</b> (yours, or leased from a telecoms company) and <b>how far it physically reaches</b>. A VPN is a WAN wearing a LAN's addresses, and the exam still calls it a WAN.</div>
 
 </section>
-
 <!-- ==================== H4 THE FOUR SHAPES (↓ cells) ==================== -->
 <section>
-  <section class="lt growslide" data-background-color="#F4F6FB">
-    <div class="bar" style="background:var(--accent1)"></div>
-    <div class="badges"><span class="bg bg-al">9618 §2.1 — bus, star, mesh, hybrid; how packets travel in each; justify a topology</span> <span class="bg" style="background:rgba(23,179,163,.14); color:#0d7a6e;">▶ live</span></div>
-    <h2>Four shapes, one packet — <span class="accent1">the posting board and the postman</span></h2>
-    <div id="rm-topo"></div>
+<section class="lt growslide" data-background-color="#F4F6FB" id="legacy-5">
+<div class="bar" style="background:var(--accent1)"></div>
+<div class="badges"><span class="bg bg-al">9618 §2.1 — bus, star, mesh, hybrid; how packets travel in each; justify a topology</span> <span class="bg" style="background:rgba(23,179,163,.14); color:#0d7a6e;">▶ live</span></div>
+<h2>Four shapes, one packet — <span class="accent1">the posting board and the postman</span></h2>
+<div id="rm-topo"></div>
 
 </section>
-  <section class="lt" data-background-color="#F4F6FB">
-    <div class="bar" style="background:var(--accent1)"></div>
-    <div class="badges"><span class="bg bg-al">9618 J24/11 Q8(a) — the tick table · N23/11 Q2(d) — star over bus · J25/12 Q6(d) — draw it</span></div>
-    <h2>The four, on the card — <span class="accent1">and what the scheme pays for each</span></h2>
-    <div><svg viewBox="0 0 960 300" xmlns="http://www.w3.org/2000/svg" font-family="Helvetica, Arial, sans-serif" font-size="12" style="width:96%; height:auto; display:block; margin:0 auto;">
-<text x="480" y="24" text-anchor="middle" fill="#888" font-weight="bold" font-size="15">Four topologies, and how a packet from A reaches D in each</text>
-<text x="130" y="52" text-anchor="middle" fill="#888" font-weight="bold">bus</text>
-<line x1="30" y1="150" x2="230" y2="150" stroke="#f59e0b" stroke-width="3"/>
-<line x1="55" y1="150" x2="55" y2="109" stroke="#888" stroke-width="1.5"/>
-<circle cx="55" cy="98" r="11" fill="rgba(136,136,136,0.12)" stroke="#f59e0b" stroke-width="1.5"/><text x="55" y="102" text-anchor="middle" fill="#f59e0b" font-size="11">A</text>
-<line x1="105" y1="150" x2="105" y2="109" stroke="#888" stroke-width="1.5"/>
-<circle cx="105" cy="98" r="11" fill="rgba(136,136,136,0.12)" stroke="#888" stroke-width="1.5"/><text x="105" y="102" text-anchor="middle" fill="#888" font-size="11">B</text>
-<line x1="155" y1="150" x2="155" y2="109" stroke="#888" stroke-width="1.5"/>
-<circle cx="155" cy="98" r="11" fill="rgba(136,136,136,0.12)" stroke="#888" stroke-width="1.5"/><text x="155" y="102" text-anchor="middle" fill="#888" font-size="11">C</text>
-<line x1="205" y1="150" x2="205" y2="109" stroke="#888" stroke-width="1.5"/>
-<circle cx="205" cy="98" r="11" fill="rgba(136,136,136,0.12)" stroke="#f59e0b" stroke-width="1.5"/><text x="205" y="102" text-anchor="middle" fill="#f59e0b" font-size="11">D</text>
-<text x="130" y="178" text-anchor="middle" fill="#888" font-size="11">one cable; A broadcasts, all hear,</text>
-<text x="130" y="192" text-anchor="middle" fill="#888" font-size="11">only D accepts; two talk at once</text>
-<text x="130" y="206" text-anchor="middle" fill="#888" font-size="11">= collision (CSMA/CD)</text>
-<text x="370" y="52" text-anchor="middle" fill="#888" font-weight="bold">star</text>
-<line x1="309.4" y1="95.7" x2="370.0" y2="132.0" stroke="#f59e0b" stroke-width="2.5"/>
-<line x1="430.6" y1="95.7" x2="370.0" y2="132.0" stroke="#888" stroke-width="1.5"/>
-<line x1="309.4" y1="169.2" x2="370.0" y2="132.0" stroke="#888" stroke-width="1.5"/>
-<line x1="430.6" y1="169.2" x2="370.0" y2="132.0" stroke="#f59e0b" stroke-width="2.5"/>
-<rect x="352" y="122" width="36" height="20" rx="3" fill="rgba(37,99,235,0.15)" stroke="#2563eb" stroke-width="1.5"/><text x="370" y="136" text-anchor="middle" fill="#2563eb" font-size="9">switch</text>
-<circle cx="300" cy="90" r="11" fill="rgba(136,136,136,0.12)" stroke="#f59e0b" stroke-width="1.5"/><text x="300" y="94" text-anchor="middle" fill="#f59e0b" font-size="11">A</text>
-<circle cx="440" cy="90" r="11" fill="rgba(136,136,136,0.12)" stroke="#888" stroke-width="1.5"/><text x="440" y="94" text-anchor="middle" fill="#888" font-size="11">B</text>
-<circle cx="300" cy="175" r="11" fill="rgba(136,136,136,0.12)" stroke="#888" stroke-width="1.5"/><text x="300" y="179" text-anchor="middle" fill="#888" font-size="11">C</text>
-<circle cx="440" cy="175" r="11" fill="rgba(136,136,136,0.12)" stroke="#f59e0b" stroke-width="1.5"/><text x="440" y="179" text-anchor="middle" fill="#f59e0b" font-size="11">D</text>
-<text x="370" y="205" text-anchor="middle" fill="#888" font-size="11">every node to one switch;</text>
-<text x="370" y="219" text-anchor="middle" fill="#888" font-size="11">A to switch to D, nobody else hears;</text>
-<text x="370" y="233" text-anchor="middle" fill="#888" font-size="11">switch dies, network dies</text>
-<text x="620" y="52" text-anchor="middle" fill="#888" font-weight="bold">mesh (full)</text>
-<line x1="561.0" y1="90.0" x2="679.0" y2="90.0" stroke="#888" stroke-width="1"/>
-<line x1="550.0" y1="101.0" x2="550.0" y2="164.0" stroke="#888" stroke-width="1"/>
-<line x1="559.4" y1="95.7" x2="680.6" y2="169.3" stroke="#f59e0b" stroke-width="2.5"/>
-<line x1="680.6" y1="95.7" x2="559.4" y2="169.3" stroke="#888" stroke-width="1"/>
-<line x1="690.0" y1="101.0" x2="690.0" y2="164.0" stroke="#888" stroke-width="1"/>
-<line x1="561.0" y1="175.0" x2="679.0" y2="175.0" stroke="#888" stroke-width="1"/>
-<circle cx="550" cy="90" r="11" fill="rgba(136,136,136,0.12)" stroke="#f59e0b" stroke-width="1.5"/><text x="550" y="94" text-anchor="middle" fill="#f59e0b" font-size="11">A</text>
-<circle cx="690" cy="90" r="11" fill="rgba(136,136,136,0.12)" stroke="#888" stroke-width="1.5"/><text x="690" y="94" text-anchor="middle" fill="#888" font-size="11">B</text>
-<circle cx="550" cy="175" r="11" fill="rgba(136,136,136,0.12)" stroke="#888" stroke-width="1.5"/><text x="550" y="179" text-anchor="middle" fill="#888" font-size="11">C</text>
-<circle cx="690" cy="175" r="11" fill="rgba(136,136,136,0.12)" stroke="#f59e0b" stroke-width="1.5"/><text x="690" y="179" text-anchor="middle" fill="#f59e0b" font-size="11">D</text>
-<text x="620" y="205" text-anchor="middle" fill="#888" font-size="11">every node to every other;</text>
-<text x="620" y="219" text-anchor="middle" fill="#888" font-size="11">A to D direct, or round via B or C;</text>
-<text x="620" y="233" text-anchor="middle" fill="#888" font-size="11">n(n−1)/2 cables — costly, robust</text>
-<text x="850" y="52" text-anchor="middle" fill="#888" font-weight="bold">hybrid</text>
-<line x1="770" y1="150" x2="840" y2="150" stroke="#f59e0b" stroke-width="3"/>
-<line x1="785" y1="150" x2="785" y2="109" stroke="#888" stroke-width="1.5"/>
-<circle cx="785" cy="98" r="11" fill="rgba(136,136,136,0.12)" stroke="#f59e0b" stroke-width="1.5"/><text x="785" y="102" text-anchor="middle" fill="#f59e0b" font-size="11">A</text>
-<line x1="825" y1="150" x2="825" y2="109" stroke="#888" stroke-width="1.5"/>
-<circle cx="825" cy="98" r="11" fill="rgba(136,136,136,0.12)" stroke="#888" stroke-width="1.5"/><text x="825" y="102" text-anchor="middle" fill="#888" font-size="11">B</text>
-<line x1="840" y1="150" x2="874" y2="150" stroke="#f59e0b" stroke-width="2.5"/>
-<rect x="874" y="141" width="28" height="18" rx="3" fill="rgba(37,99,235,0.15)" stroke="#2563eb" stroke-width="1.5"/>
-<line x1="902.0" y1="150.0" x2="922.0" y2="119.2" stroke="#888" stroke-width="1.5"/>
-<circle cx="928" cy="110" r="11" fill="rgba(136,136,136,0.12)" stroke="#888" stroke-width="1.5"/><text x="928" y="114" text-anchor="middle" fill="#888" font-size="11">C</text>
-<line x1="902.0" y1="150.0" x2="922.0" y2="180.8" stroke="#f59e0b" stroke-width="2.5"/>
-<circle cx="928" cy="190" r="11" fill="rgba(136,136,136,0.12)" stroke="#f59e0b" stroke-width="1.5"/><text x="928" y="194" text-anchor="middle" fill="#f59e0b" font-size="11">D</text>
-<text x="850" y="218" text-anchor="middle" fill="#888" font-size="11">a bus segment joined to a star:</text>
-<text x="850" y="232" text-anchor="middle" fill="#888" font-size="11">most real LANs are hybrids</text>
-<text x="480" y="280" text-anchor="middle" fill="#888" font-size="12">amber = the path A to D; 9618 asks you to trace it and to justify the choice — cost and cabling against robustness and collisions</text>
+<section class="lt rollout-topology" data-background-color="#F4F6FB" id="legacy-6">
+<div class="bar" style="background:var(--accent1)"></div>
+<div class="badges"><span class="bg bg-al">9618 J24/11 Q8(a) — the tick table · N23/11 Q2(d) — star over bus · J25/12 Q6(d) — draw it</span></div>
+<h2>The four, on the card — <span class="accent1">and what the scheme pays for each</span></h2>
+<div><svg font-family="Helvetica, Arial, sans-serif" font-size="12" style="width:96%; height:auto; display:block; margin:0 auto;" viewbox="0 0 960 300" xmlns="http://www.w3.org/2000/svg">
+<text fill="#888" font-size="15" font-weight="bold" text-anchor="middle" x="480" y="24">Four topologies, and how a packet from A reaches D in each</text>
+<text fill="#888" font-weight="bold" text-anchor="middle" x="130" y="52">bus</text>
+<line stroke="#f59e0b" stroke-width="3" x1="30" x2="230" y1="150" y2="150"></line>
+<line stroke="#888" stroke-width="1.5" x1="55" x2="55" y1="150" y2="109"></line>
+<circle cx="55" cy="98" fill="rgba(136,136,136,0.12)" r="11" stroke="#f59e0b" stroke-width="1.5"></circle><text fill="#f59e0b" font-size="11" text-anchor="middle" x="55" y="102">A</text>
+<line stroke="#888" stroke-width="1.5" x1="105" x2="105" y1="150" y2="109"></line>
+<circle cx="105" cy="98" fill="rgba(136,136,136,0.12)" r="11" stroke="#888" stroke-width="1.5"></circle><text fill="#888" font-size="11" text-anchor="middle" x="105" y="102">B</text>
+<line stroke="#888" stroke-width="1.5" x1="155" x2="155" y1="150" y2="109"></line>
+<circle cx="155" cy="98" fill="rgba(136,136,136,0.12)" r="11" stroke="#888" stroke-width="1.5"></circle><text fill="#888" font-size="11" text-anchor="middle" x="155" y="102">C</text>
+<line stroke="#888" stroke-width="1.5" x1="205" x2="205" y1="150" y2="109"></line>
+<circle cx="205" cy="98" fill="rgba(136,136,136,0.12)" r="11" stroke="#f59e0b" stroke-width="1.5"></circle><text fill="#f59e0b" font-size="11" text-anchor="middle" x="205" y="102">D</text>
+<text fill="#888" font-size="11" text-anchor="middle" x="130" y="178">one cable; A broadcasts, all hear,</text>
+<text fill="#888" font-size="11" text-anchor="middle" x="130" y="192">only D accepts; two talk at once</text>
+<text fill="#888" font-size="11" text-anchor="middle" x="130" y="206">= collision (CSMA/CD)</text>
+<text fill="#888" font-weight="bold" text-anchor="middle" x="370" y="52">star</text>
+<line stroke="#f59e0b" stroke-width="2.5" x1="309.4" x2="370.0" y1="95.7" y2="132.0"></line>
+<line stroke="#888" stroke-width="1.5" x1="430.6" x2="370.0" y1="95.7" y2="132.0"></line>
+<line stroke="#888" stroke-width="1.5" x1="309.4" x2="370.0" y1="169.2" y2="132.0"></line>
+<line stroke="#f59e0b" stroke-width="2.5" x1="430.6" x2="370.0" y1="169.2" y2="132.0"></line>
+<rect fill="rgba(37,99,235,0.15)" height="20" rx="3" stroke="#2563eb" stroke-width="1.5" width="36" x="352" y="122"></rect><text fill="#2563eb" font-size="9" text-anchor="middle" x="370" y="136">switch</text>
+<circle cx="300" cy="90" fill="rgba(136,136,136,0.12)" r="11" stroke="#f59e0b" stroke-width="1.5"></circle><text fill="#f59e0b" font-size="11" text-anchor="middle" x="300" y="94">A</text>
+<circle cx="440" cy="90" fill="rgba(136,136,136,0.12)" r="11" stroke="#888" stroke-width="1.5"></circle><text fill="#888" font-size="11" text-anchor="middle" x="440" y="94">B</text>
+<circle cx="300" cy="175" fill="rgba(136,136,136,0.12)" r="11" stroke="#888" stroke-width="1.5"></circle><text fill="#888" font-size="11" text-anchor="middle" x="300" y="179">C</text>
+<circle cx="440" cy="175" fill="rgba(136,136,136,0.12)" r="11" stroke="#f59e0b" stroke-width="1.5"></circle><text fill="#f59e0b" font-size="11" text-anchor="middle" x="440" y="179">D</text>
+<text fill="#888" font-size="11" text-anchor="middle" x="370" y="205">every node to one switch;</text>
+<text fill="#888" font-size="11" text-anchor="middle" x="370" y="219">A to switch to D, nobody else hears;</text>
+<text fill="#888" font-size="11" text-anchor="middle" x="370" y="233">switch dies, network dies</text>
+<text fill="#888" font-weight="bold" text-anchor="middle" x="620" y="52">mesh (full)</text>
+<line stroke="#888" stroke-width="1" x1="561.0" x2="679.0" y1="90.0" y2="90.0"></line>
+<line stroke="#888" stroke-width="1" x1="550.0" x2="550.0" y1="101.0" y2="164.0"></line>
+<line stroke="#f59e0b" stroke-width="2.5" x1="559.4" x2="680.6" y1="95.7" y2="169.3"></line>
+<line stroke="#888" stroke-width="1" x1="680.6" x2="559.4" y1="95.7" y2="169.3"></line>
+<line stroke="#888" stroke-width="1" x1="690.0" x2="690.0" y1="101.0" y2="164.0"></line>
+<line stroke="#888" stroke-width="1" x1="561.0" x2="679.0" y1="175.0" y2="175.0"></line>
+<circle cx="550" cy="90" fill="rgba(136,136,136,0.12)" r="11" stroke="#f59e0b" stroke-width="1.5"></circle><text fill="#f59e0b" font-size="11" text-anchor="middle" x="550" y="94">A</text>
+<circle cx="690" cy="90" fill="rgba(136,136,136,0.12)" r="11" stroke="#888" stroke-width="1.5"></circle><text fill="#888" font-size="11" text-anchor="middle" x="690" y="94">B</text>
+<circle cx="550" cy="175" fill="rgba(136,136,136,0.12)" r="11" stroke="#888" stroke-width="1.5"></circle><text fill="#888" font-size="11" text-anchor="middle" x="550" y="179">C</text>
+<circle cx="690" cy="175" fill="rgba(136,136,136,0.12)" r="11" stroke="#f59e0b" stroke-width="1.5"></circle><text fill="#f59e0b" font-size="11" text-anchor="middle" x="690" y="179">D</text>
+<text fill="#888" font-size="11" text-anchor="middle" x="620" y="205">every node to every other;</text>
+<text fill="#888" font-size="11" text-anchor="middle" x="620" y="219">A to D direct, or round via B or C;</text>
+<text fill="#888" font-size="11" text-anchor="middle" x="620" y="233">n(n−1)/2 cables — costly, robust</text>
+<text fill="#888" font-weight="bold" text-anchor="middle" x="850" y="52">hybrid</text>
+<line stroke="#f59e0b" stroke-width="3" x1="770" x2="840" y1="150" y2="150"></line>
+<line stroke="#888" stroke-width="1.5" x1="785" x2="785" y1="150" y2="109"></line>
+<circle cx="785" cy="98" fill="rgba(136,136,136,0.12)" r="11" stroke="#f59e0b" stroke-width="1.5"></circle><text fill="#f59e0b" font-size="11" text-anchor="middle" x="785" y="102">A</text>
+<line stroke="#888" stroke-width="1.5" x1="825" x2="825" y1="150" y2="109"></line>
+<circle cx="825" cy="98" fill="rgba(136,136,136,0.12)" r="11" stroke="#888" stroke-width="1.5"></circle><text fill="#888" font-size="11" text-anchor="middle" x="825" y="102">B</text>
+<line stroke="#f59e0b" stroke-width="2.5" x1="840" x2="874" y1="150" y2="150"></line>
+<rect fill="rgba(37,99,235,0.15)" height="18" rx="3" stroke="#2563eb" stroke-width="1.5" width="28" x="874" y="141"></rect>
+<line stroke="#888" stroke-width="1.5" x1="902.0" x2="922.0" y1="150.0" y2="119.2"></line>
+<circle cx="928" cy="110" fill="rgba(136,136,136,0.12)" r="11" stroke="#888" stroke-width="1.5"></circle><text fill="#888" font-size="11" text-anchor="middle" x="928" y="114">C</text>
+<line stroke="#f59e0b" stroke-width="2.5" x1="902.0" x2="922.0" y1="150.0" y2="180.8"></line>
+<circle cx="928" cy="190" fill="rgba(136,136,136,0.12)" r="11" stroke="#f59e0b" stroke-width="1.5"></circle><text fill="#f59e0b" font-size="11" text-anchor="middle" x="928" y="194">D</text>
+<text fill="#888" font-size="11" text-anchor="middle" x="850" y="218">a bus segment joined to a star:</text>
+<text fill="#888" font-size="11" text-anchor="middle" x="850" y="232">most real LANs are hybrids</text>
+<text fill="#888" font-size="12" text-anchor="middle" x="480" y="280">amber = the path A to D; 9618 asks you to trace it and to justify the choice — cost and cabling against robustness and collisions</text>
 </svg></div>
-    <div class="topo4" style="margin-top:6px;">
-      <div class="box"><div class="t">bus — the posting board</div>all devices to <b>one central cable</b> · every transmission is <b>broadcast</b>, only the addressed device keeps it · one at a time, so <b>collisions</b> · the cable fails, the network fails · cheap, hard to scale · <span class="no">✗ privacy: everyone hears</span></div>
-      <div class="box"><div class="t">star — the postman</div>all devices to <b>one central device</b> (a switch) · the sender sends to the switch, the switch <b>checks the destination address</b> and sends <b>only to the intended receiver</b> · <span class="yes">✓ no collisions, easy to add a node, one cable fault isolates one device</span> · <span class="no">✗ the switch is the single point of failure</span></div>
-      <div class="box"><div class="t">mesh — many roads</div>every device to <b>at least one other</b>, usually several · <b>multiple routes</b>; devices <b>relay</b> packets · <span class="yes">✓ a line fails and the rest keeps full function; no collisions</span> · <span class="no">✗ n(n−1)/2 cables — costly</span> · not "wireless": mesh is a shape</div>
-      <div class="box"><div class="t">hybrid — the school</div>any combination — stars joined by a backbone is nearly every real LAN · never asked on its own; it is what you draw when a scenario has two rooms</div>
-    </div>
-    <div class="fragment rule accent2" style="font-size:.5em; margin-top:6px;"><b>Drawing a star (J25/12, four marks):</b> <em>every device the stem lists</em> · <em>every one labelled</em> · <em>each connected directly to the switch, and to nothing else</em> · the internet device named. The J25 report: marks lost "not because they did not know how to draw a star topology, but because they omitted the labels or left out one or more devices". N23/12: "many diagrams incorrectly included other devices." The drawing check in the widget marks yours by exactly those lines.</div>
-    <div class="dig">⬇ dig: two cells — collisions counted, and what one cut costs each shape</div>
 
-</section>
-  <section class="lt" data-background-color="#F4F6FB">
-    <div class="bar" style="background:var(--accent1)"></div>
-    <div class="badges"><span class="bg bg-al">Python live — why your home (and the classroom) is a star</span></div>
-    <h2>Measured — <span class="accent1">why home is a star: collisions, and the price of a cut</span></h2>
-    <div style="display:grid; grid-template-columns:1fr 1fr; gap:10px; align-items:start;">
-      <div class="pycell tight pair"><script type="text/plain" class="pysrc">import random
+</section><section class="leaf lt rollout-page" data-aud="both" data-background-color="#F4F6FB" id="topology-compare-check"><h2>Compare shapes; label the drawing</h2>
+<div class="topo4" style="margin-top:6px;">
+<div class="box"><div class="t">bus — the posting board</div>all devices to <b>one central cable</b> · every transmission is <b>broadcast</b>, only the addressed device keeps it · one at a time, so <b>collisions</b> · the cable fails, the network fails · cheap, hard to scale · <span class="no">✗ privacy: everyone hears</span></div>
+<div class="box"><div class="t">star — the postman</div>all devices to <b>one central device</b> (a switch) · the sender sends to the switch, the switch <b>checks the destination address</b> and sends <b>only to the intended receiver</b> · <span class="yes">✓ no shared-medium collisions on switched full-duplex links; easy to add a node, one cable fault isolates one device</span> · <span class="no">✗ the switch is the single point of failure</span></div>
+<div class="box"><div class="t">mesh — many roads</div>A full mesh links every pair; a partial mesh uses selected links. Alternative paths can survive a failed link. Full mesh: n(n−1)/2 links. Duplex and protocol determine collisions; mesh alone does not.</div>
+<div class="box"><div class="t">hybrid — the school</div>any combination — stars joined by a backbone is nearly every real LAN · in the reviewed archive, no standalone hybrid question was found; practise it when a scenario joins different network shapes</div>
+</div><div class="rule accent2" style="font-size:.5em; margin-top:6px;"><b>Star drawing check:</b> include every requested device and label; connect each directly to the switch. Add no unrequested intermediary.</div></section>
+<section class="leaf lt rollout-page" data-aud="ig" data-background-color="#F4F6FB" id="legacy-7-ig-question"><div class="rollout-label">U14a · Shared · authored practice</div><h2>One cut: trace the remaining paths</h2><p>Four client computers and one server form a full mesh: every pair has a link. Draw it and count the links. Cut one link: can each client still reach the server? Compare a switched star when one client cable is cut.</p><div class="rollout-work">Work on paper. Keep the predicted result and its reason.</div><p class="rollout-nav">→ next idea · ↓ concise check, then optional full reference</p>
+</section><section class="leaf lt rollout-page" data-aud="ig" data-background-color="#F4F6FB" id="legacy-7-ig-check"><div class="rollout-label">U14a · Shared · authored practice</div><h2>Check · One cut: trace the remaining paths</h2><div class="rollout-check">Five vertices give 5 × 4 ÷ 2 = 10 mesh links. Every client retains a route after one link fails. A star loses only the client on the cut cable; a failed central switch is a different fault.</div><p class="rollout-limit">A full mesh has every pair linked; a partial mesh has selected links. Redundancy protects only against failures for which an alternative path remains. The preserved Python reference may use a longer or different specimen; read its stated inputs before comparing.</p><p class="rollout-nav">→ next idea · ↓ concise check, then optional full reference</p>
+</section><section class="lt rollout-ig-code-fit" data-aud="ig" data-background-color="#F4F6FB" id="legacy-7">
+<div class="bar" style="background:var(--accent1)"></div>
+<div class="badges"><span class="bg bg-al">Python live — why your home (and the classroom) is a star</span></div>
+<h2>Optional Python reference · Measured — <span class="accent1">why home is a star: collisions, and the price of a cut</span></h2>
+<div style="display:grid; grid-template-columns:1fr 1fr; gap:10px; align-items:start;">
+<div class="pycell tight pair"><script class="pysrc" type="text/plain">import random
 random.seed(7)
 SLOTS = 20                                      # one busy second of the classroom, cut into 20 moments
 def bus_collisions(n):                          # n devices on ONE cable; each picks a random moment to send
@@ -911,7 +907,7 @@ def bus_collisions(n):                          # n devices on ONE cable; each p
     return sum(1 for s in set(picks) if picks.count(s) > 1)   # a moment two or more chose: a collision — both resend
 for n in (5, 10, 20, 40):
     print("%2d devices | bus: %2d collisions in %d moments | star: 0 — each device has its own cable to the switch" % (n, bus_collisions(n), SLOTS))</script></div>
-      <div class="pycell tight pair"><script type="text/plain" class="pysrc">from collections import deque
+<div class="pycell tight pair"><script class="pysrc" type="text/plain">from collections import deque
 def links(n, topo):                             # devices 1..n and the server 0; a switch is "S" on the star
     if topo == "bus":  return [(d, d + 1) for d in range(0, n)]              # one cable: server, then each device along it
     if topo == "star": return [("S", d) for d in range(0, n + 1)]            # everyone to the switch, once
@@ -929,147 +925,212 @@ for n in (4, 8, 20):
         e = links(n, topo); cut = e[n // 2] if topo == "bus" else e[1]   # cut the cable mid-way on the bus; one device's link otherwise
         cables = 1 if topo == "bus" else len(e)
         print("n=%2d %-4s | cables %3d | after one cut, %2d of %2d devices still reach the server" % (n, topo, cables, reach_server(n, e, cut), n))</script></div>
-    </div>
-    <div class="fragment rule accent1" style="font-size:.5em; margin-top:6px;"><b>Left:</b> twenty people writing on one board in one busy second — six moments with two writers; forty people, thirteen. A star has zero, because nobody shares a cable. <b>Right:</b> the cost of one cut — the bus loses half the room, the star loses one device, the mesh loses nobody — and the cables that buy it: 1, n + 1, n(n + 1)/2. Twenty devices: 210 cables for the mesh. That is the whole of "justify a topology for a given situation" — and why the box by your front door has one cable to everything: <b>home is a star</b> because nobody shares a cable and one broken lead loses one device.</div>
+</div>
+<div class="fragment rule accent1" style="font-size:.5em; margin-top:6px;"><b>Left:</b> twenty people writing on one board in one busy second — six moments with two writers; forty people, thirteen. A star has zero, because nobody shares a cable. <b>Right:</b> the cost of one cut — the bus loses half the room, the star loses one device, the mesh loses nobody — and the cables that buy it: 1, n + 1, n(n + 1)/2. Twenty devices: 210 cables for the mesh. That is the whole of "justify a topology for a given situation" — and why the box by your front door has one cable to everything: <b>home is a star</b> because nobody shares a cable and one broken lead loses one device.</div>
 
+</section><section class="leaf lt rollout-page" data-aud="al" data-background-color="#F4F6FB" id="cut-evidence-as-question"><div class="rollout-label">U14a · AS · authored practice</div><h2>One cut: trace the remaining paths</h2><p>Four client computers and one server form a full mesh: every pair has a link. Draw it and count the links. Cut one link: can each client still reach the server? Compare a switched star when one client cable is cut.</p><div class="rollout-work">Sketch or trace first. Write the reason beside the result.</div><p class="rollout-nav">→ next idea · ↓ concise check, then optional full reference</p>
+</section><section class="leaf lt rollout-page" data-aud="al" data-background-color="#F4F6FB" id="cut-evidence-as-check"><div class="rollout-label">U14a · AS · authored practice</div><h2>Check · One cut: trace the remaining paths</h2><div class="rollout-check">Five vertices give 5 × 4 ÷ 2 = 10 mesh links. Every client retains a route after one link fails. A star loses only the client on the cut cable; a failed central switch is a different fault.</div><p class="rollout-limit"><b>Model / physical implementation:</b> A full mesh has every pair linked; a partial mesh has selected links. Redundancy protects only against failures for which an alternative path remains.</p><p class="rollout-nav">→ next idea · ↓ concise check, then optional full reference</p>
+</section><section class="leaf lt as-primary" data-aud="al" data-background-color="#f4f6fb" id="cut-evidence-as-1"><div class="bar"></div><h2>Optional reference · After one cut, who can still reach the server? · 1/3</h2><pre class="as-code" data-pc-program="cut-evidence">DECLARE Trial, Topology, Devices, Cables, Reach : INTEGER
+DECLARE Name, NText, CText, RText : STRING
+FOR Trial ← 1 TO 3
+    INPUT Devices
+    FOR Topology ← 1 TO 3
+        CASE OF Topology
+            1 : Name ← "bus "
+            2 : Name ← "star"
+            3 : Name ← "mesh"
+        ENDCASE
+        IF Topology = 1 THEN
+            Cables ← 1
+            Reach ← Devices DIV 2
+        ELSE
+            IF Topology = 2 THEN
+                Cables ← Devices + 1</pre><p class="as-caption">Inputs: [4, 8, 20]. Predict the next state; the worked result follows.</p>
+</section><section class="leaf lt as-primary" data-aud="al" data-background-color="#f4f6fb" id="cut-evidence-as-2"><div class="bar"></div><h2>Optional reference · After one cut, who can still reach the server? · 2/3</h2><pre class="as-code" data-pc-program="cut-evidence">                Reach ← Devices - 1
+            ELSE
+                Cables ← Devices * (Devices + 1) DIV 2
+                Reach ← Devices
+            ENDIF
+        ENDIF
+        NText ← NUM_TO_STR(Devices)
+        IF Devices &lt; 10 THEN
+            NText ← " " &amp; NText
+        ENDIF
+        CText ← NUM_TO_STR(Cables)
+        WHILE LENGTH(CText) &lt; 3
+            CText ← " " &amp; CText
+        ENDWHILE
+        RText ← NUM_TO_STR(Reach)
+        IF Reach &lt; 10 THEN</pre><p class="as-caption">Continued program: keep the same variable values. Predict the next state; the worked result follows.</p>
+</section><section class="leaf lt as-primary" data-aud="al" data-background-color="#f4f6fb" id="cut-evidence-as-3"><div class="bar"></div><h2>Optional reference · After one cut, who can still reach the server? · 3/3</h2><pre class="as-code" data-pc-program="cut-evidence">            RText ← " " &amp; RText
+        ENDIF
+        OUTPUT "n=", NText, " ", Name, " | cables ", CText, " | after one cut, ", RText, " of ", NText, " devices still reach the server"
+    NEXT Topology
+NEXT Trial</pre><p class="as-caption">Continued program: keep the same variable values. Predict the next state; the worked result follows.</p>
+</section><section class="leaf lt as-primary" data-aud="al" data-background-color="#f4f6fb" id="cut-evidence-as-result"><div class="bar"></div><h2>Optional reference · Worked result · After one cut, who can still reach the server?</h2><pre class="as-output">n= 4 bus  | cables   1 | after one cut,  2 of  4 devices still reach the server
+n= 4 star | cables   5 | after one cut,  3 of  4 devices still reach the server
+n= 4 mesh | cables  10 | after one cut,  4 of  4 devices still reach the server
+n= 8 bus  | cables   1 | after one cut,  4 of  8 devices still reach the server
+n= 8 star | cables   9 | after one cut,  7 of  8 devices still reach the server
+n= 8 mesh | cables  36 | after one cut,  8 of  8 devices still reach the server
+n=20 bus  | cables   1 | after one cut, 10 of 20 devices still reach the server
+n=20 star | cables  21 | after one cut, 19 of 20 devices still reach the server
+n=20 mesh | cables 210 | after one cut, 20 of 20 devices still reach the server
+</pre><p>Inputs 4,8,20 describe the illustrated models: server at one end of a bus with a cut just after its midpoint; star with one device link cut; full mesh with one link cut. The scalar formulas count the same reachable devices as the original graph search on these models. For the mesh, count one link per pair of devices including the server: n(n+1)/2. These formulas are not a general reachability algorithm.</p>
+</section><section class="leaf lt rollout-page" data-aud="al" data-background-color="#F4F6FB" id="bus-evidence-as-question"><div class="rollout-label">U14a · AS · authored practice</div><h2>Count collision moments</h2><p>Five observed arrival counts on a shared half-duplex medium are 0, 1, 2, 1, 3. Count moments with a collision. Explain why 'star' alone does not establish whether collisions can occur.</p><div class="rollout-work">Sketch or trace first. Write the reason beside the result.</div><p class="rollout-nav">→ next idea · ↓ concise check, then optional full reference</p>
+</section><section class="leaf lt rollout-page" data-aud="al" data-background-color="#F4F6FB" id="bus-evidence-as-check"><div class="rollout-label">U14a · AS · authored practice</div><h2>Check · Count collision moments</h2><div class="rollout-check">Two moments contain more than one sender. A switched full-duplex link removes shared-medium collisions; a hub-based star can share a collision domain.</div><p class="rollout-limit"><b>Model / physical implementation:</b> The supplied arrival counts are observations in a model. Topology, duplex mode and protocol are separate choices; no collision does not mean no congestion.</p><p class="rollout-nav">→ next idea · ↓ concise check, then optional full reference</p>
+</section><section class="leaf lt as-primary" data-aud="al" data-background-color="#f4f6fb" id="bus-evidence-as-1"><div class="bar"></div><h2>Optional reference · Count collision moments · 1/2</h2><pre class="as-code" data-pc-program="bus-evidence">DECLARE Trial, Devices, Moment, Arrivals, Collisions : INTEGER
+DECLARE NText, CText : STRING
+FOR Trial ← 1 TO 4
+    INPUT Devices
+    Collisions ← 0
+    FOR Moment ← 1 TO 20
+        INPUT Arrivals
+        IF Arrivals &gt; 1 THEN
+            Collisions ← Collisions + 1
+        ENDIF
+    NEXT Moment
+    NText ← NUM_TO_STR(Devices)
+    CText ← NUM_TO_STR(Collisions)
+    IF Devices &lt; 10 THEN
+        NText ← " " &amp; NText
+    ENDIF</pre><p class="as-caption">Inputs: [5, 0, 1, 1, 0, 1, 0, 0, 0, 0, 0, 1, 0, 1, 0, 0, 0, 0, 0, 0, 0, 10, 0, 2, 1, 1, 0, 0, 1, 0, 0, 0, 0, 1, 0, 1, 0, 0, 1, 1, 1, 0, 20, 0, 4, 2, 1, 1, 0, 0, 3, 0, 0, 0, 0, 1, 2, 0, 0, 0, 2, 4, 0, 40, 0, 1, 2, 3, 1, 2, 2, 2, 0, 4, 2, 2, 0, 2, 3, 2, 1, 4, 6, 1]. Predict the next state; the worked result follows.</p>
+</section><section class="leaf lt as-primary" data-aud="al" data-background-color="#f4f6fb" id="bus-evidence-as-2"><div class="bar"></div><h2>Optional reference · Count collision moments · 2/2</h2><pre class="as-code" data-pc-program="bus-evidence">    IF Collisions &lt; 10 THEN
+        CText ← " " &amp; CText
+    ENDIF
+    OUTPUT NText, " devices | bus: ", CText, " collisions in 20 moments | star: 0 — each device has its own cable to the switch"
+NEXT Trial</pre><p class="as-caption">Continued program: keep the same variable values. Predict the next state; the worked result follows.</p>
+</section><section class="leaf lt as-primary" data-aud="al" data-background-color="#f4f6fb" id="bus-evidence-as-result"><div class="bar"></div><h2>Optional reference · Worked result · Count collision moments</h2><pre class="as-output"> 5 devices | bus:  0 collisions in 20 moments | star: 0 — each device has its own cable to the switch
+10 devices | bus:  1 collisions in 20 moments | star: 0 — each device has its own cable to the switch
+20 devices | bus:  6 collisions in 20 moments | star: 0 — each device has its own cable to the switch
+40 devices | bus: 13 collisions in 20 moments | star: 0 — each device has its own cable to the switch
+</pre><p>For each supplied device count (5,10,20,40), twenty observed arrival counts follow. A collision moment has more than one arrival. The AS routine counts these observations; the optional original generates them randomly. The zero-star figure is the model’s independent-link collision assumption, not a claim that switches remove all congestion.</p>
 </section>
 </section>
-
 <!-- ==================== H5 CLIENT-SERVER AND PEER-TO-PEER ==================== -->
-<section class="lt" data-background-color="#F4F6FB">
-  <div class="bar" style="background:var(--accent3)"></div>
-  <div class="badges"><span class="bg bg-al">9618 §2.1 — the client-server and peer-to-peer models; roles; justify for a situation</span></div>
-  <h2>Who asks, who answers — <span class="accent3">a server at the front, or twenty equals</span></h2>
-  <div class="roles">
-    <div class="stages c"><div class="t">CLIENT-SERVER — J24/11 Q5(a), the bank's app; J25/13 Q3(c), the browser game</div><ol><li><b>Name the server in the scenario</b>: the bank's server · the game's web server <span class="mp">[1]</span></li><li>Its role: <b>stores all the customer / game data</b>; <b>receives the requests</b>, <b>processes</b> them, sends the response <span class="mp">[1]</span></li><li><b>Name the client in the scenario</b>: the customer's smartphone running the app · the player's web browser — <em>a device or a program, never the person</em> <span class="mp">[1]</span></li><li>Its role: <b>sends requests</b>, waits, <b>displays the response</b> <span class="mp">[1]</span></li></ol><p style="margin:5px 0 0; color:#c0392b;">The J24 report: "'the server is the bank server and the client is the customer' is insufficient"; "many responses described the actions of the smartphone user." The J25 report: the browser is the client, "sometimes incorrectly identified as the server".</p></div>
-    <div class="stages b"><div class="t">PEER-TO-PEER — J21/11 Q4, Melinda and her friends</div><ol><li>All computers are of <b>equal status</b> — no central server <span class="mp">[1]</span></li><li>Each computer <b>provides access to its own resources and data</b> — the data is distributed <span class="mp">[1]</span></li><li>Each is <b>responsible for its own security</b> <span class="mp">[1]</span></li></ol><p style="margin:5px 0 0;"><b>Drawbacks need a reason (two marks each):</b> reduced security — <em>because there is no central management, and it is only as secure as the weakest computer</em> · no central backup — <em>if one computer's data is not backed up it is lost to all</em> · files are only available <em>while the computer that holds them is switched on</em>.</p><p style="margin:5px 0 0; color:#c0392b;">The J21 report: "just 'weak security' is not enough"; and "considerable confusion between a peer-to-peer network and a mesh topology" — a model is <em>who serves whom</em>; a topology is <em>how the cables run</em>.</p></div>
-  </div>
-  <div class="fragment rule accent3" style="font-size:.5em; margin-top:8px;"><b>The classroom decides.</b> The twenty computers and the server at the front are client-server: the server holds the files and the accounts, the twenty ask. Two friends sharing a folder over the Wi-Fi are peers. The same twenty computers, wired as a star, could run either model — the shape and the model are two different questions, and the exam asks them separately.</div>
+<section class="lt" data-background-color="#F4F6FB" id="legacy-15">
+<div class="bar" style="background:var(--accent3)"></div>
+<div class="badges"><span class="bg bg-al">9618 §2.1 — the client-server and peer-to-peer models; roles; justify for a situation</span></div>
+<h2>Who asks, who answers — <span class="accent3">a server at the front, or twenty equals</span></h2>
+<div class="roles">
+<div class="stages c"><div class="t">CLIENT-SERVER — J24/11 Q5(a), the bank's app; J25/13 Q3(c), the browser game</div><ol><li><b>Name the server in the scenario</b>: the bank's server · the game's web server <span class="mp">[1]</span></li><li>Its role: <b>stores all the customer / game data</b>; <b>receives the requests</b>, <b>processes</b> them, sends the response <span class="mp">[1]</span></li><li><b>Name the client in the scenario</b>: the customer's smartphone running the app · the player's web browser — <em>a device or a program, never the person</em> <span class="mp">[1]</span></li><li>Its role: <b>sends requests</b>, waits, <b>displays the response</b> <span class="mp">[1]</span></li></ol><p style="margin:5px 0 0; color:#c0392b;">The J24 report: "'the server is the bank server and the client is the customer' is insufficient"; "many responses described the actions of the smartphone user." The J25 report: the browser is the client, "sometimes incorrectly identified as the server".</p></div>
+<div class="stages b"><div class="t">PEER-TO-PEER — J21/11 Q4, Melinda and her friends</div><ol><li>All computers are of <b>equal status</b> — no central server <span class="mp">[1]</span></li><li>Each computer <b>provides access to its own resources and data</b> — the data is distributed <span class="mp">[1]</span></li><li>Each is <b>responsible for its own security</b> <span class="mp">[1]</span></li></ol><p style="margin:5px 0 0;"><b>Drawbacks need a reason (two marks each):</b> reduced security — <em>because there is no central management, and it is only as secure as the weakest computer</em> · no central backup — <em>if one computer's data is not backed up it is lost to all</em> · files are only available <em>while the computer that holds them is switched on</em>.</p><p style="margin:5px 0 0; color:#c0392b;">The J21 report: "just 'weak security' is not enough"; and "considerable confusion between a peer-to-peer network and a mesh topology" — a model is <em>who serves whom</em>; a topology is <em>how the cables run</em>.</p></div>
+</div>
+<div class="fragment rule accent3" style="font-size:.5em; margin-top:8px;"><b>The classroom decides.</b> The twenty computers and the server at the front are client-server: the server holds the files and the accounts, the twenty ask. Two friends sharing a folder over the Wi-Fi are peers. The same twenty computers, wired as a star, could run either model — the shape and the model are two different questions, and the exam asks them separately.</div>
 
 </section>
-
 <!-- ==================== H6 THIN AND THICK ==================== -->
-<section class="lt" data-background-color="#F4F6FB">
-  <div class="bar" style="background:var(--accent2)"></div>
-  <div class="badges"><span class="bg bg-al">9618 §2.1 — thin-client and thick-client and the differences between them</span></div>
-  <h2>Thin or thick — <span class="accent2">where the data lives, where the work is done</span></h2>
-  <div class="roles">
-    <div class="stages a"><div class="t">THIN CLIENT — J24/12 Q3(b) (the exam markers) · J23/13 Q2(c) · a recent paper</div><ol><li><b>Data is not stored on the client</b> — the papers stay on the server</li><li>The client is <b>reliant on access to the server</b> / <b>the connection</b> — the marker cannot mark when the server is down</li><li>It needs <b>few local resources</b> — a low-specification laptop will do</li><li>It performs <b>minimal processing</b> — sends requests, displays results; the server does the work</li></ol><p style="margin:5px 0 0; color:#c0392b;"><b>The table's second column is the mark:</b> "data is not stored on the client" scores nothing until it says <em>the exam papers are stored on the server, not on the examiner's computer</em>. And the <b>converse-pair rule</b>: "the server does most of the processing" then "the client does very little" is <em>one</em> characteristic, scored once.</p></div>
-    <div class="stages b"><div class="t">THICK CLIENT — J23/12 Q1(e)</div><ol><li>The client does <b>most of its own processing</b>, independently</li><li>Its <b>resources are installed locally</b> — the software, the storage</li><li>The server performs <b>minimal / some</b> processing for it</li><li>It works when the network does not</li></ol><p style="margin:5px 0 0;">The J23 report: a thick-client answer needs "at least one statement about the role of the client <em>and</em> another about the role of the server"; "many responses were too vague and could apply to any client-server model."</p><p style="margin:5px 0 0;"><b>The classroom:</b> twenty thin clients are cheap, centrally managed, and dead when the server is; twenty thick clients cost more, need updating one by one, and keep working when the server goes down.</p></div>
-  </div>
-  <div class="fragment real" style="margin-top:8px;"><b>Reality note — are thin and thick blurring?</b> Yes. A browser app that caches and works offline, a phone that runs its own AI models but keeps the data in the cloud, a console game whose world lives on a server: most modern software sits between the two ends. The exam's pairs are the <b>two ends of a spectrum</b>, and the marks are for saying which end a given system leans to and why — <em>where is the data, where is the processing, what dies without the connection</em>.</div>
+<section class="lt" data-background-color="#F4F6FB" id="legacy-16">
+<div class="bar" style="background:var(--accent2)"></div>
+<div class="badges"><span class="bg bg-al">9618 §2.1 — thin-client and thick-client and the differences between them</span></div>
+<h2>Thin or thick — <span class="accent2">where the data lives, where the work is done</span></h2>
+<div class="roles">
+<div class="stages a"><div class="t">THIN CLIENT — J24/12 Q3(b) (the exam markers) · J23/13 Q2(c) · a recent paper</div><ol><li><b>Data is not stored on the client</b> — the papers stay on the server</li><li>The client is <b>reliant on access to the server</b> / <b>the connection</b> — the marker cannot mark when the server is down</li><li>It needs <b>few local resources</b> — a low-specification laptop will do</li><li>It performs <b>minimal processing</b> — sends requests, displays results; the server does the work</li></ol><p style="margin:5px 0 0; color:#c0392b;"><b>The table's second column is the mark:</b> "data is not stored on the client" scores nothing until it says <em>the exam papers are stored on the server, not on the examiner's computer</em>. And the <b>converse-pair rule</b>: "the server does most of the processing" then "the client does very little" is <em>one</em> characteristic, scored once.</p></div>
+<div class="stages b"><div class="t">THICK CLIENT — J23/12 Q1(e)</div><ol><li>The client does <b>most of its own processing</b>, independently</li><li>Its <b>resources are installed locally</b> — the software, the storage</li><li>The server performs <b>minimal / some</b> processing for it</li><li>It works when the network does not</li></ol><p style="margin:5px 0 0;">The J23 report: a thick-client answer needs "at least one statement about the role of the client <em>and</em> another about the role of the server"; "many responses were too vague and could apply to any client-server model."</p><p style="margin:5px 0 0;"><b>The classroom:</b> twenty thin clients are cheap, centrally managed, and dead when the server is; twenty thick clients cost more, need updating one by one, and keep working when the server goes down.</p></div>
+</div>
+<div class="fragment real" style="margin-top:8px;"><b>Reality note — are thin and thick blurring?</b> Yes. A browser app that caches and works offline, a phone that runs its own AI models but keeps the data in the cloud, a console game whose world lives on a server: most modern software sits between the two ends. The exam's pairs are the <b>two ends of a spectrum</b>, and the marks are for saying which end a given system leans to and why — <em>where is the data, where is the processing, what dies without the connection</em>.</div>
 
 </section>
-
 <!-- ==================== H7 THE WIDGET + THE DRAWING CHECK ==================== -->
 <section>
-  <section class="lt growslide" data-background-color="#F4F6FB">
-    <div class="bar" style="background:var(--accent1)"></div>
-    <div class="badges"><span class="bg bg-al">9618 §2.1 — the room, free play</span> <span class="bg" style="background:rgba(23,179,163,.14); color:#0d7a6e;">▶ live</span></div>
-    <h2>The room — <span class="accent1">four shapes, any number of people, a pair of scissors</span></h2>
-    <div id="rm-host"></div>
-    <div class="dig">⬇ dig: the drawing check — the exam's star, marked by the scheme's four lines</div>
+<section class="lt growslide" data-background-color="#F4F6FB" id="legacy-17">
+<div class="bar" style="background:var(--accent1)"></div>
+<div class="badges"><span class="bg bg-al">9618 §2.1 — the room, free play</span> <span class="bg" style="background:rgba(23,179,163,.14); color:#0d7a6e;">▶ live</span></div>
+<h2>The room — <span class="accent1">four shapes, any number of people, a pair of scissors</span></h2>
+<div id="rm-host"></div>
+<div class="dig">⬇ dig: the drawing check — the exam's star, marked by the scheme's four lines</div>
 
 </section>
-  <section class="lt growslide" data-background-color="#F4F6FB">
-    <div class="bar" style="background:var(--accent2)"></div>
-    <div class="badges"><span class="bg bg-al">9618 June 2025 P12 Q6(d) — draw the star; the four marks and the two reports</span> <span class="bg" style="background:rgba(23,179,163,.14); color:#0d7a6e;">▶ live</span></div>
-    <h2>The drawing check — <span class="accent2">every device, every label, only to the switch</span></h2>
-    <div id="dw-host"></div>
+<section class="lt growslide" data-background-color="#F4F6FB" id="legacy-18">
+<div class="bar" style="background:var(--accent2)"></div>
+<div class="badges"><span class="bg bg-al">9618 June 2025 P12 Q6(d) — draw the star; the four marks and the two reports</span> <span class="bg" style="background:rgba(23,179,163,.14); color:#0d7a6e;">▶ live</span></div>
+<h2>The drawing check — <span class="accent2">every device, every label, only to the switch</span></h2>
+<div id="dw-host"></div>
 
 </section>
 </section>
-
 <!-- ==================== H8 🕳 BARAN ==================== -->
-<section class="lt" data-background-color="#F4F6FB">
-  <div class="bar" style="background:var(--accent3)"></div>
-  <div class="badges"><span class="bg" style="background:rgba(242,181,60,.15); color:#B8860B; border:1.5px solid var(--accent3);">🕳️ beyond the exam</span></div>
-  <h2>🕳 Three drawings, 1964 — <span class="accent3">the shape that survives</span></h2>
-  <div class="baran">
-    <div><img src="_img/u14a-baran-comic.png" alt="a 1964 RAND memorandum page: centralized, decentralized and distributed networks"><p style="font-size:.42em; color:#8890b5; margin:4px 0 0;">Paul Baran, RAND Corporation, <em>On Distributed Communications</em>, 1964 — the figure every network textbook still redraws.</p></div>
-    <div style="font-size:.52em;">
-      <div class="rule" style="margin-top:0;"><b>A star, a hybrid of stars, a mesh.</b> Baran's question was not a classroom's: which shape of communications network survives an attack on its centre? The centralised one dies with its centre; the decentralised one loses a region; the distributed one — every node joined to three or four neighbours, messages cut into blocks and relayed by whichever road is still standing — keeps working with half its nodes gone. The ARPANET's first four nodes (1969) were wired as his mesh, and the internet still is: a mesh of meshes.</div>
-      <div class="fragment rule accent3"><b>And the classroom chose the drawing he rejected.</b> A star: one switch, twenty cables, a single point of failure — chosen because nobody is bombing the classroom, a switch costs fifty pounds, and 210 cables would not. That is the tick table's last two rows read as history: <em>robust if any line fails</em> is the mesh, and it is why the internet has no centre to strike; <em>one central device</em> is the star, and it is why your room has one.</div>
-      <div class="fragment rule accent2"><b>The message cut into blocks</b> is the other half of Baran's paper — the packet, and the switching of packets, which the A-level teaches in A12. Tonight: the shape.</div>
-    </div>
-  </div>
+<section class="lt" data-background-color="#F4F6FB" id="legacy-19">
+<div class="bar" style="background:var(--accent3)"></div>
+<div class="badges"><span class="bg" style="background:rgba(242,181,60,.15); color:#B8860B; border:1.5px solid var(--accent3);">🕳️ beyond the exam</span></div>
+<h2>🕳 Three drawings, 1964 — <span class="accent3">the shape that survives</span></h2>
+<div class="baran">
+<div><img alt="a 1964 RAND memorandum page: centralized, decentralized and distributed networks" src="_img/u14a-baran-comic.png"/><p style="font-size:.42em; color:#8890b5; margin:4px 0 0;">Paul Baran, RAND Corporation, <em>On Distributed Communications</em>, 1964 — the figure every network textbook still redraws.</p></div>
+<div style="font-size:.52em;">
+<div class="rule" style="margin-top:0;"><b>A star, a hybrid of stars, a mesh.</b> Baran's question was not a classroom's: which shape of communications network survives an attack on its centre? The centralised one dies with its centre; the decentralised one loses a region; the distributed one — every node joined to three or four neighbours, messages cut into blocks and relayed by whichever road is still standing — keeps working with half its nodes gone. The ARPANET's first four nodes (1969) were wired as his mesh, and the internet still is: a mesh of meshes.</div>
+<div class="fragment rule accent3"><b>And the classroom chose the drawing he rejected.</b> A star: one switch, twenty cables, a single point of failure — chosen because nobody is bombing the classroom, a switch costs fifty pounds, and 210 cables would not. That is the tick table's last two rows read as history: <em>robust if any line fails</em> is the mesh, and it is why the internet has no centre to strike; <em>one central device</em> is the star, and it is why your room has one.</div>
+<div class="fragment rule accent2"><b>The message cut into blocks</b> is the other half of Baran's paper — the packet, and the switching of packets, which the A-level teaches in A12. Tonight: the shape.</div>
+</div>
+</div>
 
 </section>
-
 <!-- ==================== H9 GAME ==================== -->
-<section class="lt growslide" data-background-color="#F4F6FB">
-  <div class="bar" style="background:var(--accent3)"></div>
-  <div class="badges"><span class="bg bg-al">🎮 24 marks · unspent · 9618 only</span></div>
-  <div class="g-wrap">
-    <div class="g-head">
-      <span class="g-stage" id="g-stage"></span>
-      <span class="g-score" id="g-score"></span>
-      <div class="g-prog" id="g-prog"></div>
-      <span class="g-navwrap"><button id="g-back" class="g-skip" title="back to the previous stage">&larr; back</button><button id="g-skip" class="g-skip" title="skip to the next stage">next &rarr;</button></span>
-    </div>
-    <div class="g-q" id="g-q"></div>
-    <div id="g-body"></div>
-    <div class="g-say" id="g-say">&nbsp;</div>
-  </div>
-
-</section>
-
 <!-- ==================== H10 EXAM LENS ==================== -->
-<section class="lt" data-background-color="#F4F6FB">
-  <div class="bar" style="background:var(--accent2)"></div>
-  <div class="badges"><span class="bg bg-al">9618 — what Paper 1 actually does, 2021–2026</span> <span class="bg bg-ig">0478 — never asked</span></div>
-  <h2>How the papers actually ask this</h2>
-  <div class="two-col" style="font-size:.52em; margin-top:6px;">
-    <div>
-      <div class="rule accent1" style="margin-top:0;"><strong class="accent1">9618 — every sitting, one LAN scenario.</strong> Twenty question-parts on this slice, 2021–2025. Since June 2023 the shape is fixed: a company / a school / a business has a LAN — <b>characteristics or benefits</b> [2] · <b>draw the star</b> [2–4] (labels, every device, only to the switch) · <b>how packets travel</b> through the switch [2–3] · <b>thin or thick client</b> [2–4], often applied to the scenario's software. Around it: <b>LAN or WAN with justification</b> [3], <b>two differences</b> [2], the <b>tick table</b> (J24/11), <b>roles in a client-server scenario</b> [4] (the bank, the browser game), <b>star over bus</b> with a reason [2], a <b>mesh described</b> [2]. Peer-to-peer last asked in 2021.</div>
-    </div>
-    <div>
-      <div class="rule accent3" style="margin-top:0;"><strong class="accent3">Where the marks die — the reports, every year.</strong> "A LAN covers a local area" (the acronym) · a second difference too vague ("faster") · the diagram missing a device or a label, or with a hub the stem never mentioned · a star drawn as a bus or a mesh · "package" · thin and thick confused, and the converse pair claimed twice · the <em>user</em> described instead of the devices · a P2P drawback that any network has · "a WAN is wireless".</div>
-      <div class="rule" style="font-size:.95em;"><strong>Never asked:</strong> the hybrid topology on its own · the internet vs the WWW since 2021 · a topology <em>chosen</em> from scratch for a scenario with cost figures. <strong>0478:</strong> none of this slice — no LAN/WAN, no topology, no client-server on the 2023 syllabus, and nothing asked 2021–2026; its network questions are U14b's hardware and U14c's internet.</div>
-    </div>
-  </div>
-  <div class="fragment rule accent2" style="font-size:.52em;"><strong class="accent2">The four that decide the marks:</strong> <b>say the rule, not the acronym</b> · <b>a difference names both sides</b> · <b>a device, not a user</b> · <b>a converse pair scores once</b>.</div>
+<section class="rollout-stack"><section class="lt" data-background-color="#F4F6FB" id="legacy-21">
+<div class="bar" style="background:var(--accent2)"></div>
+<div class="badges"><span class="bg bg-al">9618 — what Paper 1 actually does, 2021–2026</span> <span class="bg bg-ig">0478 — never asked</span></div>
+<h2>How the papers actually ask this</h2>
+<div class="two-col" style="font-size:.52em; margin-top:6px;">
+<div>
+<div class="rule accent1" style="margin-top:0;"><strong class="accent1">9618 — every sitting, one LAN scenario.</strong> Twenty question-parts on this slice, 2021–2025. Since June 2023 the shape is fixed: a company / a school / a business has a LAN — <b>characteristics or benefits</b> [2] · <b>draw the star</b> [2–4] (labels, every device, only to the switch) · <b>how packets travel</b> through the switch [2–3] · <b>thin or thick client</b> [2–4], often applied to the scenario's software. Around it: <b>LAN or WAN with justification</b> [3], <b>two differences</b> [2], the <b>tick table</b> (J24/11), <b>roles in a client-server scenario</b> [4] (the bank, the browser game), <b>star over bus</b> with a reason [2], a <b>mesh described</b> [2]. Peer-to-peer last asked in 2021.</div>
+</div>
+<div>
+<div class="rule accent3" style="margin-top:0;"><strong class="accent3">Where the marks die — the reports, every year.</strong> "A LAN covers a local area" (the acronym) · a second difference too vague ("faster") · the diagram missing a device or a label, or with a hub the stem never mentioned · a star drawn as a bus or a mesh · "package" · thin and thick confused, and the converse pair claimed twice · the <em>user</em> described instead of the devices · a P2P drawback that any network has · "a WAN is wireless".</div>
+<div class="rule" style="font-size:.95em;"><strong>Never asked:</strong> the hybrid topology on its own · the internet vs the WWW since 2021 · a topology <em>chosen</em> from scratch for a scenario with cost figures. <strong>0478:</strong> none of this slice — no LAN/WAN, no topology, no client-server on the 2023 syllabus, and nothing asked 2021–2026; its network questions are U14b's hardware and U14c's internet.</div>
+</div>
+</div>
+<div class="fragment rule accent2" style="font-size:.52em;"><strong class="accent2">The four that decide the marks:</strong> <b>say the rule, not the acronym</b> · <b>a difference names both sides</b> · <b>a device, not a user</b> · <b>a converse pair scores once</b>.</div>
 
-</section>
+</section><section class="lt growslide rollout-game" data-background-color="#F4F6FB" id="legacy-20">
+<div class="bar" style="background:var(--accent3)"></div>
+<div class="badges"><span class="bg bg-al">🎮 24 marks · unspent · 9618 only</span></div>
+<div class="g-wrap">
+<div class="g-head">
+<span class="g-stage" id="g-stage"></span>
+<span class="g-score" id="g-score"></span>
+<div class="g-prog" id="g-prog"></div>
+<span class="g-navwrap"><button class="g-skip" id="g-back" title="back to the previous stage">← back</button><button class="g-skip" id="g-skip" title="skip to the next stage">next →</button></span>
+</div>
+<div class="g-q" id="g-q"></div>
+<div id="g-body"></div>
+<div class="g-say" id="g-say"> </div>
+</div>
 
+</section></section>
 <!-- ==================== H11 VOCAB ==================== -->
-<section class="lt" data-background-color="#F4F6FB">
-  <div class="bar" style="background:var(--accent1)"></div>
-  <div class="badges"><span class="bg bg-al">9618 §2.1</span></div>
-  <h2>The words</h2>
-  <table class="vtab" style="font-size:.84em;">
-    <tr><th>term</th><th>中文</th><th>one line that earns the mark</th></tr>
-    <tr><td><b>LAN</b></td><td>局域网</td><td>covers a small geographical area, on privately owned infrastructure, at a high data transfer rate — wired or wireless</td></tr>
-    <tr><td><b>WAN</b></td><td>广域网</td><td>covers a large geographical area over external / leased infrastructure; connections often virtual; the internet is the largest</td></tr>
-    <tr><td><b>bus · star · mesh · hybrid</b></td><td>总线 · 星型 · 网状 · 混合</td><td>one shared cable (broadcast, collisions) · every device to one switch (checks the address, sends to one) · every device to several others (multiple routes) · any combination</td></tr>
-    <tr><td><b>switch</b></td><td>交换机</td><td>the star's centre: receives a packet, checks its destination address, sends it only to the intended receiver</td></tr>
-    <tr><td><b>client-server</b></td><td>客户端-服务器</td><td>the server stores the data and processes requests; the client sends requests and displays the response — name both in the scenario</td></tr>
-    <tr><td><b>peer-to-peer</b></td><td>对等网络</td><td>all computers of equal status; each provides its own resources and secures itself; no central server, so no central backup</td></tr>
-    <tr><td><b>thin client</b></td><td>瘦客户端</td><td>stores no data, does minimal processing, needs few resources, and nothing works without the server</td></tr>
-    <tr><td><b>thick client</b></td><td>胖客户端</td><td>does most of its own processing with resources installed locally; the server does little; it works when the network does not</td></tr>
-  </table>
+<section class="lt" data-background-color="#F4F6FB" id="legacy-22">
+<div class="bar" style="background:var(--accent1)"></div>
+<div class="badges"><span class="bg bg-al">9618 §2.1</span></div>
+<h2>The words</h2>
+<table class="vtab" style="font-size:.84em;">
+<tr><th>term</th><th>中文</th><th>one line that earns the mark</th></tr>
+<tr><td><b>LAN</b></td><td>局域网</td><td>covers a small geographical area, on privately owned infrastructure, at a high data transfer rate — wired or wireless</td></tr>
+<tr><td><b>WAN</b></td><td>广域网</td><td>covers a large geographical area over external / leased infrastructure; connections often virtual; the internet is the largest</td></tr>
+<tr><td><b>bus · star · mesh · hybrid</b></td><td>总线 · 星型 · 网状 · 混合</td><td>one shared cable (broadcast, collisions) · every device to one switch (checks the address, sends to one) · every device to several others (multiple routes) · any combination</td></tr>
+<tr><td><b>switch</b></td><td>交换机</td><td>the star's centre: receives a packet, checks its destination address, sends it only to the intended receiver</td></tr>
+<tr><td><b>client-server</b></td><td>客户端-服务器</td><td>the server stores the data and processes requests; the client sends requests and displays the response — name both in the scenario</td></tr>
+<tr><td><b>peer-to-peer</b></td><td>对等网络</td><td>all computers of equal status; each provides its own resources and secures itself; no central server, so no central backup</td></tr>
+<tr><td><b>thin client</b></td><td>瘦客户端</td><td>stores no data, does minimal processing, needs few resources, and nothing works without the server</td></tr>
+<tr><td><b>thick client</b></td><td>胖客户端</td><td>does most of its own processing with resources installed locally; the server does little; it works when the network does not</td></tr>
+</table>
 </section>
-
 <!-- ==================== H12 CLOSER ==================== -->
-<section class="dk" data-background-color="#151B3C">
-  <div class="bar" style="background:var(--accent1)"></div>
-  <div class="badges"><span class="bg bg-al">9618 §2.1</span></div>
-  <h2>A network is a set of devices, <span class="accent1">and the rule for who may talk to whom</span></h2>
-  <div class="rule" style="font-size:.62em;"><strong>Tonight's rules were the shape and the model:</strong> a posting board or a postman; a server at the front or twenty equals; a thin client that dies with the server or a thick one that keeps working. Every question on the paper is one of those rules with a scenario on it — and the mark is for the rule, said as the scheme says it.</div>
-  <div class="fragment rule accent3" style="font-size:.62em;"><strong class="accent3">🍦 The Switch</strong> — <span class="mono">challenge_U14a_TheSwitch.py</span>. <em>With a pen first:</em> fill a switch's table for six frames — learn the source, send a known destination out of one port, flood an unknown one. Then write <span class="mono">Switch.receive</span>; the judge checks the floods stop as the table fills, and the scoop puts the same six frames on a bus and counts the collisions.</div>
-  <div class="fragment rule accent2" style="font-size:.62em;"><strong class="accent2">Next lesson:</strong> the wire itself — copper, glass and air, and what each can carry how far; the switch's cousin the <strong>router</strong>; the number the network card was born with; and what happens on a posting board when two people write at once. <strong>U14b: the wire, the box, and the collision.</strong></div>
+<section class="dk" data-background-color="#151B3C" id="legacy-23">
+<div class="bar" style="background:var(--accent1)"></div>
+<div class="badges"><span class="bg bg-al">9618 §2.1</span></div>
+<h2>A network is a set of devices, <span class="accent1">and the rule for who may talk to whom</span></h2>
+<div class="rule" style="font-size:.62em;"><strong>Tonight's rules were the shape and the model:</strong> a posting board or a postman; a server at the front or twenty equals; a thin client that dies with the server or a thick one that keeps working. Every question on the paper is one of those rules with a scenario on it — and the mark is for the rule, said as the scheme says it.</div>
+<div class="fragment rule accent3" style="font-size:.62em;"><strong class="accent3">🍦 The Switch</strong> — <span class="mono">challenge_U14a_TheSwitch.py</span>. <em>With a pen first:</em> fill a switch's table for six frames — learn the source, send a known destination out of one port, flood an unknown one. Then write <span class="mono">Switch.receive</span>; the judge checks the floods stop as the table fills, and the scoop puts the same six frames on a bus and counts the collisions.</div>
+<div class="fragment rule accent2" style="font-size:.62em;"><strong class="accent2">Next lesson:</strong> the wire itself — copper, glass and air, and what each can carry how far; the switch's cousin the <strong>router</strong>; the number the network card was born with; and what happens on a posting board when two people write at once. <strong>U14b: the wire, the box, and the collision.</strong></div>
 
 </section>
-
-</div></div>
-
+</div></div><script>document.querySelectorAll('[data-aud]').forEach(n=>{if(n.dataset.aud!=='both'&&n.dataset.aud!==AUD)n.remove()});</script>
 <button id="fs-btn" title="fullscreen">⛶</button>
 <button id="llmchip">⚡ no reader — click for help</button>
-<div id="llmhelp"><span class="x" id="llmhelp-x">✕</span><b>Live marking needs the marking server.</b><br>
-Two steps, on the teacher's Mac:<br>1. open the <b>CS_Materials</b> folder<br>2. double-click <b>Start-LLM-Marking.command</b><br>
+<div id="llmhelp"><span class="x" id="llmhelp-x">✕</span><b>Live marking needs the marking server.</b><br/>
+Two steps, on the teacher's Mac:<br/>1. open the <b>CS_Materials</b> folder<br/>2. double-click <b>Start-LLM-Marking.command</b><br/>
 This chip lights up by itself a few seconds after the server starts — no reload needed. Without it, the pattern marks still work; the reader adds the marker that reads for <i>meaning</i> — and photos of handwritten answers need it too.</div>
 <div id="py-chip">🐍 waking Python…</div>
-
 <script src="https://cdnjs.cloudflare.com/ajax/libs/reveal.js/4.6.1/reveal.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/reveal.js/4.6.1/plugin/notes/notes.min.js"></script>
 <script src="https://cdn.jsdelivr.net/pyodide/v0.26.4/full/pyodide.js"></script>
@@ -1129,7 +1190,7 @@ function runPy(code,outEl,cb){
     pyBusy=false; setRunButtons(true); currentOut=null; if(cb) cb(crashed);
   });
 }
-function initPyCells(){
+function initPyCells(){if(!document.querySelector('.pycell,.py-cell')){document.getElementById('py-chip')?.remove();return;}
   document.querySelectorAll('.pycell').forEach(function(cell){
     var srcEl=cell.querySelector('.pysrc');
     var code=srcEl?srcEl.textContent.replace(/^\n/,'').replace(/\s+$/,''):'';
@@ -1971,6 +2032,57 @@ document.getElementById('fs-btn').addEventListener('click',function(){
   else if(d.requestFullscreen){d.requestFullscreen();}
 });
 
+var ROLLOUT_CODE="u14a";var ROLLOUT_GUIDES=[{"w": "LAN area and local ownership describe this school scenario. A WAN may also use private infrastructure; speed alone is not its definition."}, {"t": "The published row about one failed line accepts star OR mesh. The full-mesh rerouting claim and the single-client star failure describe different levels of continued service.", "p": "For this switched-star account, explain the switch forwarding a frame by destination address. Full-duplex operation is the qualification for no shared-medium collision."}, {}, {"p": "Peer-to-peer describes service roles. It does not require every pair of devices to have a physical cable."}];
+/* Human judgement for prose; exact structured answers retain deterministic checks. */
+var rolloutAnswers={},rolloutCommitted={},rolloutPart=0;
+function rolloutEscape(s){return String(s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));}
+function rolloutSave(){var t=document.getElementById('rollout-answer');if(t)rolloutAnswers[G.i+':'+rolloutPart]=t.value;}
+function rolloutSelect(i){rolloutSave();rolloutPart=i;gDraw();}
+function rolloutExact(stage,key){
+ var map={u14a:{'1:t':{answers:[['star'],['bus'],['mesh'],['star','mesh','star mesh','mesh star'],['bus']]}},u14c:{'0:f':{answers:[['4','four'],['8','eight'],['8','eight'],['16','sixteen'],['::','double colon']]},'1:a':{answers:[['e']]},'1:b':{answers:[['a']]},'1:c':{answers:[['c']]},'1:d':{answers:[['f']]},'2:i':{answers:[['10','10.0.0.0'],['4','0.0.0.4']]}},u14d:AUD==='ig'?{'0:t':{answers:[['b']]}}:{},u15a:{'0:s':{sets:true}},u15b:AUD==='al'?{'0:n':{answers:[['range','range check'],['presence','presence check'],['existence','existence check','lookup','look up','lookup check']]},'2:t1':{answers:[['odd or even','even or odd','odd','even']]},'2:t2':{answers:[['7','seven','7 bits','seven bits']]},'2:t3':{answers:[['odd','odd parity']]},'2:t4':{answers:[['block','parity block']]},'2:t5':{answers:[['byte','parity byte']]}}:{'2:i':{answers:[['1']]},'2:ii':{answers:[['c and d','d and c','c d','d c','c,d','d,c']]}} ,u16:AUD==='ig'?{'2:t1':{answers:[['knowledge base']]},'2:t2':{answers:[['inference engine']]},'2:t3':{answers:[['rule base']]},'2:t4':{answers:[['knowledge base']]},'2:t5':{answers:[['interface','user interface']]}}:{}};
+ return map[ROLLOUT_CODE]?.[stage+':'+key]||null;
+}
+function rolloutCheckExact(cfg,text){
+ const norm=x=>String(x).toLowerCase().trim().replace(/^\d+[.)]\s*/, '').replace(/\s+/g,' ');
+ if(cfg.sets){let lines=text.toLowerCase().split(/\n|;/),groups={};for(let l of lines){let m=l.match(/^\s*(security|integrity)\s*:\s*(.*)$/);if(m)groups[m[1]]=m[2].split(/,|·/).map(norm).filter(Boolean).sort()};return ['security','integrity'].map((k,i)=>JSON.stringify(groups[k]||[])===JSON.stringify((i?['double entry','presence check']:['firewall','access rights','password']).sort()));}
+ const parts=cfg.answers.length===1?[text]:text.split(/,|\n/).filter(x=>x.trim());
+ return cfg.answers.map((alts,i)=>alts.includes(norm(parts[i]||'')));
+}
+var rolloutOriginalDraw=gDraw;
+gDraw=function(){
+ if(G.i>=STAGES.length){gFinish();return;}
+ var s=STAGES[G.i];if(s.vals||s.match){rolloutOriginalDraw();return;}
+ var parts=s.parts?.length?s.parts:[{key:'answer',lbl:'Your response',rows:2}];
+ if(rolloutPart>=parts.length)rolloutPart=0;
+ var p=parts[rolloutPart],key=G.i+':'+rolloutPart,cfg=rolloutExact(G.i,p.key);
+ gNavState();gProg();gEl('g-score').textContent='part caps · max '+s.total;
+ gEl('g-stage').textContent=s.name;
+ var stem=document.createElement('div');stem.innerHTML=s.q.replace(/verbatim/g,'answer entry adapted');stem.querySelectorAll('span[style*="c0392b"]').forEach(n=>n.remove());
+ gEl('g-q').innerHTML=stem.innerHTML;
+ gEl('g-body').innerHTML='<div class="rollout-parts">'+parts.map((x,i)=>'<button class="g-skip" onclick="rolloutSelect('+i+')" aria-pressed="'+(i===rolloutPart)+'">part '+(i+1)+'</button>').join('')+'</div><p class="g-lbl">'+(p.lbl||'Your response')+'</p><textarea id="rollout-answer" class="g-ta" rows="2" placeholder="Work on paper or type. Commit an attempt before comparing."></textarea><button id="rollout-commit" class="g-sub">I have attempted this → compare</button>';
+ var ta=document.getElementById('rollout-answer');ta.value=rolloutAnswers[key]||'';ta.oninput=()=>{rolloutSave();delete rolloutCommitted[key];gSay('');};gSay('');
+ function reveal(){
+  rolloutSave();if(!ta.value.trim()){gSay('Write an attempt before comparing. Blank work earns zero.');return;}rolloutCommitted[key]=true;
+  var cap=s.groupCaps?.[p.key]??s.total;
+  var pts=(s.mps||[]).filter(m=>(!m.grp||m.grp===p.key)&&m.pts!==0);
+  var guide=pts.map(m=>'<li>'+m.label+'</li>').join('');
+  var check=cfg?rolloutCheckExact(cfg,ta.value):null;
+  var headline=check?'Exact check: '+check.filter(Boolean).length+' / '+check.length:'Self / teacher review · maximum '+cap+' · no automatic prose score';
+  var spec=ROLLOUT_GUIDES[G.i]?.[p.key]||'';
+  gSay('<div class="rollout-rubric"><b>'+headline+'</b><p>Compare meaning in this part only. Credit distinct correct ideas; a repeated idea earns once. A negated or contradicted claim earns no affected point. Blank work earns zero.</p>'+(spec?'<p class="rollout-caution">'+spec+'</p>':'')+'<ul>'+guide+'</ul><details class="rollout-reference"><summary>Full reference for this question</summary><div>'+s.model.replace(/\n/g,'<br>')+'</div></details></div>');
+  if(check)gEl('g-say').dataset.exact=check.filter(Boolean).length;
+  Reveal.layout();
+ }
+ document.getElementById('rollout-commit').onclick=reveal;
+ if(rolloutCommitted[key])reveal();G.locked=false;Reveal.layout();
+};
+gFinish=function(){gEl('g-stage').textContent='Practice complete';gEl('g-score').textContent='';gEl('g-q').textContent='Choose one response to improve.';gEl('g-body').innerHTML='<p>Keep the original attempt beside its correction. Identify the sentence or step that now explains the mechanism.</p><button class="g-sub" onclick="gReplay()">Return to the questions</button>';gEl('g-back').style.display='none';gEl('g-skip').style.display='none';gEl('g-prog').innerHTML='';gSay('No automatic prose total has been assigned. Use each question’s part caps for a human mark.');};
+['g-back','g-skip'].forEach(id=>document.getElementById(id)?.addEventListener('click',()=>{rolloutSave();rolloutPart=0},true));
+if(typeof llmBind==='function')llmBind=function(){};
+if(typeof llmDetect==='function')llmDetect=function(){};
+if(typeof llmWatch==='function')llmWatch=function(){};
+['llmchip','llmhelp'].forEach(id=>{let n=document.getElementById(id);if(n)n.hidden=true;});
+
 Reveal.initialize({
   hash:true, slideNumber:'c/t', width:1280, height:720, margin:.06,
   plugins:[RevealNotes], transition:'slide', backgroundTransition:'fade'
@@ -1978,5 +2090,5 @@ Reveal.initialize({
 Reveal.on('ready', function(e){ autoSizePyTextareas(e.currentSlide); });
 Reveal.on('slidechanged', function(e){ autoSizePyTextareas(e.currentSlide); });
 </script>
-</body>
+<script>if(AUD==='al'){const mapping={"bus-evidence": "bus-evidence-as-1", "cut-evidence": "cut-evidence-as-1"};document.querySelectorAll('a[href^="#/"]').forEach(a=>{const id=a.getAttribute('href').slice(2);if(mapping[id])a.setAttribute('href','#/'+mapping[id]);});}</script></body>
 </html>
